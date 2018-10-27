@@ -1,5 +1,6 @@
 package fall2018.csc2017.slidingtiles;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserAccount {
@@ -7,14 +8,20 @@ public class UserAccount {
 
     private String password;
 
-    private HashMap<String, Board> history;
+    private HashMap<String,Board[]> history;
 
     private Board tempHistory;
+
+    private ArrayList<Integer> userScoreList = new ArrayList<>();
 
     public UserAccount(String name, String password){
         this.name=name;
         this.password=password;
-        this.history=new HashMap<String, Board>(3);
+        this.history=new HashMap<>();
+    }
+
+    public void addGame(String name){
+        history.put(name, new Board[3]);
     }
 
     public void changeName(String name){
@@ -41,15 +48,34 @@ public class UserAccount {
         this.tempHistory=b;
     }
 
+    public ArrayList<Integer> getUserScoreList(){return this.userScoreList;}
+
+    public int getHistorySize(String key){
+        int size = 0;
+        for(int i = 0; i<3;i++){
+            if(!history.get(key)[i].equals(0)){
+                size++;
+            }
+        }
+        return size;
+    }
     public void setHistory(String key, Board item){
-        if (history.size()<3){
-            history.put(key, item);
+        int length = getHistorySize(key);
+        if (length < 3){
+            history.get(key)[length+1] = item;
         }
         else{
             System.out.println("history is full, override or give up?");
-            System.out.println(history.keySet());
-            // suposed to be connected with UI, trigger UserAccountManager
+        }
+    }
 
+    public void overrideHistory(String key, Board item, Integer index){
+        history.get(key)[index] = item;
+
+    }
+
+    public void play(BoardManager b){
+        while(!b.puzzleSolved()){
         }
     }
 
