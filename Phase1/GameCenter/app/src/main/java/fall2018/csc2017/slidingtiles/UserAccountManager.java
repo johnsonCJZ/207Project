@@ -14,9 +14,6 @@ public class UserAccountManager {
         userList.add(u);
     }
 
-    public void RemoveUser(UserAccount u){
-        userList.removeIf(u::equals);
-    }
 
 
 
