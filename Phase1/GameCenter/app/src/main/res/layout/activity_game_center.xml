@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:background="@drawable/bg_gradient"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    tools:context="fall2018.csc2017.slidingtiles.GameStoreActivity">
 
     <TextView
         android:id="@+id/textView3"
@@ -17,6 +19,16 @@
         android:textColor="@android:color/white"
         android:textSize="30sp" />
 
+    <Button
+        android:id="@+id/store"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/white"
+        android:text="Game Store"
+        android:textAllCaps="true"
+        android:textColor="@android:color/background_dark" />
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -29,7 +41,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/Slide"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 app:srcCompat="@drawable/img_botton_gc_slid" />
@@ -53,7 +65,7 @@
             android:paddingBottom="20dp">
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/Pong"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 app:srcCompat="@drawable/pong" />
@@ -71,4 +83,10 @@
         </TableRow>
 
     </TableLayout>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign Out" />
 </LinearLayout>
