@@ -11,7 +11,6 @@ public class ScoreSorter implements Sorter{
                     Object[] temp = nameAndScore.get(j-1);
                     nameAndScore.set(j - 1, nameAndScore.get(j));
                     nameAndScore.set(j, temp);
-
                 }
             }
         }
