@@ -6,17 +6,25 @@ import java.util.Iterator;
 public class UserAccountManager {
     private ArrayList<UserAccount> userList;
 
-    public UserAccountManager(){
+    UserAccountManager(){
         userList = new ArrayList<>();
     }
 
+    public ArrayList<UserAccount> getAcounts(){
+        return userList;
+    }
+
     public void AddUser(UserAccount u){
+
         userList.add(u);
     }
 
     public void RemoveUser(UserAccount u){
-        userList.removeIf(u::equals);
+
+        userList.remove(u);
     }
+
+
 
 
 
