@@ -16,20 +16,22 @@ import java.util.List;
 public class Board extends Observable implements Serializable, Iterable<Tile>{
 
     /**
-     * The number of rows.
+     * The number of rows and columns.
      */
-    final static int NUM_ROWS = 4;
-
-    /**
-     * The number of rows.
-     */
-    final static int NUM_COLS = 4;
+    private int dimension = 4;
 
     /**
      * The tiles on the board in row-major order.
      */
-    private Tile[][] tiles = new Tile[NUM_ROWS][NUM_COLS];
+    private Tile[][] tiles = new Tile[dimension][dimension];
 
+    /**
+     * A new empty board of n*n tiles.
+     * @param n the number of rows and columns of the board
+     */
+    Board(int n) {
+        this.dimension = n;
+    }
     /**
      * A new board of tiles in row-major order.
      * Precondition: len(tiles) == NUM_ROWS * NUM_COLS
@@ -39,20 +41,42 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
     Board(List<Tile> tiles) {
         Iterator<Tile> iter = tiles.iterator();
 
-        for (int row = 0; row != Board.NUM_ROWS; row++) {
-            for (int col = 0; col != Board.NUM_COLS; col++) {
+            for (int row = 0; row != this.dimension; row++) {
+                for (int col = 0; col != this.dimension; col++) {
                 this.tiles[row][col] = iter.next();
             }
         }
     }
 
     /**
-     * Return the number of tiles on the board.
-     * @return the number of tiles on the board
+     * Set the tiles to tiles.
+     * @param tiles the tiles for the board
      */
-    int numTiles() {
-        return NUM_ROWS*NUM_COLS; // no need to check empty tile on board
+    void setTiles(List<Tile> tiles) {
+        Iterator<Tile> iter = tiles.iterator();
+
+        for (int row = 0; row != this.dimension; row++) {
+            for (int col = 0; col != this.dimension; col++) {
+                this.tiles[row][col] = iter.next();
+            }
+        }
+
     }
+    /**
+     * Set the number of rows and columns to int d.
+     * @param d the number of rows/columns
+     */
+    void setDimension(int d) { dimension = d;}
+
+    /**
+     * Return the number of rows/columns the board.
+     * @return the number of rows/columns on the board
+     */
+    int getDimension() {
+        return dimension; // no need to check empty tile on board
+    }
+
+
 
     /**
      * Return the tile at (row, col)
@@ -132,9 +156,9 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
         @Override
         public boolean hasNext() {
             int temp = currentPosition + 1;
-            currentRow = temp / NUM_COLS;
-            currentCol = temp % NUM_COLS;
-            return currentRow < NUM_ROWS;
+            currentRow = temp / dimension;
+            currentCol = temp % dimension;
+            return currentRow < dimension;
         }
 
         /**
@@ -146,8 +170,8 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
         public Tile next() {
             if (this.hasNext()) {
                 currentPosition++;
-                currentRow = currentPosition / NUM_COLS;
-                currentCol = currentPosition % NUM_COLS;
+                currentRow = currentPosition / dimension;
+                currentCol = currentPosition % dimension;
                 return this.tiles[currentRow][currentCol];
             } else {
                 throw new NoSuchElementException();
