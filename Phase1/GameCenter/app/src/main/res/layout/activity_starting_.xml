@@ -28,7 +28,6 @@
         android:id="@+id/LoadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/GameText"
         android:layout_toStartOf="@+id/StartButton"
         android:text="Load Saved Game" />
 
