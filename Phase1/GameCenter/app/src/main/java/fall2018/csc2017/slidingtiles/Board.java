@@ -23,7 +23,7 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
     /**
      * The tiles on the board in row-major order.
      */
-    private Tile[][] tiles = new Tile[dimension][dimension];
+    private Tile[][] tiles;
 
     /**
      * A new empty board of n*n tiles.
@@ -31,7 +31,9 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
      */
     Board(int n) {
         this.dimension = n;
+        tiles= new Tile[dimension][dimension];
     }
+
     /**
      * A new board of tiles in row-major order.
      * Precondition: len(tiles) == NUM_ROWS * NUM_COLS

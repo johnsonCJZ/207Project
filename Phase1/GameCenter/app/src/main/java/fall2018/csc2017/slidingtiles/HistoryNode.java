@@ -5,7 +5,7 @@ public class HistoryNode {
     /**
      * The next HistoryNode linked.
      */
-    public HistoryNode next = null;
+    public HistoryNode next;
 
     /**
      * the data that the node stores.
@@ -18,6 +18,7 @@ public class HistoryNode {
      */
     HistoryNode(int[] dat) {
         this.data = dat;
+        this.next=null;
     }
 
     /**

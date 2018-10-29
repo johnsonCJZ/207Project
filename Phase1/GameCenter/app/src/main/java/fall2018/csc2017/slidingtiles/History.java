@@ -8,10 +8,6 @@ public class History{
 
     public int size = 0;
 
-    History() {
-
-    }
-
 
     public HistoryNode get(int index) {
         int count = 0;
