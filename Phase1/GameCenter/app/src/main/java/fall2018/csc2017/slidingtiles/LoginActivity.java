@@ -27,15 +27,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final String username = etUsername.getText().toString();
                 final String password = etPassword.getText().toString();
-                ArrayList<UserAccount> userList = UserAccountManager.getUserList();
-                for(UserAccount account: userList){
-                    if(account.getName().equals(username) && account.getPassword().equals(password)){
-                        Intent loginIntent = new Intent(LoginActivity.this, GameCenterActivity.class);
-                        LoginActivity.this.startActivity(loginIntent);
-                    }
+                // checkUserId
+                Intent loginIntent = new Intent(LoginActivity.this, GameCenterActivity.class);
+                LoginActivity.this.startActivity(loginIntent);
                 }
-            }
-        });
+            });
 
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,4 +41,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    private boolean checkUserId(String username, String password){
+        ArrayList<UserAccount> userList = UserAccountManager.getUserList();
+        for(UserAccount account: userList){
+            if(account.getName().equals(username) && account.getPassword().equals(password)){
+                return true;
+            }
+
+        }return false;}
 }
