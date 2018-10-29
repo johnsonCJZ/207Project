@@ -1,6 +1,8 @@
 package fall2018.csc2017.slidingtiles;
 
-public class History{
+import java.io.Serializable;
+
+public class History implements Serializable {
 
     public HistoryNode front = null;
 

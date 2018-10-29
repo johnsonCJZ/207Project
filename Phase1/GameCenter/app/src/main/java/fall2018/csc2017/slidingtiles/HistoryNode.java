@@ -1,6 +1,8 @@
 package fall2018.csc2017.slidingtiles;
 
-public class HistoryNode {
+import java.io.Serializable;
+
+public class HistoryNode implements Serializable {
 
     /**
      * The next HistoryNode linked.
