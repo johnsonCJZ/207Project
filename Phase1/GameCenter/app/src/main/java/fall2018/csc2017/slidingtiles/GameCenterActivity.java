@@ -32,7 +32,7 @@ public class GameCenterActivity extends AppCompatActivity {
         });
     }
     public void openSlide(){
-        Intent intent = new Intent(this, MainSlideActivity.class);
+        Intent intent = new Intent(this, SlideGameActivity.class);
         startActivity(intent);
     }
 
