@@ -74,9 +74,5 @@ public class UserAccount {
 
     }
 
-    public void play(BoardManager b){
-        while(!b.puzzleSolved()){
-        }
-    }
 
 }

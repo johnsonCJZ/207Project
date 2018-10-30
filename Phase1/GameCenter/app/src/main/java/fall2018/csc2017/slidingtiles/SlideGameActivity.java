@@ -30,6 +30,8 @@ public class SlideGameActivity extends AppCompatActivity {
         addStartButtonListener();
     }
 
+
+
     private void addStartButtonListener() {
         Button startButton = findViewById(R.id.NewGameButton);
         startButton.setOnClickListener(new View.OnClickListener() {

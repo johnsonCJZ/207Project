@@ -33,7 +33,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
     }
 
     private void switchToGame() {
-        Intent tmp = new Intent(this, GameActivity.class);
+        Intent tmp = new Intent(this, MainSlideActivity.class);
         saveToFile(SlideGameActivity.TEMP_SAVE_FILENAME);
         startActivity(tmp);
     }
