@@ -30,6 +30,8 @@ public class SlideGameActivity extends AppCompatActivity {
         addStartButtonListener();
     }
 
+
+
     private void addStartButtonListener() {
         Button startButton = findViewById(R.id.NewGameButton);
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -42,8 +44,8 @@ public class SlideGameActivity extends AppCompatActivity {
     }
 
     private void switchToGame() {
-        Intent tmp = new Intent(this, GameActivity.class);
-        saveToFile(StartingActivity.TEMP_SAVE_FILENAME);
+        Intent tmp = new Intent(this, SlideDifficultyActivity.class);
+        saveToFile(SlideGameActivity.TEMP_SAVE_FILENAME);
         startActivity(tmp);
     }
 

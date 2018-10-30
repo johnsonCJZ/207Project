@@ -1,11 +1,13 @@
 package fall2018.csc2017.slidingtiles;
 
-public class HistoryNode {
+import java.io.Serializable;
+
+public class HistoryNode implements Serializable {
 
     /**
      * The next HistoryNode linked.
      */
-    public HistoryNode next = null;
+    public HistoryNode next;
 
     /**
      * the data that the node stores.
@@ -18,6 +20,7 @@ public class HistoryNode {
      */
     HistoryNode(int[] dat) {
         this.data = dat;
+        this.next=null;
     }
 
     /**

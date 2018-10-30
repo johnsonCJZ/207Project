@@ -40,8 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="252dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="251dp"
         android:text="Log In"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="116dp" />
