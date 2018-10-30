@@ -19,8 +19,9 @@
         <activity android:name=".GameActivity" />
         <activity android:name=".GameStoreActivity" />
         <activity android:name=".SlideGameActivity" />
-        <activity android:name=".RegisterActivity"/>
-        <activity android:name=".GameCenterActivity"/>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".GameCenterActivity" />
+        <activity android:name=".SlideDifficultyActivity"></activity>
     </application>
 
 </manifest>

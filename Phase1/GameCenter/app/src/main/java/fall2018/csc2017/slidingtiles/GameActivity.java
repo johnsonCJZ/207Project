@@ -56,7 +56,7 @@ public class GameActivity extends AppCompatActivity implements Observer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadFromFile(StartingActivity.TEMP_SAVE_FILENAME);
+        loadFromFile(SlideGameActivity.TEMP_SAVE_FILENAME);
         createTileButtons(this);
         setContentView(R.layout.activity_main);
 
@@ -120,7 +120,7 @@ public class GameActivity extends AppCompatActivity implements Observer {
     @Override
     protected void onPause() {
         super.onPause();
-        saveToFile(StartingActivity.TEMP_SAVE_FILENAME);
+        saveToFile(SlideGameActivity.TEMP_SAVE_FILENAME);
     }
 
     /**
