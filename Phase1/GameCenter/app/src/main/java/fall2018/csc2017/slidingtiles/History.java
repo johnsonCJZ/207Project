@@ -10,6 +10,9 @@ public class History implements Serializable {
 
     public int size = 0;
 
+    public int getSize() {
+        return size;
+    }
 
     public HistoryNode get(int index) {
         int count = 0;

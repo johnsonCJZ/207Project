@@ -60,6 +60,10 @@ class BoardManager implements Serializable {
         this.history.add(new HistoryNode(this.findBlankIndex(numTiles)));
     }
 
+    public History getHistory() {
+        return history;
+    }
+
     /**
      * Return whether the tiles are in row-major order.
      *
