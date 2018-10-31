@@ -17,8 +17,8 @@ public class ScoreBoard {
     }
 
     public int calculateScore(BoardManager boardManager){
-        Strategy easyStrategy = new SlidingTilesEasyStrategy();
-        return easyStrategy.calculateScore(boardManager);
+        Strategy scoreStrategy = new SlidingTilesScoreStrategy();
+        return scoreStrategy.calculateScore(boardManager);
     }
 
     public void addAndSort(Pair<String, Integer> pair) {

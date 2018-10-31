@@ -12,42 +12,47 @@ import java.util.Iterator;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    final EditText etUsername = (EditText) findViewById(R.id.etUsername);
+    final EditText etPassword = (EditText) findViewById(R.id.etPassword);
+    final EditText etConfirmPW = (EditText) findViewById(R.id.etConfirmPW);
+    final Button bRegister = (Button) findViewById(R.id.bRegister);
+    final Button bBack = (Button) findViewById(R.id.bBack);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        final EditText etUsername = (EditText) findViewById(R.id.etUsername);
-        final EditText etPassword = (EditText) findViewById(R.id.etPassword);
-        final EditText etConfirmPW = (EditText) findViewById(R.id.etConfirmPW);
-        final Button bLogIn = (Button) findViewById(R.id.bRegister);
-        final Button bBack = (Button) findViewById(R.id.bBack);
-
         bBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String username = etUsername.getText().toString();
-                final String password = etPassword.getText().toString();
-                final String confirmPW = etConfirmPW.getText().toString();
-                ArrayList<UserAccount> userList = UserAccountManager.getUserList();
-                Boolean userExists = false;
-                UserAccount newUser;
-                // should change to use the iterator design pattern after solving the static problem
-                for(UserAccount account: userList){
-                    if(account.getName().equals(username)){userExists = true;}
-                    //tell the user the username already exists.
+                if(registerButtonPushed()){
+                    Intent registerIntent = new Intent( RegisterActivity.this, LoginActivity.class);
+                    RegisterActivity.this.startActivity(registerIntent);
                 }
-                if(!userExists){
-                    if(password.equals(confirmPW)){
-                        newUser = new UserAccount(username, password);
-                        UserAccountManager.AddUser(newUser);
-                    }
-                    ////Tell the user the password and confirmed password are not the same
-                }
-                Intent registerIntent = new Intent( RegisterActivity.this, LoginActivity.class);
-                RegisterActivity.this.startActivity(registerIntent);
             }
         });
+    }
+
+    private boolean registerButtonPushed() {
+        final String username = etUsername.getText().toString();
+        final String password = etPassword.getText().toString();
+        final String confirmPW = etConfirmPW.getText().toString();
+        ArrayList<UserAccount> userList = UserAccountManager.getUserList();
+        UserAccount newUser = new UserAccount(username, password);
+        // should change to use the iterator design pattern after solving the static problem
+        for (UserAccount account : userList) {
+            if (account.getName().equals(username)) {
+                return false;
+            }
+            //tell the user the username already exists.
+        }
+        if (password.equals(confirmPW)) {
+            UserAccountManager.AddUser(newUser);
+            return true;
+        }
+        //Tell the user the password and confirmed password are not the same
+        return false;
 
     }
 }

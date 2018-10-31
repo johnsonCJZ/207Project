@@ -12,26 +12,15 @@ import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
 
+    final EditText etUsername = (EditText) findViewById(R.id.etUsername);
+    final EditText etPassword = (EditText) findViewById(R.id.etPassword);
+    final Button bLogIn = (Button) findViewById(R.id.bLogin);
+    final TextView registerLink = (TextView) findViewById(R.id.registerLink);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        final EditText etUsername = (EditText) findViewById(R.id.etUsername);
-        final EditText etPassword = (EditText) findViewById(R.id.etPassword);
-        final Button bLogIn = (Button) findViewById(R.id.bLogin);
-        final TextView registerLink = (TextView) findViewById(R.id.registerLink);
-
-        bLogIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String username = etUsername.getText().toString();
-                final String password = etPassword.getText().toString();
-                // checkUserId
-                Intent loginIntent = new Intent(LoginActivity.this, GameCenterActivity.class);
-                LoginActivity.this.startActivity(loginIntent);
-                }
-            });
 
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +28,21 @@ public class LoginActivity extends AppCompatActivity {
                 Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 LoginActivity.this.startActivity(registerIntent);
             }
+        });
+
+        loginButtonPushed();
+    }
+
+    private void loginButtonPushed(){
+        bLogIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String username = etUsername.getText().toString();
+                final String password = etPassword.getText().toString();
+                if(checkUserId(username,password)){
+                Intent loginIntent = new Intent(LoginActivity.this, GameCenterActivity.class);
+                LoginActivity.this.startActivity(loginIntent);
+            }}
         });
     }
     private boolean checkUserId(String username, String password){
@@ -50,3 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
         }return false;}
 }
+
+
+
+
