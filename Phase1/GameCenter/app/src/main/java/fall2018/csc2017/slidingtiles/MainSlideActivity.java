@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
@@ -108,6 +109,35 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                         display();
                     }
                 });
+        // redo and undo buttons
+        Button redo = findViewById(R.id.Redo);
+        Button undo = findViewById(R.id.Undo);
+        redo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println(boardManager.getBoard().toString());
+                boardManager.redo();
+                System.out.println(boardManager.getBoard().toString());
+                updateTileButtons();
+                display();
+            }
+
+        });
+
+        undo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println(boardManager.getBoard().toString());
+                boardManager.undo();
+                System.out.println(boardManager.getBoard().toString());
+                display();
+            }
+
+        });
+
+
+
+
 
 
     }
