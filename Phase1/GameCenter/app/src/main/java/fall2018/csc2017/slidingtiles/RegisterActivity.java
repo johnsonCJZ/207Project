@@ -6,24 +6,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    final EditText etUsername = (EditText) findViewById(R.id.etUsername);
-    final EditText etPassword = (EditText) findViewById(R.id.etPassword);
-    final EditText etConfirmPW = (EditText) findViewById(R.id.etConfirmPW);
-    final Button bRegister = (Button) findViewById(R.id.bRegister);
-    final Button bBack = (Button) findViewById(R.id.bBack);
+    EditText etUsername;
+    EditText etPassword;
+    EditText etConfirmPW;
+    Button bRegister;
+    Button bBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        etUsername = (EditText) findViewById(R.id.etUsername);
+        etPassword = (EditText) findViewById(R.id.etPassword);
+        etConfirmPW = (EditText) findViewById(R.id.etConfirmPW);
+        bRegister = (Button) findViewById(R.id.bRegister);
 
-        bBack.setOnClickListener(new View.OnClickListener() {
+        bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(registerButtonPushed()){
@@ -35,24 +40,31 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean registerButtonPushed() {
-        final String username = etUsername.getText().toString();
-        final String password = etPassword.getText().toString();
-        final String confirmPW = etConfirmPW.getText().toString();
+        String username = etUsername.getText().toString();
+        String password = etPassword.getText().toString();
+        String confirmPW = etConfirmPW.getText().toString();
         ArrayList<UserAccount> userList = UserAccountManager.getUserList();
         UserAccount newUser = new UserAccount(username, password);
+        TextView textView = (TextView)findViewById(R.id.textView7);
         // should change to use the iterator design pattern after solving the static problem
-        for (UserAccount account : userList) {
-            if (account.getName().equals(username)) {
-                return false;
-            }
-            //tell the user the username already exists.
-        }
-        if (password.equals(confirmPW)) {
-            UserAccountManager.AddUser(newUser);
-            return true;
+        if (!userList.isEmpty()){
+            for (UserAccount account : userList) {
+                if (account.getName().equals(username)) {
+                    textView.setText("this name is taken");
+                    return false;
+                }
+                //tell the user the username already exists.
+        }}
+        if (!password.equals(confirmPW)) {
+            textView.setText("password doesn't match");
+            return false;
+
         }
         //Tell the user the password and confirmed password are not the same
-        return false;
+        UserAccountManager.AddUser(newUser);
+        return true;
 
     }
+
+
 }

@@ -12,16 +12,19 @@ import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
 
-    final EditText etUsername = (EditText) findViewById(R.id.etUsername);
-    final EditText etPassword = (EditText) findViewById(R.id.etPassword);
-    final Button bLogIn = (Button) findViewById(R.id.bLogin);
-    final TextView registerLink = (TextView) findViewById(R.id.registerLink);
+    EditText etUsername;
+    EditText etPassword;
+    Button bLogIn;
+    TextView registerLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        etUsername= (EditText) findViewById(R .id.etUsername);
+        etPassword= (EditText) findViewById(R.id.etPassword);
+        bLogIn= (Button) findViewById(R.id.bLogin);
+        registerLink = (TextView) findViewById(R.id.registerLink);
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -37,8 +40,8 @@ public class LoginActivity extends AppCompatActivity {
         bLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String username = etUsername.getText().toString();
-                final String password = etPassword.getText().toString();
+                String username = etUsername.getText().toString();
+                String password = etPassword.getText().toString();
                 if(checkUserId(username,password)){
                 Intent loginIntent = new Intent(LoginActivity.this, GameCenterActivity.class);
                 LoginActivity.this.startActivity(loginIntent);

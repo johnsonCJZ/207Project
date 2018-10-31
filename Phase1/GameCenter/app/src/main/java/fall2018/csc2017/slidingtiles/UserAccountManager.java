@@ -6,11 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class UserAccountManager implements Iterable<UserAccount>{
-    private static ArrayList<UserAccount> userList;
-
-    UserAccountManager(){
-        userList = new ArrayList<>();
-    }
+    private static ArrayList<UserAccount> userList = new ArrayList<>();;
 
     public static ArrayList<UserAccount> getUserList(){
         return userList;
