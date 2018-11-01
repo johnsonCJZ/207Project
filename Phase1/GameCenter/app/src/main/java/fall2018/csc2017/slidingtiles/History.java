@@ -37,15 +37,17 @@ public class History implements Serializable {
         }
     }
 
-    public void remove(int index) {
-        if (this.size == 1) {
-            this.front = null;
-            this.back = null;
-            this.size--;
+    public  void clear() {
+        if (size != 0) {
+            front = null;
+            back = null;
+            size = 0;
         }
-        else if (index == 0) {
-            this.front = this.front.next;
-            this.size--;
+    }
+
+    public void remove(int index) {
+        if (index == 0) {
+            clear();
         }
         else if (index == this.size-1) {
             this.back = this.get(this.size-2);

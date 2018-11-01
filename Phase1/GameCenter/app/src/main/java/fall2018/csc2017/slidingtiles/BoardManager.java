@@ -32,7 +32,7 @@ public class BoardManager implements Serializable {
      */
     public BoardManager(Board board) {
         this.board = board;
-        int[] blank = this.findBlankIndex(this.board.getDimension() * this.board.getDimension());
+        int[] blank = this.findBlankIndex(0);
         this.history.add(new HistoryNode(blank));
     }
 
@@ -57,7 +57,7 @@ public class BoardManager implements Serializable {
 
         Collections.shuffle(tiles);
         board.setTiles(tiles);
-        this.history.add(new HistoryNode(this.findBlankIndex(numTiles)));
+        this.history.add(new HistoryNode(this.findBlankIndex(0)));
     }
 
     public History getHistory() {
@@ -127,6 +127,8 @@ public class BoardManager implements Serializable {
             r_row = result[0];
             r_col = result[1];
             board.swapTiles(row,col,r_row,r_col);
+            result[0] = row;
+            result[1] = col;
             if (currIndex == history.size-1) {history.add(new HistoryNode(result)); currIndex++;}
             else {
                 history.remove(currIndex+1);
