@@ -3,13 +3,13 @@ package fall2018.csc2017.slidingtiles;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * Manage a board, including swapping tiles, checking for a win, and managing taps.
  */
-class BoardManager implements Serializable {
+public class BoardManager implements Serializable {
 
     /**
      * The board being managed.
@@ -30,7 +30,7 @@ class BoardManager implements Serializable {
      * Manage a board that has been pre-populated.
      * @param board the board
      */
-    BoardManager(Board board) {
+    public BoardManager(Board board) {
         this.board = board;
         int[] blank = this.findBlankIndex(this.board.getDimension() * this.board.getDimension());
         this.history.add(new HistoryNode(blank));
@@ -39,7 +39,7 @@ class BoardManager implements Serializable {
     /**
      * Return the current board.
      */
-    Board getBoard() {
+    public Board getBoard() {
         return board;
     }
 
@@ -47,7 +47,7 @@ class BoardManager implements Serializable {
      * Manage a new shuffled n*n board.
      * @param n the number of rows and columns
      */
-    BoardManager(int n) {
+    public BoardManager(int n) {
         List<Tile> tiles = new ArrayList<>();
         this.board = new Board(n);
         final int numTiles = board.getDimension() * board.getDimension();
@@ -69,19 +69,23 @@ class BoardManager implements Serializable {
      *
      * @return whether the tiles are in row-major order
      */
-    boolean puzzleSolved() {
-        int current = 0;
-        boolean solved = true;
-        for (Tile aBoard : this.board) {
-            int temp = aBoard.getId();
-            if (current < temp) {
-                current = temp;
-            } else {
-                solved = false;
-                break;
+    public boolean puzzleSolved() {
+        Iterator iter = board.iterator();
+        Tile previous = (Tile) iter.next();
+
+        while (iter.hasNext()){
+            Tile next = (Tile) iter.next();
+            if (previous.getId() < next.getId()) {
+                previous = next;
+            }
+            else {
+                if (next.getId() == 0 && !iter.hasNext()) {
+                    return true;
+                }
+                return false;
             }
         }
-        return solved;
+        return false;
     }
 
     /**
@@ -90,11 +94,11 @@ class BoardManager implements Serializable {
      * @param position the tile to check
      * @return whether the tile at position is surrounded by a blank tile
      */
-    boolean isValidTap(int position) {
+    public boolean isValidTap(int position) {
 
         int row = position / board.getDimension();
         int col = position % board.getDimension();
-        int blankId = board.getDimension() * board.getDimension();
+        int blankId = 0;
         // Are any of the 4 the blank tile?
         Tile above = row == 0 ? null : board.getTile(row - 1, col);
         Tile below = row == board.getDimension() - 1 ? null : board.getTile(row + 1, col);
@@ -111,11 +115,11 @@ class BoardManager implements Serializable {
      *
      * @param position the position
      */
-    void touchMove(int position) {
+    public void touchMove(int position) {
 
         int row = position / board.getDimension();
         int col = position % board.getDimension();
-        int blankId = board.getDimension() * board.getDimension();
+        int blankId = 0;
         int r_row;
         int r_col;
         if (isValidTap(position)){
@@ -156,7 +160,7 @@ class BoardManager implements Serializable {
 
     }
 
-    void undo() {
+    public void undo() {
         if (history.size > 1) {
             int[] currPosition = history.get(currIndex).getData();
             int[] prePosition = history.get(currIndex-1).getData();
@@ -165,7 +169,7 @@ class BoardManager implements Serializable {
         }
     }
 
-    void redo() {
+    public void redo() {
         if (history.get(currIndex).next != null) {
             int[] currPosition = history.get(currIndex).getData();
             int[] postPosition = history.get(currIndex+1).getData();
