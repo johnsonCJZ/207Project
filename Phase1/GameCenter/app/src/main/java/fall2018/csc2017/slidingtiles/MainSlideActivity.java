@@ -1,6 +1,7 @@
 package fall2018.csc2017.slidingtiles;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -107,6 +108,9 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                         columnHeight = displayHeight / boardManager.getBoard().getDimension();
 
                         display();
+                        if (boardManager.puzzleSolved()){
+                            addScoreBoard();
+                        }
                     }
                 });
         // redo and undo buttons
@@ -141,6 +145,13 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
 
     }
+
+
+    private void addScoreBoard(){
+        Intent tmp = new Intent(this, ScoreBoardActivity.class);
+        startActivity(tmp);
+    }
+
 
     /**
      * Create the buttons for displaying the tiles.

@@ -21,7 +21,8 @@
         <activity android:name=".SlideGameActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".GameCenterActivity" />
-        <activity android:name=".SlideDifficultyActivity"></activity>
+        <activity android:name=".SlideDifficultyActivity" />
+        <activity android:name=".ScoreBoardActivity"></activity>
     </application>
 
 </manifest>
