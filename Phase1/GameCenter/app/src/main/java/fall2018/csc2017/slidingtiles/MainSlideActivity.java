@@ -119,10 +119,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         redo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(boardManager.getBoard().toString());
                 boardManager.redo();
-                System.out.println(boardManager.getBoard().toString());
-                updateTileButtons();
                 display();
             }
 
@@ -131,19 +128,10 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         undo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(boardManager.getBoard().toString());
                 boardManager.undo();
-                System.out.println(boardManager.getBoard().toString());
                 display();
             }
-
         });
-
-
-
-
-
-
     }
 
 
