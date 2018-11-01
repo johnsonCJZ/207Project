@@ -39,7 +39,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = new BoardManager(4);
+                boardManager = new BoardManager(3);
                 switchToGame();
             }
         });
@@ -50,7 +50,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = new BoardManager(4);
+                boardManager = new BoardManager(5);
                 switchToGame();
             }
         });
