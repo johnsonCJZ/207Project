@@ -1,9 +1,10 @@
 package fall2018.csc2017.slidingtiles;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserAccount {
+public class UserAccount implements Serializable {
     private String name;
 
     private String password;
@@ -14,10 +15,19 @@ public class UserAccount {
 
     private ArrayList<Integer> userScoreList = new ArrayList<>();
 
+    private ScoreBoard personalHistory3x3;
+
+    private ScoreBoard personalHistory4x4;
+
+    private ScoreBoard personalHistory5x5;
+
     public UserAccount(String name, String password){
         this.name=name;
         this.password=password;
         this.history=new HashMap<>();
+        personalHistory3x3 = new ScoreBoard();
+        personalHistory4x4 = new ScoreBoard();
+        personalHistory5x5 = new ScoreBoard();
     }
 
     public void addGame(String name){

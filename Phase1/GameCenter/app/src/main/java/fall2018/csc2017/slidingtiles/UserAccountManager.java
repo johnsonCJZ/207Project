@@ -2,22 +2,25 @@ package fall2018.csc2017.slidingtiles;
 
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class UserAccountManager implements Iterable<UserAccount>{
-    private static ArrayList<UserAccount> userList = new ArrayList<>();;
+public class UserAccountManager implements Iterable<UserAccount>, Serializable {
+    private ArrayList<UserAccount> userList = new ArrayList<>();
 
-    public static ArrayList<UserAccount> getUserList(){
+    public final static String USERS = "save_user_info.ser";
+
+    public ArrayList<UserAccount> getUserList(){
         return userList;
     }
 
-    public static void AddUser(UserAccount u){
+    public void AddUser(UserAccount u){
 
         userList.add(u);
     }
 
-    public static void RemoveUser(UserAccount u){
+    public void RemoveUser(UserAccount u){
 
         userList.remove(u);
     }
