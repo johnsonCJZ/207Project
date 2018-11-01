@@ -58,6 +58,7 @@ public class Tile implements Comparable<Tile>, Serializable {
      * @param backgroundId
      */
     public Tile(int backgroundId) {
+        id = backgroundId;
         // This looks so ugly.
         switch (backgroundId) {
             case 0:

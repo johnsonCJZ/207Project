@@ -20,9 +20,33 @@ public class SlideDifficultyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slide_difficulty);
         addStart4x4Button();
+        addStart3x3Button();
+        addStart5x5Button();
     }
     private void addStart4x4Button() {
         Button startButton = findViewById(R.id.button3);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boardManager = new BoardManager(4);
+                switchToGame();
+            }
+        });
+    }
+
+    private void addStart3x3Button() {
+        Button startButton = findViewById(R.id.button);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boardManager = new BoardManager(4);
+                switchToGame();
+            }
+        });
+    }
+
+    private void addStart5x5Button() {
+        Button startButton = findViewById(R.id.button4);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
