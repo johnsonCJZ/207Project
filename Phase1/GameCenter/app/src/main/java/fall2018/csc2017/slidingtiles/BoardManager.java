@@ -11,6 +11,8 @@ import java.util.List;
  */
 public class BoardManager implements Serializable {
 
+
+    private double time;
     /**
      * The board being managed.
      */
@@ -31,6 +33,7 @@ public class BoardManager implements Serializable {
      * @param board the board
      */
     public BoardManager(Board board) {
+        this.time = 0.0;
         this.board = board;
         int[] blank = this.findBlankIndex(0);
         this.history.add(new HistoryNode(blank));
@@ -48,6 +51,7 @@ public class BoardManager implements Serializable {
      * @param n the number of rows and columns
      */
     public BoardManager(int n) {
+        this.time = 0.0;
         List<Tile> tiles = new ArrayList<>();
         this.board = new Board(n);
         final int numTiles = board.getDimension() * board.getDimension();
@@ -58,6 +62,14 @@ public class BoardManager implements Serializable {
         Collections.shuffle(tiles);
         board.setTiles(tiles);
         this.history.add(new HistoryNode(this.findBlankIndex(0)));
+    }
+
+    public double getTime() {
+        return time;
+    }
+
+    public void setTime(double time) {
+        this.time = time;
     }
 
     public History getHistory() {

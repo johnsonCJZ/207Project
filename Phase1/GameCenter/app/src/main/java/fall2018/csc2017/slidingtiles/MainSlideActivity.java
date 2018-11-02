@@ -66,6 +66,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
     @Override
     public void onBackPressed() {
+        boardManager.setTime(count);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Do you want to save/override this game?")
 
@@ -113,16 +114,16 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     private void getHistory(DialogInterface dialog){
         switch (size) {
             case 3:
-                user.getHistory().replace("history3x3",boardManager);
+                user.getHistory().put("history3x3",boardManager);
                 saveToFile(UserAccountManager.USERS);
                 break;
             case 4:
-                user.getHistory().replace("history4x4",boardManager);
+                user.getHistory().put("history4x4",boardManager);
                 saveToFile(UserAccountManager.USERS);
                 break;
 
             case 5:
-                user.getHistory().replace("history5x5",boardManager);
+                user.getHistory().put("history5x5",boardManager);
                 saveToFile(UserAccountManager.USERS);
                 break;
                 }
@@ -140,6 +141,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         createTileButtons(this);
         setContentView(R.layout.activity_main);
         final TextView textView = (TextView)findViewById(R.id.textView6);
+        count=boardManager.getTime();
         Thread t = new Thread(){
             @Override
             public void run(){
