@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 public class UserAccount implements Serializable {
+
     private String name;
 
     private String password;
 
-    private HashMap<String,Board[]> history;
-
-    private Board tempHistory;
+    private HashMap<String, BoardManager> history;
 
     private ArrayList<Integer> userScoreList = new ArrayList<>();
 
@@ -24,14 +24,19 @@ public class UserAccount implements Serializable {
     public UserAccount(String name, String password){
         this.name=name;
         this.password=password;
-        this.history=new HashMap<>();
+        this.history=new HashMap<String, BoardManager>();
         personalHistory3x3 = new ScoreBoard();
         personalHistory4x4 = new ScoreBoard();
         personalHistory5x5 = new ScoreBoard();
+        history.put("history3x3", null);
+        history.put("history4x4", null);
+        history.put("history5x5",null);
+        history.put("resumeHistory", null);
+
     }
 
     public void addGame(String name){
-        history.put(name, new Board[3]);
+        history.put(name, null);
     }
 
     public void changeName(String name){
@@ -50,38 +55,19 @@ public class UserAccount implements Serializable {
         return password;
     }
 
-    protected Board getTempHistory(){
-        return tempHistory;
-    }
-
-    protected void setTempHistory(Board b){
-        this.tempHistory=b;
-    }
 
     public ArrayList<Integer> getUserScoreList(){return this.userScoreList;}
 
-    public int getHistorySize(String key){
-        int size = 0;
-        for(int i = 0; i<3;i++){
-            if(!history.get(key)[i].equals(0)){
-                size++;
-            }
+    public boolean setHistory(String key, BoardManager item){
+        if (history.get(key)==null){
+            history.put(key,item);
+            return true;
         }
-        return size;
-    }
-    public void setHistory(String key, Board item){
-        int length = getHistorySize(key);
-        if (length < 3){
-            history.get(key)[length+1] = item;
-        }
-        else{
-            System.out.println("history is full, override or give up?");
-        }
+            return false;
     }
 
-    public void overrideHistory(String key, Board item, Integer index){
-        history.get(key)[index] = item;
-
+    public HashMap<String, BoardManager> getHistory(){
+        return history;
     }
 
 

@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 public class GameCenterActivity extends AppCompatActivity {
+    private UserAccount user;
+    private UserAccountManager users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,8 +18,17 @@ public class GameCenterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_center);
         addOpenGameStore();
         addOpenSlide();
+        getUsers();
 
 
+    }
+
+    private void getUsers(){
+        Intent intentExtras = getIntent();
+        Bundle extra = intentExtras.getExtras();
+        this.user=(UserAccount) extra.getSerializable("user");
+
+        this.users = (UserAccountManager) extra.getSerializable("allUsers");
     }
 
     public void addOpenSlide(){
@@ -33,6 +44,10 @@ public class GameCenterActivity extends AppCompatActivity {
     }
     public void openSlide(){
         Intent intent = new Intent(this, SlideGameActivity.class);
+        Bundle pass = new Bundle();
+        pass.putSerializable("user",this.user);
+        pass.putSerializable("allUsers", this.users);
+        intent.putExtras(pass);
         startActivity(intent);
     }
 

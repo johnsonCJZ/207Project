@@ -56,25 +56,29 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                if(checkUserId(username,password)){
-                Intent loginIntent = new Intent(LoginActivity.this, GameCenterActivity.class);
-                LoginActivity.this.startActivity(loginIntent);
+                UserAccount user = checkUserId(username,password);
+                if(user!=null){
+                    Intent loginIntent = new Intent(LoginActivity.this, GameCenterActivity.class);
+                    Bundle pass = new Bundle();
+                    pass.putSerializable("user",user);
+                    pass.putSerializable("allUsers", userAccountManager);
+                    loginIntent.putExtras(pass);
+                    LoginActivity.this.startActivity(loginIntent);
             }}
         });
     }
-    private boolean checkUserId(String username, String password){
+    private UserAccount checkUserId(String username, String password){
         ArrayList<UserAccount> userList = userAccountManager.getUserList();
         System.out.println(userList);
         for(UserAccount account: userList){
-            System.out.println(account.getName()+" "+account.getPassword()+" "+account);
             if(account.getName().equals(username) && account.getPassword().equals(password)){
                 massage.setText("Welcome");
-                return true;
+                return account;
             }
 
         }
         massage.setText("Wrong Username or Password");
-        return false;}
+        return null;}
 
     private void loadFromFile(String fileName) {
 
@@ -93,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.e("login activity", "File contained unexpected data type: " + e.toString());
         }
     }
+
 
     public void saveToFile(String fileName) {
         try {

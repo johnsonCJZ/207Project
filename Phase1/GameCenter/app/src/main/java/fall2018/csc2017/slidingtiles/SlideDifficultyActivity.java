@@ -14,22 +14,33 @@ import java.io.ObjectOutputStream;
 public class SlideDifficultyActivity extends AppCompatActivity {
 
     private BoardManager boardManager;
+    private UserAccount user;
+    private UserAccountManager users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slide_difficulty);
+        getUser();
         addStart4x4Button();
         addStart3x3Button();
         addStart5x5Button();
     }
+
+    private void getUser(){
+        Intent intentExtras = getIntent();
+        Bundle extra = intentExtras.getExtras();
+        this.user=(UserAccount) extra.getSerializable("user");
+        this.users = (UserAccountManager) extra.getSerializable("allUsers");
+    }
+
     private void addStart4x4Button() {
         Button startButton = findViewById(R.id.button3);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boardManager = new BoardManager(4);
-                switchToGame();
+                switchToGame(4);
             }
         });
     }
@@ -40,7 +51,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boardManager = new BoardManager(3);
-                switchToGame();
+                switchToGame(3);
             }
         });
     }
@@ -51,26 +62,21 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boardManager = new BoardManager(5);
-                switchToGame();
+                switchToGame(5);
             }
         });
     }
 
-    private void switchToGame() {
+    private void switchToGame(int n) {
         Intent tmp = new Intent(this, MainSlideActivity.class);
-        saveToFile(SlideGameActivity.TEMP_SAVE_FILENAME);
+        Bundle pass = new Bundle();
+        pass.putSerializable("user",user);
+        pass.putInt("size", n);
+        pass.putSerializable("allUsers", users);
+        pass.putSerializable("boardManager", boardManager);
+        tmp.putExtras(pass);
         startActivity(tmp);
     }
 
-    public void saveToFile(String fileName) {
-        try {
-            ObjectOutputStream outputStream = new ObjectOutputStream(
-                    this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(boardManager);
-            outputStream.close();
-        } catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
 
 }

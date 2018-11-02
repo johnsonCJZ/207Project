@@ -1,6 +1,8 @@
 package fall2018.csc2017.slidingtiles;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,6 +50,9 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     private GestureDetectGridView gridView;
     private static int columnWidth, columnHeight;
     private double count=0;
+    private UserAccount user;
+    private int size;
+    private UserAccountManager users;
 
     /**
      * Set up the background image for each button based on the master list
@@ -60,10 +65,78 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
     @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you want to save/override this game?")
+
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        getHistory(dialog);
+                        MainSlideActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        MainSlideActivity.this.finish();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
+/**
+ * alert box in alter box, not mature enough
+ *
+    private void overrideAlert(final String memory){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Your had a history, wanna override?")
+
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        user.getHistory().replace(memory,boardManager);
+                        saveToFile(UserAccountManager.USERS);
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
+*/
+    private void getHistory(DialogInterface dialog){
+        switch (size) {
+            case 3:
+                user.getHistory().replace("history3x3",boardManager);
+                saveToFile(UserAccountManager.USERS);
+                break;
+            case 4:
+                user.getHistory().replace("history4x4",boardManager);
+                saveToFile(UserAccountManager.USERS);
+                break;
+
+            case 5:
+                user.getHistory().replace("history5x5",boardManager);
+                saveToFile(UserAccountManager.USERS);
+                break;
+                }
+                dialog.cancel();
+
+    }
+
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        loadFromFile(SlideGameActivity.TEMP_SAVE_FILENAME);
+        getUserAndSize(); // pass in all useful data from last activity, including boardManager
         createTileButtons(this);
         setContentView(R.layout.activity_main);
         final TextView textView = (TextView)findViewById(R.id.textView6);
@@ -141,6 +214,25 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
 
+    private void getUserAndSize(){
+        Intent intentExtras = getIntent();
+        Bundle extra = intentExtras.getExtras();
+        this.user=(UserAccount) extra.getSerializable("user");
+        this.size=extra.getInt("size");
+        this.users = (UserAccountManager) extra.getSerializable("allUsers");
+        loadFromFile(UserAccountManager.USERS);
+        for (UserAccount u: users.getUserList()){
+            if(u.getName().equals(user.getName())){
+                this.user = u;
+                }
+            }
+        this.boardManager = (BoardManager) extra.getSerializable("boardManager");
+        }
+
+
+
+
+
     /**
      * Create the buttons for displaying the tiles.
      *
@@ -178,31 +270,8 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     @Override
     protected void onPause() {
         super.onPause();
-        saveToFile(SlideGameActivity.TEMP_SAVE_FILENAME);
     }
 
-    /**
-     * Load the board manager from fileName.
-     *
-     * @param fileName the name of the file
-     */
-    private void loadFromFile(String fileName) {
-
-        try {
-            InputStream inputStream = this.openFileInput(fileName);
-            if (inputStream != null) {
-                ObjectInputStream input = new ObjectInputStream(inputStream);
-                boardManager = (BoardManager) input.readObject();
-                inputStream.close();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        } catch (ClassNotFoundException e) {
-            Log.e("login activity", "File contained unexpected data type: " + e.toString());
-        }
-    }
 
     /**
      * Save the board manager to fileName.
@@ -213,15 +282,36 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(
                     this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(boardManager);
+            outputStream.writeObject(users);
             outputStream.close();
         } catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());
         }
     }
 
+
+
+
     @Override
     public void update(Observable o, Object arg) {
         display();
+    }
+
+    private void loadFromFile(String fileName) {
+
+        try {
+            InputStream inputStream = this.openFileInput(fileName);
+            if (inputStream != null) {
+                ObjectInputStream input = new ObjectInputStream(inputStream);
+                users = (UserAccountManager) input.readObject();
+                inputStream.close();
+            }
+        } catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        } catch (ClassNotFoundException e) {
+            Log.e("login activity", "File contained unexpected data type: " + e.toString());
+        }
     }
 }
