@@ -11,6 +11,8 @@ import java.util.List;
  */
 public class BoardManager implements Serializable {
 
+    private Strategy<BoardManager> scoreStrategy;
+
 
     private double time;
     /**
@@ -62,6 +64,14 @@ public class BoardManager implements Serializable {
         Collections.shuffle(tiles);
         board.setTiles(tiles);
         this.history.add(new HistoryNode(this.findBlankIndex(0)));
+    }
+
+    public void setScoreStrategy(Strategy<BoardManager> scoreStrategy) {
+        this.scoreStrategy = scoreStrategy;
+    }
+
+    public int score(){
+        return this.scoreStrategy.calculateScore(this);
     }
 
     public double getTime() {

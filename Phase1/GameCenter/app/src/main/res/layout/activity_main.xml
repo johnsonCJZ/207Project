@@ -25,7 +25,9 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="140dp"
-        android:layout_marginBottom="0dp" />
+        android:layout_marginBottom="0dp" >
+
+    </fall2018.csc2017.slidingtiles.GestureDetectGridView>
 
     <Button
         android:id="@+id/Redo"
@@ -36,6 +38,12 @@
         android:text="Redo" />
 
     <Button
+        android:id="@+id/Cheating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cheat" />
+
+    <Button
         android:id="@+id/Undo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,4 +51,5 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="79dp"
         android:text="Undo" />
+
 </RelativeLayout>

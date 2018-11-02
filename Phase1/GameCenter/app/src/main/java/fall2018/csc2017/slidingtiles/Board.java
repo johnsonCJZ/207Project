@@ -40,8 +40,10 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
      *
      * @param tiles the tiles for the board
      */
-    Board(List<Tile> tiles) {
+    Board(List<Tile> tiles, int n) {
+        this.dimension = n;
         Iterator<Tile> iter = tiles.iterator();
+        this.tiles = new Tile[n][n];
 
             for (int row = 0; row != this.dimension; row++) {
                 for (int col = 0; col != this.dimension; col++) {

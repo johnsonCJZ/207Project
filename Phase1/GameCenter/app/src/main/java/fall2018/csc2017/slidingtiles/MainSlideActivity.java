@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -26,6 +28,10 @@ import java.util.Observer;
  * The game activity.
  */
 public class MainSlideActivity extends AppCompatActivity implements Observer {
+
+    private ScoreBoard scoreBoard;
+
+    private Pair<String, Integer> score;
 
     private static DecimalFormat df2 = new DecimalFormat(".##");
     /**
@@ -63,6 +69,8 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         updateTileButtons();
         gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -111,6 +119,60 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
 */
+    private void winAlert(){
+        boardManager.setTime(count);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        int score = clearHistoryAndGetScore();
+        builder.setMessage("you got "+String.valueOf(score)+" !")
+
+                .setPositiveButton("See my rank", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        addScoreBoard();
+                    }
+                })
+                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        MainSlideActivity.this.finish();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
+    private int clearHistoryAndGetScore(){
+        int score;
+        switch (size) {
+            case 3:
+                user.getHistory().put("history3x3",null);
+                scoreBoard=user.getScoreBoard("history3x3");
+                break;
+            case 4:
+                user.getHistory().put("history4x4",null);
+                scoreBoard=user.getScoreBoard("history4x4");
+                break;
+
+            case 5:
+                user.getHistory().put("history5x5",null);
+                scoreBoard=user.getScoreBoard("history5x5");
+                break;
+
+            default:
+                user.getHistory().put("history4x4",null);
+                scoreBoard=user.getScoreBoard("history4x4");
+
+
+        }
+        scoreBoard.setStrategy(new NormalScoreStrategy());
+        score = scoreBoard.calculateScore(boardManager);
+        this.score=new Pair<String, Integer>(user.getName(),score);
+        scoreBoard.addAndSort(this.score);
+        saveToFile(UserAccountManager.USERS);
+        return score;
+
+    }
+
+
     private void getHistory(DialogInterface dialog){
         switch (size) {
             case 3:
@@ -148,11 +210,17 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                 while(!isInterrupted()){
                     try{
                         Thread.sleep(10);
+                        if(boardManager.puzzleSolved()){
+                            this.interrupt();
+                            boardManager.setTime(count);
+                            winAlert();
+                        }
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 count +=0.01;
                                 textView.setText(String.valueOf(df2.format(count))+" s");
+
                             }
                         });
                     }catch (InterruptedException e){
@@ -183,14 +251,14 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                         columnHeight = displayHeight / boardManager.getBoard().getDimension();
 
                         display();
-                        if (boardManager.puzzleSolved()){
-                            addScoreBoard();
-                        }
+
                     }
                 });
         // redo and undo buttons
+
         Button redo = findViewById(R.id.Redo);
         Button undo = findViewById(R.id.Undo);
+        Button cheat = findViewById(R.id.Cheating);
         redo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,11 +275,45 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                 display();
             }
         });
+        cheat.setOnClickListener(new View.OnClickListener() {
+                @Override
+            public void onClick(View v) {
+                setUpCorrect();
+                display();
+        }
+    });
+    }
+
+    //cheat functions
+    private List<Tile> makeTiles() {
+        List<Tile> tiles = new ArrayList<>();
+        int numTiles = size*size;
+        for (int tileNum = 1; tileNum != numTiles-1; tileNum++) {
+            tiles.add(new Tile(tileNum));
+        }
+        tiles.add(new Tile(0));
+        tiles.add(new Tile(numTiles-1));
+
+        return tiles;
+    }
+
+    /**
+     * Make a solved Board.
+     */
+    private void setUpCorrect() {
+        List<Tile> tiles = makeTiles();
+        boardManager.getBoard().setTiles(tiles);
     }
 
 
+
+
+    //
     private void addScoreBoard(){
         Intent tmp = new Intent(this, ScoreBoardActivity.class);
+        Bundle pass = new Bundle();
+        pass.putSerializable("boardManager",boardManager);
+        tmp.putExtras(pass);
         startActivity(tmp);
     }
 
@@ -230,6 +332,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
             }
         this.boardManager = (BoardManager) extra.getSerializable("boardManager");
         }
+
 
 
 

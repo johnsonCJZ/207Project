@@ -15,6 +15,8 @@ public class UserAccount implements Serializable {
 
     private ArrayList<Integer> userScoreList = new ArrayList<>();
 
+    private HashMap<String,ScoreBoard> scoreBoard;
+
     private ScoreBoard personalHistory3x3;
 
     private ScoreBoard personalHistory4x4;
@@ -22,6 +24,7 @@ public class UserAccount implements Serializable {
     private ScoreBoard personalHistory5x5;
 
     public UserAccount(String name, String password){
+        scoreBoard = new HashMap<String,ScoreBoard>();
         this.name=name;
         this.password=password;
         this.history=new HashMap<String, BoardManager>();
@@ -32,6 +35,9 @@ public class UserAccount implements Serializable {
         history.put("history4x4", null);
         history.put("history5x5",null);
         history.put("resumeHistory", null);
+        scoreBoard.put("history3x3", personalHistory3x3);
+        scoreBoard.put("history4x4", personalHistory4x4);
+        scoreBoard.put("history5x5",personalHistory5x5);
 
     }
 
@@ -70,5 +76,12 @@ public class UserAccount implements Serializable {
         return history;
     }
 
+    public ScoreBoard getScoreBoard(String tag) {
+        return scoreBoard.get(tag);
+    }
 
+    public void setScoreBoard(String tag, ScoreBoard scoreBoard){
+        this.scoreBoard.put(tag,scoreBoard);
+
+    }
 }

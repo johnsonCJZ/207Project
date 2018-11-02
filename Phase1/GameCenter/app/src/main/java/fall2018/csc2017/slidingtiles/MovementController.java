@@ -7,6 +7,7 @@ import android.widget.Toast;
 public class MovementController {
 
     private BoardManager boardManager = null;
+    private boolean isWon=false;
 
     public MovementController() {
     }
@@ -20,9 +21,14 @@ public class MovementController {
             boardManager.touchMove(position);
             if (boardManager.puzzleSolved()) {
                 Toast.makeText(context, "YOU WIN!", Toast.LENGTH_SHORT).show();
+                isWon=true;
             }
         } else {
             Toast.makeText(context, "Invalid Tap", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public boolean isWon() {
+        return isWon;
     }
 }

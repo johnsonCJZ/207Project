@@ -9,9 +9,10 @@ import java.util.List;
 public class ScoreBoard implements Serializable {
     private int scoreBoardSize = 10;
     private List<Pair<String, Integer>> scoreList = new ArrayList<>(scoreBoardSize + 1);
+    Strategy scoreStrategy;
 
     public int calculateScore(BoardManager boardManager){
-        Strategy scoreStrategy = new SlidingTilesScoreStrategy();
+
         return scoreStrategy.calculateScore(boardManager);
     }
 
@@ -21,7 +22,6 @@ public class ScoreBoard implements Serializable {
 
         scoreList.add(pair);
         scoreSorter.sort(scoreList);
-        scoreList.set(10, null);
     }
 
     public void setScoreBoardSize(int scoreBoardSize) {
@@ -30,6 +30,10 @@ public class ScoreBoard implements Serializable {
 
     public List<Pair<String, Integer>> getScoreList() {
         return scoreList;
+    }
+
+    public void setStrategy(Strategy s){
+        this.scoreStrategy=s;
     }
 }
 
