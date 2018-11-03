@@ -31,7 +31,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
     private ScoreBoard scoreBoard;
 
-    private Pair<String, Integer> score;
+    private Object[] score;
 
     private static DecimalFormat df2 = new DecimalFormat(".##");
     /**
@@ -163,9 +163,11 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
 
         }
-        scoreBoard.setStrategy(new NormalScoreStrategy());
+        scoreBoard.setStrategy(new SlidingTilesScoreStrategy());
         score = scoreBoard.calculateScore(boardManager);
-        this.score=new Pair<String, Integer>(user.getName(),score);
+        this.score=new Object[2];
+        this.score[0] = user.getName();
+        this.score[1] = score;
         scoreBoard.addAndSort(this.score);
         saveToFile(UserAccountManager.USERS);
         return score;

@@ -1,5 +1,5 @@
 package fall2018.csc2017.slidingtiles;
 
-public interface Strategy {
-    public int calculateScore(BoardManager o, double p);
+public interface Strategy<T> {
+    public int calculateScore(T o);
 }
