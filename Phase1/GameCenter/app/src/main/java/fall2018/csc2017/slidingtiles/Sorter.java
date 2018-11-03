@@ -4,8 +4,8 @@ import android.util.Pair;
 
 import java.util.List;
 
-public interface Sorter<K, V> {
+public interface Sorter<T> {
 
-    public void sort(List<Pair<K, V>> nameAndScore);
+    public void sort(List<T> nameAndScore);
 
 }
