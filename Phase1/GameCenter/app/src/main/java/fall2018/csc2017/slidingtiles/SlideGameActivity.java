@@ -1,5 +1,6 @@
 package fall2018.csc2017.slidingtiles;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -60,7 +61,10 @@ public class SlideGameActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onResume();
+                boardManager = user.getHistory().get("resumeHistory");
+                if (boardManager != null) {
+                    switchToGame();
+                }
             }
         });
     }
@@ -136,21 +140,6 @@ public class SlideGameActivity extends AppCompatActivity {
         // create and show the alert dialog
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-
-    @Override
-    protected void onResume() {
-        updateUser();
-        super.onResume();
-        boardManager = user.getHistory().get("resumeHistory");
-        if (boardManager == null) {
-            // can not resume for no temp
-        }
-        else {
-            switchToGame();
-        }
-
     }
 
     private void loadFromFile(String fileName) {
