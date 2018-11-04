@@ -14,7 +14,7 @@ public class BoardManager implements Serializable {
     private Strategy<BoardManager> scoreStrategy;
 
 
-    private double time;
+    private Double time;
     /**
      * The board being managed.
      */

@@ -39,7 +39,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
      * The board manager.
      */
     private BoardManager boardManager;
-
     /**
      * The buttons to display.
      */
@@ -72,7 +71,13 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
     }
 
-
+    private void switchToGameCenter() {
+        Intent loginIntent = new Intent(MainSlideActivity.this, GameCenterActivity.class);
+        Bundle pass = new Bundle();
+        pass.putSerializable("user",user);
+        loginIntent.putExtras(pass);
+        MainSlideActivity.this.startActivity(loginIntent);
+    }
 
     @Override
     public void onBackPressed() {
@@ -83,12 +88,12 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         getHistory(dialog);
-                        MainSlideActivity.this.finish();
+                        switchToGameCenter();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        MainSlideActivity.this.finish();
+                        switchToGameCenter();
                     }
                 });
         AlertDialog alert = builder.create();
@@ -121,27 +126,27 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
 */
-    private void winAlert(){
+//    private void winAlert(){
 //        boardManager.setTime(count);
 //        Looper.prepare();
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
-        int score = clearHistoryAndGetScore();
-        builder.setMessage("you got "+String.valueOf(score)+" !")
-
-                .setPositiveButton("See my rank", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        addScoreBoard();
-                    }
-                })
-                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        MainSlideActivity.this.finish();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
-
-    }
+//        AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
+//        int score = clearHistoryAndGetScore();
+//        builder.setMessage("you got "+String.valueOf(score)+" !")
+//
+//                .setPositiveButton("See my rank", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        addScoreBoard();
+//                    }
+//                })
+//                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        MainSlideActivity.this.finish();
+//                    }
+//                });
+//        AlertDialog alert = builder.create();
+//        alert.show();
+//
+//    }
 
     private int clearHistoryAndGetScore(){
         int score;
@@ -199,6 +204,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
     private void autoSave() {
+        boardManager.setTime(count);
         user.getHistory().put("resumeHistory", boardManager);
         saveToFile(UserAccountManager.USERS);
     }
