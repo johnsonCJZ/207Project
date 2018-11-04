@@ -23,7 +23,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
     private void getBoard() {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
-//        BoardManager boardManager = (BoardManager) extra.getSerializable("boardManager");
+        BoardManager boardManager = (BoardManager) extra.getSerializable("boardManager");
         ScoreBoard scoreBoard = (ScoreBoard) extra.getSerializable("scoreBoard");
         setBoard((ArrayList<Object[]>) scoreBoard.getScoreList());
     }
@@ -42,29 +42,60 @@ public class ScoreBoardActivity extends AppCompatActivity {
         Intent tmp = new Intent(this, GameCenterActivity.class);
         startActivity(tmp);
     }
-    private void setBoard(ArrayList<Object[]> scoreList){
+
+    private void setBoard(ArrayList<Object[]> scoreList) {
         String name = "Name";
         String score = "Score";
 
-//        int cursor = 0;
-//        for (int i=0; i < scoreList.size(); i++){
+        int[] name_list = {
+                R.id.Name0,
+                R.id.Name1,
+                R.id.Name2,
+                R.id.Name3,
+                R.id.Name4,
+                R.id.Name5,
+                R.id.Name6,
+                R.id.Name7,
+                R.id.Name8,
+                R.id.Name9,
+                R.id.Name10
+        };
+
+        int[] score_list = {
+                R.id.Score0,
+                R.id.Score1,
+                R.id.Score2,
+                R.id.Score3,
+                R.id.Score4,
+                R.id.Score5,
+                R.id.Score6,
+                R.id.Score7,
+                R.id.Score8,
+                R.id.Score9,
+                R.id.Score10
+        };
+
+        //int cursor = 0;
+        for (int i = 0; i < scoreList.size(); i++) {
 //                String tempName = name + String.valueOf(cursor);
 //                String tempScore = score + String.valueOf(cursor);
 ////                int tempN = getResources().getIdentifier(tempName, "id",
 ////                        getPackageName());
-                TextView t1 = findViewById(R.id.Name0);
+            TextView t1 = findViewById(name_list[i]);
 ////                int tempS = getResources().getIdentifier(tempScore, "id",
 ////                        getPackageName());
-                TextView t2 = findViewById(R.id.Score0);
+            TextView t2 = findViewById(score_list[i]);
 //                if (i != null) {
-                    t1.setText((String) scoreList.get(0)[0]);
-                    t2.setText((String) scoreList.get(0)[1]);
+            t1.setText((String) scoreList.get(i)[0]);
+            t2.setText(String.valueOf(scoreList.get(i)[1]));
 //                }
 //                else {
 //                    t1.setText("N/A");
 //                    t2.setText("N/A");
 //                }
 //                cursor++;
-    }}
+        }
+    }
+}
 
 

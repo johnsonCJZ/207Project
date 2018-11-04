@@ -24,7 +24,7 @@ public class ScoreBoard implements Serializable {
         scoreList.add(scoreArray);
         scoreSorter.sort(scoreList);
         if (scoreList.size() == scoreBoardSize + 1) {
-            scoreList.set(scoreBoardSize, null);
+            scoreList.remove(scoreBoardSize);
         }
     }
 
