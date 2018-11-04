@@ -1,6 +1,8 @@
 package fall2018.csc2017.slidingtiles;
 
-public class SlidingTilesScoreStrategy implements Strategy<BoardManager> {
+import java.io.Serializable;
+
+public class SlidingTilesScoreStrategy implements Strategy<BoardManager>, Serializable {
 
     @Override
     public int calculateScore(BoardManager boardManager) {

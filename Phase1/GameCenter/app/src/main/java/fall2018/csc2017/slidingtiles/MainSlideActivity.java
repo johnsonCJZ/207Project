@@ -237,18 +237,21 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                             public void run() {
                                 if (boardManager.puzzleSolved()) {
                                     AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
-                                    builder.setMessage("1")
-                                            .setPositiveButton("11", new DialogInterface.OnClickListener() {
+                                    int score = clearHistoryAndGetScore();
+                                    builder.setMessage("you got "+String.valueOf(score)+" !")
+
+                                            .setPositiveButton("See my rank", new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int id) {
-                                                    // FIRE ZE MISSILES!
+                                                    addScoreBoard();
                                                 }
                                             })
-                                            .setNegativeButton("12", new DialogInterface.OnClickListener() {
+                                            .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int id) {
-                                                    // User cancelled the dialog
+                                                    MainSlideActivity.this.finish();
                                                 }
                                             });
-                                    builder.create().show();
+                                    AlertDialog alert = builder.create();
+                                    alert.show();
                                 }
                                 count +=0.01;
                                 textView.setText(String.valueOf(df2.format(count))+" s");

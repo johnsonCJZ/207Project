@@ -10,8 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class ScoreBoardActivity extends AppCompatActivity {
-    private BoardManager boardManager;
-    private ScoreBoard scoreBoard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +21,10 @@ public class ScoreBoardActivity extends AppCompatActivity {
     private void getBoard() {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
-        this.boardManager = (BoardManager) extra.getSerializable("boardManager");
-        this.scoreBoard = (ScoreBoard) extra.getSerializable("scoreBoard");
+        BoardManager boardManager = (BoardManager) extra.getSerializable("boardManager");
+        ScoreBoard scoreBoard = (ScoreBoard) extra.getSerializable("scoreBoard");
         addBackToHomePageButton();
-        setBoard((ArrayList<Object[]>) this.scoreBoard.getScoreList());
+        setBoard((ArrayList<Object[]>) scoreBoard.getScoreList());
     }
 
     private void addBackToHomePageButton() {
