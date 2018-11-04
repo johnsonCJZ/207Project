@@ -65,11 +65,14 @@ public class UserAccount implements Serializable {
     public ArrayList<Integer> getUserScoreList(){return this.userScoreList;}
 
     public boolean setHistory(String key, BoardManager item){
-        if (history.get(key)==null){
-            history.put(key,item);
+        if (history.get(key) == null) {
+            history.put(key, item);
             return true;
         }
+        else {
+            history.replace(key, item);
             return false;
+        }
     }
 
     public HashMap<String, BoardManager> getHistory(){

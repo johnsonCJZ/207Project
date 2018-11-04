@@ -57,6 +57,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     private GestureDetectGridView gridView;
     private static int columnWidth, columnHeight;
     private double count=0;
+    private double tempcount = 0; //
     private UserAccount user;
     private int size;
     private UserAccountManager users;
@@ -197,6 +198,11 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
     }
 
+    private void autoSave() {
+        user.getHistory().put("resumeHistory", boardManager);
+        saveToFile(UserAccountManager.USERS);
+    }
+
 
 
     @Override
@@ -253,7 +259,15 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                                     AlertDialog alert = builder.create();
                                     alert.show();
                                 }
+
                                 count +=0.01;
+                                if (tempcount < 2) {
+                                    tempcount += 0.01;
+                                }
+                                else {
+                                    tempcount = 0;
+                                    autoSave();
+                                }
                                 textView.setText(String.valueOf(df2.format(count))+" s");
 
                             }
