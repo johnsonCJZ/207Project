@@ -315,6 +315,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         Intent tmp = new Intent(this, ScoreBoardActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("boardManager",boardManager);
+        pass.putSerializable("scoreBoard", scoreBoard);
         tmp.putExtras(pass);
         startActivity(tmp);
     }

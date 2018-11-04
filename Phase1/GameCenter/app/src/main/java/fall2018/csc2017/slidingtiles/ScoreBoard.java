@@ -6,10 +6,14 @@ import java.util.List;
 
 public class ScoreBoard implements Serializable {
     private int scoreBoardSize = 10;
-    private List<Object[]> scoreList = new ArrayList<>(scoreBoardSize + 1);
+    private List<Object[]> scoreList;
     Strategy scoreStrategy;
 
-    public int calculateScore(BoardManager boardManager){
+    public ScoreBoard() {
+        this.scoreList = new ArrayList<>(scoreBoardSize + 1);
+    }
+
+    public int calculateScore(BoardManager boardManager) {
         Strategy scoreStrategy = new SlidingTilesScoreStrategy();
         return scoreStrategy.calculateScore(boardManager);
     }
@@ -19,7 +23,9 @@ public class ScoreBoard implements Serializable {
 
         scoreList.add(scoreArray);
         scoreSorter.sort(scoreList);
-        scoreList.set(10, null);
+        if (scoreList.size() == scoreBoardSize + 1) {
+            scoreList.set(scoreBoardSize, null);
+        }
     }
 
     public void setScoreBoardSize(int scoreBoardSize) {
@@ -33,6 +39,7 @@ public class ScoreBoard implements Serializable {
     public void setStrategy(Strategy s) {
         this.scoreStrategy = s;
     }
+
 }
 
 

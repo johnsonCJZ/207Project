@@ -8,18 +8,12 @@
     tools:context=".ScoreBoardActivity">
 
     <TableLayout
-        android:layout_width="match_parent"
+        android:layout_width="126dp"
         android:layout_height="match_parent">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/Name0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
+            android:layout_height="119dp">
 
 
             <TextView
@@ -27,7 +21,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
+
+            <TextView
+                android:id="@+id/Name0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
         </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -45,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:text="TextView" />
         </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -62,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:text="TextView" />
         </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -79,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:text="TextView" />
         </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -96,6 +100,7 @@
                 android:layout_height="wrap_content"
                 android:text="TextView" />
         </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -113,6 +118,7 @@
                 android:layout_height="wrap_content"
                 android:text="TextView" />
         </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -130,6 +136,7 @@
                 android:layout_height="wrap_content"
                 android:text="TextView" />
         </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -147,9 +154,10 @@
                 android:layout_height="wrap_content"
                 android:text="TextView" />
         </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="74dp">
 
             <TextView
                 android:id="@+id/Name8"
@@ -164,6 +172,7 @@
                 android:layout_height="wrap_content"
                 android:text="TextView" />
         </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -201,6 +210,20 @@
         </TableRow>
 
 
-
     </TableLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/button16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="86dp"
+            android:text="Home Page" />
+    </RelativeLayout>
+
 </LinearLayout>
