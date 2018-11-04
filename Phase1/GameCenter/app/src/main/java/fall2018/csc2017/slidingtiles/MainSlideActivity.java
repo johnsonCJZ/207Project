@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -120,8 +121,9 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
 */
     private void winAlert(){
-        boardManager.setTime(count);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        boardManager.setTime(count);
+//        Looper.prepare();
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
         int score = clearHistoryAndGetScore();
         builder.setMessage("you got "+String.valueOf(score)+" !")
 
@@ -215,11 +217,39 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                         if(boardManager.puzzleSolved()){
                             this.interrupt();
                             boardManager.setTime(count);
-                            winAlert();
+//                            winAlert();
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
+//                            builder.setMessage("1")
+//                                    .setPositiveButton("11", new DialogInterface.OnClickListener() {
+//                                        public void onClick(DialogInterface dialog, int id) {
+//                                            // FIRE ZE MISSILES!
+//                                        }
+//                                    })
+//                                    .setNegativeButton("12", new DialogInterface.OnClickListener() {
+//                                        public void onClick(DialogInterface dialog, int id) {
+//                                            // User cancelled the dialog
+//                                        }
+//                                    });
+//                            builder.create().show();
                         }
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                if (boardManager.puzzleSolved()) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
+                                    builder.setMessage("1")
+                                            .setPositiveButton("11", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    // FIRE ZE MISSILES!
+                                                }
+                                            })
+                                            .setNegativeButton("12", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+                                                    // User cancelled the dialog
+                                                }
+                                            });
+                                    builder.create().show();
+                                }
                                 count +=0.01;
                                 textView.setText(String.valueOf(df2.format(count))+" s");
 
