@@ -47,17 +47,32 @@ public class SlideGameActivity extends AppCompatActivity {
 
     private void addStartButtonListener() {
         Button startButton = findViewById(R.id.NewGameButton);
-        startButton.setOnClickListener(v -> switchToDifficulty());
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToDifficulty();
+            }
+        });
     }
 
     private void addResumeButtonListener() {
         Button startButton = findViewById(R.id.ResumeButton);
-        startButton.setOnClickListener(v -> onResume());
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onResume();
+            }
+        });
     }
 
     private void addLoadButtonListener() {
         Button startButton = findViewById(R.id.LoadButton);
-        startButton.setOnClickListener(v -> load());
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                load();
+            }
+        });
     }
 
 
@@ -93,27 +108,30 @@ public class SlideGameActivity extends AppCompatActivity {
         builder.setTitle("Choose an memory");
         // add a list
         String[] memoryList = {"3x3", "4x4","5x5"};
-        builder.setItems(memoryList, (dialog, which) -> {
-            switch (which) {
-                case 0: // 3x3
-                    boardManager = user.getHistory().get("history3x3");
-                    break;
-                case 1: // 4x4
-                    boardManager = user.getHistory().get("history4x4");
-                    break;
-                case 2: // 5x5
-                    boardManager = user.getHistory().get("history5x5");
-                    break;
-            }
-            if(boardManager!=null){
-            switchToGame();
-            }
-            else{
-                builder.setMessage("History not found");
-                AlertDialog d = builder.create();
-                d.show();
-            }
+        builder.setItems(memoryList, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0: // 3x3
+                        boardManager = user.getHistory().get("history3x3");
+                        break;
+                    case 1: // 4x4
+                        boardManager = user.getHistory().get("history4x4");
+                        break;
+                    case 2: // 5x5
+                        boardManager = user.getHistory().get("history5x5");
+                        break;
+                }
+                if(boardManager!=null){
+                switchToGame();
+                }
+                else{
+                    builder.setMessage("History not found");
+                    AlertDialog d = builder.create();
+                    d.show();
+                }
 
+            }
         });
         // create and show the alert dialog
         AlertDialog dialog = builder.create();
