@@ -75,12 +75,12 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
     private void switchToGameCenter() {
-        Intent intent = new Intent(MainSlideActivity.this, GameCenterActivity.class);
+        Intent intent = new Intent(this, GameCenterActivity.class);
         Bundle pass = new Bundle();
-        pass.putSerializable("user",user);
-        pass.putSerializable("allUsers", users);
+        pass.putSerializable("user",this.user);
+        pass.putSerializable("allUsers", this.users);
         intent.putExtras(pass);
-        MainSlideActivity.this.startActivity(intent);
+        startActivity(intent);
     }
 
     @Override
@@ -198,16 +198,16 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         switch (size) {
             case 3:
                 user.getHistory().put("history3x3", (BoardManager) boardManager.clone());
-//                saveToFile(UserAccountManager.USERS);
+                saveToFile(UserAccountManager.USERS);
                 break;
             case 4:
                 user.getHistory().put("history4x4",(BoardManager) boardManager.clone());
-//                saveToFile(UserAccFountManager.USERS);
+                saveToFile(UserAccountManager.USERS);
                 break;
 
             case 5:
                 user.getHistory().put("history5x5",(BoardManager) boardManager.clone());
-//                saveToFile(UserAccountManager.USERS);
+                saveToFile(UserAccountManager.USERS);
                 break;
                 }
                 dialog.cancel();

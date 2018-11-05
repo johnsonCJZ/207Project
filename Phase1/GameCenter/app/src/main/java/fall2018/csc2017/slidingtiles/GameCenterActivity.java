@@ -10,7 +10,6 @@ import android.widget.ImageButton;
 public class GameCenterActivity extends AppCompatActivity {
     private UserAccount user;
     private UserAccountManager users;
-    private BoardManager boardManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,14 +19,6 @@ public class GameCenterActivity extends AppCompatActivity {
         addOpenGameStore();
         addOpenSlide();
         getUsers();
-        getBoard();
-
-
-    }
-    private void getBoard() {
-        Intent intentExtras = getIntent();
-        Bundle extra = intentExtras.getExtras();
-        this.boardManager = (BoardManager) extra.getSerializable("boardManager");
     }
 
     private void getUsers(){
@@ -53,7 +44,6 @@ public class GameCenterActivity extends AppCompatActivity {
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
-        pass.putSerializable("boardManager", this.boardManager);
         intent.putExtras(pass);
         startActivity(intent);
     }

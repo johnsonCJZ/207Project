@@ -44,7 +44,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boardManager = new BoardManager(4);
                 clearResumeHistory();
-                switchToGame(4);
+                switchToGame();
             }
         });
     }
@@ -56,7 +56,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boardManager = new BoardManager(3);
                 clearResumeHistory();
-                switchToGame(3);
+                switchToGame();
             }
         });
     }
@@ -68,16 +68,15 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boardManager = new BoardManager(5);
                 clearResumeHistory();
-                switchToGame(5);
+                switchToGame();
             }
         });
     }
 
-    private void switchToGame(int n) {
+    private void switchToGame() {
         Intent tmp = new Intent(this, MainSlideActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("user",user);
-        pass.putInt("size", n);
         pass.putSerializable("allUsers", users);
         pass.putSerializable("boardManager", boardManager);
         tmp.putExtras(pass);
