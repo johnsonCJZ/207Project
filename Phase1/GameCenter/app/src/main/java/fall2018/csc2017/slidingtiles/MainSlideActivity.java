@@ -394,6 +394,8 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     private void addScoreBoard(){
         Intent tmp = new Intent(this, ScoreBoardActivity.class);
         Bundle pass = new Bundle();
+        pass.putSerializable("user",this.user);
+        pass.putSerializable("allUsers", this.users);
         pass.putSerializable("boardManager",boardManager);
         pass.putSerializable("scoreBoard", scoreBoard);
         tmp.putExtras(pass);

@@ -11,19 +11,30 @@ import java.util.ArrayList;
 
 public class ScoreBoardActivity extends AppCompatActivity {
     private ArrayList<TextView[]> textViewsArrayList = new ArrayList<>();
+    private UserAccount user;
+    private UserAccountManager users;
+    private BoardManager boardManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score_board);
+        getUsers();
         getBoard();
         addBackToHomePageButton();
+    }
+
+    private void getUsers(){
+        Intent intentExtras = getIntent();
+        Bundle extra = intentExtras.getExtras();
+        this.user=(UserAccount) extra.getSerializable("user");
+        this.users = (UserAccountManager) extra.getSerializable("allUsers");
     }
 
     private void getBoard() {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
-        BoardManager boardManager = (BoardManager) extra.getSerializable("boardManager");
+        this.boardManager = (BoardManager) extra.getSerializable("boardManager");
         ScoreBoard scoreBoard = (ScoreBoard) extra.getSerializable("scoreBoard");
         setBoard((ArrayList<Object[]>) scoreBoard.getScoreList());
     }
@@ -40,6 +51,12 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     private void switchToHomePage() {
         Intent tmp = new Intent(this, GameCenterActivity.class);
+        Bundle pass = new Bundle();
+        pass.putSerializable("user",this.user);
+        pass.putSerializable("allUsers", this.users);
+        pass.putSerializable("boardManager", this.boardManager);
+
+        tmp.putExtras(pass);
         startActivity(tmp);
     }
 
