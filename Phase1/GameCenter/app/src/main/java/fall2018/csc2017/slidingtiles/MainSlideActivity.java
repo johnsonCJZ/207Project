@@ -75,12 +75,12 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
     private void switchToGameCenter() {
-        Intent loginIntent = new Intent(MainSlideActivity.this, GameCenterActivity.class);
+        Intent intent = new Intent(MainSlideActivity.this, GameCenterActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("user",user);
-        pass.putSerializable("users", users);
-        loginIntent.putExtras(pass);
-        MainSlideActivity.this.startActivity(loginIntent);
+        pass.putSerializable("allUsers", users);
+        intent.putExtras(pass);
+        MainSlideActivity.this.startActivity(intent);
     }
 
     @Override
@@ -91,6 +91,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        isPaused = true;
                         try {
                             getHistory(dialog);
                         } catch (CloneNotSupportedException e) {
