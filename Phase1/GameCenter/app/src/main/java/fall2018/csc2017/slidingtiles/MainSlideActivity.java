@@ -85,13 +85,13 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
     @Override
     public void onBackPressed() {
+        isPaused = true;
         boardManager.setTime(count);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Do you want to save/override this game?")
 
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        isPaused = true;
                         try {
                             getHistory(dialog);
                         } catch (CloneNotSupportedException e) {
@@ -219,9 +219,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
             @Override
             public void run(){
                 while(!isInterrupted()){
-                    if (isPaused) {
-                        break;
-                    }
                     try{
                         Thread.sleep(10);
                         if(boardManager.puzzleSolved() || isPaused) {
