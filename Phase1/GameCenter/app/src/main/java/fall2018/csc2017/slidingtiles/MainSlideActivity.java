@@ -12,6 +12,7 @@ import android.util.Pair;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.io.FileNotFoundException;
@@ -33,6 +34,8 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     private ScoreBoard scoreBoard;
 
     private Object[] score;
+
+    private boolean isPaused;
 
     private static DecimalFormat df2 = new DecimalFormat(".##");
     /**
@@ -75,6 +78,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         Intent loginIntent = new Intent(MainSlideActivity.this, GameCenterActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("user",user);
+        pass.putSerializable("users", users);
         loginIntent.putExtras(pass);
         MainSlideActivity.this.startActivity(loginIntent);
     }
@@ -87,12 +91,18 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        getHistory(dialog);
+                        try {
+                            getHistory(dialog);
+                        } catch (CloneNotSupportedException e) {
+                            e.printStackTrace();
+                        }
+                        MainSlideActivity.this.finish();
                         switchToGameCenter();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        MainSlideActivity.this.finish();
                         switchToGameCenter();
                     }
                 });
@@ -183,29 +193,29 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
 
-    private void getHistory(DialogInterface dialog){
+    private void getHistory(DialogInterface dialog) throws CloneNotSupportedException {
         switch (size) {
             case 3:
-                user.getHistory().put("history3x3",boardManager);
-                saveToFile(UserAccountManager.USERS);
+                user.getHistory().put("history3x3", (BoardManager) boardManager.clone());
+//                saveToFile(UserAccountManager.USERS);
                 break;
             case 4:
-                user.getHistory().put("history4x4",boardManager);
-                saveToFile(UserAccountManager.USERS);
+                user.getHistory().put("history4x4",(BoardManager) boardManager.clone());
+//                saveToFile(UserAccountManager.USERS);
                 break;
 
             case 5:
-                user.getHistory().put("history5x5",boardManager);
-                saveToFile(UserAccountManager.USERS);
+                user.getHistory().put("history5x5",(BoardManager) boardManager.clone());
+//                saveToFile(UserAccountManager.USERS);
                 break;
                 }
                 dialog.cancel();
 
     }
 
-    private void autoSave() {
+    private void autoSave() throws CloneNotSupportedException {
         boardManager.setTime(count);
-        user.getHistory().put("resumeHistory", boardManager);
+        user.getHistory().put("resumeHistory", (BoardManager) boardManager.clone());
         saveToFile(UserAccountManager.USERS);
     }
 
@@ -215,18 +225,26 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        getUserAndSize(); // pass in all useful data from last activity, including boardManager
+        try {
+            getUserAndSize(); // pass in all useful data from last activity, including boardManager
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         createTileButtons(this);
         setContentView(R.layout.activity_main);
         final TextView textView = (TextView)findViewById(R.id.textView6);
         count=boardManager.getTime();
+        isPaused = false;
         Thread t = new Thread(){
             @Override
             public void run(){
                 while(!isInterrupted()){
+                    if (isPaused) {
+                        break;
+                    }
                     try{
                         Thread.sleep(10);
-                        if(boardManager.puzzleSolved()){
+                        if(boardManager.puzzleSolved() || isPaused){
                             this.interrupt();
                             boardManager.setTime(count);
 //                            winAlert();
@@ -248,18 +266,21 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                             @Override
                             public void run() {
                                 if (boardManager.puzzleSolved()) {
+                                    isPaused = true;
                                     AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
                                     int score = clearHistoryAndGetScore();
                                     builder.setMessage("you got "+String.valueOf(score)+" !")
 
                                             .setPositiveButton("See my rank", new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int id) {
+                                                    MainSlideActivity.this.finish();
                                                     addScoreBoard();
                                                 }
                                             })
                                             .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int id) {
                                                     MainSlideActivity.this.finish();
+                                                    switchToGameCenter();
                                                 }
                                             });
                                     AlertDialog alert = builder.create();
@@ -272,7 +293,11 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                                 }
                                 else {
                                     tempcount = 0;
-                                    autoSave();
+                                    try {
+                                        autoSave();
+                                    } catch (CloneNotSupportedException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                                 textView.setText(String.valueOf(df2.format(count))+" s");
 
@@ -374,7 +399,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
 
-    private void getUserAndSize(){
+    private void getUserAndSize() throws CloneNotSupportedException {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
         this.user=(UserAccount) extra.getSerializable("user");
@@ -387,6 +412,8 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                 }
             }
         this.boardManager = (BoardManager) extra.getSerializable("boardManager");
+        this.boardManager = (BoardManager) this.boardManager.clone();
+
         }
 
 

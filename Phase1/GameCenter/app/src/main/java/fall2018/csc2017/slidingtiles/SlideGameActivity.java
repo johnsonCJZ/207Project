@@ -63,7 +63,15 @@ public class SlideGameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boardManager = user.getHistory().get("resumeHistory");
                 if (boardManager != null) {
+                    user.getHistory().put("resumeHistory", null);
                     switchToGame();
+                }
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder
+                            (SlideGameActivity.this);
+                    builder.setMessage("History not found");
+                    AlertDialog d = builder.create();
+                    d.show();
                 }
             }
         });
@@ -108,7 +116,7 @@ public class SlideGameActivity extends AppCompatActivity {
 
     private void load(){
         updateUser();
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(SlideGameActivity.this);
         builder.setTitle("Choose an memory");
         // add a list
         String[] memoryList = {"3x3", "4x4","5x5"};
@@ -127,7 +135,8 @@ public class SlideGameActivity extends AppCompatActivity {
                         break;
                 }
                 if(boardManager!=null){
-                switchToGame();
+                    user.getHistory().put("resumeHistory", null);
+                    switchToGame();
                 }
                 else{
                     builder.setMessage("History not found");

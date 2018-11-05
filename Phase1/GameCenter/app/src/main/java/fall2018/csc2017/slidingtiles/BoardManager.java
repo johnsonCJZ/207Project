@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Manage a board, including swapping tiles, checking for a win, and managing taps.
  */
-public class BoardManager implements Serializable {
+public class BoardManager implements Serializable, Cloneable {
 
     private Strategy<BoardManager> scoreStrategy;
 
@@ -46,6 +46,11 @@ public class BoardManager implements Serializable {
      */
     public Board getBoard() {
         return board;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     /**

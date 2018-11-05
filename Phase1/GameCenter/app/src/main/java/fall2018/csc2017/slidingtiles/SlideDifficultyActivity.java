@@ -27,6 +27,9 @@ public class SlideDifficultyActivity extends AppCompatActivity {
         addStart5x5Button();
     }
 
+    private void clearResumeHistory(){
+        user.getHistory().put("resumeHistory", null);
+    }
     private void getUser(){
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
@@ -40,6 +43,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boardManager = new BoardManager(4);
+                clearResumeHistory();
                 switchToGame(4);
             }
         });
@@ -51,6 +55,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boardManager = new BoardManager(3);
+                clearResumeHistory();
                 switchToGame(3);
             }
         });
@@ -62,6 +67,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boardManager = new BoardManager(5);
+                clearResumeHistory();
                 switchToGame(5);
             }
         });
