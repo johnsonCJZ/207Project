@@ -63,6 +63,11 @@ public class SlideGameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boardManager = user.getHistory().get("resumeHistory");
                 if (boardManager != null) {
+                    try {
+                        boardManager = (BoardManager) user.getHistory().get("resumeHistory").clone();
+                    } catch (CloneNotSupportedException e) {
+                        e.printStackTrace();
+                    }
                     user.getHistory().put("resumeHistory", null);
                     switchToGame();
                 }
@@ -101,7 +106,7 @@ public class SlideGameActivity extends AppCompatActivity {
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
-        pass.putSerializable("boardManager", boardManager);
+        pass.putSerializable("boardManager", this.boardManager);
         tmp.putExtras(pass);
         startActivity(tmp);
     }
@@ -125,17 +130,28 @@ public class SlideGameActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: // 3x3
-                        boardManager = user.getHistory().get("history3x3");
+                        try {
+                            boardManager = (BoardManager) user.getHistory().get("history3x3").clone();
+                        } catch (CloneNotSupportedException e) {
+                            e.printStackTrace();
+                        }
                         break;
                     case 1: // 4x4
-                        boardManager = user.getHistory().get("history4x4");
+                        try {
+                            boardManager = (BoardManager) user.getHistory().get("history4x4").clone();
+                        } catch (CloneNotSupportedException e) {
+                            e.printStackTrace();
+                        }
                         break;
                     case 2: // 5x5
-                        boardManager = user.getHistory().get("history5x5");
+                        try {
+                            boardManager = (BoardManager) user.getHistory().get("history5x5").clone();
+                        } catch (CloneNotSupportedException e) {
+                            e.printStackTrace();
+                        }
                         break;
                 }
                 if(boardManager!=null){
-                    user.getHistory().put("resumeHistory", null);
                     switchToGame();
                 }
                 else{

@@ -201,7 +201,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                 break;
             case 4:
                 user.getHistory().put("history4x4",(BoardManager) boardManager.clone());
-//                saveToFile(UserAccountManager.USERS);
+//                saveToFile(UserAccFountManager.USERS);
                 break;
 
             case 5:
@@ -280,6 +280,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                                             .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int id) {
                                                     MainSlideActivity.this.finish();
+                                                    user.getHistory().put("resumeHistory", null);
                                                     switchToGameCenter();
                                                 }
                                             });
@@ -403,7 +404,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
         this.user=(UserAccount) extra.getSerializable("user");
-        this.size=extra.getInt("size");
         this.users = (UserAccountManager) extra.getSerializable("allUsers");
         loadFromFile(UserAccountManager.USERS);
         for (UserAccount u: users.getUserList()){
@@ -413,7 +413,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
             }
         this.boardManager = (BoardManager) extra.getSerializable("boardManager");
         this.boardManager = (BoardManager) this.boardManager.clone();
-
+        this.size = this.boardManager.getBoard().getDimension();
         }
 
 

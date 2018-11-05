@@ -18,7 +18,7 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
     /**
      * The number of rows and columns.
      */
-    private int dimension = 4;
+    private int dimension;
 
     /**
      * The tiles on the board in row-major order.
