@@ -1,6 +1,7 @@
 package fall2018.csc2017.slidingtiles;
 
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -108,6 +109,13 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                     }
                 });
         AlertDialog alert = builder.create();
+        alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                isPaused = false;
+                dialog.cancel();
+            }
+        });
         alert.show();
 
     }
@@ -218,57 +226,58 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         Thread t = new Thread(){
             @Override
             public void run(){
-                while(!isInterrupted()){
-                    try{
-                        Thread.sleep(10);
-                        if(boardManager.puzzleSolved() || isPaused) {
-                            this.interrupt();
-                            boardManager.setTime(count);
-                        }
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (boardManager.puzzleSolved()) {
-                                    isPaused = true;
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
-                                    int score = clearHistoryAndGetScore();
-                                    builder.setMessage("you got "+String.valueOf(score)+" !")
-
-                                            .setPositiveButton("See my rank", new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    MainSlideActivity.this.finish();
-                                                    addScoreBoard();
-                                                }
-                                            })
-                                            .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    MainSlideActivity.this.finish();
-                                                    user.getHistory().put("resumeHistory", null);
-                                                    switchToGameCenter();
-                                                }
-                                            });
-                                    AlertDialog alert = builder.create();
-                                    alert.show();
-                                }
-
-                                count +=0.01;
-                                if (tempcount < 2) {
-                                    tempcount += 0.01;
-                                }
-                                else {
-                                    tempcount = 0;
-                                    try {
-                                        autoSave();
-                                    } catch (CloneNotSupportedException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                                textView.setText(String.valueOf(df2.format(count))+" s");
-
+                while(!isInterrupted()) {
+                    if (!isPaused) {
+                        try {
+                            Thread.sleep(10);
+                            if (boardManager.puzzleSolved()) {
+                                this.interrupt();
+                                boardManager.setTime(count);
                             }
-                        });
-                    }catch (InterruptedException e){
-                        e.printStackTrace();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (boardManager.puzzleSolved()) {
+                                        isPaused = true;
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
+                                        int score = clearHistoryAndGetScore();
+                                        builder.setMessage("you got " + String.valueOf(score) + " !")
+
+                                                .setPositiveButton("See my rank", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        MainSlideActivity.this.finish();
+                                                        addScoreBoard();
+                                                    }
+                                                })
+                                                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        MainSlideActivity.this.finish();
+                                                        user.getHistory().put("resumeHistory", null);
+                                                        switchToGameCenter();
+                                                    }
+                                                });
+                                        AlertDialog alert = builder.create();
+                                        alert.show();
+                                    }
+
+                                    count += 0.01;
+                                    if (tempcount < 2) {
+                                        tempcount += 0.01;
+                                    } else {
+                                        tempcount = 0;
+                                        try {
+                                            autoSave();
+                                        } catch (CloneNotSupportedException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    textView.setText(String.valueOf(df2.format(count)) + " s");
+
+                                }
+                            });
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
