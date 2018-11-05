@@ -137,27 +137,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
 */
-//    private void winAlert(){
-//        boardManager.setTime(count);
-//        Looper.prepare();
-//        AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
-//        int score = clearHistoryAndGetScore();
-//        builder.setMessage("you got "+String.valueOf(score)+" !")
-//
-//                .setPositiveButton("See my rank", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        addScoreBoard();
-//                    }
-//                })
-//                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        MainSlideActivity.this.finish();
-//                    }
-//                });
-//        AlertDialog alert = builder.create();
-//        alert.show();
-//
-//    }
 
     private int clearHistoryAndGetScore(){
         int score;
@@ -245,23 +224,9 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                     }
                     try{
                         Thread.sleep(10);
-                        if(boardManager.puzzleSolved() || isPaused){
+                        if(boardManager.puzzleSolved() || isPaused) {
                             this.interrupt();
                             boardManager.setTime(count);
-//                            winAlert();
-//                            AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
-//                            builder.setMessage("1")
-//                                    .setPositiveButton("11", new DialogInterface.OnClickListener() {
-//                                        public void onClick(DialogInterface dialog, int id) {
-//                                            // FIRE ZE MISSILES!
-//                                        }
-//                                    })
-//                                    .setNegativeButton("12", new DialogInterface.OnClickListener() {
-//                                        public void onClick(DialogInterface dialog, int id) {
-//                                            // User cancelled the dialog
-//                                        }
-//                                    });
-//                            builder.create().show();
                         }
                         runOnUiThread(new Runnable() {
                             @Override
