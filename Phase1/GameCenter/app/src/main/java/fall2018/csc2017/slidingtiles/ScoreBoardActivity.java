@@ -93,7 +93,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         };
 
         //int cursor = 0;
-        for (int i = 0; i < scoreList.size(); i++) {
+        for (int i = 0; i < name_list.length; i++) {
 //                String tempName = name + String.valueOf(cursor);
 //                String tempScore = score + String.valueOf(cursor);
 ////                int tempN = getResources().getIdentifier(tempName, "id",
@@ -102,14 +102,14 @@ public class ScoreBoardActivity extends AppCompatActivity {
 ////                int tempS = getResources().getIdentifier(tempScore, "id",
 ////                        getPackageName());
             TextView t2 = findViewById(score_list[i]);
-//                if (i != null) {
+            if (i < scoreList.size()) {
             t1.setText((String) scoreList.get(i)[0]);
             t2.setText(String.valueOf(scoreList.get(i)[1]));
-//                }
-//                else {
-//                    t1.setText("N/A");
-//                    t2.setText("N/A");
-//                }
+            }
+            else {
+                t1.setText("");
+                t2.setText("");
+            }
 //                cursor++;
         }
     }
