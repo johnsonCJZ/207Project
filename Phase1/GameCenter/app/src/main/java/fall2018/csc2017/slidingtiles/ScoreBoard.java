@@ -4,21 +4,20 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScoreBoard implements Serializable {
+class ScoreBoard implements Serializable {
     private int scoreBoardSize = 10;
     private List<Object[]> scoreList;
-    Strategy scoreStrategy;
+    private SlidingTilesScoreStrategy scoreStrategy = new SlidingTilesScoreStrategy();
 
-    public ScoreBoard() {
+    ScoreBoard() {
         this.scoreList = new ArrayList<>(scoreBoardSize + 1);
     }
 
-    public int calculateScore(BoardManager boardManager) {
-        Strategy scoreStrategy = new SlidingTilesScoreStrategy();
+    int calculateScore(BoardManager boardManager) {
         return scoreStrategy.calculateScore(boardManager);
     }
 
-    public void addAndSort(Object[] scoreArray) {
+    void addAndSort(Object[] scoreArray) {
         ScoreSorter scoreSorter = new ScoreSorter();
 
         scoreList.add(scoreArray);
@@ -28,12 +27,8 @@ public class ScoreBoard implements Serializable {
         }
     }
 
-    public List<Object[]> getScoreList() {
+    List<Object[]> getScoreList() {
         return scoreList;
-    }
-
-    public void setStrategy(Strategy s) {
-        this.scoreStrategy = s;
     }
 
 }

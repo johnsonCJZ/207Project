@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class ScoreBoardActivity extends AppCompatActivity {
-    private ArrayList<TextView[]> textViewsArrayList = new ArrayList<>();
     private UserAccount user;
     private UserAccountManager users;
     private BoardManager boardManager;

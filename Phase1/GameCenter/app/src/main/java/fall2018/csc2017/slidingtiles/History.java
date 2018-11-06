@@ -10,12 +10,12 @@ public class History implements Serializable {
     /**
      * The front of the History.
      */
-    public HistoryNode front = null;
+    private HistoryNode front = null;
 
     /**
      * The back of the History.
      */
-    public HistoryNode back = null;
+    private HistoryNode back = null;
 
     /**
      * The size of the History.
@@ -65,7 +65,7 @@ public class History implements Serializable {
     /**
      * Clear the History.
      */
-    public  void clear() {
+    private void clear() {
         if (size != 0) {
             front = null;
             back = null;
@@ -77,7 +77,7 @@ public class History implements Serializable {
      * Remove the HistoryNode at the index of the History.
      * @param index the index of the History where the HistoryNode to be removed
      */
-    public void remove(int index) {
+    void remove(int index) {
         if (index == 0) {
             clear();
         }
