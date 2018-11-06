@@ -9,8 +9,19 @@ import android.widget.Button;
 
 public class SlideDifficultyActivity extends AppCompatActivity {
 
+    /**
+     * The BoardManager
+     */
     private BoardManager boardManager;
+
+    /**
+     * The UserAccount
+     */
     private UserAccount user;
+
+    /**
+     * The UserAccountManager
+     */
     private UserAccountManager users;
 
     @Override
