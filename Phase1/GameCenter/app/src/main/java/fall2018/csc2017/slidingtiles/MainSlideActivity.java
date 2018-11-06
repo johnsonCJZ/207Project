@@ -210,7 +210,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (boardManager.puzzleSolved()) {
+                                    if (boardManager.puzzleSolved() && !isPaused) {
                                         boardManager.setTime(count);
                                         isPaused = true;
                                         AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
