@@ -3,7 +3,9 @@ package fall2018.csc2017.slidingtiles;
 import android.content.Context;
 import android.widget.Toast;
 
-
+/**
+ * The swiping move operation controller
+ */
 class MovementController {
 
     private BoardManager boardManager = null;

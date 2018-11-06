@@ -34,32 +34,23 @@ public class UserAccount implements Serializable {
      */
     private HashMap<String,ScoreBoard> scoreBoard;
 
-    private ScoreBoard personalHistory3x3;
-
-    private ScoreBoard personalHistory4x4;
-
-    private ScoreBoard personalHistory5x5;
-
     /**
      * The UserAccount class constructor.
      * @param name the name of the UserAccount
      * @param password
      */
     public UserAccount(String name, String password){
-        scoreBoard = new HashMap<String,ScoreBoard>();
+        scoreBoard = new HashMap<>();
         this.name=name;
         this.password=password;
-        this.history=new HashMap<String, BoardManager>();
-        personalHistory3x3 = new ScoreBoard();
-        personalHistory4x4 = new ScoreBoard();
-        personalHistory5x5 = new ScoreBoard();
+        this.history= new HashMap<>();
         history.put("history3x3", null);
         history.put("history4x4", null);
         history.put("history5x5",null);
         history.put("resumeHistory", null);
-        scoreBoard.put("history3x3", personalHistory3x3);
-        scoreBoard.put("history4x4", personalHistory4x4);
-        scoreBoard.put("history5x5",personalHistory5x5);
+        scoreBoard.put("history3x3", new ScoreBoard());
+        scoreBoard.put("history4x4", new ScoreBoard());
+        scoreBoard.put("history5x5", new ScoreBoard());
 
     }
 
