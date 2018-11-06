@@ -4,31 +4,22 @@ import android.content.Context;
 import android.widget.Toast;
 
 
-public class MovementController {
+class MovementController {
 
     private BoardManager boardManager = null;
-    private boolean isWon=false;
 
-    public MovementController() {
-    }
-
-    public void setBoardManager(BoardManager boardManager) {
+    void setBoardManager(BoardManager boardManager) {
         this.boardManager = boardManager;
     }
 
-    public void processTapMovement(Context context, int position, boolean display) {
+    void processTapMovement(Context context, int position) {
         if (boardManager.isValidTap(position)) {
             boardManager.touchMove(position);
             if (boardManager.puzzleSolved()) {
                 Toast.makeText(context, "YOU WIN!", Toast.LENGTH_SHORT).show();
-                isWon=true;
             }
         } else {
             Toast.makeText(context, "Invalid Tap", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public boolean isWon() {
-        return isWon;
     }
 }
