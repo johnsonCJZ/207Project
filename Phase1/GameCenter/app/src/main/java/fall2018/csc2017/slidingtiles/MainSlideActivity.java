@@ -30,8 +30,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
     private ScoreBoard scoreBoard;
 
-    private Object[] score;
-
     private boolean isPaused;
 
     private static DecimalFormat df2 = new DecimalFormat(".##");
@@ -147,10 +145,10 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
         scoreBoard.setStrategy(new SlidingTilesScoreStrategy());
         score = scoreBoard.calculateScore(boardManager);
-        this.score=new Object[2];
-        this.score[0] = user.getName();
-        this.score[1] = score;
-        scoreBoard.addAndSort(this.score);
+        Object[] score1 = new Object[2];
+        score1[0] = user.getName();
+        score1[1] = score;
+        scoreBoard.addAndSort(score1);
         saveToFile(UserAccountManager.USERS);
         return score;
 
@@ -349,18 +347,34 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     private void getUserAndSize() throws CloneNotSupportedException {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
-        this.user=(UserAccount) extra.getSerializable("user");
+        this.user = (UserAccount) extra.getSerializable("user");
         this.users = (UserAccountManager) extra.getSerializable("allUsers");
         loadFromFile(UserAccountManager.USERS);
-        for (UserAccount u: users.getUserList()){
-            if(u.getName().equals(user.getName())){
+        for (UserAccount u : users.getUserList()) {
+            if (u.getName().equals(user.getName())) {
                 this.user = u;
-                }
             }
+        }
         this.boardManager = (BoardManager) extra.getSerializable("boardManager");
         this.boardManager = (BoardManager) this.boardManager.clone();
         this.size = this.boardManager.getBoard().getDimension();
+        switch (size) {
+            case 3:
+                this.scoreBoard = this.user.getScoreBoard("history3x3");
+                break;
+
+            case 4:
+                this.scoreBoard = this.user.getScoreBoard("history4x4");
+                break;
+
+            case 5:
+                this.scoreBoard = this.user.getScoreBoard("history5x5");
+                break;
+
+            default:
+                this.scoreBoard = this.user.getScoreBoard("history4x4");
         }
+    }
 
     /**
      * Create the buttons for displaying the tiles.
