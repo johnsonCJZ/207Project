@@ -10,11 +10,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class ScoreBoardActivity extends AppCompatActivity {
-    private ArrayList<TextView[]> textViewsArrayList = new ArrayList<>();
     private UserAccount user;
     private UserAccountManager users;
-    private BoardManager boardManager;
-    private ScoreBoard scoreBoard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +32,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
     private void getBoard() {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
-        this.boardManager = (BoardManager) extra.getSerializable("boardManager");
-        this.scoreBoard = (ScoreBoard) extra.getSerializable("scoreBoard");
+        ScoreBoard scoreBoard = (ScoreBoard) extra.getSerializable("scoreBoard");
         setBoard((ArrayList<Object[]>) scoreBoard.getScoreList());
     }
 
@@ -55,7 +51,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
-        pass.putSerializable("boardManager", this.boardManager);
 
         tmp.putExtras(pass);
         startActivity(tmp);
