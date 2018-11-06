@@ -82,7 +82,7 @@ public class SlideGameActivity extends AppCompatActivity {
     }
 
     private void switchToScoreBoard() {
-        Intent tmp = new Intent(this, SlideGameActivity.class);
+        Intent tmp = new Intent(this, ScoreBoardActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
