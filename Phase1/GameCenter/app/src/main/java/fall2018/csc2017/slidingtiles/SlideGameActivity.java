@@ -91,7 +91,7 @@ public class SlideGameActivity extends AppCompatActivity {
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
-        pass.putSerializable("scoreBoard", this.personalScoreBoard);
+        pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
         tmp.putExtras(pass);
         startActivity(tmp);
     }
