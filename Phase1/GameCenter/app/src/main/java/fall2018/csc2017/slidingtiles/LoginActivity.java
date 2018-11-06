@@ -1,5 +1,6 @@
 package fall2018.csc2017.slidingtiles;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,30 +14,35 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
+
     /**
      * EditText view for username
      */
     EditText etUsername;
+
     /**
      * EditText view for password
      */
     EditText etPassword;
+
     /**
      * Button for log in
      */
     Button bLogIn;
+
     /**
      * TextView for register, functions as a button
      */
     TextView registerLink;
+
     /**
      * UserAccountManager
      */
     UserAccountManager userAccountManager;
+
     /**
      * TextView to set messages.
      */
@@ -50,11 +56,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        etUsername= (EditText) findViewById(R.id.etUsername);
-        etPassword= (EditText) findViewById(R.id.etPassword);
-        bLogIn= (Button) findViewById(R.id.bLogin);
+        etUsername= findViewById(R.id.etUsername);
+        etPassword= findViewById(R.id.etPassword);
+        bLogIn= findViewById(R.id.bLogin);
         massage =findViewById(R.id.massage);
-        registerLink = (TextView) findViewById(R.id.registerLink);
+        registerLink = findViewById(R.id.registerLink);
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         bLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFromFile(UserAccountManager.USERS);
+                loadFromFile();
                 if (userAccountManager ==null){
                     userAccountManager = new UserAccountManager();
                 }
@@ -95,31 +101,28 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Check if tempted user has legit id and username
-     * @param username
-     * @param password
-     * @return
+     * @param username the username to check
+     * @param password the password to check
+     * @return the userAccount if the username and password are correctly matching
      */
+    @SuppressLint("SetTextI18n")
     private UserAccount checkUserId(String username, String password){
         ArrayList<UserAccount> userList = userAccountManager.getUserList();
-        System.out.println(userList);
         for(UserAccount account: userList){
             if(account.getName().equals(username) && account.getPassword().equals(password)){
                 massage.setText("Welcome");
                 return account;
             }
-
         }
         massage.setText("Wrong Username or Password");
         return null;}
 
     /**
      * load from pre-saved .ser file.
-      * @param fileName
      */
-    private void loadFromFile(String fileName) {
-
+    private void loadFromFile() {
         try {
-            InputStream inputStream = this.openFileInput(fileName);
+            InputStream inputStream = this.openFileInput(UserAccountManager.USERS);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
                 userAccountManager = (UserAccountManager) input.readObject();
@@ -133,7 +136,6 @@ public class LoginActivity extends AppCompatActivity {
             Log.e("login activity", "File contained unexpected data type: " + e.toString());
         }
     }
-
 }
 
 
