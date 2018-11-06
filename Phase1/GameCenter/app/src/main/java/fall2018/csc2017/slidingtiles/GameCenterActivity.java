@@ -43,9 +43,8 @@ public class GameCenterActivity extends AppCompatActivity {
         gamePong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                openPong();
             }
-
         });
     }
 
@@ -69,7 +68,7 @@ public class GameCenterActivity extends AppCompatActivity {
         gameStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openPong();
+                openSlide();
             }
 
         });
