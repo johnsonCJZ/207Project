@@ -55,10 +55,29 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     private GestureDetectGridView gridView;
     private static int columnWidth, columnHeight;
 
+    /**
+     * Time count.
+     */
     private double count=0;
+
+    /**
+     * Time count for autosave purpose.
+     */
     private double tempCount = 0; //
+
+    /**
+     * UserAccount associated to the game.
+     */
     private UserAccount user;
+
+    /**
+     * Dimension of the board game.
+     */
     private int size;
+
+    /**
+     * UserAccountManager associated to the UserAccount.
+     */
     private UserAccountManager users;
 
     /**
@@ -70,6 +89,9 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
     }
 
+    /**
+     * Switch to GameCenterActivity.
+     */
     private void switchToGameCenter() {
         Intent intent = new Intent(this, GameCenterActivity.class);
         Bundle pass = new Bundle();
@@ -115,9 +137,12 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
     }
 
+    /**
+     * Return the score of the finished game.
+     * @return the score of the finished game.
+     */
     private int getScore(){
         int score;
-
         score = personalScoreBoard.calculateScore(boardManager);
         Object[] result = new Object[2];
         result[0] = user.getName();
@@ -171,7 +196,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
         super.onCreate(savedInstanceState);
         try {
-            getUserAndSize(); // pass in all useful data from last activity, including boardManager
+            getAllInfo(); // pass in all useful data from last activity, including boardManager
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
@@ -251,6 +276,9 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         addCheatButton();
     }
 
+    /**
+     * Alert when a puzzle is solved.
+     */
     private void winAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
         int score = getScore();
@@ -331,6 +359,9 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         boardManager.getBoard().setTiles(tiles);
     }
 
+    /**
+     * Switch to ScoreBoard activity/view.
+     */
     private void switchToScoreBoard(){
         Intent tmp = new Intent(this, ScoreBoardActivity.class);
         Bundle pass = new Bundle();
@@ -342,8 +373,11 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         startActivity(tmp);
     }
 
-
-    private void getUserAndSize() throws CloneNotSupportedException {
+    /**
+     * Receive all the info(User, Size, BoardManager, ScoreBoards)from previous activity/view.
+     * @throws CloneNotSupportedException
+     */
+    private void getAllInfo() throws CloneNotSupportedException {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
 
@@ -443,6 +477,10 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         display();
     }
 
+    /**
+     * Load from file fileName
+     * @param fileName the name of the file
+     */
     private void loadFromFile(String fileName) {
 
         try {
