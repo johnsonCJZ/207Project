@@ -94,10 +94,12 @@ public class ScoreBoardActivity extends AppCompatActivity {
         for (int i = 0; i < name_list.length; i++) {
             TextView t1 = findViewById(name_list[i]);
             TextView t2 = findViewById(score_list[i]);
+
             if (i < scoreList.size()) {
             t1.setText((String) scoreList.get(i)[0]);
             t2.setText(String.valueOf(scoreList.get(i)[1]));
             }
+
             else {
                 t1.setText("");
                 t2.setText("");

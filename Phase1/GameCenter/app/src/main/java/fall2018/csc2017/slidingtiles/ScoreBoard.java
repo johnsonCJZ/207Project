@@ -28,10 +28,6 @@ public class ScoreBoard implements Serializable {
         }
     }
 
-    public void setScoreBoardSize(int scoreBoardSize) {
-        this.scoreBoardSize = scoreBoardSize;
-    }
-
     public List<Object[]> getScoreList() {
         return scoreList;
     }
