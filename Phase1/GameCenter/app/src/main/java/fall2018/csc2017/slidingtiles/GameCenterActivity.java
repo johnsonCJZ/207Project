@@ -6,10 +6,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-
+/**
+ *The game center activity, for choosing game to play/ manage games user has
+ */
 public class GameCenterActivity extends AppCompatActivity {
+    /**
+     * The current user playing the game.
+     */
     private UserAccount user;
+    /**
+     * UserAccountManager keep record of all users data.
+     */
     private UserAccountManager users;
+
+    /**
+     * Initialize activity/view from start.
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +34,10 @@ public class GameCenterActivity extends AppCompatActivity {
         getUsers();
     }
 
+    /**
+     * Get user info passing from last view/activity.
+     */
+
     private void getUsers(){
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
@@ -28,6 +45,9 @@ public class GameCenterActivity extends AppCompatActivity {
         this.users = (UserAccountManager) extra.getSerializable("allUsers");
     }
 
+    /**
+     * Set up button to open slide game
+     */
     public void addOpenSlide(){
         ImageButton gameStore;
         gameStore = findViewById(R.id.Slide);
@@ -39,6 +59,11 @@ public class GameCenterActivity extends AppCompatActivity {
 
         });
     }
+
+    /**
+     *  Actions after button is triggered, jump to slide game while passing info to
+     *  slide game activity.
+     */
     public void openSlide(){
         Intent intent = new Intent(this, SlideGameActivity.class);
         Bundle pass = new Bundle();
@@ -47,6 +72,10 @@ public class GameCenterActivity extends AppCompatActivity {
         intent.putExtras(pass);
         startActivity(intent);
     }
+
+    /**
+     * Actions after button is trigger, jump to game store to allow user manage their games.
+     */
 
     public void addOpenGameStore(){
         Button gameStore;
@@ -59,6 +88,11 @@ public class GameCenterActivity extends AppCompatActivity {
 
         });
     }
+
+    /**
+     * Actions after button is triggered, jump to game store while passing info to
+     * game store activity.
+     */
     public void openGameStore(){
         Intent intent = new Intent(this, GameStoreActivity.class);
         startActivity(intent);
