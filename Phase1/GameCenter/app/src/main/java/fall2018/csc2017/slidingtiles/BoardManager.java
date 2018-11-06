@@ -156,7 +156,7 @@ public class BoardManager implements Serializable, Cloneable {
             board.swapTiles(row,col,r_row,r_col);
             result[0] = row;
             result[1] = col;
-            if (currIndex == history.size-1) {history.add(new HistoryNode(result)); currIndex++;}
+            if (currIndex == history.getSize()-1) {history.add(new HistoryNode(result)); currIndex++;}
             else {
                 history.remove(currIndex+1);
                 history.add(new HistoryNode((result)));
@@ -190,7 +190,7 @@ public class BoardManager implements Serializable, Cloneable {
     }
 
     public void undo() {
-        if (history.size > 1) {
+        if (history.getSize() > 1) {
             int[] currPosition = history.get(currIndex).getData();
             int[] prePosition = history.get(currIndex-1).getData();
             board.swapTiles(prePosition[0], prePosition[1], currPosition[0], currPosition[1]);
