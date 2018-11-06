@@ -23,10 +23,16 @@ public class SlideDifficultyActivity extends AppCompatActivity {
         addStart5x5Button();
     }
 
+    /**
+     * Clear the autosave history.
+     */
     private void clearResumeHistory(){
         user.getHistory().put("resumeHistory", null);
     }
 
+    /**
+     * Receive UserAccount and UserAccountManager from the previous activity/view.
+     */
     private void getUser(){
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
@@ -34,6 +40,9 @@ public class SlideDifficultyActivity extends AppCompatActivity {
         this.users = (UserAccountManager) extra.getSerializable("allUsers");
     }
 
+    /**
+     * Add the 4x4 button for initializing a 4x4 game.
+     */
     private void addStart4x4Button() {
         Button startButton = findViewById(R.id.button3);
             startButton.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +55,9 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             });
     }
 
+    /**
+     * Add the 3x3 button for initializing a 4x4 game.
+     */
     private void addStart3x3Button() {
         Button startButton = findViewById(R.id.button);
             startButton.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +70,9 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             });
         }
 
+    /**
+     * Add the 5x5 button for initializing a 4x4 game.
+     */
     private void addStart5x5Button() {
         Button startButton = findViewById(R.id.button4);
             startButton.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +85,9 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             });
         }
 
+    /**
+     * Switch to game activity/view.
+     */
     private void switchToGame() {
         Intent tmp = new Intent(this, MainSlideActivity.class);
         Bundle pass = new Bundle();
