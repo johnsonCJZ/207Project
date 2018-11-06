@@ -35,24 +35,6 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
     }
 
     /**
-     * A new board of tiles in row-major order.
-     * Precondition: len(tiles) == NUM_ROWS * NUM_COLS
-     *
-     * @param tiles the tiles for the board
-     */
-    Board(List<Tile> tiles, int n) {
-        this.dimension = n;
-        Iterator<Tile> iter = tiles.iterator();
-        this.tiles = new Tile[n][n];
-
-            for (int row = 0; row != this.dimension; row++) {
-                for (int col = 0; col != this.dimension; col++) {
-                this.tiles[row][col] = iter.next();
-            }
-        }
-    }
-
-    /**
      * Set the tiles to tiles.
      * @param tiles the tiles for the board
      */
@@ -66,6 +48,7 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
         }
 
     }
+
     /**
      * Set the number of rows and columns to int d.
      * @param d the number of rows/columns
@@ -79,8 +62,6 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
     int getDimension() {
         return dimension; // no need to check empty tile on board
     }
-
-
 
     /**
      * Return the tile at (row, col)
@@ -120,10 +101,6 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
 
     @NonNull
     @Override
-    /**
-     * implement iterator for Iterable<Tile> interface
-     *
-     */
     public Iterator<Tile> iterator() {
         return new TileIterator(tiles);
 
@@ -147,7 +124,7 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
          *
          * @param tiles tiles from board
          */
-        public TileIterator (Tile[][] tiles){
+        TileIterator(Tile[][] tiles){
             this.tiles = tiles;
         }
 
@@ -172,13 +149,13 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
          */
         @Override
         public Tile next() {
-            if (this.hasNext()) {
+            if (!this.hasNext()) {
+                throw new NoSuchElementException();
+            } else {
                 currentPosition++;
                 currentRow = currentPosition / dimension;
                 currentCol = currentPosition % dimension;
                 return this.tiles[currentRow][currentCol];
-            } else {
-                throw new NoSuchElementException();
             }
         }
     }}
