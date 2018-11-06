@@ -1,6 +1,5 @@
 package fall2018.csc2017.slidingtiles;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,25 +8,23 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public class SlideGameActivity extends AppCompatActivity {
     private UserAccount user;
     private UserAccountManager users;
-    private String direction;
+    private ScoreBoard scoreBoard;
+    private BoardManager boardManager;
+
     /**
      * The main save file.
      */
     /**
      * A temporary save file.
      */
-    private BoardManager boardManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +41,54 @@ public class SlideGameActivity extends AppCompatActivity {
         rank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                direction = "ToBoard";
-                switchToDifficulty();
+                choseLevel();
             }
         });
+    }
+
+    private void choseLevel() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(SlideGameActivity.this);
+        builder.setTitle("Choose an level");
+        // add a list
+        String[] memoryList = {"3x3", "4x4","5x5"};
+        builder.setItems(memoryList, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0: // 3x3
+                        scoreBoard = user.getScoreBoard("history3x3");
+                        break;
+                    case 1: // 4x4
+                        scoreBoard = user.getScoreBoard("history4x4");
+                        break;
+                    case 2: // 5x5
+                        scoreBoard = user.getScoreBoard("history5x5");
+                        break;
+                }
+                if(scoreBoard!=null){
+                    switchToScoreBoard();
+                }
+                else{
+                    builder.setMessage("No record :)");
+                    AlertDialog d = builder.create();
+                    d.show();
+                }
+
+            }
+        });
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void switchToScoreBoard() {
+        Intent tmp = new Intent(this, SlideGameActivity.class);
+        Bundle pass = new Bundle();
+        pass.putSerializable("user",this.user);
+        pass.putSerializable("allUsers", this.users);
+        pass.putSerializable("scoreBoard", this.scoreBoard);
+        tmp.putExtras(pass);
+        startActivity(tmp);
     }
 
     private void getUsers(){
@@ -64,7 +105,6 @@ public class SlideGameActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                direction = "ToGame";
                 switchToDifficulty();
             }
         });
@@ -112,7 +152,6 @@ public class SlideGameActivity extends AppCompatActivity {
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
-        pass.putSerializable("direction", this.direction);
         tmp.putExtras(pass);
         startActivity(tmp);}
 
