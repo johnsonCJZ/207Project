@@ -1,19 +1,15 @@
 package fall2018.csc2017.slidingtiles;
 
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Pair;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import java.io.FileNotFoundException;
@@ -146,29 +142,9 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
 */
 
-    private int clearHistoryAndGetScore(){
+    private int getScore(){
         int score;
-        switch (size) {
-            case 3:
-                user.getHistory().put("history3x3",null);
-                scoreBoard=user.getScoreBoard("history3x3");
-                break;
-            case 4:
-                user.getHistory().put("history4x4",null);
-                scoreBoard=user.getScoreBoard("history4x4");
-                break;
 
-            case 5:
-                user.getHistory().put("history5x5",null);
-                scoreBoard=user.getScoreBoard("history5x5");
-                break;
-
-            default:
-                user.getHistory().put("history4x4",null);
-                scoreBoard=user.getScoreBoard("history4x4");
-
-
-        }
         scoreBoard.setStrategy(new SlidingTilesScoreStrategy());
         score = scoreBoard.calculateScore(boardManager);
         this.score=new Object[2];
@@ -232,15 +208,15 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                             Thread.sleep(10);
                             if (boardManager.puzzleSolved()) {
                                 this.interrupt();
-                                boardManager.setTime(count);
                             }
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     if (boardManager.puzzleSolved()) {
+                                        boardManager.setTime(count);
                                         isPaused = true;
                                         AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
-                                        int score = clearHistoryAndGetScore();
+                                        int score = getScore();
                                         builder.setMessage("you got " + String.valueOf(score) + " !")
 
                                                 .setPositiveButton("See my rank", new DialogInterface.OnClickListener() {
@@ -259,20 +235,20 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                                         AlertDialog alert = builder.create();
                                         alert.show();
                                     }
-
-                                    count += 0.01;
-                                    if (tempcount < 2) {
-                                        tempcount += 0.01;
-                                    } else {
-                                        tempcount = 0;
-                                        try {
-                                            autoSave();
-                                        } catch (CloneNotSupportedException e) {
-                                            e.printStackTrace();
+                                    else {
+                                        count += 0.01;
+                                        if (tempcount < 2) {
+                                            tempcount += 0.01;
+                                        } else {
+                                            tempcount = 0;
+                                            try {
+                                                autoSave();
+                                            } catch (CloneNotSupportedException e) {
+                                                e.printStackTrace();
+                                            }
                                         }
+                                        textView.setText(String.valueOf(df2.format(count)) + " s");
                                     }
-                                    textView.setText(String.valueOf(df2.format(count)) + " s");
-
                                 }
                             });
                         } catch (InterruptedException e) {
