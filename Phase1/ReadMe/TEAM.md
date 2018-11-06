@@ -52,7 +52,7 @@ Summer: UserAccount, UserAccountManager
 Max: UI and controllers
 Johnson: ScoreBoard, Strategy (and classes implements it)
 Lucia: Sorter (and classes and algorithm)
-Frank: LinkedList, History,BoardManager, Board
+Frank: HistoryNode, History,BoardManager, Board
 
 ![Oct.27th](oct-27.png)
 ## UI design structure (tempted)

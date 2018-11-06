@@ -196,6 +196,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                                     if (boardManager.puzzleSolved() && !isPaused) {
                                         boardManager.setTime(count);
                                         isPaused = true;
+                                        user.getHistory().put("resumeHistory", null);
                                         winAlert();
                                     }
                                     else {
