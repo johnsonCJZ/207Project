@@ -33,22 +33,22 @@ public class SlideGameActivity extends AppCompatActivity {
     }
 
     private void addGlobalScoreBoardListener() {
-        boardType = "Global";
         Button globalRank = findViewById(R.id.button6);
         globalRank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boardType = "Global";
                 choseLevel();
             }
         });
     }
 
     private void addPersonalScoreBoardListener() {
-        boardType = "Personal";
         Button rank = findViewById(R.id.button5);
         rank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boardType = "Personal";
                 choseLevel();
             }
         });
