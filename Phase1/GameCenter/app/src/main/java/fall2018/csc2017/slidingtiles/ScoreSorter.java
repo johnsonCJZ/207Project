@@ -1,11 +1,11 @@
 package fall2018.csc2017.slidingtiles;
 
-import android.util.Pair;
-
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.List;
 
+/**
+ * The sorter that sorts based on score.
+ */
 public class ScoreSorter implements Sorter<Object[]>, Serializable {
 
     @Override
