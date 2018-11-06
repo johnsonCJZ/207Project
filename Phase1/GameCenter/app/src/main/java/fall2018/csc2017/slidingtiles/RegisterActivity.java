@@ -15,7 +15,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -23,21 +22,20 @@ public class RegisterActivity extends AppCompatActivity {
     EditText etPassword;
     EditText etConfirmPW;
     Button bRegister;
-    Button bBack;
     UserAccountManager userAccountManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadFromFile(UserAccountManager.USERS);
+        loadFromFile();
         if (userAccountManager == null){
             userAccountManager = new UserAccountManager();
         }
         setContentView(R.layout.activity_register);
-        etUsername = (EditText) findViewById(R.id.etUsername);
-        etPassword = (EditText) findViewById(R.id.etPassword);
-        etConfirmPW = (EditText) findViewById(R.id.etConfirmPW);
-        bRegister = (Button) findViewById(R.id.bRegister);
+        etUsername = findViewById(R.id.etUsername);
+        etPassword = findViewById(R.id.etPassword);
+        etConfirmPW = findViewById(R.id.etConfirmPW);
+        bRegister = findViewById(R.id.bRegister);
 
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,14 +48,18 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Return true when a new account is registered, return false when a username is taken or
+     * the confirming password does not match.
+     * @return a boolean showing whether an account is successfully registered
+     */
     private boolean registerButtonPushed() {
         String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
         String confirmPW = etConfirmPW.getText().toString();
         ArrayList<UserAccount> userList = userAccountManager.getUserList();
         UserAccount newUser = new UserAccount(username, password);
-        TextView textView = (TextView)findViewById(R.id.textView7);
-        // should change to use the iterator design pattern after solving the static problem
+        TextView textView = findViewById(R.id.textView7);
         if (!userList.isEmpty()){
             for (UserAccount account : userList) {
                 if (account.getName().equals(username)) {
@@ -69,19 +71,21 @@ public class RegisterActivity extends AppCompatActivity {
         if (!password.equals(confirmPW)) {
             textView.setText("password doesn't match");
             return false;
-
         }
         //Tell the user the password and confirmed password are not the same
+
         userAccountManager.AddUser(newUser);
         saveToFile(UserAccountManager.USERS);
         return true;
-
     }
 
-    private void loadFromFile(String fileName) {
+    /**
+     * Load from pre-saved .ser file.
+     */
+    private void loadFromFile() {
 
         try {
-            InputStream inputStream = this.openFileInput(fileName);
+            InputStream inputStream = this.openFileInput(UserAccountManager.USERS);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
                 userAccountManager = (UserAccountManager) input.readObject();
@@ -96,6 +100,10 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Save to file fileName.
+     * @param fileName the file to save
+     */
     public void saveToFile(String fileName) {
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(

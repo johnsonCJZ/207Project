@@ -28,8 +28,14 @@ import java.util.Observer;
  */
 public class MainSlideActivity extends AppCompatActivity implements Observer {
 
+    /**
+     * The per-user scoreboard
+     */
     private ScoreBoard personalScoreBoard;
 
+    /**
+     * The per-game scoreboard
+     */
     private ScoreBoard globalScoreBoard;
 
     /**
@@ -385,7 +391,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         assert extra != null;
         this.user = (UserAccount) extra.getSerializable("user");
         this.users = (UserAccountManager) extra.getSerializable("allUsers");
-        loadFromFile(UserAccountManager.USERS);
+        loadFromFile();
 
         for (UserAccount u : users.getUserList()) {
             if (u.getName().equals(user.getName())) {
@@ -420,7 +426,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
     /**
      * Create the buttons for displaying the tiles.
-     *
      * @param context the context
      */
     private void createTileButtons(Context context) {
@@ -459,7 +464,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
     /**
      * Save the board manager to fileName.
-     *
      * @param fileName the name of the file
      */
     public void saveToFile(String fileName) {
@@ -479,13 +483,12 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
     /**
-     * Load from file fileName
-     * @param fileName the name of the file
+     * Load from pre-saved .ser file.
      */
-    private void loadFromFile(String fileName) {
+    private void loadFromFile() {
 
         try {
-            InputStream inputStream = this.openFileInput(fileName);
+            InputStream inputStream = this.openFileInput(UserAccountManager.USERS);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
                 users = (UserAccountManager) input.readObject();
