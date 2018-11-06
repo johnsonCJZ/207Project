@@ -358,10 +358,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         boardManager.getBoard().setTiles(tiles);
     }
 
-
-
-
-    //
     private void addScoreBoard(){
         Intent tmp = new Intent(this, ScoreBoardActivity.class);
         Bundle pass = new Bundle();
@@ -389,11 +385,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         this.boardManager = (BoardManager) this.boardManager.clone();
         this.size = this.boardManager.getBoard().getDimension();
         }
-
-
-
-
-
 
     /**
      * Create the buttons for displaying the tiles.
@@ -434,7 +425,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         super.onPause();
     }
 
-
     /**
      * Save the board manager to fileName.
      *
@@ -450,9 +440,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
             Log.e("Exception", "File write failed: " + e.toString());
         }
     }
-
-
-
 
     @Override
     public void update(Observable o, Object arg) {

@@ -14,6 +14,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
     private UserAccount user;
     private UserAccountManager users;
     private BoardManager boardManager;
+    private ScoreBoard scoreBoard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
         this.boardManager = (BoardManager) extra.getSerializable("boardManager");
-        ScoreBoard scoreBoard = (ScoreBoard) extra.getSerializable("scoreBoard");
+        this.scoreBoard = (ScoreBoard) extra.getSerializable("scoreBoard");
         setBoard((ArrayList<Object[]>) scoreBoard.getScoreList());
     }
 
@@ -61,8 +62,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
     }
 
     private void setBoard(ArrayList<Object[]> scoreList) {
-        String name = "Name";
-        String score = "Score";
 
         int[] name_list = {
                 R.id.Name0,
@@ -92,15 +91,8 @@ public class ScoreBoardActivity extends AppCompatActivity {
                 R.id.Score10
         };
 
-        //int cursor = 0;
         for (int i = 0; i < name_list.length; i++) {
-//                String tempName = name + String.valueOf(cursor);
-//                String tempScore = score + String.valueOf(cursor);
-////                int tempN = getResources().getIdentifier(tempName, "id",
-////                        getPackageName());
             TextView t1 = findViewById(name_list[i]);
-////                int tempS = getResources().getIdentifier(tempScore, "id",
-////                        getPackageName());
             TextView t2 = findViewById(score_list[i]);
             if (i < scoreList.size()) {
             t1.setText((String) scoreList.get(i)[0]);
@@ -110,7 +102,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
                 t1.setText("");
                 t2.setText("");
             }
-//                cursor++;
         }
     }
 }
