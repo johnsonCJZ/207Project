@@ -30,21 +30,29 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
     private ScoreBoard scoreBoard;
 
+    /**
+     * If a game is paused.
+     */
     private boolean isPaused;
 
     private static DecimalFormat df2 = new DecimalFormat(".##");
+
     /**
      * The board manager.
      */
     private BoardManager boardManager;
+
     /**
      * The buttons to display.
      */
     private ArrayList<Button> tileButtons;
 
-    // Grid View and calculated column height and width based on device size
+    /**
+     * Grid View and calculated column height and width based on device size.
+     */
     private GestureDetectGridView gridView;
     private static int columnWidth, columnHeight;
+
     private double count=0;
     private double tempCount = 0; //
     private UserAccount user;
@@ -118,7 +126,11 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
     }
 
-
+    /**
+     * Save the game history.
+     * @param dialog
+     * @throws CloneNotSupportedException
+     */
     private void saveHistory(DialogInterface dialog) throws CloneNotSupportedException {
         switch (size) {
             case 3:
@@ -139,6 +151,10 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
     }
 
+    /**
+     * Automatically save the game for resuming.
+     * @throws CloneNotSupportedException
+     */
     private void autoSave() throws CloneNotSupportedException {
         boardManager.setTime(count);
         user.getHistory().put("resumeHistory", (BoardManager) boardManager.clone());
@@ -255,7 +271,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
     /**
-     * Add the cheat button.
+     * Add the cheat button.`
      */
     private void addCheatButton() {
         Button cheat = findViewById(R.id.Cheating);
