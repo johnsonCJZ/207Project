@@ -26,7 +26,7 @@ public class SlidingTilesScoreStrategy implements Strategy<BoardManager>, Serial
     private int calTimeScore(BoardManager boardManager) {
         double time = boardManager.getTime();
 
-        return (int) Math.round((100 - time/20));
+        return (int) Math.round((100 - time/15));
 
     }
 
