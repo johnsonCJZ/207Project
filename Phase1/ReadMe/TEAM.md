@@ -77,3 +77,11 @@ Frank: game memory debugging
 Summer: UI design
 Max: code smell + design pattern, markdown summary
 Lucia: absent
+
+# Nov.6th
+Details:
+Johnson: making global scoreboard
+Frank: implementing strategy design pattern, javadoc
+Summer: UI beautifying, score board UI redesign
+Max: code smell, debugging, markdown summary, javadoc
+Lucia: absent
