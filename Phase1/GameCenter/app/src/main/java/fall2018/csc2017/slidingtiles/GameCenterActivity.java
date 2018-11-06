@@ -1,5 +1,7 @@
 package fall2018.csc2017.slidingtiles;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,7 +33,20 @@ public class GameCenterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_center);
         addOpenGameStore();
         addOpenSlide();
+        addOpenPong();
         getUsers();
+    }
+
+    private void addOpenPong() {
+        ImageButton gamePong;
+        gamePong = findViewById(R.id.Pong);
+        gamePong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+
+        });
     }
 
     /**
@@ -54,10 +69,18 @@ public class GameCenterActivity extends AppCompatActivity {
         gameStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openSlide();
+                openPong();
             }
 
         });
+    }
+
+    private void openPong() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(GameCenterActivity.this);
+        builder.setMessage("Coming Soon!");
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     /**
