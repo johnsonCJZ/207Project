@@ -37,7 +37,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
     }
 
     private void addBackToHomePageButton() {
-        Button startButton = findViewById(R.id.button16);
+        Button startButton = findViewById(R.id.homePageButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
