@@ -8,28 +8,33 @@ import java.io.Serializable;
 public class History implements Serializable {
 
     /**
-     * The front of the linked list.
+     * The front of the History.
      */
     public HistoryNode front = null;
 
     /**
-     * The back of the linked list.
+     * The back of the History.
      */
     public HistoryNode back = null;
 
     /**
-     * The size of the linked list.
+     * The size of the History.
      */
     private int size = 0;
 
     /**
-     * Return the size of the linked list.
-     * @return
+     * Return the size of the History.
+     * @return the size of the History
      */
     public int getSize() {
         return size;
     }
 
+    /**
+     * Return the HistoryNode at the index of the History.
+     * @param index the index of the HistoryNode returned
+     * @return the HistoryNode at the index
+     */
     public HistoryNode get(int index) {
         int count = 0;
         HistoryNode curr = this.front;
@@ -40,6 +45,10 @@ public class History implements Serializable {
         return curr;
     }
 
+    /**
+     * Add a new HistoryNode node to the end of the History.
+     * @param node the new HistoryNode to be added
+     */
     public void add(HistoryNode node) {
         if (this.size == 0) {
             this.front = node;
@@ -53,6 +62,9 @@ public class History implements Serializable {
         }
     }
 
+    /**
+     * Clear the History.
+     */
     public  void clear() {
         if (size != 0) {
             front = null;
@@ -61,6 +73,10 @@ public class History implements Serializable {
         }
     }
 
+    /**
+     * Remove the HistoryNode at the index of the History.
+     * @param index the index of the History where the HistoryNode to be removed
+     */
     public void remove(int index) {
         if (index == 0) {
             clear();

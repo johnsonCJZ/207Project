@@ -11,17 +11,18 @@ import java.util.List;
  */
 public class BoardManager implements Serializable, Cloneable {
 
-    private Strategy<BoardManager> scoreStrategy;
-
-
+    /**
+     * The time for how long the board has been played.
+     */
     private Double time;
+
     /**
      * The board being managed.
      */
     private Board board;
 
     /**
-     * The linkedlist of history moves of the board.
+     * The linked list of history moves of the board.
      */
     private History history = new History();
 
@@ -31,30 +32,24 @@ public class BoardManager implements Serializable, Cloneable {
     private int currIndex = 0;
 
     /**
-     * Manage a board that has been pre-populated.
-     * @param board the board
-     */
-    public BoardManager(Board board) {
-        this.time = 0.0;
-        this.board = board;
-        int[] blank = this.findBlankIndex(0);
-        this.history.add(new HistoryNode(blank));
-    }
-
-    /**
      * Return the current board.
      */
     public Board getBoard() {
         return board;
     }
 
+    /**
+     * Return a copy of the BoardManager.
+     * @return a copy of the BoardManager.
+     * @throws CloneNotSupportedException
+     */
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 
     /**
-     * Manage a new shuffled n*n board.
+     * Create a new BoardManager to manage a new shuffled n*n board.
      * @param n the number of rows and columns
      */
     public BoardManager(int n) {
@@ -71,22 +66,26 @@ public class BoardManager implements Serializable, Cloneable {
         this.history.add(new HistoryNode(this.findBlankIndex(0)));
     }
 
-    public void setScoreStrategy(Strategy<BoardManager> scoreStrategy) {
-        this.scoreStrategy = scoreStrategy;
-    }
-
-    public int score(){
-        return this.scoreStrategy.calculateScore(this);
-    }
-
+    /**
+     * Return the time recorded.
+     * @return the time recorded
+     */
     public double getTime() {
         return time;
     }
 
+    /**
+     * Set the time to time.
+     * @param time the time to be set
+     */
     public void setTime(double time) {
         this.time = time;
     }
 
+    /**
+     * Return the History.
+     * @return the History
+     */
     public History getHistory() {
         return history;
     }
@@ -96,7 +95,7 @@ public class BoardManager implements Serializable, Cloneable {
      *
      * @return whether the tiles are in row-major order
      */
-    public boolean puzzleSolved() {
+    boolean puzzleSolved() {
         Iterator iter = board.iterator();
         Tile previous = (Tile) iter.next();
 
@@ -106,10 +105,7 @@ public class BoardManager implements Serializable, Cloneable {
                 previous = next;
             }
             else {
-                if (next.getId() == 0 && !iter.hasNext()) {
-                    return true;
-                }
-                return false;
+                return next.getId() == 0 && !iter.hasNext();
             }
         }
         return false;
@@ -189,6 +185,9 @@ public class BoardManager implements Serializable, Cloneable {
 
     }
 
+    /**
+     * Undo swipe operations.
+     */
     public void undo() {
         if (history.getSize() > 1) {
             int[] currPosition = history.get(currIndex).getData();
@@ -198,6 +197,9 @@ public class BoardManager implements Serializable, Cloneable {
         }
     }
 
+    /**
+     * Redo the swipe operations that have been undone.
+     */
     public void redo() {
         if (history.get(currIndex).next != null) {
             int[] currPosition = history.get(currIndex).getData();
