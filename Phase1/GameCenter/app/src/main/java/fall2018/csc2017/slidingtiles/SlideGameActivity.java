@@ -16,9 +16,9 @@ import java.io.ObjectInputStream;
 public class SlideGameActivity extends AppCompatActivity {
     private UserAccount user;
     private UserAccountManager users;
-    private ScoreBoard personalScoreBoard;
-    private ScoreBoard globalScoreBoard;
+    private ScoreBoard scoreBoard;
     private BoardManager boardManager;
+    private String boardType = "Personal";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +33,18 @@ public class SlideGameActivity extends AppCompatActivity {
     }
 
     private void addGlobalScoreBoardListener() {
+        boardType = "Global";
+        Button globalRank = findViewById(R.id.button6);
+        globalRank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                choseLevel();
+            }
+        });
     }
 
     private void addPersonalScoreBoardListener() {
+        boardType = "Personal";
         Button rank = findViewById(R.id.button5);
         rank.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,16 +64,31 @@ public class SlideGameActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: // 3x3
-                        personalScoreBoard = user.getScoreBoard("history3x3");
+                        if (boardType.equals("Personal")) {
+                            scoreBoard = user.getScoreBoard("history3x3");
+                        }
+                        else {
+                            scoreBoard = users.getSlideTilesGlobalScoreBoard("history3x3");
+                        }
                         break;
                     case 1: // 4x4
-                        personalScoreBoard = user.getScoreBoard("history4x4");
+                        if (boardType.equals("Personal")) {
+                            scoreBoard = user.getScoreBoard("history4x4");
+                        }
+                        else {
+                            scoreBoard = users.getSlideTilesGlobalScoreBoard("history4x4");
+                        }
                         break;
                     case 2: // 5x5
-                        personalScoreBoard = user.getScoreBoard("history5x5");
+                        if (boardType.equals("Personal")) {
+                            scoreBoard = user.getScoreBoard("history5x5");
+                        }
+                        else {
+                            scoreBoard = users.getSlideTilesGlobalScoreBoard("history5x5");
+                        }
                         break;
                 }
-                if(personalScoreBoard != null){
+                if(scoreBoard != null){
                     switchToScoreBoard();
                 }
                 else{
@@ -85,7 +109,7 @@ public class SlideGameActivity extends AppCompatActivity {
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
-        pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
+        pass.putSerializable("scoreBoard", this.scoreBoard);
         tmp.putExtras(pass);
         startActivity(tmp);
     }

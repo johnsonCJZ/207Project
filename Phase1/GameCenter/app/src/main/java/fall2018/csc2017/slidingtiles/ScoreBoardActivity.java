@@ -8,9 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
-public class ScoreBoardActivity extends AppCompatActivity {
+public class ScoreBoardActivity extends AppCompatActivity{
     private UserAccount user;
     private UserAccountManager users;
 
@@ -33,10 +32,8 @@ public class ScoreBoardActivity extends AppCompatActivity {
     private void getBoard() {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
-        ScoreBoard personalScoreBoard = (ScoreBoard) extra.getSerializable("personalScoreBoard");
-        ScoreBoard globalScoreBoard = (ScoreBoard) extra.getSerializable("globalScoreBoard");
-        setPersonalBoard((ArrayList<Object[]>) personalScoreBoard.getScoreList());
-//        setGlobalBoard((ArrayList<Object[]>) globalScoreBoard.getScoreList());
+        ScoreBoard scoreBoard = (ScoreBoard) extra.getSerializable("scoreBoard");
+        setBoard((ArrayList<Object[]>) scoreBoard.getScoreList());
     }
 
     private void addBackToHomePageButton() {
@@ -59,7 +56,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         startActivity(tmp);
     }
 
-    private void setPersonalBoard(ArrayList<Object[]> scoreList) {
+    private void setBoard(ArrayList<Object[]> scoreList) {
 
 //        int[] name_list = {
 //                R.id.Name0,
@@ -107,6 +104,11 @@ public class ScoreBoardActivity extends AppCompatActivity {
                 t2.setText("");
             }
         }
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }
 

@@ -374,8 +374,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
-        pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
-        pass.putSerializable("globalScoreBoard", this.globalScoreBoard);
+        pass.putSerializable("scoreBoard", this.personalScoreBoard);
         tmp.putExtras(pass);
         startActivity(tmp);
     }
