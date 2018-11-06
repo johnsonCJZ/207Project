@@ -143,7 +143,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     private int getScore(){
         int score;
 
-        scoreBoard.setStrategy(new SlidingTilesScoreStrategy());
         score = scoreBoard.calculateScore(boardManager);
         Object[] result = new Object[2];
         result[0] = user.getName();

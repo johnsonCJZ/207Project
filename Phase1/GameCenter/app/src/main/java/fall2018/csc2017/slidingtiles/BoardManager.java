@@ -34,7 +34,7 @@ public class BoardManager implements Serializable, Cloneable {
     /**
      * Return the current board.
      */
-    public Board getBoard() {
+    Board getBoard() {
         return board;
     }
 
@@ -86,7 +86,7 @@ public class BoardManager implements Serializable, Cloneable {
      * Return the History.
      * @return the History
      */
-    public History getHistory() {
+    History getHistory() {
         return history;
     }
 
@@ -117,7 +117,7 @@ public class BoardManager implements Serializable, Cloneable {
      * @param position the tile to check
      * @return whether the tile at position is surrounded by a blank tile
      */
-    public boolean isValidTap(int position) {
+    boolean isValidTap(int position) {
 
         int row = position / board.getDimension();
         int col = position % board.getDimension();
@@ -138,7 +138,7 @@ public class BoardManager implements Serializable, Cloneable {
      *
      * @param position the position
      */
-    public void touchMove(int position) {
+    void touchMove(int position) {
 
         int row = position / board.getDimension();
         int col = position % board.getDimension();
