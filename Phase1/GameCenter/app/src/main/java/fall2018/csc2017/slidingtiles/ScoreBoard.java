@@ -8,10 +8,16 @@ import java.util.List;
  * The scoreBoard to display rankings.
  */
 class ScoreBoard implements Serializable {
-    private int scoreBoardSize = 10;
+    private int scoreBoardSize;
     private List<Object[]> scoreList = new ArrayList<>();
-    private SlidingTilesScoreStrategy scoreStrategy = new SlidingTilesScoreStrategy();
-    private ScoreSorter scoreSorter = new ScoreSorter();
+    private SlidingTilesScoreStrategy scoreStrategy;
+    private ScoreSorter scoreSorter;
+
+    ScoreBoard(){
+        setScoreBoardSize(10);
+        setScoreSorter(new ScoreSorter());
+        setScoreStrategy(new SlidingTilesScoreStrategy());
+    }
 
     /**
      * Set the scoreBoardSize to size.

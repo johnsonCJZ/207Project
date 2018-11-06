@@ -10,8 +10,19 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class ScoreBoardActivity extends AppCompatActivity{
+    /**
+     * User playing game
+     */
     private UserAccount user;
+    /**
+     * All users in database
+     */
     private UserAccountManager users;
+
+    /**
+     * Initialize activity with corresponding user and data
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +33,9 @@ public class ScoreBoardActivity extends AppCompatActivity{
         addBackToHomePageButton();
     }
 
+    /**
+     * get user info and data from last activity
+     */
     private void getUsers(){
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
@@ -29,12 +43,19 @@ public class ScoreBoardActivity extends AppCompatActivity{
         this.users = (UserAccountManager) extra.getSerializable("allUsers");
     }
 
+    /**
+     * get board from last activity
+     */
     private void getBoard() {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
         ScoreBoard scoreBoard = (ScoreBoard) extra.getSerializable("scoreBoard");
         setBoard((ArrayList<Object[]>) scoreBoard.getScoreList());
     }
+
+    /**
+     * button go back to home page.
+     */
 
     private void addBackToHomePageButton() {
         Button startButton = findViewById(R.id.homePageButton);
@@ -46,6 +67,10 @@ public class ScoreBoardActivity extends AppCompatActivity{
         });
     }
 
+    /**
+     * action go back to home page
+     */
+
     private void switchToHomePage() {
         Intent tmp = new Intent(this, GameCenterActivity.class);
         Bundle pass = new Bundle();
@@ -56,35 +81,12 @@ public class ScoreBoardActivity extends AppCompatActivity{
         startActivity(tmp);
     }
 
-    private void setBoard(ArrayList<Object[]> scoreList) {
+    /**
+     * take a list of score and return format for front end
+     * @param scoreList a list of score
+     */
 
-//        int[] name_list = {
-//                R.id.Name0,
-//                R.id.Name1,
-//                R.id.Name2,
-//                R.id.Name3,
-//                R.id.Name4,
-//                R.id.Name5,
-//                R.id.Name6,
-//                R.id.Name7,
-//                R.id.Name8,
-//                R.id.Name9,
-//                R.id.Name10
-//        };
-//
-//        int[] score_list = {
-//                R.id.Score0,
-//                R.id.Score1,
-//                R.id.Score2,
-//                R.id.Score3,
-//                R.id.Score4,
-//                R.id.Score5,
-//                R.id.Score6,
-//                R.id.Score7,
-//                R.id.Score8,
-//                R.id.Score9,
-//                R.id.Score10
-//        };
+    private void setBoard(ArrayList<Object[]> scoreList) {
 
         for (int i = 0; i < 11; i++) {
             String name = "Name" + i;

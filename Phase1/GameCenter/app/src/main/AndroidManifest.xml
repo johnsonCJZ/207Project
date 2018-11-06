@@ -23,7 +23,6 @@
         <activity android:name=".GameCenterActivity" />
         <activity android:name=".SlideDifficultyActivity" />
         <activity android:name=".ScoreBoardActivity" />
-        <activity android:name=".GlobalScoreBoardActivity"></activity>
     </application>
 
 </manifest>

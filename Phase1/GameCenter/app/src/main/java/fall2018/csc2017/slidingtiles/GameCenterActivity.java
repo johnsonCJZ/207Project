@@ -34,9 +34,28 @@ public class GameCenterActivity extends AppCompatActivity {
         addOpenSlide();
         addOpenPong();
         getUsers();
+        addLogOut();
     }
 
     /**
+     * Add log out button
+     */
+    private void addLogOut(){
+        Button logOut = findViewById(R.id.logOut);
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openLogin();
+            }
+            }
+        );}
+
+    private void openLogin(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+        /**
      * Add the button for game Pong.
      */
     private void addOpenPong() {
@@ -63,7 +82,7 @@ public class GameCenterActivity extends AppCompatActivity {
     /**
      * Set up button to open slide game
      */
-    public void addOpenSlide(){
+    private void addOpenSlide(){
         ImageButton gameStore;
         gameStore = findViewById(R.id.Slide);
         gameStore.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +109,7 @@ public class GameCenterActivity extends AppCompatActivity {
      *  Actions after button is triggered, jump to slide game while passing info to
      *  slide game activity.
      */
-    public void openSlide(){
+    private void openSlide(){
         Intent intent = new Intent(this, SlideGameActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
@@ -103,7 +122,7 @@ public class GameCenterActivity extends AppCompatActivity {
      * Actions after button is trigger, jump to game store to allow user manage their games.
      */
 
-    public void addOpenGameStore(){
+    private void addOpenGameStore(){
         Button gameStore;
         gameStore = findViewById(R.id.store);
         gameStore.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +138,7 @@ public class GameCenterActivity extends AppCompatActivity {
      * Actions after button is triggered, jump to game store while passing info to
      * game store activity.
      */
-    public void openGameStore(){
+    private void openGameStore(){
         Intent intent = new Intent(this, GameStoreActivity.class);
         startActivity(intent);
     }
