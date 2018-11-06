@@ -22,7 +22,7 @@ public class UserAccount implements Serializable {
     /**
      * The sliding tiles game history of the UserAccount.
      */
-    private HashMap<String, BoardManager> history;
+    private HashMap<String, BoardManager> history = new HashMap<>();
 
     /**
      * The sliding tiles score list of the UserAccount
@@ -32,25 +32,23 @@ public class UserAccount implements Serializable {
     /**
      * The archive of the game sliding tiles.
      */
-    private HashMap<String,ScoreBoard> scoreBoard;
+    private HashMap<String,ScoreBoard> personalScoreBoard = new HashMap<>();
 
     /**
      * The UserAccount class constructor.
      * @param name the name of the UserAccount
      * @param password
      */
-    public UserAccount(String name, String password){
-        scoreBoard = new HashMap<>();
+    UserAccount(String name, String password){
         this.name=name;
         this.password=password;
-        this.history= new HashMap<>();
         history.put("history3x3", null);
         history.put("history4x4", null);
         history.put("history5x5",null);
         history.put("resumeHistory", null);
-        scoreBoard.put("history3x3", new ScoreBoard());
-        scoreBoard.put("history4x4", new ScoreBoard());
-        scoreBoard.put("history5x5", new ScoreBoard());
+        personalScoreBoard.put("history3x3", new ScoreBoard());
+        personalScoreBoard.put("history4x4", new ScoreBoard());
+        personalScoreBoard.put("history5x5", new ScoreBoard());
 
     }
 
@@ -90,7 +88,7 @@ public class UserAccount implements Serializable {
      * The getter for the password of the UserAccount.
      * @return the password
      */
-    public String getPassword(){
+    String getPassword(){
         return password;
     }
 
@@ -115,7 +113,7 @@ public class UserAccount implements Serializable {
      * The getter for the History of the UserAccount.
      * @return the History
      */
-    public HashMap<String, BoardManager> getHistory(){
+    HashMap<String, BoardManager> getHistory(){
         return history;
     }
 
@@ -124,7 +122,7 @@ public class UserAccount implements Serializable {
      * @param tag the size of the ScoreBoard.
      * @return the ScoreBoard wanted
      */
-    public ScoreBoard getScoreBoard(String tag) {
-        return scoreBoard.get(tag);
+    ScoreBoard getScoreBoard(String tag) {
+        return personalScoreBoard.get(tag);
     }
 }

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ScoreBoardActivity extends AppCompatActivity {
     private UserAccount user;
@@ -32,8 +33,10 @@ public class ScoreBoardActivity extends AppCompatActivity {
     private void getBoard() {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
-        ScoreBoard scoreBoard = (ScoreBoard) extra.getSerializable("scoreBoard");
-        setBoard((ArrayList<Object[]>) scoreBoard.getScoreList());
+        ScoreBoard personalScoreBoard = (ScoreBoard) extra.getSerializable("personalScoreBoard");
+        ScoreBoard globalScoreBoard = (ScoreBoard) extra.getSerializable("globalScoreBoard");
+        setPersonalBoard((ArrayList<Object[]>) personalScoreBoard.getScoreList());
+//        setGlobalBoard((ArrayList<Object[]>) globalScoreBoard.getScoreList());
     }
 
     private void addBackToHomePageButton() {
@@ -56,39 +59,43 @@ public class ScoreBoardActivity extends AppCompatActivity {
         startActivity(tmp);
     }
 
-    private void setBoard(ArrayList<Object[]> scoreList) {
+    private void setPersonalBoard(ArrayList<Object[]> scoreList) {
 
-        int[] name_list = {
-                R.id.Name0,
-                R.id.Name1,
-                R.id.Name2,
-                R.id.Name3,
-                R.id.Name4,
-                R.id.Name5,
-                R.id.Name6,
-                R.id.Name7,
-                R.id.Name8,
-                R.id.Name9,
-                R.id.Name10
-        };
+//        int[] name_list = {
+//                R.id.Name0,
+//                R.id.Name1,
+//                R.id.Name2,
+//                R.id.Name3,
+//                R.id.Name4,
+//                R.id.Name5,
+//                R.id.Name6,
+//                R.id.Name7,
+//                R.id.Name8,
+//                R.id.Name9,
+//                R.id.Name10
+//        };
+//
+//        int[] score_list = {
+//                R.id.Score0,
+//                R.id.Score1,
+//                R.id.Score2,
+//                R.id.Score3,
+//                R.id.Score4,
+//                R.id.Score5,
+//                R.id.Score6,
+//                R.id.Score7,
+//                R.id.Score8,
+//                R.id.Score9,
+//                R.id.Score10
+//        };
 
-        int[] score_list = {
-                R.id.Score0,
-                R.id.Score1,
-                R.id.Score2,
-                R.id.Score3,
-                R.id.Score4,
-                R.id.Score5,
-                R.id.Score6,
-                R.id.Score7,
-                R.id.Score8,
-                R.id.Score9,
-                R.id.Score10
-        };
-
-        for (int i = 0; i < name_list.length; i++) {
-            TextView t1 = findViewById(name_list[i]);
-            TextView t2 = findViewById(score_list[i]);
+        for (int i = 0; i < 11; i++) {
+            String name = "Name" + i;
+            String score = "Score" + i;
+            TextView t1 = findViewById
+                    (getResources().getIdentifier(name, "id", getPackageName()));
+            TextView t2 = findViewById
+                    (getResources().getIdentifier(score, "id", getPackageName()));
 
             if (i < scoreList.size()) {
             t1.setText((String) scoreList.get(i)[0]);

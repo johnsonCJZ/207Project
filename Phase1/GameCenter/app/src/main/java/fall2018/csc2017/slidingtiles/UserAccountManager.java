@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -12,16 +13,17 @@ import java.util.Iterator;
 public class UserAccountManager implements Iterable<UserAccount>, Serializable {
     private ArrayList<UserAccount> userList = new ArrayList<>();
 
+    private HashMap<String,ScoreBoard> slideTilesGlobalScoreBoard = new HashMap<>();
     /**
      * The serialized file for the users information.
      */
-    public final static String USERS = "save_user_info.ser";
+    final static String USERS = "save_user_info.ser";
 
     /**
      * The getter for a list of all the users.
      * @return a list of all the users.
      */
-    public ArrayList<UserAccount> getUserList(){
+    ArrayList<UserAccount> getUserList(){
         return userList;
     }
 
@@ -29,11 +31,16 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
      * Add a new UserAccount.
      * @param u the new UserAccount to be added
      */
-    public void AddUser(UserAccount u){
+    void AddUser(UserAccount u){
 
         userList.add(u);
     }
 
+    UserAccountManager() {
+        slideTilesGlobalScoreBoard.put("history3x3", new ScoreBoard());
+        slideTilesGlobalScoreBoard.put("history4x4", new ScoreBoard());
+        slideTilesGlobalScoreBoard.put("history5x5", new ScoreBoard());
+    }
     /**
      * Return a iterator of the UserAccountManager class.
      * @return a UserAccountManager Iterator.
@@ -60,10 +67,7 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
          */
         @Override
         public boolean hasNext() {
-            if(index < userList.size()){
-                return true;
-            }
-            return false;
+            return index < userList.size();
         }
 
         /**
@@ -77,6 +81,10 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
             }
             return null;
         }
+    }
+
+    ScoreBoard getSlideTilesGlobalScoreBoard(String tag) {
+        return slideTilesGlobalScoreBoard.get(tag);
     }
 }
 

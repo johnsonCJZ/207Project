@@ -16,7 +16,8 @@ import java.io.ObjectInputStream;
 public class SlideGameActivity extends AppCompatActivity {
     private UserAccount user;
     private UserAccountManager users;
-    private ScoreBoard scoreBoard;
+    private ScoreBoard personalScoreBoard;
+    private ScoreBoard globalScoreBoard;
     private BoardManager boardManager;
 
     /**
@@ -33,10 +34,14 @@ public class SlideGameActivity extends AppCompatActivity {
         addStartButtonListener();
         addLoadButtonListener();
         addResumeButtonListener();
-        addSeeScoreBoardListener();
+        addPersonalScoreBoardListener();
+        addGlobalScoreBoardListener();
     }
 
-    private void addSeeScoreBoardListener() {
+    private void addGlobalScoreBoardListener() {
+    }
+
+    private void addPersonalScoreBoardListener() {
         Button rank = findViewById(R.id.button5);
         rank.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,16 +61,16 @@ public class SlideGameActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: // 3x3
-                        scoreBoard = user.getScoreBoard("history3x3");
+                        personalScoreBoard = user.getScoreBoard("history3x3");
                         break;
                     case 1: // 4x4
-                        scoreBoard = user.getScoreBoard("history4x4");
+                        personalScoreBoard = user.getScoreBoard("history4x4");
                         break;
                     case 2: // 5x5
-                        scoreBoard = user.getScoreBoard("history5x5");
+                        personalScoreBoard = user.getScoreBoard("history5x5");
                         break;
                 }
-                if(scoreBoard!=null){
+                if(personalScoreBoard != null){
                     switchToScoreBoard();
                 }
                 else{
@@ -86,7 +91,7 @@ public class SlideGameActivity extends AppCompatActivity {
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
-        pass.putSerializable("scoreBoard", this.scoreBoard);
+        pass.putSerializable("scoreBoard", this.personalScoreBoard);
         tmp.putExtras(pass);
         startActivity(tmp);
     }
@@ -94,6 +99,7 @@ public class SlideGameActivity extends AppCompatActivity {
     private void getUsers(){
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
+        assert extra != null;
         this.user=(UserAccount) extra.getSerializable("user");
         this.users = (UserAccountManager) extra.getSerializable("allUsers");
     }
