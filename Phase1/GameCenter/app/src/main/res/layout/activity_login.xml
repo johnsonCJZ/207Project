@@ -54,7 +54,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="195dp"
         android:onClick="Registar"
-        android:text="Registar"
+        android:text="Register"
         android:textSize="18sp" />
 
     <TextView
