@@ -7,8 +7,15 @@ import android.view.View;
 import android.widget.Button;
 
 public class GameStoreActivity extends AppCompatActivity {
+    /**
+     * The game store activity, for managing users' games.
+     * @param savedInstanceState
+     */
 
-
+    /**
+     *  Initialize game store.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

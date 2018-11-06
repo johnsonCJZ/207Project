@@ -17,14 +17,35 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
-
+    /**
+     * EditText view for username
+     */
     EditText etUsername;
+    /**
+     * EditText view for password
+     */
     EditText etPassword;
+    /**
+     * Button for log in
+     */
     Button bLogIn;
+    /**
+     * TextView for register, functions as a button
+     */
     TextView registerLink;
+    /**
+     * UserAccountManager
+     */
     UserAccountManager userAccountManager;
+    /**
+     * TextView to set messages.
+     */
     TextView massage;
 
+    /**
+     * Initialize login in activity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +67,10 @@ public class LoginActivity extends AppCompatActivity {
         loginButtonPushed();
     }
 
+    /**
+     *  Actions after login in button is triggered, jump to game center activity while passing info to
+     *  game center activity.
+     */
     private void loginButtonPushed(){
         bLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +92,13 @@ public class LoginActivity extends AppCompatActivity {
             }}
         });
     }
+
+    /**
+     * Check if tempted user has legit id and username
+     * @param username
+     * @param password
+     * @return
+     */
     private UserAccount checkUserId(String username, String password){
         ArrayList<UserAccount> userList = userAccountManager.getUserList();
         System.out.println(userList);
@@ -80,6 +112,10 @@ public class LoginActivity extends AppCompatActivity {
         massage.setText("Wrong Username or Password");
         return null;}
 
+    /**
+     * load from pre-saved .ser file.
+      * @param fileName
+     */
     private void loadFromFile(String fileName) {
 
         try {
@@ -98,17 +134,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
-    public void saveToFile(String fileName) {
-        try {
-            ObjectOutputStream outputStream = new ObjectOutputStream(
-                    this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(userAccountManager);
-            outputStream.close();
-        } catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
 }
 
 
