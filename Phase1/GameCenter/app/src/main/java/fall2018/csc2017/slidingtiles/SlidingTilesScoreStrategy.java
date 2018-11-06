@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * The Strategy to calculate the score of a sliding tiles game.
  */
-public class SlidingTilesScoreStrategy implements Strategy<BoardManager>, Serializable {
+public class SlidingTilesScoreStrategy implements ScoreStrategy<BoardManager>, Serializable {
 
     /**
      * Calculate the score that is related to steps used to solve a board.
