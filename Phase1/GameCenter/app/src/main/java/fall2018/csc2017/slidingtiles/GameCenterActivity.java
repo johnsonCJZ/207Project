@@ -25,7 +25,6 @@ public class GameCenterActivity extends AppCompatActivity {
      * Initialize activity/view from start.
      * @param savedInstanceState
      */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +36,9 @@ public class GameCenterActivity extends AppCompatActivity {
         getUsers();
     }
 
+    /**
+     * Add the button for game Pong.
+     */
     private void addOpenPong() {
         ImageButton gamePong;
         gamePong = findViewById(R.id.Pong);
@@ -51,7 +53,6 @@ public class GameCenterActivity extends AppCompatActivity {
     /**
      * Get user info passing from last view/activity.
      */
-
     private void getUsers(){
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
@@ -74,6 +75,9 @@ public class GameCenterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Open the game Pong. For phase 2.
+     */
     private void openPong() {
         AlertDialog.Builder builder = new AlertDialog.Builder(GameCenterActivity.this);
         builder.setMessage("Coming Soon!");
