@@ -30,6 +30,11 @@ public class SlidingTilesScoreStrategy implements ScoreStrategy<BoardManager>, S
 
     }
 
+    /**
+     * Calculate score of game
+     * @param boardManager the boardManager to calculate score for
+     * @return the score with respect to both time and steps
+     */
     @Override
     public int calculateScore(BoardManager boardManager) {
         int stepScore = calStepScore(boardManager);

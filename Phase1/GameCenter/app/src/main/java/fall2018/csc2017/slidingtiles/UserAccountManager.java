@@ -11,9 +11,16 @@ import java.util.Iterator;
  * Represent a manager class for UserAccounts.
  */
 public class UserAccountManager implements Iterable<UserAccount>, Serializable {
+    /**
+     * all users stored
+     */
     private ArrayList<UserAccount> userList = new ArrayList<>();
 
+    /**
+     * global scoreBoard
+     */
     private HashMap<String,ScoreBoard> slideTilesGlobalScoreBoard = new HashMap<>();
+
     /**
      * The serialized file for the users information.
      */
@@ -36,6 +43,9 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
         userList.add(u);
     }
 
+    /**
+     * create a new UserAccountManager with empty memory
+     */
     UserAccountManager() {
         slideTilesGlobalScoreBoard.put("history3x3", new ScoreBoard());
         slideTilesGlobalScoreBoard.put("history4x4", new ScoreBoard());

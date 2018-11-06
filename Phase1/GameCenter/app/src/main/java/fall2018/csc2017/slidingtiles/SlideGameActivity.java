@@ -14,12 +14,36 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 
 public class SlideGameActivity extends AppCompatActivity {
+    /**
+     * user that is operating system
+     */
     private UserAccount user;
+
+    /**
+     * all users from database
+     */
     private UserAccountManager users;
+
+    /**
+     * scoreboard of user
+     */
     private ScoreBoard scoreBoard;
+
+    /**
+     * boardManager in user
+     */
     private BoardManager boardManager;
+
+    /**
+     * board type judgement
+     */
     private String boardType = "Personal";
 
+
+    /**
+     * Initialize all buttons
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +54,11 @@ public class SlideGameActivity extends AppCompatActivity {
         addResumeButtonListener();
         addPersonalScoreBoardListener();
         addGlobalScoreBoardListener();
-    }
+}
 
+    /**
+     * add global scoreboard button
+     */
     private void addGlobalScoreBoardListener() {
         Button globalRank = findViewById(R.id.button6);
         globalRank.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +70,9 @@ public class SlideGameActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * add personal scoreboard button
+     */
     private void addPersonalScoreBoardListener() {
         Button rank = findViewById(R.id.button5);
         rank.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +84,9 @@ public class SlideGameActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * choose game difficulty to view scoreboard
+     */
     private void choseLevel() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(SlideGameActivity.this);
         builder.setTitle("Choose an level");
@@ -104,6 +137,9 @@ public class SlideGameActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * start scoreboard activity
+     */
     private void switchToScoreBoard() {
         Intent tmp = new Intent(this, ScoreBoardActivity.class);
         Bundle pass = new Bundle();
@@ -114,6 +150,9 @@ public class SlideGameActivity extends AppCompatActivity {
         startActivity(tmp);
     }
 
+    /**
+     * get user info and data from last class
+     */
     private void getUsers(){
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
@@ -123,7 +162,9 @@ public class SlideGameActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * add start button
+     */
     private void addStartButtonListener() {
         Button startButton = findViewById(R.id.NewGameButton);
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +175,9 @@ public class SlideGameActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * add resume button
+     */
     private void addResumeButtonListener() {
         Button startButton = findViewById(R.id.ResumeButton);
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +204,9 @@ public class SlideGameActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * add load button
+     */
     private void addLoadButtonListener() {
         Button startButton = findViewById(R.id.LoadButton);
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +217,9 @@ public class SlideGameActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * start SlideDifficultActivity and pass useful info and data to next activity
+     */
     private void switchToDifficulty(){
         Intent tmp = new Intent(this, SlideDifficultyActivity.class);
         Bundle pass = new Bundle();
@@ -179,6 +228,9 @@ public class SlideGameActivity extends AppCompatActivity {
         tmp.putExtras(pass);
         startActivity(tmp);}
 
+    /**
+     * start playing game with MainSlideActivity
+      */
     private void switchToGame() {
         Intent tmp = new Intent(this, MainSlideActivity.class);
         Bundle pass = new Bundle();
@@ -189,6 +241,9 @@ public class SlideGameActivity extends AppCompatActivity {
         startActivity(tmp);
     }
 
+    /**
+     * get correct user info
+     */
     private void updateUser(){
         loadFromFile(UserAccountManager.USERS);
         for (UserAccount u: users.getUserList())
@@ -197,6 +252,9 @@ public class SlideGameActivity extends AppCompatActivity {
             }
     }
 
+    /**
+     * load game
+     */
     private void load(){
         updateUser();
         final AlertDialog.Builder builder = new AlertDialog.Builder(SlideGameActivity.this);
@@ -238,6 +296,10 @@ public class SlideGameActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * load from saved database
+     * @param fileName name of database
+     */
     private void loadFromFile(String fileName) {
 
         try {

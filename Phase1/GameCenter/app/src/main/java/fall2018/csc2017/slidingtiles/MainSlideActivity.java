@@ -196,7 +196,10 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
 
-
+    /**
+     * Initialize all buttons
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
