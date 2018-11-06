@@ -44,8 +44,8 @@ public class SlideGameActivity extends AppCompatActivity {
         rank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchToDifficulty();
                 direction = "ToBoard";
+                switchToDifficulty();
             }
         });
     }
@@ -64,8 +64,8 @@ public class SlideGameActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchToDifficulty();
                 direction = "ToGame";
+                switchToDifficulty();
             }
         });
     }
