@@ -28,7 +28,9 @@ import java.util.Observer;
  */
 public class MainSlideActivity extends AppCompatActivity implements Observer {
 
-    private ScoreBoard scoreBoard;
+    private ScoreBoard personalScoreBoard;
+
+    private ScoreBoard globalScoreBoard;
 
     private boolean isPaused;
 
@@ -108,11 +110,12 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     private int getScore(){
         int score;
 
-        score = scoreBoard.calculateScore(boardManager);
+        score = personalScoreBoard.calculateScore(boardManager);
         Object[] result = new Object[2];
         result[0] = user.getName();
         result[1] = score;
-        scoreBoard.addAndSort(result);
+        personalScoreBoard.addAndSort(result);
+        globalScoreBoard.addAndSort(result);
         saveToFile(UserAccountManager.USERS);
         return score;
 
@@ -158,7 +161,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         }
         createTileButtons(this);
         setContentView(R.layout.activity_main);
-        final TextView textView = (TextView)findViewById(R.id.textView6);
+        final TextView textView = findViewById(R.id.textView6);
         count=boardManager.getTime();
         isPaused = false;
         Thread t = new Thread(){
@@ -317,7 +320,8 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
-        pass.putSerializable("scoreBoard", this.scoreBoard);
+        pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
+        pass.putSerializable("globalScoreBoard", this.globalScoreBoard);
         tmp.putExtras(pass);
         startActivity(tmp);
     }
@@ -326,32 +330,40 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     private void getUserAndSize() throws CloneNotSupportedException {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
+
+        assert extra != null;
         this.user = (UserAccount) extra.getSerializable("user");
         this.users = (UserAccountManager) extra.getSerializable("allUsers");
         loadFromFile(UserAccountManager.USERS);
+
         for (UserAccount u : users.getUserList()) {
             if (u.getName().equals(user.getName())) {
                 this.user = u;
             }
         }
         this.boardManager = (BoardManager) extra.getSerializable("boardManager");
+        assert this.boardManager != null;
         this.boardManager = (BoardManager) this.boardManager.clone();
         this.size = this.boardManager.getBoard().getDimension();
         switch (size) {
             case 3:
-                this.scoreBoard = this.user.getScoreBoard("history3x3");
+                this.personalScoreBoard = this.user.getScoreBoard("history3x3");
+                this.globalScoreBoard = this.users.getSlideTilesGlobalScoreBoard("history3x3");
                 break;
 
             case 4:
-                this.scoreBoard = this.user.getScoreBoard("history4x4");
+                this.personalScoreBoard = this.user.getScoreBoard("history4x4");
+                this.globalScoreBoard = this.users.getSlideTilesGlobalScoreBoard("history4x4");
                 break;
 
             case 5:
-                this.scoreBoard = this.user.getScoreBoard("history5x5");
+                this.personalScoreBoard = this.user.getScoreBoard("history5x5");
+                this.globalScoreBoard = this.users.getSlideTilesGlobalScoreBoard("history5x5");
                 break;
 
             default:
-                this.scoreBoard = this.user.getScoreBoard("history4x4");
+                this.personalScoreBoard = this.user.getScoreBoard("history4x4");
+                this.globalScoreBoard = this.users.getSlideTilesGlobalScoreBoard("history4x4");
         }
     }
 

@@ -55,7 +55,7 @@ public class GameCenterActivity extends AppCompatActivity {
     private void getUsers(){
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
-        this.user=(UserAccount) extra.getSerializable("user");
+        this.user =(UserAccount) extra.getSerializable("user");
         this.users = (UserAccountManager) extra.getSerializable("allUsers");
     }
 
