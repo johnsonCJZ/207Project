@@ -63,7 +63,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
      * Set up the background image for each button based on the master list
      * of positions, and then call the adapter to set the view.
      */
-    // Display
     public void display() {
         updateTileButtons();
         gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
@@ -88,7 +87,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         try {
-                            getHistory(dialog);
+                            saveHistory(dialog);
                         } catch (CloneNotSupportedException e) {
                             e.printStackTrace();
                         }
@@ -114,32 +113,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
     }
 
-/**
- * alert box in alter box, not mature enough
- *
-    private void overrideAlert(final String memory){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Your had a history, wanna override?")
-
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        user.getHistory().replace(memory,boardManager);
-                        saveToFile(UserAccountManager.USERS);
-                        dialog.cancel();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
-
-    }
-
-*/
-
     private int getScore(){
         int score;
 
@@ -154,7 +127,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
 
-    private void getHistory(DialogInterface dialog) throws CloneNotSupportedException {
+    private void saveHistory(DialogInterface dialog) throws CloneNotSupportedException {
         switch (size) {
             case 3:
                 user.getHistory().put("history3x3", (BoardManager) boardManager.clone());
@@ -212,25 +185,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                                     if (boardManager.puzzleSolved() && !isPaused) {
                                         boardManager.setTime(count);
                                         isPaused = true;
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
-                                        int score = getScore();
-                                        builder.setMessage("you got " + String.valueOf(score) + " !")
-
-                                                .setPositiveButton("See my rank", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int id) {
-                                                        MainSlideActivity.this.finish();
-                                                        switchToScoreBoard();
-                                                    }
-                                                })
-                                                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int id) {
-                                                        MainSlideActivity.this.finish();
-                                                        user.getHistory().put("resumeHistory", null);
-                                                        switchToGameCenter();
-                                                    }
-                                                });
-                                        AlertDialog alert = builder.create();
-                                        alert.show();
+                                        winAlert();
                                     }
                                     else {
                                         count += 0.01;
@@ -280,11 +235,66 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
                     }
                 });
-        // redo and undo buttons
+        addRedoButton();
+        addUndoButton();
+        addCheatButton();
+    }
 
-        Button redo = findViewById(R.id.Redo);
-        Button undo = findViewById(R.id.Undo);
+    private void winAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
+        int score = getScore();
+        builder.setMessage("you got " + String.valueOf(score) + " !")
+
+                .setPositiveButton("See my rank", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        MainSlideActivity.this.finish();
+                        switchToScoreBoard();
+                    }
+                })
+                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        MainSlideActivity.this.finish();
+                        user.getHistory().put("resumeHistory", null);
+                        switchToGameCenter();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    /**
+     * Add the cheat button.
+     */
+    private void addCheatButton() {
         Button cheat = findViewById(R.id.Cheating);
+        cheat.setOnClickListener(new View.OnClickListener() {
+                @Override
+            public void onClick(View v) {
+                cheat();
+                display();
+            }
+        });
+    }
+
+    /**
+     * Add the undo button.
+     */
+    private void addUndoButton() {
+        Button undo = findViewById(R.id.Undo);
+        undo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boardManager.undo();
+                display();
+            }
+        });
+    }
+
+    /**
+     * Add the redo button.
+     */
+    private void addRedoButton() {
+        Button redo = findViewById(R.id.Redo);
         redo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -293,25 +303,13 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
             }
 
         });
-
-        undo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boardManager.undo();
-                display();
-            }
-        });
-        cheat.setOnClickListener(new View.OnClickListener() {
-                @Override
-            public void onClick(View v) {
-                setUpCorrect();
-                display();
-        }
-    });
     }
 
-    //cheat functions
-    private List<Tile> makeTiles() {
+    /**
+     * Manage the board to a ready-to-solve state. The cheat operation is only for testing and will
+     * not be saved into history. This functionality will be removed in Phase 2.
+     */
+    private void cheat() {
         List<Tile> tiles = new ArrayList<>();
         int numTiles = size*size;
         for (int tileNum = 1; tileNum != numTiles-1; tileNum++) {
@@ -319,15 +317,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         }
         tiles.add(new Tile(0));
         tiles.add(new Tile(numTiles-1));
-
-        return tiles;
-    }
-
-    /**
-     * Make a solved Board.
-     */
-    private void setUpCorrect() {
-        List<Tile> tiles = makeTiles();
         boardManager.getBoard().setTiles(tiles);
     }
 
