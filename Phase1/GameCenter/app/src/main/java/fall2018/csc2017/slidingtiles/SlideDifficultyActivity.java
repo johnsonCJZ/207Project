@@ -39,7 +39,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
 
     private void addStart4x4Button() {
         Button startButton = findViewById(R.id.button3);
-        if (this.direction == "ToGame") {
+        if (this.direction.equals("ToGame")) {
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -62,7 +62,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
 
     private void addStart3x3Button() {
         Button startButton = findViewById(R.id.button);
-        if (this.direction == "ToGame") {
+        if (this.direction.equals("ToGame")) {
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -94,7 +94,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
     }
     private void addStart5x5Button() {
         Button startButton = findViewById(R.id.button4);
-        if (this.direction == "ToGame") {
+        if (this.direction.equals("ToGame")) {
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
