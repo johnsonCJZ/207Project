@@ -220,7 +220,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                                                 .setPositiveButton("See my rank", new DialogInterface.OnClickListener() {
                                                     public void onClick(DialogInterface dialog, int id) {
                                                         MainSlideActivity.this.finish();
-                                                        addScoreBoard();
+                                                        switchToScoreBoard();
                                                     }
                                                 })
                                                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
@@ -332,13 +332,12 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         boardManager.getBoard().setTiles(tiles);
     }
 
-    private void addScoreBoard(){
+    private void switchToScoreBoard(){
         Intent tmp = new Intent(this, ScoreBoardActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
-        pass.putSerializable("boardManager",boardManager);
-        pass.putSerializable("scoreBoard", scoreBoard);
+        pass.putSerializable("scoreBoard", this.scoreBoard);
         tmp.putExtras(pass);
         startActivity(tmp);
     }

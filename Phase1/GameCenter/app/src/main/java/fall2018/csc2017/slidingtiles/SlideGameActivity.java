@@ -20,6 +20,7 @@ import java.io.ObjectOutputStream;
 public class SlideGameActivity extends AppCompatActivity {
     private UserAccount user;
     private UserAccountManager users;
+    private String direction;
     /**
      * The main save file.
      */
@@ -35,6 +36,18 @@ public class SlideGameActivity extends AppCompatActivity {
         addStartButtonListener();
         addLoadButtonListener();
         addResumeButtonListener();
+        addSeeScoreBoardListener();
+    }
+
+    private void addSeeScoreBoardListener() {
+        Button rank = findViewById(R.id.button5);
+        rank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToDifficulty();
+                direction = "ToBoard";
+            }
+        });
     }
 
     private void getUsers(){
@@ -52,6 +65,7 @@ public class SlideGameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 switchToDifficulty();
+                direction = "ToGame";
             }
         });
     }
@@ -98,6 +112,7 @@ public class SlideGameActivity extends AppCompatActivity {
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
+        pass.putSerializable("direction", this.direction);
         tmp.putExtras(pass);
         startActivity(tmp);}
 
