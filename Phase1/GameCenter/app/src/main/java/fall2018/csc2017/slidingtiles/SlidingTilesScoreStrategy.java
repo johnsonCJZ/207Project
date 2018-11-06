@@ -3,14 +3,14 @@ package fall2018.csc2017.slidingtiles;
 import java.io.Serializable;
 
 /**
- *
+ * The Strategy to calculate the score of a sliding tiles game.
  */
 public class SlidingTilesScoreStrategy implements Strategy<BoardManager>, Serializable {
 
     /**
-     *
-     * @param boardManager
-     * @return
+     * Calculate the score that is related to steps used to solve a board.
+     * @param boardManager the boardManager to calculate score for
+     * @return the score related to steps
      */
     private int calStepScore(BoardManager boardManager) {
         int step = boardManager.getHistory().getSize()-1;
@@ -19,9 +19,9 @@ public class SlidingTilesScoreStrategy implements Strategy<BoardManager>, Serial
     }
 
     /**
-     *
-     * @param boardManager
-     * @return
+     * Calculate the score that is related to time taken solve a board.
+     * @param boardManager the boardManager to calculate score for
+     * @return the score related to time
      */
     private int calTimeScore(BoardManager boardManager) {
         double time = boardManager.getTime();
@@ -31,11 +31,6 @@ public class SlidingTilesScoreStrategy implements Strategy<BoardManager>, Serial
     }
 
     @Override
-    /**
-     *
-     * @param boardManager
-     * @return the score calculated
-     */
     public int calculateScore(BoardManager boardManager) {
         int stepScore = calStepScore(boardManager);
         int timeScore = calTimeScore(boardManager);
