@@ -21,6 +21,11 @@ class ScoreBoard implements Serializable {
         scoreBoardSize = size;
     }
 
+    /**
+     * Return a score calculated by using scoreStrategy.
+     * @param boardManager the boardManager that is finished and to be calculated for score
+     * @return a score calculated by using scoreStrategy
+     */
     int calculateScore(BoardManager boardManager) {
         return scoreStrategy.calculateScore(boardManager);
     }

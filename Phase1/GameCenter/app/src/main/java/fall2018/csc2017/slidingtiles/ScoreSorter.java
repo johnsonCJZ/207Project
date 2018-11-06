@@ -2,10 +2,11 @@ package fall2018.csc2017.slidingtiles;
 
 import android.util.Pair;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.List;
 
-public class ScoreSorter implements Sorter<Object[]>{
+public class ScoreSorter implements Sorter<Object[]>, Serializable {
 
     @Override
     public void sort(List<Object[]> nameAndScore){

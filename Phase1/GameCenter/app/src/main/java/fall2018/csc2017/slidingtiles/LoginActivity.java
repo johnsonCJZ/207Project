@@ -105,7 +105,6 @@ public class LoginActivity extends AppCompatActivity {
      * @param password the password to check
      * @return the userAccount if the username and password are correctly matching
      */
-    @SuppressLint("SetTextI18n")
     private UserAccount checkUserId(String username, String password){
         ArrayList<UserAccount> userList = userAccountManager.getUserList();
         for(UserAccount account: userList){
