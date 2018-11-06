@@ -20,12 +20,6 @@ public class SlideGameActivity extends AppCompatActivity {
     private ScoreBoard globalScoreBoard;
     private BoardManager boardManager;
 
-    /**
-     * The main save file.
-     */
-    /**
-     * A temporary save file.
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
