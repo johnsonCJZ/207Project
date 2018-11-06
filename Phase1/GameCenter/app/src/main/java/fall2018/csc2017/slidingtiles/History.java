@@ -2,14 +2,30 @@ package fall2018.csc2017.slidingtiles;
 
 import java.io.Serializable;
 
+/**
+ * The History linked list.
+ */
 public class History implements Serializable {
 
+    /**
+     * The front of the linked list.
+     */
     public HistoryNode front = null;
 
+    /**
+     * The back of the linked list.
+     */
     public HistoryNode back = null;
 
-    public int size = 0;
+    /**
+     * The size of the linked list.
+     */
+    private int size = 0;
 
+    /**
+     * Return the size of the linked list.
+     * @return
+     */
     public int getSize() {
         return size;
     }
