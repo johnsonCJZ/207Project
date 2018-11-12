@@ -3,6 +3,8 @@ package fall2018.csc2017.slidingtiles;
 import android.content.Context;
 import android.widget.Toast;
 
+import es.dmoral.toasty.Toasty;
+
 /**
  * The swiping move operation controller
  */
@@ -27,10 +29,10 @@ class MovementController {
         if (boardManager.isValidTap(position)) {
             boardManager.touchMove(position);
             if (boardManager.puzzleSolved()) {
-                Toast.makeText(context, "YOU WIN!", Toast.LENGTH_SHORT).show();
+                Toasty.success(context, "YOU WIN!!", Toast.LENGTH_SHORT, true).show();
             }
         } else {
-            Toast.makeText(context, "Invalid Tap", Toast.LENGTH_SHORT).show();
+            Toasty.warning(context, "Invalid Tap!", Toast.LENGTH_SHORT, true).show();
         }
     }
 }

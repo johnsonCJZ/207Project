@@ -1,6 +1,7 @@
 package fall2018.csc2017.slidingtiles;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,12 +10,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+
+import es.dmoral.toasty.Toasty;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -106,14 +110,15 @@ public class LoginActivity extends AppCompatActivity {
      * @return the userAccount if the username and password are correctly matching
      */
     private UserAccount checkUserId(String username, String password){
+        Context context = getApplicationContext();
         ArrayList<UserAccount> userList = userAccountManager.getUserList();
         for(UserAccount account: userList){
             if(account.getName().equals(username) && account.getPassword().equals(password)){
-                massage.setText("Welcome");
+                Toasty.success(context, "Welcome!", Toast.LENGTH_SHORT, true).show();
                 return account;
             }
         }
-        massage.setText("Wrong Username or Password");
+        Toasty.error(context, "Wrong Username or Password", Toast.LENGTH_SHORT, true).show();
         return null;}
 
     /**

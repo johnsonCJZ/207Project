@@ -1,6 +1,7 @@
 package fall2018.csc2017.slidingtiles;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import es.dmoral.toasty.Toasty;
+
 /**
  *The game center activity, for choosing game to play/ manage games user has
  */
@@ -25,9 +30,12 @@ public class GameCenterActivity extends AppCompatActivity {
      * Initialize activity/view from start.
      * @param savedInstanceState
      */
+
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context= getApplicationContext();
 
         setContentView(R.layout.activity_game_center);
         addOpenGameStore();
@@ -98,11 +106,7 @@ public class GameCenterActivity extends AppCompatActivity {
      * Open the game Pong. For phase 2.
      */
     private void openPong() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(GameCenterActivity.this);
-        builder.setMessage("Coming Soon!");
-
-        AlertDialog alert = builder.create();
-        alert.show();
+        Toasty.warning(context, "Coming Soon!", Toast.LENGTH_SHORT, true).show();
     }
 
     /**

@@ -1,10 +1,14 @@
 package fall2018.csc2017.slidingtiles;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import es.dmoral.toasty.Toasty;
 
 public class GameStoreActivity extends AppCompatActivity {
     /**
@@ -19,12 +23,15 @@ public class GameStoreActivity extends AppCompatActivity {
      *  Initialize game store.
      * @param savedInstanceState
      */
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        context= getApplicationContext();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_store_acivity);
         addOpenPong();
         addOpenSlide();
+
     }
 
     /**
@@ -37,11 +44,7 @@ public class GameStoreActivity extends AppCompatActivity {
         gamePong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(GameStoreActivity.this);
-                builder.setMessage("Coming Soon!");
-
-                AlertDialog alert = builder.create();
-                alert.show();
+                Toasty.warning(context, "Coming Soon!", Toast.LENGTH_SHORT, true).show();
             }
         });
 
@@ -57,11 +60,7 @@ public class GameStoreActivity extends AppCompatActivity {
         gamePong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(GameStoreActivity.this);
-                builder.setMessage("You have this game already!");
-
-                AlertDialog alert = builder.create();
-                alert.show();
+                Toasty.warning(context, "You have this game already!", Toast.LENGTH_SHORT, true).show();
             }
         });}
 
