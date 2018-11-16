@@ -72,11 +72,11 @@ public class ScoreBoardActivity extends AppCompatActivity{
      */
 
     private void switchToHomePage() {
-        Intent tmp = new Intent(this, GameCenterActivity.class);
+        Intent tmp = new Intent(this, MainInfoPanelActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
-
+        pass.putString("fragment", "Slide");
         tmp.putExtras(pass);
         startActivity(tmp);
     }

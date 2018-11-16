@@ -23,6 +23,10 @@
         <activity android:name=".GameCenterActivity" />
         <activity android:name=".SlideDifficultyActivity" />
         <activity android:name=".ScoreBoardActivity" />
+        <activity
+            android:name=".MainInfoPanelActivity"
+            android:label="@string/title_activity_main_info_panel"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

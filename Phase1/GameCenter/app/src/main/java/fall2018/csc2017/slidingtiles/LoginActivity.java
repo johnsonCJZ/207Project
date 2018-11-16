@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                 String password = etPassword.getText().toString();
                 UserAccount user = checkUserId(username,password);
                 if(user!=null){
-                    Intent loginIntent = new Intent(LoginActivity.this, GameCenterActivity.class);
+                    Intent loginIntent = new Intent(LoginActivity.this, MainInfoPanelActivity.class);
                     Bundle pass = new Bundle();
                     pass.putSerializable("user",user);
                     pass.putSerializable("allUsers", userAccountManager);

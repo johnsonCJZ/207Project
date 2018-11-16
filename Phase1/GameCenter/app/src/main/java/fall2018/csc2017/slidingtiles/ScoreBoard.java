@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * The scoreBoard to display rankings.
  */
-class ScoreBoard implements Serializable {
+public class ScoreBoard implements Serializable {
     private int scoreBoardSize;
     private List<Object[]> scoreList = new ArrayList<>();
     private SlidingTilesScoreStrategy scoreStrategy;

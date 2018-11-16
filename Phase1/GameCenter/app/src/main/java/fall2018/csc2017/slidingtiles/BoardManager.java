@@ -44,7 +44,7 @@ public class BoardManager implements Serializable, Cloneable {
      * @throws CloneNotSupportedException
      */
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

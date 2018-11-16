@@ -24,13 +24,13 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
     /**
      * The serialized file for the users information.
      */
-    final static String USERS = "save_user_info.ser";
+    public final static String USERS = "save_user_info.ser";
 
     /**
      * The getter for a list of all the users.
      * @return a list of all the users.
      */
-    ArrayList<UserAccount> getUserList(){
+    public ArrayList<UserAccount> getUserList(){
         return userList;
     }
 
@@ -93,7 +93,7 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
         }
     }
 
-    ScoreBoard getSlideTilesGlobalScoreBoard(String tag) {
+    public ScoreBoard getSlideTilesGlobalScoreBoard(String tag) {
         return slideTilesGlobalScoreBoard.get(tag);
     }
 }

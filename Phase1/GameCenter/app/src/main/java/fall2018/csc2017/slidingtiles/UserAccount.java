@@ -39,7 +39,7 @@ public class UserAccount implements Serializable {
      * @param name the name of the UserAccount
      * @param password
      */
-    UserAccount(String name, String password){
+    public UserAccount(String name, String password){
         this.name=name;
         this.password=password;
         history.put("history3x3", null);
@@ -88,7 +88,7 @@ public class UserAccount implements Serializable {
      * The getter for the password of the UserAccount.
      * @return the password
      */
-    String getPassword(){
+    public String getPassword(){
         return password;
     }
 
@@ -113,7 +113,7 @@ public class UserAccount implements Serializable {
      * The getter for the History of the UserAccount.
      * @return the History
      */
-    HashMap<String, BoardManager> getHistory(){
+    public HashMap<String, BoardManager> getHistory(){
         return history;
     }
 
@@ -122,7 +122,7 @@ public class UserAccount implements Serializable {
      * @param tag the size of the ScoreBoard.
      * @return the ScoreBoard wanted
      */
-    ScoreBoard getScoreBoard(String tag) {
+    public ScoreBoard getScoreBoard(String tag) {
         return personalScoreBoard.get(tag);
     }
 }

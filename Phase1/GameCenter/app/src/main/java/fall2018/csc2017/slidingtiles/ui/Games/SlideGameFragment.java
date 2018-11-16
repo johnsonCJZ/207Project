@@ -1,19 +1,30 @@
-package fall2018.csc2017.slidingtiles;
+package fall2018.csc2017.slidingtiles.ui.Games;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 
-public class SlideGameActivity extends AppCompatActivity {
+import fall2018.csc2017.slidingtiles.R;
+import fall2018.csc2017.slidingtiles.*;
+
+
+public class SlideGameFragment extends Fragment {
+
     /**
      * user that is operating system
      */
@@ -40,28 +51,46 @@ public class SlideGameActivity extends AppCompatActivity {
     private String boardType = "Personal";
 
 
+    private Button globalRank;
 
-    /**
-     * Initialize all buttons
-     * @param savedInstanceState
-     */
+    private Button rank;
+
+    private Button startButton;
+
+    private Button resumeButton;
+
+    private Button loadButton;
+
+    private Button logOut;
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getUsers();
-        setContentView(R.layout.activity_slide_game);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+
+        getUser();
+        View rootView = inflater.inflate(R.layout.slide_game_fragment, container, false);
+        globalRank=rootView.findViewById(R.id.global_rank);
+        rank=rootView.findViewById(R.id.personal_rank);
+        startButton=rootView.findViewById(R.id.NewGameButton1);
+        resumeButton=rootView.findViewById(R.id.ResumeButton1);
+        loadButton=rootView.findViewById(R.id.LoadButton1);
         addStartButtonListener();
         addLoadButtonListener();
         addResumeButtonListener();
         addPersonalScoreBoardListener();
         addGlobalScoreBoardListener();
-}
+        return rootView;
+    }
+
+    private void getUser(){
+        user= (UserAccount) getArguments().getSerializable("user");
+        users= (UserAccountManager) getArguments().getSerializable("allUsers");
+    }
 
     /**
      * add global scoreboard button
      */
     private void addGlobalScoreBoardListener() {
-        Button globalRank = findViewById(R.id.button6);
         globalRank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,11 +100,12 @@ public class SlideGameActivity extends AppCompatActivity {
         });
     }
 
+
+
     /**
      * add personal scoreboard button
      */
     private void addPersonalScoreBoardListener() {
-        Button rank = findViewById(R.id.button5);
         rank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +119,7 @@ public class SlideGameActivity extends AppCompatActivity {
      * choose game difficulty to view scoreboard
      */
     private void choseLevel() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(SlideGameActivity.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Choose an level");
         // add a list
         String[] memoryList = {"3x3", "4x4","5x5"};
@@ -142,7 +172,7 @@ public class SlideGameActivity extends AppCompatActivity {
      * start scoreboard activity
      */
     private void switchToScoreBoard() {
-        Intent tmp = new Intent(this, ScoreBoardActivity.class);
+        Intent tmp = new Intent(getActivity(), ScoreBoardActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
@@ -152,22 +182,9 @@ public class SlideGameActivity extends AppCompatActivity {
     }
 
     /**
-     * get user info and data from last class
-     */
-    private void getUsers(){
-        Intent intentExtras = getIntent();
-        Bundle extra = intentExtras.getExtras();
-        assert extra != null;
-        this.user=(UserAccount) extra.getSerializable("user");
-        this.users = (UserAccountManager) extra.getSerializable("allUsers");
-    }
-
-
-    /**
      * add start button
      */
     private void addStartButtonListener() {
-        Button startButton = findViewById(R.id.NewGameButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,8 +197,7 @@ public class SlideGameActivity extends AppCompatActivity {
      * add resume button
      */
     private void addResumeButtonListener() {
-        Button startButton = findViewById(R.id.ResumeButton);
-        startButton.setOnClickListener(new View.OnClickListener() {
+        resumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boardManager = user.getHistory().get("resumeHistory");
@@ -196,7 +212,7 @@ public class SlideGameActivity extends AppCompatActivity {
                 }
                 else {
                     AlertDialog.Builder builder = new AlertDialog.Builder
-                            (SlideGameActivity.this);
+                            (getActivity());
                     builder.setMessage("History not found");
                     AlertDialog d = builder.create();
                     d.show();
@@ -209,8 +225,7 @@ public class SlideGameActivity extends AppCompatActivity {
      * add load button
      */
     private void addLoadButtonListener() {
-        Button startButton = findViewById(R.id.LoadButton);
-        startButton.setOnClickListener(new View.OnClickListener() {
+        loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 load();
@@ -222,7 +237,7 @@ public class SlideGameActivity extends AppCompatActivity {
      * start SlideDifficultActivity and pass useful info and data to next activity
      */
     private void switchToDifficulty(){
-        Intent tmp = new Intent(this, SlideDifficultyActivity.class);
+        Intent tmp = new Intent(getActivity(), SlideDifficultyActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
@@ -231,9 +246,9 @@ public class SlideGameActivity extends AppCompatActivity {
 
     /**
      * start playing game with MainSlideActivity
-      */
+     */
     private void switchToGame() {
-        Intent tmp = new Intent(this, MainSlideActivity.class);
+        Intent tmp = new Intent(getActivity(), MainSlideActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
@@ -258,7 +273,7 @@ public class SlideGameActivity extends AppCompatActivity {
      */
     private void load(){
         updateUser();
-        final AlertDialog.Builder builder = new AlertDialog.Builder(SlideGameActivity.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Choose an memory");
         // add a list
         String[] memoryList = {"3x3", "4x4","5x5"};
@@ -267,13 +282,13 @@ public class SlideGameActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: // 3x3
-                            boardManager = user.getHistory().get("history3x3");
+                        boardManager = user.getHistory().get("history3x3");
                         break;
                     case 1: // 4x4
-                            boardManager = user.getHistory().get("history4x4");
+                        boardManager = user.getHistory().get("history4x4");
                         break;
                     case 2: // 5x5
-                            boardManager = user.getHistory().get("history5x5");
+                        boardManager = user.getHistory().get("history5x5");
                         break;
                 }
                 if(boardManager!=null){
@@ -304,7 +319,7 @@ public class SlideGameActivity extends AppCompatActivity {
     private void loadFromFile(String fileName) {
 
         try {
-            InputStream inputStream = this.openFileInput(fileName);
+            InputStream inputStream = getActivity().openFileInput(fileName);
             if (inputStream != null) {
                 ObjectInputStream input = new ObjectInputStream(inputStream);
                 users = (UserAccountManager) input.readObject();
@@ -318,10 +333,6 @@ public class SlideGameActivity extends AppCompatActivity {
             Log.e("login activity", "File contained unexpected data type: " + e.toString());
         }
     }
+
+
 }
-
-
-
-
-
-
