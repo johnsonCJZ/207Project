@@ -2,51 +2,19 @@ package fall2018.csc2017.slidingtiles;
 
 import java.util.Random;
 
-public class MineSweeper {
-    private static final long serialVersionUID = 1L;
-    private int width, height;
+public class MineSweeperManager {
     private MineSweeperTile[][] tiles;
-    private int difficulty;
     private MineSweeperBoard board;
-//    private JButton reset;
     private boolean finished;
+    private int width, height, difficulty;
 
-    public MineSweeper(int x, int y, int d) {
-        width = x;
-        height = y;
-        difficulty = d;
-        tiles = new MineSweeperTile[width][height];
-
+    public MineSweeperManager(int x, int y, int d, int m) {
         reset();
+        board = new MineSweeperBoard(x,y,d, m);
+        width = board.getWidth();
+        height = board.getHeight();
+        difficulty = board.getDifficulty();
 
-        board = new MineSweeperBoard(this);
-//        reset = new JButton("Reset");
-
-//        add(board, BorderLayout.CENTER);
-//        add(reset, BorderLayout.SOUTH);
-
-//        reset.addActionListener(new Actions(this));
-//
-//        setTitle("Minesweeper");
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        setResizable(false);
-//        pack();
-//        setVisible(true);
-    }
-
-    public int getx()
-    {
-        return width;
-    }
-
-    public int gety()
-    {
-        return height;
-    }
-
-    public MineSweeperTile[][] getTiles()
-    {
-        return tiles;
     }
 
     public void reset()
