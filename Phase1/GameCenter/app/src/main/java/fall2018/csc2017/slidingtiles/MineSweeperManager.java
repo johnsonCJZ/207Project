@@ -7,6 +7,7 @@ public class MineSweeperManager {
     private MineSweeperBoard board;
     private boolean finished;
     private int width, height, difficulty;
+    private double time;
 
     public MineSweeperManager(int x, int y, int d, int m) {
         reset();
@@ -15,6 +16,18 @@ public class MineSweeperManager {
         height = board.getHeight();
         difficulty = board.getDifficulty();
 
+    }
+
+    public MineSweeperBoard getBoard(){
+        return board;
+    }
+
+    public double getTime() {
+        return time;
+    }
+
+    public void setTime(double time) {
+        this.time = time;
     }
 
     public void reset()
@@ -90,17 +103,11 @@ public class MineSweeperManager {
         }
     }
 
-//    public void refresh()
-//    {
-//        board.repaint();
-//    }
-
     public void select(int x, int y)
     {
         if (tiles[x][y].isFlagged()) return;
         tiles[x][y].reveal();
         resetMarks();
-//        refresh();
 
         if (tiles[x][y].isMine())
         {
@@ -123,8 +130,6 @@ public class MineSweeperManager {
                 tiles[i][j].reveal();
             }
         }
-//        refresh();
-//        JOptionPane.showMessageDialog(null, "BOOOOM!");
         reset();
     }
 
@@ -139,9 +144,6 @@ public class MineSweeperManager {
                 if (!tiles[i][j].isMine()) tiles[i][j].unflag();
             }
         }
-
-//        refresh();
-//        JOptionPane.showMessageDialog(null, "Congratulations! You won!");
         reset();
     }
 
@@ -157,7 +159,6 @@ public class MineSweeperManager {
                 }
             }
         }
-
         return true;
     }
 
