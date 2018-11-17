@@ -58,49 +58,50 @@ public class MineSweeperManager {
         {
             for (int j = 0; j < height; j++)
             {
-                int count = 0;
-
-                if (i > 0 &&	j > 0 && tiles[i - 1]	[j - 1]	.isMine()) count++;
-                if (j > 0 && tiles[i][j - 1].isMine()) count++;
-                if (i < width - 1 && j > 0 && tiles[i + 1][j - 1].isMine()) count++;
-
-                if (i > 0 && tiles[i - 1][j].isMine()) count++;
-                if (i < width - 1 && tiles[i + 1][j].isMine()) count++;
-
-                if (i > 0 && j < height - 1 && tiles[i - 1][j + 1].isMine()) count++;
-                if (j < height - 1	&& tiles[i] [j + 1].isMine()) count++;
-                if (i < width - 1 && j < height - 1 && tiles[i + 1][j + 1].isMine()) count++;
-
-                tiles[i][j].setNumber(count);
-
-                if (tiles[i][j].isMine())
-                {
+                //if the tile is a mine, set the number to be -1
+                if (tiles[i][j].isMine()) {
                     tiles[i][j].setNumber(-1);
                 }
 
+                //if the tile isn't a mine, set the number to be the number of mines surrounds it.
+                else {
+                    int count = 0;
+                    if (i > 0 && j > 0 && tiles[i - 1][j - 1].isMine()) count++; //upper-left tile
+                    if (j > 0 && tiles[i][j - 1].isMine()) count++; //left tile
+                    if (i < width - 1 && j > 0 && tiles[i + 1][j - 1].isMine())
+                        count++; //lower-left
+                    if (i > 0 && tiles[i - 1][j].isMine()) count++; // upper tile
+                    if (i < width - 1 && tiles[i + 1][j].isMine()) count++; // lower tile
+                    if (i > 0 && j < height - 1 && tiles[i - 1][j + 1].isMine())
+                        count++; //upper-right
+                    if (j < height - 1 && tiles[i][j + 1].isMine()) count++; //right tile
+                    if (i < width - 1 && j < height - 1 && tiles[i + 1][j + 1].isMine())
+                        count++; //lower-right tile
+                    tiles[i][j].setNumber(count);
+                }
+
+                //if the tile is not surrounded by any mine.
                 if (tiles[i][j].getNumber() == 0)
                 {
-                    tiles[i][j].reveal();
+//                    tiles[i][j].reveal();
                 }
             }
         }
 
-        for (int i = 0; i < width; i++)
-        {
-            for (int j = 0; j < height; j++)
-            {
-                if (i > 0 &&	j > 0 && tiles[i - 1][j - 1].getNumber() == 0) tiles[i][j].reveal();
-                if (j > 0 && tiles[i][j - 1].getNumber() == 0) tiles[i][j].reveal();
-                if (i < width - 1 && j > 0 && tiles[i + 1][j - 1].getNumber() == 0) tiles[i][j].reveal();
-
-                if (i > 0 && tiles[i - 1][j].getNumber() == 0) tiles[i][j].reveal();
-                if (i < width - 1 && tiles[i + 1]	[j]		.getNumber() == 0) tiles[i][j].reveal();
-
-                if (i > 0 && j < height - 1 && tiles[i - 1][j + 1].getNumber() == 0) tiles[i][j].reveal();
-                if (j < height - 1 && tiles[i][j + 1].getNumber() == 0) tiles[i][j].reveal();
-                if (i < width - 1 && j < height - 1 && tiles[i + 1][j + 1]	.getNumber() == 0) tiles[i][j].reveal();
-            }
-        }
+//        for (int i = 0; i < width; i++)
+//        {
+//            for (int j = 0; j < height; j++)
+//            {
+//                if (i > 0 &&	j > 0 && tiles[i - 1][j - 1].getNumber() == 0) tiles[i][j].reveal();
+//                if (j > 0 && tiles[i][j - 1].getNumber() == 0) tiles[i][j].reveal();
+//                if (i < width - 1 && j > 0 && tiles[i + 1][j - 1].getNumber() == 0) tiles[i][j].reveal();
+//                if (i > 0 && tiles[i - 1][j].getNumber() == 0) tiles[i][j].reveal();
+//                if (i < width - 1 && tiles[i + 1]	[j]		.getNumber() == 0) tiles[i][j].reveal();
+//                if (i > 0 && j < height - 1 && tiles[i - 1][j + 1].getNumber() == 0) tiles[i][j].reveal();
+//                if (j < height - 1 && tiles[i][j + 1].getNumber() == 0) tiles[i][j].reveal();
+//                if (i < width - 1 && j < height - 1 && tiles[i + 1][j + 1]	.getNumber() == 0) tiles[i][j].reveal();
+//            }
+//        }
     }
 
     public void select(int x, int y)
