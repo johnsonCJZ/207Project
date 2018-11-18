@@ -56,6 +56,10 @@ public class MineSweeperTile {
         }
     }
 
+    public int getBackground() {
+        return background;
+    }
+
     public void setMine(){
         isMine = true;
     }
