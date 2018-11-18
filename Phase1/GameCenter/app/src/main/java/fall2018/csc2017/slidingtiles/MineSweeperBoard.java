@@ -35,4 +35,14 @@ public class MineSweeperBoard extends Observable {
         int col = position % width;
         return tiles[row][col];
     }
+
+    public void setTiles(){
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                MineSweeperTile tile = new MineSweeperTile();
+                tiles[i][j] = tile;
+                tile.setPosition((i * width + j));
+            }
+        }
+    }
 }
