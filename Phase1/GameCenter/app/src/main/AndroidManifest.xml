@@ -18,16 +18,14 @@
         </activity>
         <activity android:name=".MainSlideActivity" />
         <activity android:name=".GameStoreActivity" />
-        <activity android:name=".SlideGameActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".GameCenterActivity" />
         <activity android:name=".SlideDifficultyActivity" />
-        <activity android:name=".ScoreBoardActivity" />
         <activity
             android:name=".MainInfoPanelActivity"
             android:label="@string/title_activity_main_info_panel"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Main2048Activity"></activity>
+        <activity android:name=".Main2048Activity"/>
+        <activity android:name=".ScoreBoardTabLayoutActivity"></activity>
     </application>
 
 </manifest>

@@ -64,7 +64,7 @@ public class Main2048Activity extends AppCompatActivity {
     }
     private void createTileButtons(Context context) {
         Board2048 board = boardManager.getBoard();
-        tileButtons = new ArrayList<>()
+        ArrayList tileButtons = new ArrayList<>();
     }
 
     private void winAlert() {
@@ -75,14 +75,14 @@ public class Main2048Activity extends AppCompatActivity {
                 .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Main2048Activity.this.finish();
-                        switchToScoreBoard();
+                        //switchToScoreBoard();
                     }
                 })
                 .setNegativeButton("Back To Home Page", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Main2048Activity.this.finish();
-                        user.getHistory().put("resumeHistory", null);
-                        switchToGameCenter();
+                        //user.getHistory().put("resumeHistory", null);
+                        //switchToGameCenter();
                     }
                 });
         AlertDialog alert = builder.create();
@@ -91,7 +91,7 @@ public class Main2048Activity extends AppCompatActivity {
 
     private int getScore() {
         int score;
-        score = personalScoreBoard.calculateScore(boardManager);
+        //score = personalScoreBoard.calculateScore(boardManager);
         return 0;
 
     }

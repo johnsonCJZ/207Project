@@ -55,19 +55,11 @@
         android:layout_marginTop="30dp">
 
         <Button
-            android:id="@+id/personal_rank"
+            android:id="@+id/Rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="PersonalRank"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/global_rank"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:text="GlobalRank"
+            android:text="Score Board"
             android:textStyle="bold" />
 
     </TableRow>

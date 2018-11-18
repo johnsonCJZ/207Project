@@ -38,7 +38,9 @@ public class SlideGameFragment extends Fragment {
     /**
      * scoreboard of user
      */
-    private ScoreBoard scoreBoard;
+    private ScoreBoard personalScoreBoard;
+
+    private ScoreBoard globalScoreBoard;
 
     /**
      * boardManager in user
@@ -48,12 +50,9 @@ public class SlideGameFragment extends Fragment {
     /**
      * board type judgement
      */
-    private String boardType = "Personal";
 
 
-    private Button globalRank;
-
-    private Button rank;
+    private Button Rank;
 
     private Button startButton;
 
@@ -61,7 +60,6 @@ public class SlideGameFragment extends Fragment {
 
     private Button loadButton;
 
-    private Button logOut;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -69,16 +67,14 @@ public class SlideGameFragment extends Fragment {
 
         getUser();
         View rootView = inflater.inflate(R.layout.slide_game_fragment, container, false);
-        globalRank=rootView.findViewById(R.id.global_rank);
-        rank=rootView.findViewById(R.id.personal_rank);
+        Rank=rootView.findViewById(R.id.Rank);
         startButton=rootView.findViewById(R.id.NewGameButton1);
         resumeButton=rootView.findViewById(R.id.ResumeButton1);
         loadButton=rootView.findViewById(R.id.LoadButton1);
         addStartButtonListener();
         addLoadButtonListener();
         addResumeButtonListener();
-        addPersonalScoreBoardListener();
-        addGlobalScoreBoardListener();
+        addScoreBoardListener();
         return rootView;
     }
 
@@ -90,30 +86,16 @@ public class SlideGameFragment extends Fragment {
     /**
      * add global scoreboard button
      */
-    private void addGlobalScoreBoardListener() {
-        globalRank.setOnClickListener(new View.OnClickListener() {
+    private void addScoreBoardListener() {
+        Rank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardType = "Global";
                 choseLevel();
             }
         });
     }
 
 
-
-    /**
-     * add personal scoreboard button
-     */
-    private void addPersonalScoreBoardListener() {
-        rank.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boardType = "Personal";
-                choseLevel();
-            }
-        });
-    }
 
     /**
      * choose game difficulty to view scoreboard
@@ -128,31 +110,19 @@ public class SlideGameFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: // 3x3
-                        if (boardType.equals("Personal")) {
-                            scoreBoard = user.getScoreBoard("history3x3");
-                        }
-                        else {
-                            scoreBoard = users.getSlideTilesGlobalScoreBoard("history3x3");
-                        }
+                        personalScoreBoard = user.getScoreBoard("history3x3");
+                        globalScoreBoard = users.getSlideTilesGlobalScoreBoard("history3x3");
                         break;
                     case 1: // 4x4
-                        if (boardType.equals("Personal")) {
-                            scoreBoard = user.getScoreBoard("history4x4");
-                        }
-                        else {
-                            scoreBoard = users.getSlideTilesGlobalScoreBoard("history4x4");
-                        }
+                        personalScoreBoard = user.getScoreBoard("history4x4");
+                        globalScoreBoard = users.getSlideTilesGlobalScoreBoard("history4x4");
                         break;
                     case 2: // 5x5
-                        if (boardType.equals("Personal")) {
-                            scoreBoard = user.getScoreBoard("history5x5");
-                        }
-                        else {
-                            scoreBoard = users.getSlideTilesGlobalScoreBoard("history5x5");
-                        }
+                        personalScoreBoard = user.getScoreBoard("history5x5");
+                        globalScoreBoard = users.getSlideTilesGlobalScoreBoard("history5x5");
                         break;
                 }
-                if(scoreBoard != null){
+                if(personalScoreBoard != null && globalScoreBoard!=null){
                     switchToScoreBoard();
                 }
                 else{
@@ -172,11 +142,12 @@ public class SlideGameFragment extends Fragment {
      * start scoreboard activity
      */
     private void switchToScoreBoard() {
-        Intent tmp = new Intent(getActivity(), ScoreBoardActivity.class);
+        Intent tmp = new Intent(getActivity(), ScoreBoardTabLayoutActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
-        pass.putSerializable("scoreBoard", this.scoreBoard);
+        pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
+        pass.putSerializable("globalScoreBoard", this.globalScoreBoard);
         tmp.putExtras(pass);
         startActivity(tmp);
     }
@@ -333,6 +304,8 @@ public class SlideGameFragment extends Fragment {
             Log.e("login activity", "File contained unexpected data type: " + e.toString());
         }
     }
+
+
 
 
 }
