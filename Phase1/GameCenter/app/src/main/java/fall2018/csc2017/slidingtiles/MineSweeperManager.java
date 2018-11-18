@@ -1,23 +1,90 @@
 package fall2018.csc2017.slidingtiles;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MineSweeperManager {
-    private MineSweeperTile[][] tiles;
     private MineSweeperBoard board;
+    private MineSweeperTile[][] tiles = board.getTiles();
     private boolean finished;
-    private int width, height, difficulty;
+    private int width;
+    private int height;
     private double time;
+    private boolean isFirst = true;
 
-    public MineSweeperManager(int x, int y, int d, int m) {
-        reset();
-        board = new MineSweeperBoard(x,y,d, m);
+    public MineSweeperManager(int x, int y, int m) {
+        board = new MineSweeperBoard(x,y,m);
         width = board.getWidth();
         height = board.getHeight();
-        difficulty = board.getDifficulty();
-
+        setUpBoard();
     }
 
+    public void setMines(int position){
+        int mine = board.getMine();
+        List<MineSweeperTile> startNine = getSurround(position);
+        Random r = new Random();
+        List<Integer> randomNum = new ArrayList<>();
+        int i = 0;
+
+        startNine.add(board.getTile(position));
+
+        while (i < mine) {
+            Integer num = r.nextInt(width*height);
+
+            if (!randomNum.contains(num) && !startNine.contains(board.getTile(num))){
+                randomNum.add(num);
+                board.getTile(num).setMine();
+                i++;
+            }
+        }
+    }
+
+    public List<MineSweeperTile> getSurround(int position) {
+        int row = position / width;
+        int col = position / width;
+        List<MineSweeperTile> surround = new ArrayList<>();
+
+        if (row != 0 && col != 0){
+            surround.add(board.getTiles()[row-1][col-1]);
+        }
+        if (row != 0 && col != width-1){
+            surround.add(board.getTiles()[row-1][col+1]);
+        }
+        if (row != 0){surround.add(board.getTiles()[row-1][col]);}
+        if (row != height-1 && col != 0){
+            surround.add(board.getTiles()[row+1][col-1]);
+        }
+        if (row != height-1 && col != width-1){
+            surround.add(board.getTiles()[row+1][col+1]);
+        }
+        if (row != height-1){surround.add(board.getTiles()[row+1][col]);}
+        if (col != 0){surround.add(board.getTiles()[row][col-1]);}
+        if (col != width-1){surround.add(board.getTiles()[row][col+1]);}
+        return surround;
+    }
+
+    public void reveal(MineSweeperTile currTile){
+        if (currTile.getNumber() == 0){
+            currTile.reveal();
+            for (MineSweeperTile tile : getSurround(currTile.getPosition())){
+                if (tile.getNumber() == 0){
+                    reveal(tile);}
+            }
+        }
+        else {currTile.reveal();}
+    }
+
+    public void touchmove(int position){
+        if (isFirst){
+            setMines(position);
+            setNumbers();
+            isFirst = false;
+        }
+        MineSweeperTile currTile = board.getTile(position);
+        if (currTile.isMine()){}
+        else reveal(currTile);
+    }
     public MineSweeperBoard getBoard(){
         return board;
     }
@@ -30,10 +97,10 @@ public class MineSweeperManager {
         this.time = time;
     }
 
-    public void reset()
+    public void setUpBoard()
     {
-        Random random = new Random();
         finished = false;
+        isFirst = true;
 
         for (int i = 0; i < width; i++)
         {
@@ -41,15 +108,9 @@ public class MineSweeperManager {
             {
                 MineSweeperTile c = new MineSweeperTile();
                 tiles[i][j] = c;
-                int r = random.nextInt(100);
-
-                if (r < difficulty)
-                {
-                    tiles[i][j].setMine();
-                }
+                c.setPosition((i*width + j));
             }
         }
-        setNumbers();
     }
 
     private void setNumbers()
@@ -106,7 +167,8 @@ public class MineSweeperManager {
 
     public void select(int x, int y)
     {
-        if (tiles[x][y].isFlagged()) return;
+        if (tiles[x][y].isFlagged())
+            return;
         tiles[x][y].reveal();
         resetMarks();
 
@@ -131,7 +193,7 @@ public class MineSweeperManager {
                 tiles[i][j].reveal();
             }
         }
-        reset();
+        setUpBoard();
     }
 
     private void win()
@@ -145,7 +207,7 @@ public class MineSweeperManager {
                 if (!tiles[i][j].isMine()) tiles[i][j].unflag();
             }
         }
-        reset();
+        setUpBoard();
     }
 
     private boolean won()

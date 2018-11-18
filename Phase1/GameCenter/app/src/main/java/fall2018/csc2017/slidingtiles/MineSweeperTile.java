@@ -65,7 +65,7 @@ public class MineSweeperTile {
         isFlagged = true;
     }
 
-    public void unflag()
+    public void unFlag()
     {
         isFlagged = false;
     }
