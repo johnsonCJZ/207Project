@@ -27,7 +27,7 @@ public class MinesweeperDifficultyActivity extends AppCompatActivity {
 
     private void addEasyButton() {
         Button Easy = findViewById(R.id.Easy);
-        clickFourDifficulties(Easy, 9, 9, 10);
+        clickFourDifficulties(Easy, 5, 5, 3);
     }
 
     private void addMediumButton(){

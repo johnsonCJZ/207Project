@@ -120,7 +120,7 @@ public class MineSweeperActivity extends AppCompatActivity implements Observer {
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
-        pass.putString("fragment", "MineSweeper");
+        pass.putString("fragment", "Mine");
         intent.putExtras(pass);
         startActivity(intent);
     }
@@ -229,7 +229,7 @@ public class MineSweeperActivity extends AppCompatActivity implements Observer {
         }
         createTileButtons(this);
         setContentView(R.layout.activity_minesweeper);
-        final TextView textView = findViewById(R.id.textView6);
+        final TextView textView = findViewById(R.id.time);
         count=boardManager.getTime();
         isPaused = false;
         Thread t = new Thread(){
@@ -278,7 +278,7 @@ public class MineSweeperActivity extends AppCompatActivity implements Observer {
         t.start();
 
         // Add View to activity
-        gridView = findViewById(R.id.grid);
+        gridView = findViewById(R.id.mine_grid);
         gridView.setNumColumns(boardManager.getBoard().getWidth());
         gridView.setBoardManager(boardManager);
         boardManager.getBoard().addObserver(this);
