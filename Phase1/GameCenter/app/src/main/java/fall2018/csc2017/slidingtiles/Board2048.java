@@ -13,33 +13,17 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
 
     private Tile2048[][] tiles;
 
-    int score;
-
     /**
      * A new empty board of 4*4 tiles.
      */
     Board2048() {
         this.tiles = new Tile2048[dimension][dimension];
-        this.score = 0;
-        setTiles();
     }
 
     void addTile() {
         ArrayList<Tile2048> empty = findEmpty();
         Tile2048 randomTile = empty.get((int) (Math.random() * empty.size()));
         randomTile.random();
-
-    }
-
-    void setTiles() {
-        for (int row = 0; row != this.dimension; row++) {
-            for (int col = 0; col != this.dimension; col++) {
-                Tile2048 tile = this.tiles[row][col];
-                tile.setX(col);
-                tile.setY(row);
-                tile.setValue(0);
-            }
-        }
 
     }
 
@@ -65,7 +49,6 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                     Tile2048 tile = tiles[row][col];
                     if (tile.equals(tiles[row + 1][col])) {
                         tile.setValue(tile.getValue() * 2);
-                        score += tile.getValue() * 2;
                         moveVertical(row + 1, col, "DOWN");
                         break;
                     }
@@ -78,7 +61,6 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                     Tile2048 tile = tiles[row][col];
                     if (tile.equals(tiles[row - 1][col])) {
                         tile.setValue(tile.getValue() * 2);
-                        score += tile.getValue() * 2;
                         moveHorizontal(row - 1, col, "UP");
                         break;
                     }
@@ -88,6 +70,10 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
 
         setChanged();
         notifyObservers();
+    }
+
+    public Tile2048[][] getTiles() {
+        return tiles;
     }
 
     private void moveVertical(int row, int col, String direction) {
@@ -115,7 +101,6 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                     Tile2048 tile = tiles[i][j];
                     if (tile.equals(tiles[i][j + 1])) {
                         tile.setValue(tile.getValue() * 2);
-                        score += tile.getValue() * 2;
                         moveHorizontal(i, j + 1, "LEFT");
                         break;
                     }
@@ -127,7 +112,6 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                     Tile2048 tile = tiles[i][j];
                     if (tile.equals(tiles[i][j - 1])) {
                         tile.setValue(tile.getValue() * 2);
-                        score += tile.getValue() * 2;
                         moveHorizontal(i, j - 1, "RIGHT");
                         break;
                     }

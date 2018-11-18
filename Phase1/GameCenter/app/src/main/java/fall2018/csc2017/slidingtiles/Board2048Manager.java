@@ -12,15 +12,41 @@ public class Board2048Manager implements Cloneable{
     private Board2048Manager() {
         this.board = new Board2048();
         this.dimension = board.getDimension();
+        setTiles();
         board.addTile();
         board.addTile();
+    }
+
+    void setTiles() {
+        for (int row = 0; row != this.dimension; row++) {
+            for (int col = 0; col != this.dimension; col++) {
+                Tile2048 tile = this.board.getTiles()[row][col];
+                tile.setX(col);
+                tile.setY(row);
+                tile.setValue(0);
+            }
+        }
+
     }
 
     private boolean isFull() {
         return board.findEmpty().size() == 0;
     }
 
-    boolean isValidMove(String direction) {
+    boolean isLose() {
+        return !canMove();
+    }
+
+    boolean isWin(){
+        for (Tile2048 tile : board) {
+            if (tile.getValue() == 2048) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    boolean canMove() {
         if (!isFull()) {
             return true;
         } else {
