@@ -37,5 +37,6 @@ class MovementController {
                 Toasty.warning(context, "Invalid Tap!", Toast.LENGTH_SHORT, true).show();
             }
         }
+
     }
 }

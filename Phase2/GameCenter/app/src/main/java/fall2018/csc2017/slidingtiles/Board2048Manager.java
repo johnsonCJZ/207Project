@@ -1,6 +1,8 @@
 package fall2018.csc2017.slidingtiles;
 
-public class Board2048Manager implements Cloneable{
+import java.io.Serializable;
+
+public class Board2048Manager extends Manager implements Cloneable, Serializable {
     private Board2048 board;
 
     private int dimension;

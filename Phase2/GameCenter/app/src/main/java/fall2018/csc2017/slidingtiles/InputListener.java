@@ -6,10 +6,13 @@ package fall2018.csc2017.slidingtiles;
 // is
 // https://github.com/veryyoung/2048/blob/master/app/src/main/java/me/veryyoung/game2048/InputListener.java
 
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class InputListener implements View.OnTouchListener {
+import static fall2018.csc2017.slidingtiles.GestureDetectGridView.SWIPE_MAX_OFF_PATH;
+
+public class InputListener extends GestureDetector.SimpleOnGestureListener   {
 
     private static final int SWIPE_MIN_DISTANCE = 0;
     private static final int SWIPE_THRESHOLD_VELOCITY = 25;
@@ -29,12 +32,49 @@ public class InputListener implements View.OnTouchListener {
     private boolean hasMoved = false;
 
     private Board2048Manager boardManager;
-    MainView2048 mView;
 
-    public InputListener(MainView2048 view) {
+    public InputListener() {
         super();
-        this.mView = view;
-        boardManager = mView.game;
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                           float velocityY) {
+        try {
+            if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH){
+                if (Math.abs(e1.getX() - e2.getX()) > SWIPE_MAX_OFF_PATH) {
+                    return false;
+                }
+                // up to down swipe
+                if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE
+                        && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+                    boardManager.moveDown();
+                }
+                // down to up swipe
+                else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE
+                        && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+                    boardManager.moveUp();
+            }   }
+            // right to left swipe
+            if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
+                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                boardManager.moveLeft();
+            }
+            // left to right swipe
+            else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
+                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                boardManager.moveRight();
+
+
+            }
+        } catch (Exception e) {
+
+        }
+        return false;
+    }
+
+    public void setBoardManager(Board2048Manager boardManager) {
+        this.boardManager = boardManager;
     }
 
     public boolean onTouch(View view, MotionEvent event) {
@@ -88,6 +128,8 @@ public class InputListener implements View.OnTouchListener {
                             previousDirection = previousDirection * 2;
                             veryLastDirection = 2;
                             boardManager.moveDown();
+                            // this is when swipe down
+
                         } else if (((dy <= -SWIPE_THRESHOLD_VELOCITY && previousDirection == 1) || y
                                 - startingY <= -MOVE_THRESHOLD)
                                 && previousDirection % 3 != 0) {
@@ -95,6 +137,8 @@ public class InputListener implements View.OnTouchListener {
                             previousDirection = previousDirection * 3;
                             veryLastDirection = 3;
                             boardManager.moveUp();
+                            // this is when swipe up
+
                         } else if (((dx >= SWIPE_THRESHOLD_VELOCITY && previousDirection == 1) || x
                                 - startingX >= MOVE_THRESHOLD)
                                 && previousDirection % 5 != 0) {
@@ -102,6 +146,8 @@ public class InputListener implements View.OnTouchListener {
                             previousDirection = previousDirection * 5;
                             veryLastDirection = 5;
                             boardManager.moveRight();
+                            // this is when swipe right
+
                         } else if (((dx <= -SWIPE_THRESHOLD_VELOCITY && previousDirection == 1) || x
                                 - startingX <= -MOVE_THRESHOLD)
                                 && previousDirection % 7 != 0) {
@@ -109,6 +155,8 @@ public class InputListener implements View.OnTouchListener {
                             previousDirection = previousDirection * 7;
                             veryLastDirection = 7;
                             boardManager.moveLeft();
+                            // this is when swipe left
+
                         }
                         if (moved) {
                             hasMoved = true;
