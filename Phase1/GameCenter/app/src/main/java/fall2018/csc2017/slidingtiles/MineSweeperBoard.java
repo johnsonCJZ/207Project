@@ -1,7 +1,6 @@
 package fall2018.csc2017.slidingtiles;
 
 public class MineSweeperBoard {
-//    private static final long serialVersionUID = 1L;
     private int width, height;
     private int difficulty;
     private int mine;
