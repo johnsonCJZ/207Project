@@ -330,7 +330,7 @@ public class MineSweeperActivity extends AppCompatActivity implements Observer {
      * Switch to ScoreBoard activity/view.
      */
     private void switchToScoreBoard(){
-        Intent tmp = new Intent(this, ScoreBoardActivity.class);
+        Intent tmp = new Intent(this, ScoreBoardTabLayoutActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("user",this.user);
         pass.putSerializable("allUsers", this.users);
