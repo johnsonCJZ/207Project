@@ -13,11 +13,14 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
 
     private Tile2048[][] tiles;
 
+    int score;
+
     /**
      * A new empty board of 4*4 tiles.
      */
     Board2048() {
         this.tiles = new Tile2048[dimension][dimension];
+        this.score = 0;
         setTiles();
     }
 
@@ -62,6 +65,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                     Tile2048 tile = tiles[row][col];
                     if (tile.equals(tiles[row + 1][col])) {
                         tile.setValue(tile.getValue() * 2);
+                        score += tile.getValue() * 2;
                         moveVertical(row + 1, col, "DOWN");
                         break;
                     }
@@ -74,6 +78,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                     Tile2048 tile = tiles[row][col];
                     if (tile.equals(tiles[row - 1][col])) {
                         tile.setValue(tile.getValue() * 2);
+                        score += tile.getValue() * 2;
                         moveHorizontal(row - 1, col, "UP");
                         break;
                     }
@@ -110,6 +115,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                     Tile2048 tile = tiles[i][j];
                     if (tile.equals(tiles[i][j + 1])) {
                         tile.setValue(tile.getValue() * 2);
+                        score += tile.getValue() * 2;
                         moveHorizontal(i, j + 1, "LEFT");
                         break;
                     }
@@ -121,6 +127,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                     Tile2048 tile = tiles[i][j];
                     if (tile.equals(tiles[i][j - 1])) {
                         tile.setValue(tile.getValue() * 2);
+                        score += tile.getValue() * 2;
                         moveHorizontal(i, j - 1, "RIGHT");
                         break;
                     }
