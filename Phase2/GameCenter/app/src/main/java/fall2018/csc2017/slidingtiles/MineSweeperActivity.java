@@ -69,7 +69,7 @@ public class MineSweeperActivity extends AppCompatActivity implements Observer {
     /**
      * Time count for autosave purpose.
      */
-    private double tempCount = 0; //
+    private double tempCount = 0;
 
     /**
      * UserAccount associated to the game.
@@ -98,7 +98,7 @@ public class MineSweeperActivity extends AppCompatActivity implements Observer {
         MineSweeperBoard board = boardManager.getBoard();
         int nextPos = 0;
         for (Button b : tileButtons) {
-            b.setBackgroundResource(board.getTile(boardManager.getBoard().getWidth()).getBackground());
+            b.setBackgroundResource(board.getTile(nextPos).getBackground());
             nextPos++;
         }
     }
@@ -228,7 +228,7 @@ public class MineSweeperActivity extends AppCompatActivity implements Observer {
             e.printStackTrace();
         }
         createTileButtons(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_minesweeper);
         final TextView textView = findViewById(R.id.textView6);
         count=boardManager.getTime();
         isPaused = false;

@@ -26,14 +26,16 @@ class MovementController {
      * @param position the position where a tap occurred
      */
     void processTapMovement(Context context, int position) {
-        BoardManager b = (BoardManager) boardManager;
-        if (b.isValidTap(position)) {
-            b.touchMove(position);
-            if (b.puzzleSolved()) {
-                Toasty.success(context, "YOU WIN!!", Toast.LENGTH_SHORT, true).show();
+        if (boardManager instanceof BoardManager) {
+            BoardManager b = (BoardManager) boardManager;
+            if (b.isValidTap(position)) {
+                b.touchMove(position);
+                if (b.puzzleSolved()) {
+                    Toasty.success(context, "YOU WIN!!", Toast.LENGTH_SHORT, true).show();
+                }
+            } else {
+                Toasty.warning(context, "Invalid Tap!", Toast.LENGTH_SHORT, true).show();
             }
-        } else {
-            Toasty.warning(context, "Invalid Tap!", Toast.LENGTH_SHORT, true).show();
         }
     }
 }

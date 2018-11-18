@@ -9,6 +9,6 @@ class MineSweeperScoreStrategy implements ScoreStrategy<MineSweeperManager>, Ser
     @Override
     public int calculateScore(MineSweeperManager boardManager) {
         double time = boardManager.getTime();
-        return (int) Math.round((100 - time/15));
+        return (int) time;
     }
 }

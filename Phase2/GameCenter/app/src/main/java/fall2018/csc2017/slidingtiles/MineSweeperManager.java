@@ -89,7 +89,7 @@ public class MineSweeperManager extends Manager implements Serializable {
         }
     }
 
-    void touchmove(int position) {
+    void touchMove(int position) {
         if (isFirst) {
             setMines(position);
             setNumbers();
