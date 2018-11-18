@@ -20,7 +20,7 @@ public class MineSweeperManager {
         setUpBoard();
     }
 
-    public void setMines(int position){
+    void setMines(int position){
         int mine = board.getMine();
         List<MineSweeperTile> startNine = getSurround(position);
         Random r = new Random();
@@ -40,7 +40,7 @@ public class MineSweeperManager {
         }
     }
 
-    public List<MineSweeperTile> getSurround(int position) {
+    List<MineSweeperTile> getSurround(int position) {
         int row = position / width;
         int col = position / width;
         List<MineSweeperTile> surround = new ArrayList<>();
@@ -64,7 +64,7 @@ public class MineSweeperManager {
         return surround;
     }
 
-    public void reveal(MineSweeperTile currTile){
+    void reveal(MineSweeperTile currTile){
         if (currTile.getNumber() == 0){
             currTile.reveal();
             for (MineSweeperTile tile : getSurround(currTile.getPosition())){
@@ -75,7 +75,7 @@ public class MineSweeperManager {
         else {currTile.reveal();}
     }
 
-    public void touchmove(int position){
+    void touchmove(int position){
         if (isFirst){
             setMines(position);
             setNumbers();
@@ -85,19 +85,19 @@ public class MineSweeperManager {
         if (currTile.isMine()){}
         else reveal(currTile);
     }
-    public MineSweeperBoard getBoard(){
+    MineSweeperBoard getBoard(){
         return board;
     }
 
-    public double getTime() {
+    double getTime() {
         return time;
     }
 
-    public void setTime(double time) {
+    void setTime(double time) {
         this.time = time;
     }
 
-    public void setUpBoard()
+    void setUpBoard()
     {
         finished = false;
         isFirst = true;
@@ -113,7 +113,7 @@ public class MineSweeperManager {
         }
     }
 
-    private void setNumbers()
+    void setNumbers()
     {
         for (int i = 0; i < width; i++)
         {
@@ -165,7 +165,7 @@ public class MineSweeperManager {
 //        }
     }
 
-    public void select(int x, int y)
+    void select(int x, int y)
     {
         if (tiles[x][y].isFlagged())
             return;
@@ -182,21 +182,21 @@ public class MineSweeperManager {
         }
     }
 
-    private void loose()
+    void loose()
     {
         finished = true;
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                if (!tiles[i][j].isObscured()) tiles[i][j].unflag();
+                if (!tiles[i][j].isObscured()) tiles[i][j].unFlag();
                 tiles[i][j].reveal();
             }
         }
         setUpBoard();
     }
 
-    private void win()
+    void win()
     {
         finished = true;
         for (int i = 0; i < width; i++)
@@ -204,13 +204,13 @@ public class MineSweeperManager {
             for (int j = 0; j < height; j++)
             {
                 tiles[i][j].reveal();
-                if (!tiles[i][j].isMine()) tiles[i][j].unflag();
+                if (!tiles[i][j].isMine()) tiles[i][j].unFlag();
             }
         }
         setUpBoard();
     }
 
-    private boolean won()
+    boolean won()
     {
         for (int i = 0; i < width; i++)
         {
@@ -225,26 +225,26 @@ public class MineSweeperManager {
         return true;
     }
 
-    public void mark(int x, int y)
+    void mark(int x, int y)
     {
-        if (tiles[x][y].isFlagged()) tiles[x][y].unflag();
+        if (tiles[x][y].isFlagged()) tiles[x][y].unFlag();
         else if (tiles[x][y].isObscured()) tiles[x][y].flag();
 
         resetMarks();
     }
 
-    private void resetMarks()
+    void resetMarks()
     {
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                if (!tiles[i][j].isObscured()) tiles[i][j].unflag();
+                if (!tiles[i][j].isObscured()) tiles[i][j].unFlag();
             }
         }
     }
 
-    public boolean isFinished()
+    boolean isFinished()
     {
         return finished;
     }
