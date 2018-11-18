@@ -27,6 +27,7 @@
             android:name=".MainInfoPanelActivity"
             android:label="@string/title_activity_main_info_panel"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Main2048Activity"></activity>
     </application>
 
 </manifest>
