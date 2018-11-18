@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Observable;
 
@@ -19,11 +18,12 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
      */
     Board2048() {
         this.tiles = new Tile2048[dimension][dimension];
+        setTiles();
     }
 
-    private void addTile() {
+    void addTile() {
         ArrayList<Tile2048> empty = findEmpty();
-        Tile2048 randomTile = empty.get((int)(Math.random()*empty.size()));
+        Tile2048 randomTile = empty.get((int) (Math.random() * empty.size()));
         randomTile.random();
 
     }
@@ -31,7 +31,10 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
     void setTiles() {
         for (int row = 0; row != this.dimension; row++) {
             for (int col = 0; col != this.dimension; col++) {
-                this.tiles[row][col] = Tile.ZERO;
+                Tile2048 tile = this.tiles[row][col];
+                tile.setX(col);
+                tile.setY(row);
+                tile.setValue(0);
             }
         }
 
@@ -39,23 +42,108 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
 
     ArrayList<Tile2048> findEmpty() {
         ArrayList result = new ArrayList<>();
-        for (Tile2048 tile:this){
-        if (tile.isEmpty()) {
-            result.add(tile);
+        for (Tile2048 tile : this) {
+            if (tile.isEmpty()) {
+                result.add(tile);
+            }
         }
         return result;
+    }
+
+
+    Tile2048 tileAtPosition(int x, int y) {
+        return tiles[x][y];
+    }
+    //direction = up or down here
+    void mergeVertical(String direction) {
+        if (direction.equals("DOWN")) {
+            for (int col = 0; col < dimension - 1; col++) {
+                for (int row = 0; row < dimension - 1; row++) {
+                    Tile2048 tile = tiles[row][col];
+                    if (tile.equals(tiles[row + 1][col])) {
+                        tile.setValue(tile.getValue() * 2);
+                        moveVertical(row + 1, col, "DOWN");
+                        break;
+                    }
+                }
+            }
         }
+        else {
+            for (int col = 0; col < dimension - 1; col++) {
+                for (int row = dimension - 1; row > 0; row--) {
+                    Tile2048 tile = tiles[row][col];
+                    if (tile.equals(tiles[row - 1][col])) {
+                        tile.setValue(tile.getValue() * 2);
+                        moveHorizontal(row - 1, col, "UP");
+                        break;
+                    }
+                }
+            }
+        }
+
+        setChanged();
+        notifyObservers();
     }
 
-    Tile2048 tileAtPosition(int x, int y){
-    return tiles[x][y];
+    private void moveVertical(int row, int col, String direction) {
+        if (direction.equals("DOWN")) {
+            for (int index = col; index < dimension - 1; index++) {
+                tiles[row][col].setValue(tiles[row + 1][col].getValue());
+            }
+            tiles[dimension][col].setValue(0);
+        } else {
+            for (int index = col; index > 0; index--) {
+                tiles[row][col].setValue(tiles[row][col - 1].getValue());
+            }
+            tiles[row][col].setValue(0);
+        }
+
+        setChanged();
+        notifyObservers();
     }
 
-    void swapTiles(int row1, int col1, int row2, int col2) {
-        Tile2048 temp1 = this.tiles[row1][col1];
-        Tile2048 temp2 = this.tiles[row2][col2];
-        this.tiles[row1][col1] = temp2;
-        this.tiles[row2][col2] = temp1;
+    //direction = left or right here
+    void mergeHorizontal(String direction) {
+        if (direction.equals("LEFT")) {
+            for (int i = 0; i < dimension - 1; i++) {
+                for (int j = 0; j < dimension - 1; j++) {
+                    Tile2048 tile = tiles[i][j];
+                    if (tile.equals(tiles[i][j + 1])) {
+                        tile.setValue(tile.getValue() * 2);
+                        moveHorizontal(i, j + 1, "LEFT");
+                        break;
+                    }
+                }
+            }
+        } else {
+            for (int i = 0; i < dimension - 1; i++) {
+                for (int j = dimension - 1; j > 0; j--) {
+                    Tile2048 tile = tiles[i][j];
+                    if (tile.equals(tiles[i][j - 1])) {
+                        tile.setValue(tile.getValue() * 2);
+                        moveHorizontal(i, j - 1, "RIGHT");
+                        break;
+                    }
+                }
+            }
+        }
+
+        setChanged();
+        notifyObservers();
+    }
+
+    private void moveHorizontal(int row, int col, String direction) {
+        if (direction.equals("LEFT")) {
+            for (int index = col; index < dimension - 1; index++) {
+                tiles[row][col].setValue(tiles[row][col + 1].getValue());
+            }
+            tiles[row][dimension].setValue(0);
+        } else {
+            for (int index = col; index > 0; index--) {
+                tiles[row][col].setValue(tiles[row][col - 1].getValue());
+            }
+            tiles[row][0].setValue(0);
+        }
 
         setChanged();
         notifyObservers();
@@ -73,7 +161,6 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
 
     /**
      * internal nested iterator iterates through 2-D array tiles
-     *
      */
     private class Tile2048Iterator implements Iterator<Tile2048> {
         int currentRow = 0;
@@ -89,7 +176,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
          *
          * @param tiles tiles from board
          */
-        Tile2048Iterator(Tile2048[][] tiles){
+        Tile2048Iterator(Tile2048[][] tiles) {
             this.tiles = tiles;
         }
 
@@ -123,4 +210,5 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                 return this.tiles[currentRow][currentCol];
             }
         }
+    }
 }

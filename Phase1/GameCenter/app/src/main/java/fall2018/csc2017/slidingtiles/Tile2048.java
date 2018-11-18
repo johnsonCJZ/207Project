@@ -24,4 +24,41 @@ class   Tile2048 {
             this.value = 2;
         }
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        else if (!(obj instanceof Tile2048)) {
+            return false;
+        }
+        else {
+            return ((Tile2048) obj).getValue() == this.value;
+        }
+    }
 }
