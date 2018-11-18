@@ -34,6 +34,7 @@ public class UserAccount implements Serializable {
      */
     private HashMap<String,ScoreBoard> personalScoreBoard = new HashMap<>();
 
+    private ArrayList<String> games = new ArrayList<>();
     /**
      * The UserAccount class constructor.
      * @param name the name of the UserAccount
@@ -52,13 +53,7 @@ public class UserAccount implements Serializable {
 
     }
 
-    /**
-     * Add a new game to the UserAccount.
-     * @param name The name of the new game being added.
-     */
-    public void addGame(String name){
-        history.put(name, null);
-    }
+
 
     /**
      * Change the username of the UserAccount.
@@ -124,5 +119,17 @@ public class UserAccount implements Serializable {
      */
     public ScoreBoard getScoreBoard(String tag) {
         return personalScoreBoard.get(tag);
+    }
+
+    /**
+     * Add a new game to the UserAccount.
+     * @param game The name of the new game being added.
+     */
+    public void addGames(String game){
+        this.games.add(game);
+    }
+
+    public ArrayList<String> getGames() {
+        return games;
     }
 }

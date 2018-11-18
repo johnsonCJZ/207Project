@@ -14,7 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import es.dmoral.toasty.Toasty;
 import fall2018.csc2017.slidingtiles.menu_bars.GameStoreFragment;
 import fall2018.csc2017.slidingtiles.menu_bars.ProfileFragment;
 import fall2018.csc2017.slidingtiles.menu_bars.ToolFragment;
@@ -193,6 +195,10 @@ public class MainInfoPanelActivity extends AppCompatActivity
                         p).commit();
                 break;
             case R.id.game_store:
+                GameStoreFragment gf = new GameStoreFragment();
+                gf.setArguments(passInfo());
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        gf).commit();
                 break;
 
             case R.id.nav_manage:
@@ -203,24 +209,37 @@ public class MainInfoPanelActivity extends AppCompatActivity
                 break;
 
             case R.id.slide:
-                SlideGameFragment s =new SlideGameFragment();
-                s.setArguments(passInfo());
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        s).commit();
+                if (!user.getGames().contains("Slide")){
+                    Toasty.error(getApplicationContext(), "You haven't bought this game!", Toast.LENGTH_SHORT, true).show();
+                }
+                else{
+                    SlideGameFragment s =new SlideGameFragment();
+                    s.setArguments(passInfo());
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            s).commit();
+                }
                 break;
 
             case R.id.mine_sweeper:
-                MinesweeperFragment m =new MinesweeperFragment();
-                m.setArguments(passInfo());
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        m).commit();
+                if (!user.getGames().contains("Minesweeper")){
+                    Toasty.error(getApplicationContext(), "You haven't bought this game!", Toast.LENGTH_SHORT, true).show();
+                }
+                else{
+                    MinesweeperFragment m =new MinesweeperFragment();
+                    m.setArguments(passInfo());
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            m).commit();}
                 break;
 
             case R.id.g2048:
-                G2048Fragment g =new G2048Fragment();
-                g.setArguments(passInfo());
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        g).commit();
+                if (!user.getGames().contains("G2048")){
+                    Toasty.error(getApplicationContext(), "You haven't bought this game!", Toast.LENGTH_SHORT, true).show();
+                }
+                else{
+                    G2048Fragment g =new G2048Fragment();
+                    g.setArguments(passInfo());
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            g).commit();}
                 break;
         }
 
