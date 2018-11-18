@@ -38,7 +38,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
     }
 
 
-    Tile2048 tileAtPosition(int x, int y) {
+    Tile2048 getTile(int x, int y) {
         return tiles[x][y];
     }
     //direction = up or down here
