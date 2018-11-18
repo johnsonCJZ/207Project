@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MineSweeperManager {
+public class MineSweeperManager extends Manager{
     private MineSweeperBoard board;
     private MineSweeperTile[][] tiles = board.getTiles();
     private boolean finished;

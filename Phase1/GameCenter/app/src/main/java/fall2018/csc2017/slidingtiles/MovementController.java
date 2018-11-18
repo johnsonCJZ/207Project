@@ -10,13 +10,13 @@ import es.dmoral.toasty.Toasty;
  */
 class MovementController {
 
-    private BoardManager boardManager = null;
+    private Manager boardManager = null;
 
     /**
      * Set the boardManager to boardManager.
      * @param boardManager the BoardManger to set
      */
-    void setBoardManager(BoardManager boardManager) {
+    void setBoardManager(Manager boardManager) {
         this.boardManager = boardManager;
     }
 
@@ -26,9 +26,10 @@ class MovementController {
      * @param position the position where a tap occurred
      */
     void processTapMovement(Context context, int position) {
-        if (boardManager.isValidTap(position)) {
-            boardManager.touchMove(position);
-            if (boardManager.puzzleSolved()) {
+        BoardManager b = (BoardManager) boardManager;
+        if (b.isValidTap(position)) {
+            b.touchMove(position);
+            if (b.puzzleSolved()) {
                 Toasty.success(context, "YOU WIN!!", Toast.LENGTH_SHORT, true).show();
             }
         } else {

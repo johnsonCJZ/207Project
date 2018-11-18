@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Manage a board, including swapping tiles, checking for a win, and managing taps.
  */
-public class BoardManager implements Serializable, Cloneable {
+public class BoardManager extends Manager implements Serializable, Cloneable {
 
     /**
      * The time for how long the board has been played.
