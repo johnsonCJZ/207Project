@@ -10,14 +10,24 @@ import java.util.List;
 public class ScoreBoard implements Serializable {
     private int scoreBoardSize;
     private List<Object[]> scoreList = new ArrayList<>();
-    private SlidingTilesScoreStrategy slidingTilesScoreStrategy;
-    private MineSweeperScoreStrategy mineSweeperScoreStrategy;
+    private ScoreStrategy scoreStrategy;
     private ScoreSorter scoreSorter;
 
-    ScoreBoard(){
+    ScoreBoard(String name){
         setScoreBoardSize(10);
         setScoreSorter(new ScoreSorter());
-        setSlidingTilesScoreStrategy(new SlidingTilesScoreStrategy());
+        setSlidscoreStrategy(new SlidingTilesScoreStrategy());
+        switch(name){
+            case "2048":
+                setScoreStrategy(new Game2048ScoreStrategy());
+                break;
+            case "MineSweeper":
+                setScoreStrategy(new MineSweeperScoreStrategy());
+                break;
+            case "SlidingTiles":
+                setScoreStrategy(new SlidingTilesScoreStrategy());
+                break;
+        }
     }
 
     /**
@@ -29,24 +39,20 @@ public class ScoreBoard implements Serializable {
     }
 
     /**
-     * Return a score calculated by using slidingTilesScoreStrategy.
+     * Return a score calculated by using slidscoreStrategy.
      * @param boardManager the boardManager that is finished and to be calculated for score
-     * @return a score calculated by using slidingTilesScoreStrategy
+     * @return a score calculated by using slidscoreStrategy
      */
-    int calculateScore(BoardManager boardManager) {
-        return slidingTilesScoreStrategy.calculateScore(boardManager);
-    }
-
-    int calculateScore(MineSweeperManager boardManager){
-        return mineSweeperScoreStrategy.calculateScore(boardManager);
+    int calculateScore(Manager boardManager) {
+        return scoreStrategy.calculateScore(boardManager);
     }
 
     /**
-     * Set the slidingTilesScoreStrategy to strategy. Open to modification.
+     * Set the slidscoreStrategy to strategy. Open to modification.
      * @param strategy the ScoreStrategy to set
      */
-    void setSlidingTilesScoreStrategy(SlidingTilesScoreStrategy strategy) {
-        slidingTilesScoreStrategy = strategy;
+    void setScoreStrategy(ScoreStrategy strategy) {
+        scoreStrategy = strategy;
     }
 
     /**
