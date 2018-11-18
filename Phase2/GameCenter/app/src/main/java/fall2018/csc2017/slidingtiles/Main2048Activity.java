@@ -94,9 +94,18 @@ public class Main2048Activity extends AppCompatActivity {
 
                     }
                 });
-        addRedoButton();
-        addUndoButton();
         addCheatButton();
+    }
+
+    private void addCheatButton() {
+        Button cheat = findViewById(R.id.Cheat2048);
+        cheat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cheat();
+                display();
+            }
+        });
     }
 
     private void display() {
@@ -152,7 +161,7 @@ public class Main2048Activity extends AppCompatActivity {
                         switchToGameCenter();
                     }
                 })
-                .setNegativeButton("Back To ", new DialogInterface.OnClickListener() {
+                .setNegativeButton("See My Rank ", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Main2048Activity.this.finish();
                         //user.getHistory().put("resumeHistory", null);
