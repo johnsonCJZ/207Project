@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SlidingTiles</string>
-    <string name="title_activity_main_info_panel">Ready Play One!</string>
+    <string name="title_activity_main_info_panel">Ready Player One!</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">UserName</string>
