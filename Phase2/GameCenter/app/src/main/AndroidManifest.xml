@@ -24,8 +24,10 @@
             android:name=".MainInfoPanelActivity"
             android:label="@string/title_activity_main_info_panel"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Main2048Activity"/>
-        <activity android:name=".ScoreBoardTabLayoutActivity"></activity>
+        <activity android:name=".Main2048Activity" />
+        <activity android:name=".ScoreBoardTabLayoutActivity" />
+        <activity android:name=".MineSweeperActivity" />
+        <activity android:name=".MinesweeperDifficultyActivity"></activity>
     </application>
 
 </manifest>

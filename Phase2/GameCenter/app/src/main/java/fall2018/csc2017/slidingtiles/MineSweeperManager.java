@@ -1,12 +1,13 @@
 package fall2018.csc2017.slidingtiles;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MineSweeperManager extends Manager {
+public class MineSweeperManager extends Manager implements Serializable {
     private MineSweeperBoard board;
-    private MineSweeperTile[][] tiles = board.getTiles();
+    private MineSweeperTile[][] tiles;
     private int width;
     private int height;
     private double time;
@@ -16,6 +17,7 @@ public class MineSweeperManager extends Manager {
 
     public MineSweeperManager(int x, int y, int m) {
         board = new MineSweeperBoard(x, y, m);
+        tiles=board.getTiles();
         width = board.getWidth();
         height = board.getHeight();
         setUpBoard();

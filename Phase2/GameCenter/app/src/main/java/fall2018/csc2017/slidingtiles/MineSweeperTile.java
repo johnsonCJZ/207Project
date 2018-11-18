@@ -1,6 +1,8 @@
 package fall2018.csc2017.slidingtiles;
 
-public class MineSweeperTile {
+import java.io.Serializable;
+
+public class MineSweeperTile implements Serializable {
     /**
      * The background id to find the tile image.
      */

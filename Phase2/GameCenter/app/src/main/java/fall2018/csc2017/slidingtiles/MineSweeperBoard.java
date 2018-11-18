@@ -1,8 +1,9 @@
 package fall2018.csc2017.slidingtiles;
 
+import java.io.Serializable;
 import java.util.Observable;
 
-public class MineSweeperBoard extends Observable {
+public class MineSweeperBoard extends Observable implements Serializable {
     private int width, height;
     private int mine;
     private MineSweeperTile[][] tiles;
@@ -33,7 +34,7 @@ public class MineSweeperBoard extends Observable {
     public MineSweeperTile getTile(int position) {
         int row = position / width;
         int col = position % width;
-        return tiles[row][col];
+        return tiles[col][row];
     }
 
     public void setTiles(){
@@ -45,4 +46,5 @@ public class MineSweeperBoard extends Observable {
             }
         }
     }
+
 }

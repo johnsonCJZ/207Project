@@ -81,6 +81,7 @@ public class SlideGameFragment extends Fragment {
     private void getUser(){
         user= (UserAccount) getArguments().getSerializable("user");
         users= (UserAccountManager) getArguments().getSerializable("allUsers");
+
     }
 
     /**
