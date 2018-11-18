@@ -1,6 +1,8 @@
 package fall2018.csc2017.slidingtiles;
 
-public class MineSweeperBoard {
+import java.util.Observable;
+
+public class MineSweeperBoard extends Observable {
     private int width, height;
     private int mine;
     private MineSweeperTile[][] tiles;
