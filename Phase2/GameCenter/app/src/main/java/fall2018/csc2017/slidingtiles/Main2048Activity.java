@@ -12,7 +12,7 @@ public class Main2048Activity extends AppCompatActivity {
     private ScoreBoard personalScoreBoard;
     private Board2048Manager boardManager;
 
-    boolean isPaused;
+    static boolean isPaused;
 
     boolean isWin;
 

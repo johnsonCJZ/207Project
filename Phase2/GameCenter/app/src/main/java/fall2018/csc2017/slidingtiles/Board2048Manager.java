@@ -46,6 +46,22 @@ public class Board2048Manager implements Cloneable{
         return false;
     }
 
+    void moveUp() {
+        board.mergeVertical("UP");
+    }
+
+    void moveDown() {
+        board.mergeVertical("DOWN");
+    }
+
+    void moveLeft() {
+        board.mergeHorizontal("LEFT");
+    }
+
+    void moveRight() {
+        board.mergeHorizontal("RIGHT");
+    }
+
     boolean canMove() {
         if (!isFull()) {
             return true;

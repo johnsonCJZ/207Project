@@ -97,7 +97,7 @@ public class GestureDetectGridView extends GridView {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
+    public boolean onTouchEvent(MotionEvent ev)  {
         return gDetector.onTouchEvent(ev);
     }
 
