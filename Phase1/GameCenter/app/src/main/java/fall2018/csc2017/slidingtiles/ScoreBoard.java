@@ -16,7 +16,6 @@ public class ScoreBoard implements Serializable {
     ScoreBoard(String name){
         setScoreBoardSize(10);
         setScoreSorter(new ScoreSorter());
-        setSlidscoreStrategy(new SlidingTilesScoreStrategy());
         switch(name){
             case "2048":
                 setScoreStrategy(new Game2048ScoreStrategy());
