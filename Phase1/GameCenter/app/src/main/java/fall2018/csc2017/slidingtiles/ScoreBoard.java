@@ -10,13 +10,14 @@ import java.util.List;
 public class ScoreBoard implements Serializable {
     private int scoreBoardSize;
     private List<Object[]> scoreList = new ArrayList<>();
-    private SlidingTilesScoreStrategy scoreStrategy;
+    private SlidingTilesScoreStrategy slidingTilesScoreStrategy;
+    private MineSweeperScoreStrategy mineSweeperScoreStrategy;
     private ScoreSorter scoreSorter;
 
     ScoreBoard(){
         setScoreBoardSize(10);
         setScoreSorter(new ScoreSorter());
-        setScoreStrategy(new SlidingTilesScoreStrategy());
+        setSlidingTilesScoreStrategy(new SlidingTilesScoreStrategy());
     }
 
     /**
@@ -28,20 +29,24 @@ public class ScoreBoard implements Serializable {
     }
 
     /**
-     * Return a score calculated by using scoreStrategy.
+     * Return a score calculated by using slidingTilesScoreStrategy.
      * @param boardManager the boardManager that is finished and to be calculated for score
-     * @return a score calculated by using scoreStrategy
+     * @return a score calculated by using slidingTilesScoreStrategy
      */
     int calculateScore(BoardManager boardManager) {
-        return scoreStrategy.calculateScore(boardManager);
+        return slidingTilesScoreStrategy.calculateScore(boardManager);
+    }
+
+    int calculateScore(MineSweeperManager boardManager){
+        return mineSweeperScoreStrategy.calculateScore(boardManager);
     }
 
     /**
-     * Set the scoreStrategy to strategy. Open to modification.
+     * Set the slidingTilesScoreStrategy to strategy. Open to modification.
      * @param strategy the ScoreStrategy to set
      */
-    void setScoreStrategy(SlidingTilesScoreStrategy strategy) {
-        scoreStrategy = strategy;
+    void setSlidingTilesScoreStrategy(SlidingTilesScoreStrategy strategy) {
+        slidingTilesScoreStrategy = strategy;
     }
 
     /**
