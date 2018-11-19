@@ -10,9 +10,7 @@ public class MinesweeperDifficultyActivity extends AppCompatActivity {
     UserAccount user;
     UserAccountManager users;
     MineSweeperManager boardManager;
-    int width;
-    int height;
-    int mine;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +28,7 @@ public class MinesweeperDifficultyActivity extends AppCompatActivity {
         Easy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager=new MineSweeperManager(5, 5, 25);
+                boardManager=new MineSweeperManager(9, 9, 10);
                 switchToGame();
             }
         });
@@ -84,20 +82,6 @@ public class MinesweeperDifficultyActivity extends AppCompatActivity {
         Bundle extra = intentExtras.getExtras();
         this.user=(UserAccount) extra.getSerializable("user");
         this.users = (UserAccountManager) extra.getSerializable("allUsers");
-    }
-
-    private void clickFourDifficulties(Button b, int x, int y, int m) {
-        height=x;
-        width =y;
-        mine=m;
-        b.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                boardManager=new MineSweeperManager(height, width, mine);
-                switchToGame();
-            }
-        });
     }
 
     private void switchToGame(){

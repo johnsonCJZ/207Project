@@ -8,6 +8,7 @@ import java.util.Observable;
 public class MineSweeperBoard extends Observable implements Serializable {
     private int w, h;
     private int mine;
+    private int mineLeft;
     private MineSweeperTile[][] tiles;
 
     MineSweeperBoard(int x, int y, int m) {
@@ -28,6 +29,8 @@ public class MineSweeperBoard extends Observable implements Serializable {
     public int getMine() {
         return mine;
     }
+
+    int getMineLeft() {return mineLeft;}
 
     public MineSweeperTile[][] getTiles() {
         return tiles;
@@ -78,6 +81,9 @@ public class MineSweeperBoard extends Observable implements Serializable {
         } else if (getTile(position).isObscured()) {
             getTile(position).flag();
         }
+        if (getTile(position).isFlagged()){mineLeft--;}
+        else {mineLeft++;}
+
         setChanged();
         notifyObservers();
     }
