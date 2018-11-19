@@ -62,12 +62,12 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
     /**
      * Time count.
      */
-    private double count=0;
+    private int count=0;
 
     /**
      * Time count for autosave purpose.
      */
-    private double tempCount = 0;
+    private int tempCount = 0;
 
     /**
      * UserAccount associated to the game.
@@ -101,12 +101,18 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
         }
     }
 
+    void updateMineLeft(){
+        final TextView mineLeft = findViewById(R.id.mineLeft);
+        mineLeft.setText("Mine: " + String.valueOf(boardManager.getBoard().getMineLeft()));
+    }
+
     /**
      * Set up the background image for each button based on the master list
      * of positions, and then call the adapter to set the view.
      */
     public void display() {
         updateTileButtons();
+        updateMineLeft();
         gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
     }
 
@@ -227,7 +233,7 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
         }
         createTileButtons(this);
         setContentView(R.layout.activity_minesweeper);
-        final TextView textView = findViewById(R.id.time);
+        final TextView time = findViewById(R.id.time);
         count=boardManager.getTime();
         isPaused = false;
         Thread t = new Thread(){
@@ -236,7 +242,7 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
                 while(!isInterrupted()) {
                     if (!isPaused) {
                         try {
-                            Thread.sleep(10);
+                            Thread.sleep(1000);
                             if (boardManager.isWon()) {
                                 this.interrupt();
                             }
@@ -250,9 +256,9 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
                                         winAlert();
                                     }
                                     else {
-                                        count += 0.01;
+                                        count += 1;
                                         if (tempCount < 2) {
-                                            tempCount += 0.01;
+                                            tempCount += 1;
                                         } else {
                                             tempCount = 0;
                                             try {
@@ -261,7 +267,7 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
                                                 e.printStackTrace();
                                             }
                                         }
-                                        textView.setText(String.valueOf(df2.format(count)) + " s");
+                                        time.setText("Time: " +String.format("%03d", count) + " s");
                                     }
                                 }
                             });
@@ -274,7 +280,6 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
         };
 
         t.start();
-
         // Add View to activity
         gridView = findViewById(R.id.mine_grid);
         gridView.setNumColumns(boardManager.getBoard().getW());

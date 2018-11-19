@@ -212,7 +212,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         }
         createTileButtons(this);
         setContentView(R.layout.activity_main);
-        final TextView textView = findViewById(R.id.textView6);
+        final TextView time = findViewById(R.id.textView6);
         count=boardManager.getTime();
         isPaused = false;
         Thread t = new Thread(){
@@ -246,7 +246,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                                                 e.printStackTrace();
                                             }
                                         }
-                                        textView.setText(String.valueOf(df2.format(count)) + " s");
+                                        time.setText(String.valueOf(df2.format(count)) + " s");
                                     }
                                 }
                             });

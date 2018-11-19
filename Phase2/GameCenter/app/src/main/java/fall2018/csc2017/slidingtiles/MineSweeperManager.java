@@ -10,7 +10,7 @@ public class MineSweeperManager extends Manager implements Serializable {
     private MineSweeperTile[][] tiles;
     private int width;
     private int height;
-    private double time;
+    private int time;
     private boolean isFirst = true;
     private boolean lost = false;
     private List<MineSweeperTile> minePosition = new ArrayList<>();
@@ -27,9 +27,9 @@ public class MineSweeperManager extends Manager implements Serializable {
         return board;
     }
 
-    double getTime() { return time; }
+    int getTime() { return time; }
 
-    void setTime(double time) {
+    void setTime(int time) {
         this.time = time;
     }
 

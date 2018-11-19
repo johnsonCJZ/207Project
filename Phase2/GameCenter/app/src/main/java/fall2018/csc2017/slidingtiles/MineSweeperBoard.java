@@ -13,6 +13,7 @@ public class MineSweeperBoard extends Observable implements Serializable {
 
     MineSweeperBoard(int x, int y, int m) {
         mine = m;
+        mineLeft = m;
         this.h = x;
         this.w = y;
         tiles = new MineSweeperTile[h][w];
