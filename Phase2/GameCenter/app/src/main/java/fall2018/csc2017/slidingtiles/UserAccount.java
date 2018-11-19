@@ -34,7 +34,7 @@ public class UserAccount implements Serializable {
      */
     private HashMap<String,ScoreBoard> personalScoreBoard = new HashMap<>();
 
-    private ArrayList<String> games = new ArrayList<>();
+    private ArrayList<String> games;
     /**
      * The UserAccount class constructor.
      * @param name the name of the UserAccount
@@ -43,6 +43,7 @@ public class UserAccount implements Serializable {
     public UserAccount(String name, String password){
         this.name=name;
         this.password=password;
+        games = new ArrayList<>();
         history.put("history3x3", null);
         history.put("history4x4", null);
         history.put("history5x5",null);
