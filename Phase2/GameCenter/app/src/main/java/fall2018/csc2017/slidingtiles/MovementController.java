@@ -58,4 +58,28 @@ class MovementController {
                 }
         }
     }
+
+    void processLeftSwipe() {
+        if (boardManager instanceof  Board2048Manager) {
+            ((Board2048Manager) boardManager).moveLeft();
+        }
+    }
+
+    void processRightSwipe() {
+        if (boardManager instanceof  Board2048Manager) {
+            ((Board2048Manager) boardManager).moveRight();
+        }
+    }
+
+    void processDownSwipe() {
+        if (boardManager instanceof  Board2048Manager) {
+            ((Board2048Manager) boardManager).moveDown();
+        }
+    }
+
+    void processUpSwipe() {
+        if (boardManager instanceof  Board2048Manager) {
+            ((Board2048Manager) boardManager).moveUp();
+        }
+    }
 }
