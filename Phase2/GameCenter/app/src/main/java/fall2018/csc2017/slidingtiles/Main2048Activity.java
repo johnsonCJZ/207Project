@@ -78,7 +78,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
         t.start();
 
         // Add View to activity
-        gridView = findViewById(R.id.grid);
+        gridView = findViewById(R.id.grid2048);
         gridView.setNumColumns(boardManager.getBoard().getDimension());
         gridView.setBoardManager(boardManager);
         boardManager.getBoard().addObserver(this);
@@ -102,12 +102,16 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
         addCheatButton();
     }
 
+    private void cheat() {
+    boardManager.cheat();
+    }
+
     private void addCheatButton() {
         Button cheat = findViewById(R.id.Cheat2048);
         cheat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                cheat();
+                cheat();
                 display();
             }
         });

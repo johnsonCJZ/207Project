@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".Main2048Activity">
 
+    <fall2018.csc2017.slidingtiles.GestureDetectGridView
+        android:id="@+id/grid2048"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginBottom="0dp">
+
+    </fall2018.csc2017.slidingtiles.GestureDetectGridView>
+
     <Button
         android:id="@+id/Cheat2048"
         android:layout_width="wrap_content"
