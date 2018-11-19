@@ -10,6 +10,7 @@ public class MineSweeperManager extends Manager implements Serializable {
     private MineSweeperTile[][] tiles;
     private int width;
     private int height;
+    private int mineLeft;
     private double time;
     private boolean isFirst = true;
     private boolean lost = false;
@@ -17,6 +18,7 @@ public class MineSweeperManager extends Manager implements Serializable {
 
     public MineSweeperManager(int x, int y, int m) {
         board = new MineSweeperBoard(x, y, m);
+        mineLeft = m;
         tiles=board.getTiles();
         width = board.getW();
         height = board.getH();
@@ -120,5 +122,9 @@ public class MineSweeperManager extends Manager implements Serializable {
         return true;
     }
 
-    void mark(int position) {board.flag(position);}
+    void mark(int position) {
+        board.flag(position);
+        if (board.getTile(position).isFlagged()){mineLeft--;}
+        else mineLeft++;
+    }
 }
