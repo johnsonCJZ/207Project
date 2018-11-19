@@ -6,4 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".CreateNewOrLoad2048">
 
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MAX change the background pls"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="italic"
+        tools:layout_editor_absoluteX="31dp"
+        tools:layout_editor_absoluteY="186dp" />
+
+    <Button
+        android:id="@+id/New2048Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Game"
+        tools:layout_editor_absoluteX="60dp"
+        tools:layout_editor_absoluteY="288dp" />
+
+    <Button
+        android:id="@+id/Resume2048Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resume"
+        tools:layout_editor_absoluteX="230dp"
+        tools:layout_editor_absoluteY="288dp" />
 </android.support.constraint.ConstraintLayout>
