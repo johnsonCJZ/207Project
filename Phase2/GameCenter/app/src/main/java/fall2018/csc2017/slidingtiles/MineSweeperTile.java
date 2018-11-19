@@ -8,22 +8,29 @@ public class MineSweeperTile implements Serializable {
      */
     private int background;
 
+    /**
+     * Whether the tile is a mine or flagged or obscured.
+     */
     private boolean isMine, isFlagged, isObscured;
 
+    /**
+     * The number of mines around the tile. -1 if the tile is a mine.
+     */
     private int number;
 
+    /**
+     * The position of the tile in a MineSweeperBoard.
+     */
     private int position;
 
-    public MineSweeperTile()
-    {
+    MineSweeperTile(){
         isMine = false;
         isFlagged = false;
         isObscured = true;
         number = 0;
-
     }
 
-    public void setBackground() {
+    void setBackground() {
         if(!isObscured()) {
             switch (number) {
                 case -1:
@@ -69,23 +76,23 @@ public class MineSweeperTile implements Serializable {
         return background;
     }
 
-    public void setMine(){
+    void setMine(){
         isMine = true;
     }
 
-    public void flag()
+    void flag()
     {
         isFlagged = true;
         setBackground();
     }
 
-    public void unFlag()
+    void unFlag()
     {
         isFlagged = false;
         setBackground();
     }
 
-    public void reveal()
+    void reveal()
     {
         isObscured = false;
         setBackground();
@@ -97,31 +104,31 @@ public class MineSweeperTile implements Serializable {
         setBackground();
     }
 
-    public boolean isMine()
+    boolean isMine()
     {
         return isMine;
     }
 
-    public boolean isFlagged()
+    boolean isFlagged()
     {
         return isFlagged;
     }
 
-    public boolean isObscured()
+    boolean isObscured()
     {
         return isObscured;
     }
 
-    public int getNumber()
+    int getNumber()
     {
         return number;
     }
 
-    public int getPosition() {
+    int getPosition() {
         return position;
     }
 
-    public void setPosition(int position) {
+    void setPosition(int position) {
         this.position = position;
     }
 }

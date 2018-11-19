@@ -18,15 +18,15 @@ public class MineSweeperBoard extends Observable implements Serializable {
         tiles = new MineSweeperTile[h][w];
     }
 
-    public int getW() {
+    int getW() {
         return w;
     }
 
-    public int getH() {
+    int getH() {
         return h;
     }
 
-    public int getMine() {
+    int getMine() {
         return mine;
     }
 
@@ -42,7 +42,7 @@ public class MineSweeperBoard extends Observable implements Serializable {
         return tiles[row][col];
     }
 
-    public void setTiles(){
+    void setTiles(){
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {
                 MineSweeperTile tile = new MineSweeperTile();
@@ -75,7 +75,6 @@ public class MineSweeperBoard extends Observable implements Serializable {
     }
 
     void flag(int position) {
-
         if (getTile(position).isFlagged()) {
             getTile(position).unFlag();
         } else if (getTile(position).isObscured()) {

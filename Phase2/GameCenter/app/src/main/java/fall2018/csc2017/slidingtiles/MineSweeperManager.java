@@ -15,7 +15,7 @@ public class MineSweeperManager extends Manager implements Serializable {
     private boolean lost = false;
     private List<MineSweeperTile> minePosition = new ArrayList<>();
 
-    public MineSweeperManager(int x, int y, int m) {
+    MineSweeperManager(int x, int y, int m) {
         board = new MineSweeperBoard(x, y, m);
         tiles=board.getTiles();
         width = board.getW();
@@ -23,7 +23,23 @@ public class MineSweeperManager extends Manager implements Serializable {
         setUpBoard();
     }
 
-    void setMines(int position) {
+    MineSweeperBoard getBoard() {
+        return board;
+    }
+
+    double getTime() { return time; }
+
+    void setTime(double time) {
+        this.time = time;
+    }
+
+    private void setUpBoard() {
+        lost = false;
+        isFirst = true;
+        board.setTiles();
+    }
+
+    private void setMines(int position) {
         int mine = board.getMine();
         List<MineSweeperTile> startNine = board.getSurround(position);
         Random r = new Random();
@@ -58,26 +74,11 @@ public class MineSweeperManager extends Manager implements Serializable {
         }
     }
 
-    MineSweeperBoard getBoard() {
-        return board;
+    void mark(int position) {
+        board.flag(position);
     }
 
-    double getTime() {
-        return time;
-    }
-
-    void setTime(double time) {
-        this.time = time;
-    }
-
-    void setUpBoard() {
-        lost = false;
-        isFirst = true;
-
-        board.setTiles();
-    }
-
-    void setNumbers() {
+    private void setNumbers() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
 
@@ -110,17 +111,14 @@ public class MineSweeperManager extends Manager implements Serializable {
         return lost;
     }
 
+    List<MineSweeperTile> getMinePosition() {return minePosition;}
+
     boolean isWon() {
         for (int i = 0; i < height * width; i++){
             if (board.getTile(i).isObscured() && !board.getTile(i).isMine()){
                 return false;
-
             }
         }
         return true;
-    }
-
-    void mark(int position) {
-        board.flag(position);
     }
 }
