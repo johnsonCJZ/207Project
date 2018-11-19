@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,14 +18,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 /**
  * The game activity.
  */
-public class MineSweeperActivity extends AppCompatActivity implements Observer {
+public class  MineSweeperActivity extends AppCompatActivity implements Observer {
 
     /**
      * The per-user scoreboard
@@ -279,7 +277,7 @@ public class MineSweeperActivity extends AppCompatActivity implements Observer {
 
         // Add View to activity
         gridView = findViewById(R.id.mine_grid);
-        gridView.setNumColumns(boardManager.getBoard().getWidth());
+        gridView.setNumColumns(boardManager.getBoard().getW());
         gridView.setBoardManager(boardManager);
         boardManager.getBoard().addObserver(this);
         // Observer sets up desired dimensions as well as calls our display function
@@ -292,8 +290,8 @@ public class MineSweeperActivity extends AppCompatActivity implements Observer {
                         int displayWidth = gridView.getMeasuredWidth();
                         int displayHeight = gridView.getMeasuredHeight();
 
-                        columnWidth = displayWidth / boardManager.getBoard().getWidth();
-                        columnHeight = displayHeight / boardManager.getBoard().getHeight();
+                        columnWidth = displayWidth / boardManager.getBoard().getW();
+                        columnHeight = displayHeight / boardManager.getBoard().getH();
 
                         display();
 
@@ -358,8 +356,8 @@ public class MineSweeperActivity extends AppCompatActivity implements Observer {
             }
         }
         this.boardManager = (MineSweeperManager) extra.getSerializable("boardManager");
-        width = boardManager.getBoard().getWidth();
-        height = boardManager.getBoard().getHeight();
+        width = boardManager.getBoard().getW();
+        height = boardManager.getBoard().getH();
         assert this.boardManager != null;
 //        this.boardManager = (BoardManager) this.boardManager.clone();
 //        this.size = this.boardManager.getBoard().getDimension();

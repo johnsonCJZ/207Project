@@ -27,22 +27,46 @@ public class MinesweeperDifficultyActivity extends AppCompatActivity {
 
     private void addEasyButton() {
         Button Easy = findViewById(R.id.Easy);
-        clickFourDifficulties(Easy, 5, 5, 3);
+        Easy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boardManager=new MineSweeperManager(5, 5, 25);
+                switchToGame();
+            }
+        });
     }
 
     private void addMediumButton(){
         Button Medium = findViewById(R.id.Medium);
-        clickFourDifficulties(Medium, 16, 16, 40);
+        Medium.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boardManager=new MineSweeperManager(16, 16, 40);
+                switchToGame();
+            }
+        });
     }
 
     private void addHardButton(){
         Button Hard = findViewById(R.id.Hard);
-        clickFourDifficulties(Hard, 16, 30, 99);
+        Hard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boardManager=new MineSweeperManager(16, 30, 99);
+                switchToGame();
+            }
+        });
     }
 
     private void addExtremeButton(){
         Button Extreme = findViewById(R.id.Extreme);
-        clickFourDifficulties(Extreme, 24, 30, 180);
+        Extreme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boardManager=new MineSweeperManager(30, 30, 180);
+                switchToGame();
+            }
+        });
     }
 
     private void addCustomButton(){

@@ -18,14 +18,14 @@ public class MineSweeperManager extends Manager implements Serializable {
     public MineSweeperManager(int x, int y, int m) {
         board = new MineSweeperBoard(x, y, m);
         tiles=board.getTiles();
-        width = board.getWidth();
-        height = board.getHeight();
+        width = board.getW();
+        height = board.getH();
         setUpBoard();
     }
 
     void setMines(int position) {
         int mine = board.getMine();
-        List<MineSweeperTile> startNine = getSurround(position);
+        List<MineSweeperTile> startNine = board.getSurround(position);
         Random r = new Random();
         List<Integer> randomNum = new ArrayList<>();
         int i = 0;
@@ -44,53 +44,6 @@ public class MineSweeperManager extends Manager implements Serializable {
         }
     }
 
-    List<MineSweeperTile> getSurround(int position) {
-        int row = position / width;
-        int col = position / width;
-        List<MineSweeperTile> surround = new ArrayList<>();
-
-        if (row != 0 && col != 0) {
-            surround.add(board.getTiles()[row - 1][col - 1]);
-        }
-        if (row != 0 && col != width - 1) {
-            surround.add(board.getTiles()[row - 1][col + 1]);
-        }
-        if (row != 0) {
-            surround.add(board.getTiles()[row - 1][col]);
-        }
-        if (row != height - 1 && col != 0) {
-            surround.add(board.getTiles()[row + 1][col - 1]);
-        }
-        if (row != height - 1 && col != width - 1) {
-            surround.add(board.getTiles()[row + 1][col + 1]);
-        }
-        if (row != height - 1) {
-            surround.add(board.getTiles()[row + 1][col]);
-        }
-        if (col != 0) {
-            surround.add(board.getTiles()[row][col - 1]);
-        }
-        if (col != width - 1) {
-            surround.add(board.getTiles()[row][col + 1]);
-        }
-        return surround;
-    }
-
-    void reveal(MineSweeperTile currTile) {
-        if (currTile.getNumber() == 0) {
-            currTile.reveal();
-            for (MineSweeperTile tile : getSurround(currTile.getPosition())) {
-                tile.reveal();
-                if (tile.getNumber() == 0) {
-                    reveal(tile);
-                }
-            }
-        }
-        else {
-            currTile.reveal();
-        }
-    }
-
     void touchMove(int position) {
         if (isFirst) {
             setMines(position);
@@ -100,7 +53,7 @@ public class MineSweeperManager extends Manager implements Serializable {
         MineSweeperTile currTile = board.getTile(position);
         if (currTile.isMine()) {
             lost = true;
-        } else reveal(currTile);
+        } else board.reveal(position);
     }
 
     MineSweeperBoard getBoard() {
