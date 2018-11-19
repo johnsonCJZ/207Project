@@ -1,5 +1,7 @@
 package fall2018.csc2017.slidingtiles;
 
-public class Manager {
+import java.io.Serializable;
+
+public class Manager implements Serializable {
 
 }

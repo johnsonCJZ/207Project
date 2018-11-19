@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Board2048Manager extends Manager implements Cloneable, Serializable {
     private Board2048 board;
 
-    private int dimension;
+    private Integer dimension;
 
     Board2048 getBoard() {
         return board;
@@ -27,6 +27,10 @@ public class Board2048Manager extends Manager implements Cloneable, Serializable
         for (int row = 0; row != this.dimension; row++) {
             for (int col = 0; col != this.dimension; col++) {
                 Tile2048 tile = this.board.getTiles()[row][col];
+                if (tile==null){
+                    tile=new Tile2048();
+                    this.board.getTiles()[row][col]=tile;
+                }
                 tile.setX(col);
                 tile.setY(row);
                 tile.setValue(0);

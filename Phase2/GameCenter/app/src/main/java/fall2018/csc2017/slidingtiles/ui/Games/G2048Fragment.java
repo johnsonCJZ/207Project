@@ -8,13 +8,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
-import fall2018.csc2017.slidingtiles.CreateNewOrLoad2048;
+import fall2018.csc2017.slidingtiles.CreateNewOrLoad2048Activity;
 import fall2018.csc2017.slidingtiles.MineSweeperManager;
-import fall2018.csc2017.slidingtiles.MinesweeperDifficultyActivity;
 import fall2018.csc2017.slidingtiles.R;
 import fall2018.csc2017.slidingtiles.UserAccount;
 import fall2018.csc2017.slidingtiles.UserAccountManager;
@@ -23,7 +22,7 @@ public class G2048Fragment extends Fragment {
     private View view;
     private UserAccount user;
     private UserAccountManager users;
-    private ImageView Image2048;
+    private ImageButton Image2048;
     private MineSweeperManager boardManager;
 
     @Nullable
@@ -31,6 +30,7 @@ public class G2048Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.g2048_fragment, container, false);
+        Image2048 = (ImageButton)view.findViewById(R.id.g_2048);
         Toasty.success(getContext(), "Press 2048 logo to start", Toast.LENGTH_LONG, true).show();
         addStartButton();
         getUser();
@@ -42,7 +42,7 @@ public class G2048Fragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                Intent tmp = new Intent(getActivity(), CreateNewOrLoad2048.class);
+                Intent tmp = new Intent(getActivity(), CreateNewOrLoad2048Activity.class);
                 Bundle pass = new Bundle();
                 pass.putSerializable("user",user);
                 pass.putSerializable("allUsers", users);

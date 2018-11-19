@@ -8,12 +8,13 @@
     android:background="@drawable/bg_gradient2"
     tools:context=".ui.Games.G2048Fragment">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="288dp"
-        android:layout_height="373dp"
+    <ImageButton
+        android:id="@+id/g_2048"
+        android:layout_width="215dp"
+        android:layout_height="211dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="69dp"
+        android:layout_marginTop="148dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/g2048_logo" />
 </RelativeLayout>

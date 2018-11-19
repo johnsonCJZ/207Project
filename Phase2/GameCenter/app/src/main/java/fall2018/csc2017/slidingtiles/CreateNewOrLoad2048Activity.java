@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class CreateNewOrLoad2048 extends AppCompatActivity {
+public class CreateNewOrLoad2048Activity extends AppCompatActivity {
 
     private Board2048Manager boardManager;
 

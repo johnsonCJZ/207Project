@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateNewOrLoad2048">
+    tools:context=".CreateNewOrLoad2048Activity">
 
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="MAX change the background pls"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        android:textStyle="italic"
-        tools:layout_editor_absoluteX="31dp"
-        tools:layout_editor_absoluteY="186dp" />
 
     <Button
         android:id="@+id/New2048Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/Resume2048Button"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="77dp"
         android:text="New Game"
         tools:layout_editor_absoluteX="60dp"
         tools:layout_editor_absoluteY="288dp" />
@@ -31,7 +22,11 @@
         android:id="@+id/Resume2048Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="91dp"
+        android:layout_marginBottom="295dp"
         android:text="Resume"
         tools:layout_editor_absoluteX="230dp"
         tools:layout_editor_absoluteY="288dp" />
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
