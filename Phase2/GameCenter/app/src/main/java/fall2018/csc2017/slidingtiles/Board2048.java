@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.Observable;
 
 public class Board2048 extends Observable implements Serializable, Iterable<Tile2048> {
-    final private int dimension = 4;
+    final static int dimension = 4;
 
     private Tile2048[][] tiles;
 
@@ -45,7 +45,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
         return result;
     }
 
-    void moveEmpty(Tile2048[] tileArray, String direction){
+    static void moveEmpty(Tile2048[] tileArray, String direction){
         ArrayList<Integer> temp = new ArrayList<>(dimension);
         switch (direction) {
             case "LEFT":

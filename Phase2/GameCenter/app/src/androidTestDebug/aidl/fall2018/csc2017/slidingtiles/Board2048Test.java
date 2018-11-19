@@ -29,6 +29,7 @@ public class Board2048Test {
     public void moveEmptyTest() {
         Tile2048[] expected = new Tile2048[4];
         expected[0].setValue(3);
-//        Assert.assertEquals(expected, Board2048.moveEmpty(oneNumberTileArray));
+        Board2048.moveEmpty(oneNumberTileArray, "LEFT");
+        Assert.assertEquals(expected, oneNumberTileArray);
     }
 }
