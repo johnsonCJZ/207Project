@@ -37,6 +37,16 @@ class MovementController {
                 Toasty.warning(context, "Invalid Tap!", Toast.LENGTH_SHORT, true).show();
             }
         }
+        else if (boardManager instanceof MineSweeperManager) {
+            MineSweeperManager b = (MineSweeperManager) boardManager;
+            b.touchMove(position);
+            if (b.isLost()) {
+                Toasty.warning(context, "YOU LOST!", Toast.LENGTH_SHORT, true).show();
+            }
+            else if (b.isWon()) {
+                Toasty.success(context, "YOU WIN!", Toast.LENGTH_SHORT,true).show();
+            }
+        }
 
     }
 }
