@@ -80,11 +80,13 @@ public class MineSweeperManager extends Manager implements Serializable {
         if (currTile.getNumber() == 0) {
             currTile.reveal();
             for (MineSweeperTile tile : getSurround(currTile.getPosition())) {
+                tile.reveal();
                 if (tile.getNumber() == 0) {
                     reveal(tile);
                 }
             }
-        } else {
+        }
+        else {
             currTile.reveal();
         }
     }
@@ -93,7 +95,6 @@ public class MineSweeperManager extends Manager implements Serializable {
         if (isFirst) {
             setMines(position);
             setNumbers();
-            updateBackground();
             isFirst = false;
         }
         MineSweeperTile currTile = board.getTile(position);
@@ -122,9 +123,10 @@ public class MineSweeperManager extends Manager implements Serializable {
     }
 
     void setNumbers() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                //if the tile is a mine, set the number to be -1
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+
+                //if the tile is a mine, set the number to -1.
                 if (tiles[i][j].isMine()) {
                     tiles[i][j].setNumber(-1);
                 }
@@ -134,55 +136,30 @@ public class MineSweeperManager extends Manager implements Serializable {
                     int count = 0;
                     if (i > 0 && j > 0 && tiles[i - 1][j - 1].isMine()) count++; //upper-left tile
                     if (j > 0 && tiles[i][j - 1].isMine()) count++; //left tile
-                    if (i < width - 1 && j > 0 && tiles[i + 1][j - 1].isMine())
+                    if (i < height - 1 && j > 0 && tiles[i + 1][j - 1].isMine())
                         count++; //lower-left
                     if (i > 0 && tiles[i - 1][j].isMine()) count++; // upper tile
-                    if (i < width - 1 && tiles[i + 1][j].isMine()) count++; // lower tile
-                    if (i > 0 && j < height - 1 && tiles[i - 1][j + 1].isMine())
+                    if (i < height - 1 && tiles[i + 1][j].isMine()) count++; // lower tile
+                    if (i > 0 && j < width - 1 && tiles[i - 1][j + 1].isMine())
                         count++; //upper-right
-                    if (j < height - 1 && tiles[i][j + 1].isMine()) count++; //right tile
-                    if (i < width - 1 && j < height - 1 && tiles[i + 1][j + 1].isMine())
+                    if (j < width - 1 && tiles[i][j + 1].isMine()) count++; //right tile
+                    if (i < height - 1 && j < width - 1 && tiles[i + 1][j + 1].isMine())
                         count++; //lower-right tile
                     tiles[i][j].setNumber(count);
                 }
-
-                //if the tile is not surrounded by any mine.
-                if (tiles[i][j].getNumber() == 0) {
-//                    tiles[i][j].reveal();
-                }
             }
         }
+    }
 
-//        for (int i = 0; i < width; i++)
-//        {
-//            for (int j = 0; j < height; j++)
-//            {
-//                if (i > 0 &&	j > 0 && tiles[i - 1][j - 1].getNumber() == 0) tiles[i][j].reveal();
-//                if (j > 0 && tiles[i][j - 1].getNumber() == 0) tiles[i][j].reveal();
-//                if (i < width - 1 && j > 0 && tiles[i + 1][j - 1].getNumber() == 0) tiles[i][j].reveal();
-//                if (i > 0 && tiles[i - 1][j].getNumber() == 0) tiles[i][j].reveal();
-//                if (i < width - 1 && tiles[i + 1]	[j]		.getNumber() == 0) tiles[i][j].reveal();
-//                if (i > 0 && j < height - 1 && tiles[i - 1][j + 1].getNumber() == 0) tiles[i][j].reveal();
-//                if (j < height - 1 && tiles[i][j + 1].getNumber() == 0) tiles[i][j].reveal();
-//                if (i < width - 1 && j < height - 1 && tiles[i + 1][j + 1]	.getNumber() == 0) tiles[i][j].reveal();
-//            }
-//        }
-    }
-    void updateBackground() {
-        for (int i = 0; i < width * height; i++) {
-            board.getTile(i).setBackground();
-        }
-    }
     boolean isLost() {
         return lost;
     }
 
     boolean isWon() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                if (tiles[i][j].isObscured() && !tiles[i][j].isMine()) {
-                    return false;
-                }
+        for (int i = 0; i < height * width; i++){
+            if (board.getTile(i).isObscured() && !board.getTile(i).isMine()){
+                return false;
+
             }
         }
         return true;

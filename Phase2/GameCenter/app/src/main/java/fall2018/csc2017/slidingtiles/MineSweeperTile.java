@@ -24,38 +24,45 @@ public class MineSweeperTile implements Serializable {
     }
 
     public void setBackground() {
-        switch(number) {
-            case -1:
-                background = R.drawable.mine_b2;
-                break;
-            case 0:
-                background = R.drawable.mine_base;
-                break;
-            case 1:
-                background = R.drawable.mine_1;
-                break;
-            case 2:
-                background = R.drawable.mine_2;
-                break;
-            case 3:
-                background = R.drawable.mine_3;
-                break;
-            case 4:
-                background = R.drawable.mine_4;
-                break;
-            case 5:
-                background = R.drawable.mine_5;
-                break;
-            case 6:
-                background = R.drawable.mine_6;
-                break;
-            case 7:
-                background = R.drawable.mine_7;
-                break;
-            case 8:
-                background = R.drawable.mine_8;
-                break;
+        if(!isObscured()) {
+            switch (number) {
+                case -1:
+                    background = R.drawable.mine_b2;
+                    break;
+                case 0:
+                    background = R.drawable.mine_base;
+                    break;
+                case 1:
+                    background = R.drawable.mine_1;
+                    break;
+                case 2:
+                    background = R.drawable.mine_2;
+                    break;
+                case 3:
+                    background = R.drawable.mine_3;
+                    break;
+                case 4:
+                    background = R.drawable.mine_4;
+                    break;
+                case 5:
+                    background = R.drawable.mine_5;
+                    break;
+                case 6:
+                    background = R.drawable.mine_6;
+                    break;
+                case 7:
+                    background = R.drawable.mine_7;
+                    break;
+                case 8:
+                    background = R.drawable.mine_8;
+                    break;
+            }
         }
+        else if (isFlagged()){
+            background = R.drawable.mine_d;
+
+        }
+        else {background = R.drawable.mine_mask;}
     }
 
     public int getBackground() {
@@ -69,21 +76,25 @@ public class MineSweeperTile implements Serializable {
     public void flag()
     {
         isFlagged = true;
+        setBackground();
     }
 
     public void unFlag()
     {
         isFlagged = false;
+        setBackground();
     }
 
     public void reveal()
     {
         isObscured = false;
+        setBackground();
     }
 
     public void setNumber(int i)
     {
         number = i;
+        setBackground();
     }
 
     public boolean isMine()

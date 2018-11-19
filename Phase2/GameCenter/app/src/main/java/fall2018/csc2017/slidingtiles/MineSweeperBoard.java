@@ -10,9 +10,9 @@ public class MineSweeperBoard extends Observable implements Serializable {
 
     public MineSweeperBoard(int x, int y, int m) {
         mine = m;
-        width = x;
-        height = y;
-        tiles = new MineSweeperTile[width][height];
+        height = x;
+        width = y;
+        tiles = new MineSweeperTile[height][width];
     }
 
     public int getWidth() {
@@ -34,12 +34,12 @@ public class MineSweeperBoard extends Observable implements Serializable {
     public MineSweeperTile getTile(int position) {
         int row = position / width;
         int col = position % width;
-        return tiles[col][row];
+        return tiles[row][col];
     }
 
     public void setTiles(){
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 MineSweeperTile tile = new MineSweeperTile();
                 tiles[i][j] = tile;
                 tile.setPosition((i * width + j));

@@ -10,8 +10,8 @@ public class MinesweeperDifficultyActivity extends AppCompatActivity {
     UserAccount user;
     UserAccountManager users;
     MineSweeperManager boardManager;
+    int width;
     int height;
-    int weight;
     int mine;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +37,12 @@ public class MinesweeperDifficultyActivity extends AppCompatActivity {
 
     private void addHardButton(){
         Button Hard = findViewById(R.id.Hard);
-        clickFourDifficulties(Hard, 30, 16, 99);
+        clickFourDifficulties(Hard, 16, 30, 99);
     }
 
     private void addExtremeButton(){
         Button Extreme = findViewById(R.id.Extreme);
-        clickFourDifficulties(Extreme, 30, 24, 180);
+        clickFourDifficulties(Extreme, 24, 30, 180);
     }
 
     private void addCustomButton(){
@@ -64,13 +64,13 @@ public class MinesweeperDifficultyActivity extends AppCompatActivity {
 
     private void clickFourDifficulties(Button b, int x, int y, int m) {
         height=x;
-        weight=y;
+        width =y;
         mine=m;
         b.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                boardManager=new MineSweeperManager(height,weight,mine);
+                boardManager=new MineSweeperManager(height, width, mine);
                 switchToGame();
             }
         });

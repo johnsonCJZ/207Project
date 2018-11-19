@@ -84,7 +84,7 @@ public class MineSweeperActivity extends AppCompatActivity implements Observer {
     /**
      * Height of the MineSweeperBoard.
      */
-    private int Height;
+    private int height;
 
     /**
      * UserAccountManager associated to the UserAccount.
@@ -358,6 +358,8 @@ public class MineSweeperActivity extends AppCompatActivity implements Observer {
             }
         }
         this.boardManager = (MineSweeperManager) extra.getSerializable("boardManager");
+        width = boardManager.getBoard().getWidth();
+        height = boardManager.getBoard().getHeight();
         assert this.boardManager != null;
 //        this.boardManager = (BoardManager) this.boardManager.clone();
 //        this.size = this.boardManager.getBoard().getDimension();
@@ -390,8 +392,6 @@ public class MineSweeperActivity extends AppCompatActivity implements Observer {
     private void createTileButtons(Context context) {
         MineSweeperBoard board = boardManager.getBoard();
         tileButtons = new ArrayList<>();
-        int width = boardManager.getBoard().getWidth();
-        int height = boardManager.getBoard().getHeight();
         for (int i = 0; i < width * height; i++) {
             Button tmp = new Button(context);
             tmp.setBackgroundResource(board.getTile(i).getBackground());
