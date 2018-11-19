@@ -49,4 +49,13 @@ class MovementController {
         }
 
     }
+
+    void processLongPressMovement(Context context, int position){
+        if (boardManager instanceof MineSweeperManager) {
+            MineSweeperManager b = (MineSweeperManager) boardManager;
+            if (b.getBoard().getTile(position).isObscured()) {
+                b.mark(position);
+                }
+        }
+    }
 }
