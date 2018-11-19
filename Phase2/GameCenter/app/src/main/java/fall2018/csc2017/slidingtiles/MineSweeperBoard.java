@@ -43,6 +43,7 @@ public class MineSweeperBoard extends Observable implements Serializable {
                 MineSweeperTile tile = new MineSweeperTile();
                 tiles[i][j] = tile;
                 tile.setPosition((i * width + j));
+                tile.setBackground();
             }
         }
     }
