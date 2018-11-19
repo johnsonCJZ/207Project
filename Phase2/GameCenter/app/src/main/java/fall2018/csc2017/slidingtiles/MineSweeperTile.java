@@ -23,7 +23,7 @@ public class MineSweeperTile implements Serializable {
 
     }
 
-    public void setBackground(int background) {
+    public void setBackground() {
         switch(number) {
             case -1:
                 background = R.drawable.mine_b2;

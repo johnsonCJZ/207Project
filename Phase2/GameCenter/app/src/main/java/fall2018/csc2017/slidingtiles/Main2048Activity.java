@@ -6,13 +6,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Main2048Activity extends AppCompatActivity {
+public class Main2048Activity extends AppCompatActivity implements Observer {
     private ScoreBoard personalScoreBoard;
     private ScoreBoard globalScoreBoard;
     private Board2048Manager boardManager;
@@ -102,7 +107,7 @@ public class Main2048Activity extends AppCompatActivity {
         cheat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cheat();
+//                cheat();
                 display();
             }
         });
@@ -192,6 +197,27 @@ public class Main2048Activity extends AppCompatActivity {
         globalScoreBoard.addAndSort(result);
         saveToFile(UserAccountManager.USERS);
         return score;
+
+    }
+
+    public void saveToFile(String fileName) {
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(
+                    this.openFileOutput(fileName, MODE_PRIVATE));
+            outputStream.writeObject(users);
+            outputStream.close();
+        } catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        display();
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 }

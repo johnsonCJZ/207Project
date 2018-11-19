@@ -93,6 +93,7 @@ public class MineSweeperManager extends Manager implements Serializable {
         if (isFirst) {
             setMines(position);
             setNumbers();
+            updateBackground();
             isFirst = false;
         }
         MineSweeperTile currTile = board.getTile(position);
@@ -167,7 +168,11 @@ public class MineSweeperManager extends Manager implements Serializable {
 //            }
 //        }
     }
-
+    void updateBackground() {
+        for (int i = 0; i < width * height; i++) {
+            board.getTile(i).setBackground();
+        }
+    }
     boolean isLost() {
         return lost;
     }
