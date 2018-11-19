@@ -11,7 +11,10 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -21,7 +24,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
     private ScoreBoard personalScoreBoard;
     private ScoreBoard globalScoreBoard;
     private Board2048Manager boardManager;
-    private GestureDetectGridView2048 gridView;
+    private GestureDetectGridView gridView;
     private ArrayList<Button> tileButtons;
     private UserAccount user;
     private UserAccountManager users;
@@ -36,6 +39,11 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        try {
+            getAllInfo(); // pass in all useful data from last activity, including boardManager
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2048);
         createTileButtons(this);
@@ -78,7 +86,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
         t.start();
 
         // Add View to activity
-        gridView = findViewById(R.id.grid2048);
+        gridView = (GestureDetectGridView)findViewById(R.id.grid2048);
         gridView.setNumColumns(boardManager.getBoard().getDimension());
         gridView.setBoardManager(boardManager);
         boardManager.getBoard().addObserver(this);
@@ -105,6 +113,27 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
     private void cheat() {
     boardManager.cheat();
     }
+
+    private void getAllInfo() throws CloneNotSupportedException {
+        Intent intentExtras = getIntent();
+        Bundle extra = intentExtras.getExtras();
+
+        assert extra != null;
+        this.user = (UserAccount) extra.getSerializable("user");
+        this.users = (UserAccountManager) extra.getSerializable("allUsers");
+        loadFromFile();
+
+        for (UserAccount u : users.getUserList()) {
+            if (u.getName().equals(user.getName())) {
+                this.user = u;
+            }
+        }
+        this.boardManager = (Board2048Manager) extra.getSerializable("boardManager");
+        assert this.boardManager != null;
+        this.boardManager = (Board2048Manager) this.boardManager.clone();
+//        this.size = this.boardManager.getBoard().getDimension();
+    }
+
 
     private void addCheatButton() {
         Button cheat = findViewById(R.id.Cheat2048);
@@ -150,9 +179,10 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
             for (int col = 0; col != boardManager.getBoard().getDimension(); col++) {
                 Button tmp = new Button(context);
                 tmp.setBackgroundResource(board.getTile(row, col).getBackground());
-                this.tileButtons.add(tmp);
+                tileButtons.add(tmp);
             }
         }
+        this.tileButtons=tileButtons;
     }
 
     private void endAlert() {
@@ -224,4 +254,23 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
+    private void loadFromFile() {
+        try {
+            InputStream inputStream = this.openFileInput(UserAccountManager.USERS);
+            if (inputStream != null) {
+                ObjectInputStream input = new ObjectInputStream(inputStream);
+                users = (UserAccountManager) input.readObject();
+                inputStream.close();
+            }
+        } catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        } catch (ClassNotFoundException e) {
+            Log.e("login activity", "File contained unexpected data type: " + e.toString());
+        }
+    }
+
+
 }

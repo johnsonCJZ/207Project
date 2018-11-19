@@ -1,6 +1,8 @@
 package fall2018.csc2017.slidingtiles;
 
-class   Tile2048 {
+import java.io.Serializable;
+
+public class Tile2048 implements Serializable {
     private int x;
 
     private int y;
