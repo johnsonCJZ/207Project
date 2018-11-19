@@ -71,6 +71,17 @@ public class MineSweeperBoard extends Observable implements Serializable {
         notifyObservers();
     }
 
+    void flag(int position) {
+
+        if (getTile(position).isFlagged()) {
+            getTile(position).unFlag();
+        } else if (getTile(position).isObscured()) {
+            getTile(position).flag();
+        }
+        setChanged();
+        notifyObservers();
+    }
+
     List<MineSweeperTile> getSurround(int position) {
         int row = position / w;
         int col = position % w;

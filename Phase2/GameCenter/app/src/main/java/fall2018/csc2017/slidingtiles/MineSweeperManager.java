@@ -51,9 +51,11 @@ public class MineSweeperManager extends Manager implements Serializable {
             isFirst = false;
         }
         MineSweeperTile currTile = board.getTile(position);
-        if (currTile.isMine()) {
-            lost = true;
-        } else board.reveal(position);
+        if (!currTile.isFlagged()) {
+            if (currTile.isMine()) {
+                lost = true;
+            } else board.reveal(position);
+        }
     }
 
     MineSweeperBoard getBoard() {
@@ -118,12 +120,5 @@ public class MineSweeperManager extends Manager implements Serializable {
         return true;
     }
 
-    void mark(int position) {
-
-        if (board.getTile(position).isFlagged()) {
-            board.getTile(position).unFlag();
-        } else if (board.getTile(position).isObscured()) {
-            board.getTile(position).flag();
-        }
-    }
+    void mark(int position) {board.flag(position);}
 }
