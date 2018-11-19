@@ -73,7 +73,7 @@ public class MineSweeperBoard extends Observable implements Serializable {
 
     List<MineSweeperTile> getSurround(int position) {
         int row = position / w;
-        int col = position / w;
+        int col = position % w;
         List<MineSweeperTile> surround = new ArrayList<>();
 
         if (row != 0 && col != 0) {
