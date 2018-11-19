@@ -13,13 +13,14 @@ public class MineSweeperManager extends Manager implements Serializable {
     private int time;
     private boolean isFirst = true;
     private boolean lost = false;
-    private List<MineSweeperTile> minePosition = new ArrayList<>();
+    private List<MineSweeperTile> minePosition;
 
     MineSweeperManager(int x, int y, int m) {
         board = new MineSweeperBoard(x, y, m);
         tiles=board.getTiles();
         width = board.getW();
         height = board.getH();
+        minePosition = board.getMinePosition();
         setUpBoard();
     }
 
@@ -68,9 +69,10 @@ public class MineSweeperManager extends Manager implements Serializable {
         }
         MineSweeperTile currTile = board.getTile(position);
         if (!currTile.isFlagged()) {
+            board.reveal(position);
             if (currTile.isMine()) {
                 lost = true;
-            } else board.reveal(position);
+            }
         }
     }
 
@@ -108,10 +110,11 @@ public class MineSweeperManager extends Manager implements Serializable {
     }
 
     boolean isLost() {
+        if (lost){
+            board.showMines();
+        }
         return lost;
     }
-
-    List<MineSweeperTile> getMinePosition() {return minePosition;}
 
     boolean isWon() {
         for (int i = 0; i < height * width; i++){

@@ -34,7 +34,7 @@ public class MineSweeperTile implements Serializable {
         if(!isObscured()) {
             switch (number) {
                 case -1:
-                    background = R.drawable.mine_b2;
+                    background = R.drawable.mine_b;
                     break;
                 case 0:
                     background = R.drawable.mine_base;
@@ -70,6 +70,15 @@ public class MineSweeperTile implements Serializable {
 
         }
         else {background = R.drawable.mine_mask;}
+    }
+
+    void showMine(){
+        if (isObscured()){
+            background = R.drawable.mine_b2;
+        }
+        else {
+            background = R.drawable.mine_b;
+        }
     }
 
     public int getBackground() {

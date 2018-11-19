@@ -10,6 +10,7 @@ public class MineSweeperBoard extends Observable implements Serializable {
     private int mine;
     private int mineLeft;
     private MineSweeperTile[][] tiles;
+    private List<MineSweeperTile> minePosition = new ArrayList<>();
 
     MineSweeperBoard(int x, int y, int m) {
         mine = m;
@@ -32,6 +33,8 @@ public class MineSweeperBoard extends Observable implements Serializable {
     }
 
     int getMineLeft() {return mineLeft;}
+
+    List<MineSweeperTile> getMinePosition() {return minePosition;}
 
     public MineSweeperTile[][] getTiles() {
         return tiles;
@@ -118,5 +121,14 @@ public class MineSweeperBoard extends Observable implements Serializable {
             surround.add(getTiles()[row][col + 1]);
         }
         return surround;
+    }
+
+    void showMines(){
+        for (MineSweeperTile tile : minePosition){
+            tile.showMine();
+        }
+
+        setChanged();
+        notifyObservers();
     }
 }
