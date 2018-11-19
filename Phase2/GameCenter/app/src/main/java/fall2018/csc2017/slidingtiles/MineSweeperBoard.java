@@ -62,7 +62,7 @@ public class MineSweeperBoard extends Observable implements Serializable {
         if (currTile.getNumber() == 0) {
             currTile.reveal();
             for (MineSweeperTile tile : getSurround(position)) {
-                 if(tile.isObscured()) {
+                 if(tile.isObscured() && !tile.isFlagged()) {
                      tile.reveal();
                      if (tile.getNumber() == 0) {
                          reveal(tile.getPosition());
