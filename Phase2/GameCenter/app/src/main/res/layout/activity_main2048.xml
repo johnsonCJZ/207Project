@@ -6,4 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".Main2048Activity">
 
+    <Button
+        android:id="@+id/Cheat2048"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cheat" />
 </android.support.constraint.ConstraintLayout>

@@ -19,6 +19,10 @@ public class Board2048Manager extends Manager implements Cloneable, Serializable
         board.addTile();
     }
 
+    void cheat() {
+        board.getTile(0,0).setValue(2048);
+    }
+
     void setTiles() {
         for (int row = 0; row != this.dimension; row++) {
             for (int col = 0; col != this.dimension; col++) {
@@ -70,9 +74,9 @@ public class Board2048Manager extends Manager implements Cloneable, Serializable
         } else {
             for (int i = 0; i < dimension; i++) {
                 for (int j = 0; j < dimension; j++) {
-                    Tile2048 tile = board.tileAtPosition(i, j);
-                if ((i < dimension - 1 && tile.equals(board.tileAtPosition(i + 1, j)))
-                    || (j < dimension - 1 && tile.equals(board.tileAtPosition(i, j+1)))) {
+                    Tile2048 tile = board.getTile(i, j);
+                if ((i < dimension - 1 && tile.equals(board.getTile(i + 1, j)))
+                    || (j < dimension - 1 && tile.equals(board.getTile(i, j+1)))) {
                     return true;
                 }
                 }
