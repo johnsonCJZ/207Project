@@ -57,22 +57,22 @@ public class Board2048Manager extends Manager implements Cloneable, Serializable
     }
 
     void moveUp() {
-        board.mergeVertical("UP");
+        board.merge("UP");
     }
 
     void moveDown() {
-        board.mergeVertical("DOWN");
+        board.merge("DOWN");
     }
 
     void moveLeft() {
-        board.mergeHorizontal("LEFT");
+        board.merge("LEFT");
     }
 
     void moveRight() {
-        board.mergeHorizontal("RIGHT");
+        board.merge("RIGHT");
     }
 
-    boolean canMove() {
+    private boolean canMove() {
         if (!isFull()) {
             return true;
         } else {

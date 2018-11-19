@@ -9,7 +9,12 @@ public class Tile2048 implements Serializable {
     //value can only be 0, 2 or 4.
     private int value;
 
-    int background = R.drawable.tile_0;
+    int background;
+
+    public Tile2048() {
+        this.background = R.drawable.tile_0;
+        this.value = 0;
+    }
 
     boolean isEmpty() {
         return value == 0;
