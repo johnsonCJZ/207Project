@@ -7,8 +7,13 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.FileNotFoundException;
@@ -83,6 +88,12 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
      * Height of the MineSweeperBoard.
      */
     private int height;
+
+    private int mine;
+
+    private Thread t;
+
+    private ImageButton face;
 
     /**
      * UserAccountManager associated to the UserAccount.
@@ -224,63 +235,25 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         try {
             getAllInfo(); // pass in all useful data from last activity, including boardManager
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
-        createTileButtons(this);
         setContentView(R.layout.activity_minesweeper);
-        final TextView time = findViewById(R.id.time);
-        count=boardManager.getTime();
-        isPaused = false;
-        Thread t = new Thread(){
-            @Override
-            public void run(){
-                while(!isInterrupted()) {
-                    if (!isPaused) {
-                        try {
-                            Thread.sleep(1000);
-                            if (boardManager.isWon()) {
-                                this.interrupt();
-                            }
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (boardManager.isWon() && !isPaused) {
-                                        boardManager.setTime(count);
-                                        isPaused = true;
-                                        user.getHistory().put("resumeHistory", null);
-                                        winAlert();
-                                    }
-                                    else {
-                                        count += 1;
-                                        if (tempCount < 2) {
-                                            tempCount += 1;
-                                        } else {
-                                            tempCount = 0;
-                                            try {
-                                                autoSave();
-                                            } catch (CloneNotSupportedException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                        time.setText("Time: " +String.format("%03d", count) + " s");
-                                    }
-                                }
-                            });
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        };
-
+        face = (ImageButton) findViewById(R.id.Thomas);
+        face.setImageResource(R.drawable.normal);
+        createTileButtons(this);
+        t = time();
         t.start();
+
         // Add View to activity
+        setGridView();
+        addStartOver();
+    }
+
+    private void setGridView(){
         gridView = findViewById(R.id.mine_grid);
         gridView.setNumColumns(boardManager.getBoard().getW());
         gridView.setBoardManager(boardManager);
@@ -302,6 +275,22 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
 
                     }
                 });
+    }
+
+
+    private void addStartOver(){
+        face.setImageResource(R.drawable.normal);
+        face.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                t.interrupt();
+                t=time();
+                t.start();
+                boardManager = new MineSweeperManager(height,width,mine);
+                createTileButtons(getApplicationContext());
+                setGridView();
+            }
+        });
     }
 
     /**
@@ -342,6 +331,60 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
         startActivity(tmp);
     }
 
+    private Thread time(){
+        final TextView time = findViewById(R.id.time);
+        count=boardManager.getTime();
+        isPaused = false;
+        Thread t = new Thread(){
+        @Override
+        public void run(){
+            while(!isInterrupted()) {
+                if (!isPaused) {
+                    try {
+                        Thread.sleep(1000);
+                        if (boardManager.isWon()) {
+                            this.interrupt();
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (boardManager.isWon() && !isPaused) {
+                                    boardManager.setTime(count);
+                                    isPaused = true;
+                                    user.getHistory().put("resumeHistory", null);
+                                    winAlert();
+                                }
+                                else if (boardManager.isLost()){
+                                    boardManager.setTime(count);
+                                    isPaused = true;
+                                    user.getHistory().put("resumeHistory", null);
+                                    face.setImageResource(R.drawable.sad);
+                                }
+                                else {
+                                    count += 1;
+                                    if (tempCount < 2) {
+                                        tempCount += 1;
+                                    } else {
+                                        tempCount = 0;
+                                        try {
+                                            autoSave();
+                                        } catch (CloneNotSupportedException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    time.setText("Time: " +String.format("%03d", count) + " s");
+                                }
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    };
+    return t;}
+
     /**
      * Receive all the info(User, Size, BoardManager, ScoreBoards)from previous activity/view.
      * @throws CloneNotSupportedException
@@ -363,6 +406,7 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
         this.boardManager = (MineSweeperManager) extra.getSerializable("boardManager");
         width = boardManager.getBoard().getW();
         height = boardManager.getBoard().getH();
+        mine = boardManager.getBoard().getMine();
         assert this.boardManager != null;
 //        this.boardManager = (BoardManager) this.boardManager.clone();
 //        this.size = this.boardManager.getBoard().getDimension();
@@ -392,11 +436,17 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
      * Create the buttons for displaying the tiles.
      * @param context the context
      */
-    private void createTileButtons(Context context) {
+    private void createTileButtons(final Context context) {
         MineSweeperBoard board = boardManager.getBoard();
         tileButtons = new ArrayList<>();
         for (int i = 0; i < width * height; i++) {
             Button tmp = new Button(context);
+            tmp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    face.setImageResource(R.drawable.surprise);
+                }
+            });
             tmp.setBackgroundResource(board.getTile(i).getBackground());
             this.tileButtons.add(tmp);
         }
@@ -429,6 +479,7 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
     @Override
     public void update(Observable o, Object arg) {
         display();
+        face.setImageResource(R.drawable.normal);
     }
 
     /**

@@ -43,4 +43,15 @@
         android:textColorLink="@android:color/black"
         android:textSize="30sp" />
 
+    <ImageButton
+        android:id="@+id/Thomas"
+        android:layout_width="93dp"
+        android:layout_height="103dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="153dp"
+        android:layout_marginEnd="-10dp"
+        android:layout_toStartOf="@+id/time"
+        android:scaleType="fitCenter"
+        />
+
 </RelativeLayout>
