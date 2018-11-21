@@ -26,14 +26,10 @@ public class Board2048Manager extends Manager implements Cloneable, Serializable
     void setTiles() {
         for (int row = 0; row != this.dimension; row++) {
             for (int col = 0; col != this.dimension; col++) {
-                Tile2048 tile = this.board.getTiles()[row][col];
-                if (tile==null){
-                    tile=new Tile2048();
-                    this.board.getTiles()[row][col]=tile;
-                }
+                this.board.setTile(row, col, new Tile2048());
+                Tile2048 tile = board.getTile(row, col);
                 tile.setX(col);
                 tile.setY(row);
-                tile.setValue(0);
             }
         }
 

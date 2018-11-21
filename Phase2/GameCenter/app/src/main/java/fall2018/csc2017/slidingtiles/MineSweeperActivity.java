@@ -67,7 +67,7 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
     /**
      * Time count.
      */
-    private int count=0;
+    private int count = 0;
 
     /**
      * Time count for autosave purpose.
@@ -283,10 +283,8 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
         face.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                t.interrupt();
-                t=time();
-                t.start();
                 boardManager = new MineSweeperManager(height,width,mine);
+                boardManager.setTime(-1);
                 createTileButtons(getApplicationContext());
                 setGridView();
             }
@@ -333,7 +331,7 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
 
     private Thread time(){
         final TextView time = findViewById(R.id.time);
-        count=boardManager.getTime();
+        count = boardManager.getTime();
         isPaused = false;
         Thread t = new Thread(){
         @Override
@@ -359,9 +357,12 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
                                     isPaused = true;
                                     user.getHistory().put("resumeHistory", null);
                                     face.setImageResource(R.drawable.sad);
+                                    addStartOver();
                                 }
                                 else {
+                                    count = boardManager.getTime();
                                     count += 1;
+                                    boardManager.setTime(count);
                                     if (tempCount < 2) {
                                         tempCount += 1;
                                     } else {

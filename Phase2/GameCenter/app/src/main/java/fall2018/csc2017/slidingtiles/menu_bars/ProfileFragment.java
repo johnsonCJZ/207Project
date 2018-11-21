@@ -67,7 +67,9 @@ public class ProfileFragment extends Fragment {
 
     private void setContents() {
         username.setText(userAccount.getName());
-        age.setText(userAccount.getAge().toString());
+        if (userAccount.getAge() != null) {
+            age.setText(userAccount.getAge().toString());
+        }
         email.setText(userAccount.getEmail());
 
     }

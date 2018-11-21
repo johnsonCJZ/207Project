@@ -25,6 +25,8 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
         Tile2048 randomTile = empty.get((int) (Math.random() * empty.size()));
         randomTile.random();
 
+        setChanged();
+        notifyObservers();
     }
 
     ArrayList<Tile2048> findEmpty() {
@@ -45,37 +47,79 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
         return result;
     }
 
-    static void moveEmpty(Tile2048[] tileArray, String direction){
+    static void mergeList(Tile2048[] tileArray, String direction){
         ArrayList<Integer> temp = new ArrayList<>(dimension);
+        int i;
         switch (direction) {
             case "LEFT":
-                for (int i = 0; i < dimension; i++) {
-                    Tile2048 tile = tileArray[i];
-                    Integer value = tile.getValue();
-                    if (!value.equals(0)) {
-                        temp.add(value);
+                i = 0;
+                while (i <= dimension-1) {
+                    if (i == dimension-1) {
+                        temp.add(tileArray[i].getValue());
+                        i++;
+                    }
+                    else if (tileArray[i].getValue() == 0){i++;}
+                    else {
+                        int j = i+1;
+                        while (tileArray[j].getValue() == 0 && j<=dimension-1) {
+                            j++;
+                        }
+                        Integer valuea = tileArray[i].getValue();
+                        Integer valueb = tileArray[j].getValue();
+                        if (valuea.equals(valueb)){
+                            temp.add(valuea*2);
+                        }
+                        else{
+                            temp.add(valuea);
+                            temp.add(valueb);
+                        }
+                        i = j+1;
                     }
                 }
+
                 while (temp.size() != dimension) {
                     temp.add(0);
                 }
-                for (int i = 0; i < dimension; i++) {
-                    tileArray[i].setValue(temp.get(i));
+
+                for (int k = 0; k < dimension; k++) {
+                    tileArray[k].setValue(temp.get(k));
                 }
+                break;
+
             case "RIGHT" :
-                for (int i = dimension - 1; i == 0; i--) {
-                    Tile2048 tile = tileArray[i];
-                    Integer value = tile.getValue();
-                    if (!value.equals(0)) {
-                        temp.add(value);
+                i = dimension - 1;
+                while (i >= 0) {
+                    if (i == 0) {
+                        temp.add(tileArray[i].getValue());
+                        i--;
+                    }
+                    else if (tileArray[i].getValue() == 0){i--;}
+                    else {
+                        int j = i-1;
+                        while (tileArray[j].getValue() == 0 && j>=0) {
+                            j--;
+                        }
+                        Integer valuea = tileArray[i].getValue();
+                        Integer valueb = tileArray[j].getValue();
+                        if (valuea.equals(valueb)){
+                            temp.add(valuea*2);
+                        }
+                        else{
+                            temp.add(valuea);
+                            temp.add(valueb);
+                        }
+                        i = j-1;
                     }
                 }
+
                 while (temp.size() != dimension) {
                     temp.add(0);
                 }
-                for (int i = dimension - 1; i == 0; i--) {
-                    tileArray[i].setValue(temp.get(i));
+                for (i = dimension - 1; i >= 0; i--) {
+                    tileArray[i].setValue(temp.get(temp.size()-1-i));
                 }
+                break;
+
             default:
                 throw new NoSuchElementException("No Such Direction");
 
@@ -86,76 +130,79 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
         switch (direction) {
             case "LEFT":
                 for (int row = 0; row < dimension - 1; row++) {
-                    mergeToLeft(tiles[row]);
+                    mergeList(tiles[row], "LEFT");
                 }
                 break;
             case "UP":
                 for (int col = 0; col < dimension - 1; col++) {
-                    mergeToLeft(getColumn(col));
+                    mergeList(getColumn(col), "LEFT");
                 }
                 break;
             case "RIGHT":
                 for (int row = 0; row < dimension - 1; row++) {
-                    mergeToRight(tiles[row]);
+                    mergeList(tiles[row], "RIGHT");
                 }
                 break;
             case "DOWN":
                 for (int col = 0; col < dimension - 1; col++) {
-                    mergeToRight(getColumn(col));
+                    mergeList(getColumn(col), "RIGHT");
                 }
                 break;
             default:
                 throw new NoSuchElementException("No Such Direction");
         }
 
+
         setChanged();
         notifyObservers();
     }
 
-    private void mergeToRight(Tile2048[] tileArray) {
-        moveEmpty(tileArray, "RIGHT");
-        for (int j = dimension - 1; j > 0; j--) {
-            Tile2048 tile = tileArray[j];
-            if (tile.equals(tileArray[j - 1])) {
-                tile.setValue(tile.getValue() * 2);
-                move(tileArray, j - 1, "RIGHT");
-                break;
-            }
-        }
-    }
+//    private void mergeToRight(Tile2048[] tileArray) {
+//        moveEmpty(tileArray, "RIGHT");
+//        for (int j = dimension - 1; j > 0; j--) {
+//            Tile2048 tile = tileArray[j];
+//            if (tile.getValue() != 0 && tile.equals(tileArray[j - 1])) {
+//                tile.setValue(tile.getValue() * 2);
+//                move(tileArray, j - 1, "RIGHT");
+//                break;
+//            }
+//        }
+//    }
 
-    private void mergeToLeft(Tile2048[] tileArray) {
-        moveEmpty(tileArray, "LEFT");
-        for (int j = 0; j < dimension - 1; j++) {
-            Tile2048 tile = tileArray[j];
-            if (tile.equals(tileArray[j + 1])) {
-                tile.setValue(tile.getValue() * 2);
-                move(tileArray, j + 1, "LEFT");
-                break;
-            }
-        }
-    }
+//    private void mergeToLeft(Tile2048[] tileArray) {
+//        moveEmpty(tileArray, "LEFT");
+//        for (int j = 0; j < dimension - 1; j++) {
+//            Tile2048 tile = tileArray[j];
+//            if (tile.getValue() != 0 && tile.equals(tileArray[j + 1])) {
+//                tile.setValue(tile.getValue() * 2);
+//                move(tileArray, j + 1, "LEFT");
+//                break;
+//            }
+//        }
+//    }
 
 
-    private void move(Tile2048[] tileArray, int col, String direction) {
-        int i = col;
-        Integer value = tileArray[i].getValue();
-        if (direction.equals("LEFT")) {
-            while (!value.equals(0) && i != dimension - 1) {
-                tileArray[i].setValue(tileArray[i + 1].getValue());
-                i++;
-                value = tileArray[i].getValue();
-            }
-            tileArray[dimension].setValue(0);
-        } else {
-            while (!value.equals(0) && i != 0) {
-                tileArray[i].setValue(tileArray[i - 1].getValue());
-                i--;
-                value = tileArray[i].getValue();
-            }
-            tileArray[0].setValue(0);
-        }
-    }
+//    private void move(Tile2048[] tileArray, int col, String direction) {
+//        int i = col;
+//        Integer value = tileArray[i].getValue();
+//        if (direction.equals("LEFT")) {
+//            while (!value.equals(0) && i != dimension - 1) {
+//                tileArray[i].setValue(tileArray[i + 1].getValue());
+//                i++;
+//                value = tileArray[i].getValue();
+//            }
+//            tileArray[dimension].setValue(0);
+//            addTile();
+//        } else {
+//            while (!value.equals(0) && i != 0) {
+//                tileArray[i].setValue(tileArray[i - 1].getValue());
+//                i--;
+//                value = tileArray[i].getValue();
+//            }
+//            tileArray[0].setValue(0);
+//            addTile();
+//        }
+//    }
 
     Tile2048 getTile(int x, int y) {
         return tiles[x][y];
@@ -169,7 +216,9 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
         return tiles;
     }
 
-
+    void setTile(int x, int y, Tile2048 tile){
+        this.tiles[x][y] = tile;
+    }
 
     @NonNull
     @Override
