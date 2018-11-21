@@ -61,17 +61,17 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                     else if (tileArray[i].getValue() == 0){i++;}
                     else {
                         int j = i+1;
-                        while (tileArray[j].getValue() == 0 && j<=dimension-1) {
+                        while (j<dimension-1 && tileArray[j].getValue() == 0) {
                             j++;
                         }
-                        Integer valuea = tileArray[i].getValue();
-                        Integer valueb = tileArray[j].getValue();
-                        if (valuea.equals(valueb)){
-                            temp.add(valuea*2);
+                        Integer valueI = tileArray[i].getValue();
+                        Integer valueJ = tileArray[j].getValue();
+                        if (valueI.equals(valueJ)){
+                            temp.add(valueI*2);
                         }
                         else{
-                            temp.add(valuea);
-                            temp.add(valueb);
+                            temp.add(valueI);
+                            temp.add(valueJ);
                         }
                         i = j+1;
                     }
@@ -96,17 +96,17 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                     else if (tileArray[i].getValue() == 0){i--;}
                     else {
                         int j = i-1;
-                        while (tileArray[j].getValue() == 0 && j>=0) {
+                        while (j>0 && tileArray[j].getValue() == 0) {
                             j--;
                         }
-                        Integer valuea = tileArray[i].getValue();
-                        Integer valueb = tileArray[j].getValue();
-                        if (valuea.equals(valueb)){
-                            temp.add(valuea*2);
+                        Integer valueI = tileArray[i].getValue();
+                        Integer valueJ = tileArray[j].getValue();
+                        if (valueI.equals(valueJ)){
+                            temp.add(valueI*2);
                         }
                         else{
-                            temp.add(valuea);
-                            temp.add(valueb);
+                            temp.add(valueI);
+                            temp.add(valueJ);
                         }
                         i = j-1;
                     }
@@ -129,22 +129,22 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
     void merge(String direction) {
         switch (direction) {
             case "LEFT":
-                for (int row = 0; row < dimension - 1; row++) {
+                for (int row = 0; row <= dimension - 1; row++) {
                     mergeList(tiles[row], "LEFT");
                 }
                 break;
             case "UP":
-                for (int col = 0; col < dimension - 1; col++) {
+                for (int col = 0; col <= dimension - 1; col++) {
                     mergeList(getColumn(col), "LEFT");
                 }
                 break;
             case "RIGHT":
-                for (int row = 0; row < dimension - 1; row++) {
+                for (int row = 0; row <= dimension - 1; row++) {
                     mergeList(tiles[row], "RIGHT");
                 }
                 break;
             case "DOWN":
-                for (int col = 0; col < dimension - 1; col++) {
+                for (int col = 0; col <= dimension - 1; col++) {
                     mergeList(getColumn(col), "RIGHT");
                 }
                 break;
