@@ -69,12 +69,13 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                         Integer valueJ = tileArray[j].getValue();
                         if (valueI.equals(valueJ)){
                             temp.add(valueI*2);
+                            i=j+1;
                         }
                         else{
                             temp.add(valueI);
-                            temp.add(valueJ);
+                            i = i+1;
                         }
-                        i = j+1;
+
                     }
                 }
 
@@ -104,12 +105,13 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                         Integer valueJ = tileArray[j].getValue();
                         if (valueI.equals(valueJ)){
                             temp.add(valueI*2);
+                            i=j-1;
                         }
                         else{
                             temp.add(valueI);
-                            temp.add(valueJ);
+                            i = i-1;
                         }
-                        i = j-1;
+
                     }
                 }
 
