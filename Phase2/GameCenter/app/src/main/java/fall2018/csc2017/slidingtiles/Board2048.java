@@ -22,11 +22,12 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
 
     void addTile() {
         ArrayList<Tile2048> empty = findEmpty();
+        if (!empty.isEmpty()){ // add if not empty
         Tile2048 randomTile = empty.get((int) (Math.random() * empty.size()));
         randomTile.random();
-
-        setChanged();
-        notifyObservers();
+//        setChanged();
+//        notifyObservers();
+        }
     }
 
     ArrayList<Tile2048> findEmpty() {
