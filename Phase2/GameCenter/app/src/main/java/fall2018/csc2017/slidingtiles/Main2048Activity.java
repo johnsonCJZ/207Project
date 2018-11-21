@@ -160,8 +160,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
 
     private void updateTileButtons() {
         Board2048 board = boardManager.getBoard();
-        // add a tile if has empty spot
-        board.addTile();
+        Board2048 boardCopy = boardManager.getBoard();
         int nextPos = 0;
         for (Button b : tileButtons) {
             int row = nextPos / boardManager.getBoard().getDimension();
@@ -169,6 +168,9 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
             b.setBackgroundResource(board.getTile(row, col).getBackground());
             nextPos++;
         }
+        // add a tile if the board has been modified and it has empty spot
+        board.addTile();
+
     }
 
     private void autoSave() {

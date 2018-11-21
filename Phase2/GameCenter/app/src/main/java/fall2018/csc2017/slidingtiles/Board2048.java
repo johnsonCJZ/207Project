@@ -73,7 +73,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                         }
                         else{
                             temp.add(valueI);
-                            i = i+1;
+                            i = j;
                         }
 
                     }
@@ -109,7 +109,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                         }
                         else{
                             temp.add(valueI);
-                            i = i-1;
+                            i = j;
                         }
 
                     }

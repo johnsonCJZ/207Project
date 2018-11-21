@@ -12,7 +12,7 @@ public class Tile2048 implements Serializable {
     int background;
 
     public Tile2048() {
-        this.background = R.drawable.tile_0;
+        this.background = R.drawable.tile_2048_0;
         this.value = 0;
     }
 
@@ -38,37 +38,37 @@ public class Tile2048 implements Serializable {
 
     void updateBackground() {
         switch (value) {
-            case 0: background = R.drawable.tile_0;
+            case 0: background = R.drawable.tile_2048_0;
             break;
 
-            case 2: background = R.drawable.tile_2;
+            case 2: background = R.drawable.tile_2048_2;
             break;
 
-            case 4: background = R.drawable.tile_4;
+            case 4: background = R.drawable.tile_2048_4;
             break;
 
-            case 8: background = R.drawable.tile_8;
+            case 8: background = R.drawable.tile_2048_8;
             break;
 
-            case 16: background = R.drawable.tile_16;
+            case 16: background = R.drawable.tile_2048_16;
             break;
 
-            case 32: background = R.drawable.tile_32;
+            case 32: background = R.drawable.tile_2048_32;
             break;
 
-            case 64: background = R.drawable.tile_64;
+            case 64: background = R.drawable.tile_2048_64;
             break;
 
-            case 128: background = R.drawable.tile_128;
+            case 128: background = R.drawable.tile_2048_128;
             break;
 
-            case 512: background = R.drawable.tile_512;
+            case 512: background = R.drawable.tile_2048_512;
             break;
 
-            case 1024: background = R.drawable.tile_1024;
+            case 1024: background = R.drawable.tile_2048_1024;
             break;
 
-            case 2048: background = R.drawable.tile_2048;
+            case 2048: background = R.drawable.tile_2048_2048;
             break;
         }
     }
