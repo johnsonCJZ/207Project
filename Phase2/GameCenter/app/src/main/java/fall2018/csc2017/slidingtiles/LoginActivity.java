@@ -1,6 +1,5 @@
 package fall2018.csc2017.slidingtiles;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -61,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         etUsername= findViewById(R.id.etUsername);
-        etPassword= findViewById(R.id.etPassword);
+        etPassword= findViewById(R.id.password);
         bLogIn= findViewById(R.id.bLogin);
         massage =findViewById(R.id.massage);
         registerLink = findViewById(R.id.registerLink);

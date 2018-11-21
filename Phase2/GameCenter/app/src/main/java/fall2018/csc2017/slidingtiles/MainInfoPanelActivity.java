@@ -17,6 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
+import fall2018.csc2017.slidingtiles.drop_down_menu.ContactsFragment;
+import fall2018.csc2017.slidingtiles.drop_down_menu.HelpsFragment;
+import fall2018.csc2017.slidingtiles.drop_down_menu.SettingsFragment;
 import fall2018.csc2017.slidingtiles.menu_bars.GameStoreFragment;
 import fall2018.csc2017.slidingtiles.menu_bars.ProfileFragment;
 import fall2018.csc2017.slidingtiles.menu_bars.ToolFragment;
@@ -64,8 +67,10 @@ public class MainInfoPanelActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         if (fragment==null){
+            ProfileFragment pp = new ProfileFragment();
+            pp.setArguments(passInfo());
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new ProfileFragment()).commit();
+                    pp).commit();
             navigationView.setCheckedItem(R.id.profile);
         }
         else {
@@ -161,13 +166,22 @@ public class MainInfoPanelActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         switch (id){
             case R.id.action_settings:
-                // + setting activity
+                SettingsFragment s = new SettingsFragment();
+                s.setArguments(passInfo());
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        s).commit();
                 break;
             case R.id.action_helps:
-                // + help activity
+                HelpsFragment h = new HelpsFragment();
+                h.setArguments(passInfo());
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        h).commit();
                 break;
             case R.id.action_contacts:
-                // + contact activity
+                ContactsFragment c = new ContactsFragment();
+                c.setArguments(passInfo());
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        c).commit();
                 break;
         }
 

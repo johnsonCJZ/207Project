@@ -18,9 +18,11 @@ import java.util.ArrayList;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText etUsername;
-    EditText etPassword;
-    EditText etConfirmPW;
+    EditText username;
+    EditText password;
+    EditText confirm;
+    EditText email;
+    EditText age;
     Button bRegister;
     UserAccountManager userAccountManager;
 
@@ -32,9 +34,11 @@ public class RegisterActivity extends AppCompatActivity {
             userAccountManager = new UserAccountManager();
         }
         setContentView(R.layout.activity_register);
-        etUsername = findViewById(R.id.etUsername);
-        etPassword = findViewById(R.id.etPassword);
-        etConfirmPW = findViewById(R.id.etConfirmPW);
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
+        confirm = findViewById(R.id.confirmpw);
+        email = findViewById(R.id.email);
+        age = findViewById(R.id.age);
         bRegister = findViewById(R.id.bRegister);
 
         bRegister.setOnClickListener(new View.OnClickListener() {
@@ -54,12 +58,20 @@ public class RegisterActivity extends AppCompatActivity {
      * @return a boolean showing whether an account is successfully registered
      */
     private boolean registerButtonPushed() {
-        String username = etUsername.getText().toString();
-        String password = etPassword.getText().toString();
-        String confirmPW = etConfirmPW.getText().toString();
+        String username = this.username.getText().toString();
+        String password = this.password.getText().toString();
+        String confirmPW = confirm.getText().toString();
+        String emails = email.getText().toString();
         ArrayList<UserAccount> userList = userAccountManager.getUserList();
         UserAccount newUser = new UserAccount(username, password);
         TextView textView = findViewById(R.id.textView7);
+        if(!(age.getText().toString().equals(""))){
+            Integer agei = Integer.parseInt(age.getText().toString());
+            newUser.setAge(agei);
+        }
+        if (!email.equals("")){
+            newUser.setEmail(emails);
+        }
         if (!userList.isEmpty()){
             for (UserAccount account : userList) {
                 if (account.getName().equals(username)) {
@@ -72,8 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
             textView.setText("password doesn't match");
             return false;
         }
-        //Tell the user the password and confirmed password are not the same
-
+//        Tell the user the password and confirmed password are not the same
         userAccountManager.AddUser(newUser);
         saveToFile(UserAccountManager.USERS);
         return true;

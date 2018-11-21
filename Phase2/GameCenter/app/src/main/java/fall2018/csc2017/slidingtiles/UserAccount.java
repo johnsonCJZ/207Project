@@ -20,6 +20,16 @@ public class UserAccount implements Serializable {
     private String password;
 
     /**
+     * The age of the UserAccount.
+     */
+    private Integer age;
+
+    /**
+     * The email of the UserAccount.
+     */
+    private String email;
+
+    /**
      * The sliding tiles game history of the UserAccount.
      */
     private HashMap<String, BoardManager> history = new HashMap<>();
@@ -34,12 +44,16 @@ public class UserAccount implements Serializable {
      */
     private HashMap<String,ScoreBoard> personalScoreBoard = new HashMap<>();
 
+    /**
+     * The games the UserAccount has purchased.
+     */
     private ArrayList<String> games;
     /**
      * The UserAccount class constructor.
      * @param name the name of the UserAccount
      * @param password
      */
+
     public UserAccount(String name, String password){
         this.name=name;
         this.password=password;
@@ -54,7 +68,35 @@ public class UserAccount implements Serializable {
 
     }
 
+    /**
+     * The setter of the field email.
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
+    /**
+     * The getter of the field email
+     * @return the email of the UserAccount
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * The setter of the field age.
+     */
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    /**
+     * The getter of the field age.
+     * @return the age of the UserAccount.
+     */
+    public Integer getAge() {
+        return age;
+    }
 
     /**
      * Change the username of the UserAccount.
