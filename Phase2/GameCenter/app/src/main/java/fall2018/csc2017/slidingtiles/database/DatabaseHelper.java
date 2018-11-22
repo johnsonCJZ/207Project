@@ -63,7 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean insertScoreboard(){}
+    public boolean insertScoreboard(){return true;}
 
     public Integer deleteData (String username) {
         SQLiteDatabase db = this.getWritableDatabase();

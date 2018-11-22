@@ -12,6 +12,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
     final static int dimension = 4;
 
     private Tile2048[][] tiles;
+    private boolean isChanged = false;
 
     /**
      * A new empty board of 4*4 tiles.
@@ -20,13 +21,16 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
         this.tiles = new Tile2048[dimension][dimension];
     }
 
+    boolean isChanged() {return isChanged;}
+
     void addTile() {
         ArrayList<Tile2048> empty = findEmpty();
         if (!empty.isEmpty()){ // add if not empty
         Tile2048 randomTile = empty.get((int) (Math.random() * empty.size()));
         randomTile.random();
-//        setChanged();
-//        notifyObservers();
+        isChanged = false;
+        setChanged();
+        notifyObservers();
         }
     }
 
@@ -48,7 +52,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
         return result;
     }
 
-    static void mergeList(Tile2048[] tileArray, String direction){
+    void mergeList(Tile2048[] tileArray, String direction){
         ArrayList<Integer> temp = new ArrayList<>(dimension);
         int i;
         switch (direction) {
@@ -81,6 +85,12 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
 
                 while (temp.size() != dimension) {
                     temp.add(0);
+                }
+
+                for (int m = 0; m < dimension; m++){
+                    if (tileArray[m].getValue() != temp.get(m)){
+                        isChanged = true;
+                    }
                 }
 
                 for (int k = 0; k < dimension; k++) {
@@ -118,6 +128,13 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                 while (temp.size() != dimension) {
                     temp.add(0);
                 }
+
+                for (int m = 0; m < dimension; m++) {
+                    if (tileArray[m].getValue() != temp.get(temp.size() - 1 - m)) {
+                        isChanged = true;
+                    }
+                }
+
                 for (i = dimension - 1; i >= 0; i--) {
                     tileArray[i].setValue(temp.get(temp.size()-1-i));
                 }
