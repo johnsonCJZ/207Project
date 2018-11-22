@@ -18,9 +18,10 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 import es.dmoral.toasty.Toasty;
+import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 public class LoginActivity extends AppCompatActivity {
-
+    DatabaseHelper myDB;
     /**
      * EditText view for username
      */
@@ -58,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myDB = new DatabaseHelper(this);
         setContentView(R.layout.activity_login);
         etUsername= findViewById(R.id.etUsername);
         etPassword= findViewById(R.id.password);

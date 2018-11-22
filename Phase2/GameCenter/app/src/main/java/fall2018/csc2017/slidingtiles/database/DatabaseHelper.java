@@ -6,6 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 
+import com.google.gson.Gson;
+
+import fall2018.csc2017.slidingtiles.ScoreBoard;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     static final String DATABASE_NAME = "User.db";
     static final String TABLE_NAME = "user_table";
@@ -38,18 +42,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    private String convertToJson(Object o) {
+    Gson gson = new Gson();
+        return gson.toJson(o);
+    }
+
     public boolean insertUserData(String username, String password, int age, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_NAME, username);
         contentValues.put(KEY_PASSWORD, password);
-        contentValues.put(KEY_AGE, age);
+        contentValues.put(KEY_AGE, age); //change default value of age = 0 and email = "" in regist activity
         contentValues.put(KEY_EMAIL, email);
+        contentValues.put(KEY_ST3X3, convertToJson(new ScoreBoard("SlidingTiles")));
+        contentValues.put(KEY_ST4X4, convertToJson(new ScoreBoard("SlidingTiles")));
+        contentValues.put(KEY_ST5X5, convertToJson(new ScoreBoard("SlidingTiles")));
+        contentValues.put(KEY_2048, convertToJson(new ScoreBoard("2048")));
+        contentValues.put(KEY_MS, convertToJson(new ScoreBoard("MineSweeper")));
         long result = db.insert(TABLE_NAME,null ,contentValues);
-        if(result == -1)
-            return false;
-        else
-            return true;
+        db.close();
+
+        return result != -1;
     }
 
     public boolean updateUserData(String username, String password, int age, String email) {

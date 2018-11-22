@@ -13,7 +13,7 @@ public class ScoreBoard implements Serializable {
     private ScoreStrategy scoreStrategy;
     private ScoreSorter scoreSorter;
 
-    ScoreBoard(String name){
+    public ScoreBoard(String name){
         setScoreBoardSize(10);
         setScoreSorter(new ScoreSorter());
         switch(name){
