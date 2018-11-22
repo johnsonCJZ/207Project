@@ -11,9 +11,12 @@ public class Tile2048 implements Serializable {
 
     int background;
 
+    private boolean fadeIn;
+
     public Tile2048() {
         this.background = R.drawable.tile_2048_0;
         this.value = 0;
+        fadeIn = false;
     }
 
     boolean isEmpty() {
@@ -25,8 +28,7 @@ public class Tile2048 implements Serializable {
         if (prob <= 0.2) {
             this.value = 4;
             updateBackground();
-        }
-        else{
+        } else {
             this.value = 2;
             updateBackground();
         }
@@ -38,43 +40,56 @@ public class Tile2048 implements Serializable {
 
     void updateBackground() {
         switch (value) {
-            case 0: background = R.drawable.tile_2048_0;
-            break;
+            case 0:
+                background = R.drawable.tile_2048_0;
+                break;
 
-            case 2: background = R.drawable.tile_2048_2;
-            break;
+            case 2:
+                background = R.drawable.tile_2048_2;
+                break;
 
-            case 4: background = R.drawable.tile_2048_4;
-            break;
+            case 4:
+                background = R.drawable.tile_2048_4;
+                break;
 
-            case 8: background = R.drawable.tile_2048_8;
-            break;
+            case 8:
+                background = R.drawable.tile_2048_8;
+                break;
 
-            case 16: background = R.drawable.tile_2048_16;
-            break;
+            case 16:
+                background = R.drawable.tile_2048_16;
+                break;
 
-            case 32: background = R.drawable.tile_2048_32;
-            break;
+            case 32:
+                background = R.drawable.tile_2048_32;
+                break;
 
-            case 64: background = R.drawable.tile_2048_64;
-            break;
+            case 64:
+                background = R.drawable.tile_2048_64;
+                break;
 
-            case 128: background = R.drawable.tile_2048_128;
-            break;
+            case 128:
+                background = R.drawable.tile_2048_128;
+                break;
 
-            case 256: background = R.drawable.tile_2048_256;
-            break;
+            case 256:
+                background = R.drawable.tile_2048_256;
+                break;
 
-            case 512: background = R.drawable.tile_2048_512;
-            break;
+            case 512:
+                background = R.drawable.tile_2048_512;
+                break;
 
-            case 1024: background = R.drawable.tile_2048_1024;
-            break;
+            case 1024:
+                background = R.drawable.tile_2048_1024;
+                break;
 
-            case 2048: background = R.drawable.tile_2048_2048;
-            break;
+            case 2048:
+                background = R.drawable.tile_2048_2048;
+                break;
         }
     }
+
     public int getX() {
         return x;
     }
@@ -104,12 +119,24 @@ public class Tile2048 implements Serializable {
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
-        }
-        else if (!(obj instanceof Tile2048)) {
+        } else if (!(obj instanceof Tile2048)) {
             return false;
-        }
-        else {
+        } else {
             return ((Tile2048) obj).getValue() == this.value;
         }
     }
+
+    public void setAnimation() {
+        fadeIn = true;
+    }
+
+    public boolean getFadeIn() {
+        return fadeIn;
+    }
+
+
+    public void removeFadeIn() {
+        fadeIn = false;
+    }
 }
+

@@ -9,6 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 
 import java.io.FileNotFoundException;
@@ -160,19 +164,36 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
 
     private void updateTileButtons() {
         Board2048 board = boardManager.getBoard();
+        Tile2048 newTile = board.addTile();
+        if (newTile!=null){
+            newTile.setAnimation();
+        }
         int nextPos = 0;
         for (Button b : tileButtons) {
             int row = nextPos / boardManager.getBoard().getDimension();
             int col = nextPos % boardManager.getBoard().getDimension();
+            if (board.getTile(row, col).getFadeIn()){
+                addFadeInAnimation(b);
+                board.getTile(row, col).removeFadeIn();
+            }
             b.setBackgroundResource(board.getTile(row, col).getBackground());
             nextPos++;
         }
         // add a tile if the board has been modified and it has empty spot
-        if (board.isChanged()) {board.addTile();}
 
     }
 
     private void autoSave() {
+    }
+
+    private void addFadeInAnimation(Button b){
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
+        fadeIn.setDuration(1000);
+        AnimationSet animation = new AnimationSet(true); //change to false
+        animation.addAnimation(fadeIn);
+        b.setAnimation(animation);
+
     }
 
     private void createTileButtons(Context context) {
