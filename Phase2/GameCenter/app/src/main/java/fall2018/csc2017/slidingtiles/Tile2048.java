@@ -62,6 +62,9 @@ public class Tile2048 implements Serializable {
             case 128: background = R.drawable.tile_2048_128;
             break;
 
+            case 256: background = R.drawable.tile_2048_256;
+            break;
+
             case 512: background = R.drawable.tile_2048_512;
             break;
 
