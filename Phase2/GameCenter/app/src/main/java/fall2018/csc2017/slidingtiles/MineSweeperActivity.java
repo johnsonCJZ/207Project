@@ -399,11 +399,6 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
         this.users = (UserAccountManager) extra.getSerializable("allUsers");
         loadFromFile();
 
-        for (UserAccount u : users.getUserList()) {
-            if (u.getName().equals(user.getName())) {
-                this.user = u;
-            }
-        }
         this.boardManager = (MineSweeperManager) extra.getSerializable("boardManager");
         width = boardManager.getBoard().getW();
         height = boardManager.getBoard().getH();

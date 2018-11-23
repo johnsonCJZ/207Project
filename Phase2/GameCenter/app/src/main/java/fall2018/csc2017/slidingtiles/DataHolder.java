@@ -11,7 +11,7 @@ public class DataHolder {
         data.put(id, new WeakReference<Object>(object));
     }
 
-    Object retrieve(String id) {
+    public Object retrieve(String id) {
         WeakReference<Object> objectWeakReference = data.get(id);
         return objectWeakReference.get();
     }

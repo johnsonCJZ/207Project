@@ -21,10 +21,12 @@ import java.io.ObjectInputStream;
 
 import fall2018.csc2017.slidingtiles.R;
 import fall2018.csc2017.slidingtiles.*;
+import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 
 public class SlideGameFragment extends Fragment {
-
+    DatabaseHelper myDB;
+    String username;
     /**
      * user that is operating system
      */
@@ -64,7 +66,7 @@ public class SlideGameFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
+        username = (String) DataHolder.getInstance().retrieve("current user");
         getUser();
         View rootView = inflater.inflate(R.layout.slide_game_fragment, container, false);
         Rank=rootView.findViewById(R.id.Rank);
@@ -79,8 +81,8 @@ public class SlideGameFragment extends Fragment {
     }
 
     private void getUser(){
-        user= (UserAccount) getArguments().getSerializable("user");
-        users= (UserAccountManager) getArguments().getSerializable("allUsers");
+        user= (UserAccount) myDB.selectUser(username);
+        users= (UserAccountManager) myDB.selectAccountManager();
 
     }
 
@@ -145,8 +147,8 @@ public class SlideGameFragment extends Fragment {
     private void switchToScoreBoard() {
         Intent tmp = new Intent(getActivity(), ScoreBoardTabLayoutActivity.class);
         Bundle pass = new Bundle();
-        pass.putSerializable("user",this.user);
-        pass.putSerializable("allUsers", this.users);
+        myDB.updateUser(username, this.user);
+        myDB.updateAccountManager(this.users);
         pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
         pass.putSerializable("globalScoreBoard", this.globalScoreBoard);
         tmp.putExtras(pass);
@@ -233,11 +235,7 @@ public class SlideGameFragment extends Fragment {
      * get correct user info
      */
     private void updateUser(){
-        loadFromFile(UserAccountManager.USERS);
-        for (UserAccount u: users.getUserList())
-            if (u.getName().equals(user.getName())) {
-                user = u;
-            }
+        this.user = myDB.selectUser(username);
     }
 
     /**
