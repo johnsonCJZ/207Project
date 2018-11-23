@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,8 +17,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class RegisterActivity extends AppCompatActivity {
+import es.dmoral.toasty.Toasty;
+import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
+public class RegisterActivity extends AppCompatActivity {
+    DatabaseHelper myDB = new DatabaseHelper(this);
     EditText username;
     EditText password;
     EditText confirm;
@@ -25,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText age;
     Button bRegister;
     UserAccountManager userAccountManager;
+    UserAccount newUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +49,15 @@ public class RegisterActivity extends AppCompatActivity {
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(registerButtonPushed()){
-                    Intent registerIntent = new Intent( RegisterActivity.this, LoginActivity.class);
-                    RegisterActivity.this.startActivity(registerIntent);
+                if(registerButtonPushed()) {
+                    boolean update = myDB.createAndInsertNew(newUser.getName(), myDB.convertToJson(newUser));
+                    if (update) {
+                        Intent registerIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+                        RegisterActivity.this.startActivity(registerIntent);
+                    }
+                    else {
+                        Toasty.success(getApplicationContext(), "Please Try Again", Toast.LENGTH_SHORT, true).show();
+                    }
                 }
             }
         });
@@ -62,8 +73,8 @@ public class RegisterActivity extends AppCompatActivity {
         String password = this.password.getText().toString();
         String confirmPW = confirm.getText().toString();
         String emails = email.getText().toString();
-        ArrayList<UserAccount> userList = userAccountManager.getUserList();
-        UserAccount newUser = new UserAccount(username, password);
+        ArrayList<String> userList = userAccountManager.getUserList();
+        newUser = new UserAccount(username, password);
         TextView textView = findViewById(R.id.textView7);
         if(!(age.getText().toString().equals(""))){
             Integer agei = Integer.parseInt(age.getText().toString());
@@ -73,8 +84,8 @@ public class RegisterActivity extends AppCompatActivity {
             newUser.setEmail(emails);
         }
         if (!userList.isEmpty()){
-            for (UserAccount account : userList) {
-                if (account.getName().equals(username)) {
+            for (String account : userList) {
+                if (account.equals(username)) {
                     textView.setText("this name is taken");
                     return false;
                 }
@@ -85,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         }
 //        Tell the user the password and confirmed password are not the same
-        userAccountManager.AddUser(newUser);
+        userAccountManager.AddUser(newUser.getName());
         saveToFile(UserAccountManager.USERS);
         return true;
     }

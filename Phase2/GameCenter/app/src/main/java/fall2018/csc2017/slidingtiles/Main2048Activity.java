@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
+
 public class Main2048Activity extends AppCompatActivity implements Observer {
     private ScoreBoard personalScoreBoard;
     private ScoreBoard globalScoreBoard;
@@ -39,15 +41,15 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
 
     double tempCount;
     private boolean isWin;
+    private DatabaseHelper myDB;
+    private String username;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        try {
-            getAllInfo(); // pass in all useful data from last activity, including boardManager
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        myDB = new DatabaseHelper(this);
+        username = (String) DataHolder.getInstance().retrieve("current user");
+        getAllInfo(); // pass in all useful data from last activity, including boardManager
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2048);
         createTileButtons(this);
@@ -118,23 +120,19 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
     boardManager.cheat();
     }
 
-    private void getAllInfo() throws CloneNotSupportedException {
+    private void getAllInfo() {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
 
         assert extra != null;
-        this.user = (UserAccount) extra.getSerializable("user");
+        this.user = myDB.selectUser(username);
         this.users = (UserAccountManager) extra.getSerializable("allUsers");
         loadFromFile();
 
-        for (UserAccount u : users.getUserList()) {
-            if (u.getName().equals(user.getName())) {
-                this.user = u;
-            }
-        }
+        personalScoreBoard = user.getScoreBoard("2048");
+        globalScoreBoard = users.getSlideTilesGlobalScoreBoard("2048");
         this.boardManager = (Board2048Manager) extra.getSerializable("boardManager");
         assert this.boardManager != null;
-        this.boardManager = (Board2048Manager) this.boardManager.clone();
 //        this.size = this.boardManager.getBoard().getDimension();
     }
 
@@ -238,8 +236,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
     private void switchToGameCenter() {
             Intent intent = new Intent(this, MainInfoPanelActivity.class);
             Bundle pass = new Bundle();
-            pass.putSerializable("user",this.user);
-            pass.putSerializable("allUsers", this.users);
+            loadFromFile();
             pass.putString("fragment", "Slide");
             intent.putExtras(pass);
             startActivity(intent);

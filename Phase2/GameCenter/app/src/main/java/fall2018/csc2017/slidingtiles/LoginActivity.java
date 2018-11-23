@@ -115,13 +115,11 @@ public class LoginActivity extends AppCompatActivity {
      */
     private UserAccount checkUserId(String username, String password){
         Context context = getApplicationContext();
-        ArrayList<UserAccount> userList = userAccountManager.getUserList();
-        for(UserAccount account: userList){
-            if(account.getName().equals(username) && account.getPassword().equals(password)){
+        UserAccount account = myDB.selectUser(username);
+            if(account != null && account.getPassword().equals(password)){
                 Toasty.success(context, "Welcome!", Toast.LENGTH_SHORT, true).show();
                 return account;
             }
-        }
         Toasty.error(context, "Wrong Username or Password", Toast.LENGTH_SHORT, true).show();
         return null;}
 

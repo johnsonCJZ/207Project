@@ -14,7 +14,7 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
     /**
      * all users stored
      */
-    private ArrayList<UserAccount> userList = new ArrayList<>();
+    private ArrayList<String> userList = new ArrayList<>();
 
     /**
      * global scoreBoard
@@ -30,7 +30,7 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
      * The getter for a list of all the users.
      * @return a list of all the users.
      */
-    public ArrayList<UserAccount> getUserList(){
+    public ArrayList<String> getUserList(){
         return userList;
     }
 
@@ -38,7 +38,7 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
      * Add a new UserAccount.
      * @param u the new UserAccount to be added
      */
-    void AddUser(UserAccount u){
+    void AddUser(String u){
 
         userList.add(u);
     }
@@ -46,7 +46,7 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
     /**
      * create a new UserAccountManager with empty memory
      */
-    UserAccountManager() {
+    public UserAccountManager() {
         slideTilesGlobalScoreBoard.put("history3x3", new ScoreBoard("SlidingTiles"));
         slideTilesGlobalScoreBoard.put("history4x4", new ScoreBoard("SlidingTiles"));
         slideTilesGlobalScoreBoard.put("history5x5", new ScoreBoard("SlidingTiles"));

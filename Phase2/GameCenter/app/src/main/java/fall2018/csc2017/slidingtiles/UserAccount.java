@@ -57,6 +57,8 @@ public class UserAccount implements Serializable {
     public UserAccount(String name, String password){
         this.name=name;
         this.password=password;
+        this.age = 0;
+        this.email = "";
         games = new ArrayList<>();
         history.put("history3x3", null);
         history.put("history4x4", null);

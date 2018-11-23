@@ -33,7 +33,7 @@ public class ScoreBoard implements Serializable {
      * Set the scoreBoardSize to size.
      * @param size the new size to set
      */
-    void setScoreBoardSize(int size) {
+    private void setScoreBoardSize(int size) {
         scoreBoardSize = size;
     }
 
@@ -50,7 +50,7 @@ public class ScoreBoard implements Serializable {
      * Set the slidscoreStrategy to strategy. Open to modification.
      * @param strategy the ScoreStrategy to set
      */
-    void setScoreStrategy(ScoreStrategy strategy) {
+    private void setScoreStrategy(ScoreStrategy strategy) {
         scoreStrategy = strategy;
     }
 
@@ -58,7 +58,7 @@ public class ScoreBoard implements Serializable {
      * Set the scoreSorter to sorter. Open to modification.
      * @param sorter the Sorter to set
      */
-    void setScoreSorter(ScoreSorter sorter) {
+    private void setScoreSorter(ScoreSorter sorter) {
         scoreSorter = sorter;
     }
 
@@ -66,7 +66,7 @@ public class ScoreBoard implements Serializable {
      * Add a new result to the scoreList and sort the list to get the new ranking.
      * @param scoreArray the new result to add
      */
-    void addAndSort(Object[] scoreArray) {
+    public void addAndSort(Object[] scoreArray) {
         scoreList.add(scoreArray);
         scoreSorter.sort(scoreList);
         if (scoreList.size() == scoreBoardSize + 1) {

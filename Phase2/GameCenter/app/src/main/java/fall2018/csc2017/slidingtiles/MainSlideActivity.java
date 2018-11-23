@@ -16,18 +16,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
+
 /**
  * The game activity.
  */
 public class MainSlideActivity extends AppCompatActivity implements Observer {
-
+    DatabaseHelper myDB;
     /**
      * The per-user scoreboard
      */
@@ -85,6 +86,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
      * UserAccountManager associated to the UserAccount.
      */
     private UserAccountManager users;
+    private String username;
 
     /**
      * Set up the background image for each button based on the master list
@@ -117,11 +119,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        try {
                             saveHistory(dialog);
-                        } catch (CloneNotSupportedException e) {
-                            e.printStackTrace();
-                        }
                         MainSlideActivity.this.finish();
                         switchToGameCenter();
                     }
@@ -156,7 +154,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         result[1] = score;
         personalScoreBoard.addAndSort(result);
         globalScoreBoard.addAndSort(result);
-        saveToFile(UserAccountManager.USERS);
         return score;
 
     }
@@ -164,22 +161,18 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     /**
      * Save the game history.
      * @param dialog
-     * @throws CloneNotSupportedException
      */
-    private void saveHistory(DialogInterface dialog) throws CloneNotSupportedException {
+    private void saveHistory(DialogInterface dialog) {
         switch (size) {
             case 3:
-                user.getHistory().put("history3x3", (BoardManager) boardManager.clone());
-                saveToFile(UserAccountManager.USERS);
+                user.getHistory().put("history3x3", (BoardManager) boardManager);
                 break;
             case 4:
-                user.getHistory().put("history4x4",(BoardManager) boardManager.clone());
-                saveToFile(UserAccountManager.USERS);
+                user.getHistory().put("history4x4",(BoardManager) boardManager);
                 break;
 
             case 5:
-                user.getHistory().put("history5x5",(BoardManager) boardManager.clone());
-                saveToFile(UserAccountManager.USERS);
+                user.getHistory().put("history5x5",(BoardManager) boardManager);
                 break;
                 }
                 dialog.cancel();
@@ -188,12 +181,10 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
     /**
      * Automatically save the game for resuming.
-     * @throws CloneNotSupportedException
      */
-    private void autoSave() throws CloneNotSupportedException {
+    private void autoSave() {
         boardManager.setTime(count);
-        user.getHistory().put("resumeHistory", (BoardManager) boardManager.clone());
-        saveToFile(UserAccountManager.USERS);
+        user.getHistory().put("resumeHistory", (BoardManager) boardManager);
     }
 
 
@@ -203,13 +194,10 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        myDB = new DatabaseHelper(this);
+        username = (String) DataHolder.getInstance().retrieve("current user");
         super.onCreate(savedInstanceState);
-        try {
             getAllInfo(); // pass in all useful data from last activity, including boardManager
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
         createTileButtons(this);
         setContentView(R.layout.activity_main);
         final TextView time = findViewById(R.id.textView6);
@@ -240,11 +228,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                                             tempCount += 0.01;
                                         } else {
                                             tempCount = 0;
-                                            try {
-                                                autoSave();
-                                            } catch (CloneNotSupportedException e) {
-                                                e.printStackTrace();
-                                            }
+                                            autoSave();
                                         }
                                         time.setText(String.valueOf(df2.format(count)) + " s");
                                     }
@@ -375,36 +359,25 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
      */
     private void switchToScoreBoard(){
         Intent tmp = new Intent(this, ScoreBoardTabLayoutActivity.class);
-        Bundle pass = new Bundle();
-        pass.putSerializable("user",this.user);
-        pass.putSerializable("allUsers", this.users);
-        pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
-        pass.putSerializable("globalScoreBoard", this.globalScoreBoard);
-        tmp.putExtras(pass);
+        myDB.updateUser(user.getName(), this.user);
+        myDB.updateAccountManager(users);
         startActivity(tmp);
     }
 
     /**
      * Receive all the info(User, Size, BoardManager, ScoreBoards)from previous activity/view.
-     * @throws CloneNotSupportedException
      */
-    private void getAllInfo() throws CloneNotSupportedException {
+    private void getAllInfo(){
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
 
         assert extra != null;
-        this.user = (UserAccount) extra.getSerializable("user");
-        this.users = (UserAccountManager) extra.getSerializable("allUsers");
-        loadFromFile();
+        this.user = myDB.selectUser(username);
+        this.users = myDB.selectAccountManager();
+//        loadFromFile();
 
-        for (UserAccount u : users.getUserList()) {
-            if (u.getName().equals(user.getName())) {
-                this.user = u;
-            }
-        }
         this.boardManager = (BoardManager) extra.getSerializable("boardManager");
         assert this.boardManager != null;
-        this.boardManager = (BoardManager) this.boardManager.clone();
         this.size = this.boardManager.getBoard().getDimension();
         switch (size) {
             case 3:
@@ -466,20 +439,20 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         super.onPause();
     }
 
-    /**
-     * Save the board manager to fileName.
-     * @param fileName the name of the file
-     */
-    public void saveToFile(String fileName) {
-        try {
-            ObjectOutputStream outputStream = new ObjectOutputStream(
-                    this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(users);
-            outputStream.close();
-        } catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
+//    /**
+//     * Save the board manager to fileName.
+//     * @param fileName the name of the file
+//     */
+//    public void saveToFile(String fileName) {
+//        try {
+//            ObjectOutputStream outputStream = new ObjectOutputStream(
+//                    this.openFileOutput(fileName, MODE_PRIVATE));
+//            outputStream.writeObject(users);
+//            outputStream.close();
+//        } catch (IOException e) {
+//            Log.e("Exception", "File write failed: " + e.toString());
+//        }
+//    }
 
     @Override
     public void update(Observable o, Object arg) {
