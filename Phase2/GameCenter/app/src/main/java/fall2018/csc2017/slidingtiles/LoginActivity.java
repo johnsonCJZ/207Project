@@ -101,8 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                     loginIntent.putExtras(pass);
                     // pass user name to global context using application singleton
                     // so that all activity knows current user
-                    MyApplication app = (MyApplication) getApplicationContext();
-                    app.setUser(username);
+                    DataHolder.getInstance().save("current user", user.getName());
                     LoginActivity.this.startActivity(loginIntent);
             }}
         });

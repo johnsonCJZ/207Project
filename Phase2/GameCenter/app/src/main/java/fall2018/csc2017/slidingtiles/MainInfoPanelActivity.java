@@ -141,8 +141,7 @@ public class MainInfoPanelActivity extends AppCompatActivity
         this.fragment = (String) extra.getString("fragment");
 
         // use this to set user name on global
-        MyApplication app = (MyApplication) getApplicationContext();
-        currentUser = app.getCurrentUser();
+        currentUser = (String)DataHolder.getInstance().retrieve("current user");
     }
 
     @Override
