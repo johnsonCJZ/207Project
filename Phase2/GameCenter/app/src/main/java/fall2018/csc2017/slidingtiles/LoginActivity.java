@@ -99,6 +99,10 @@ public class LoginActivity extends AppCompatActivity {
                     pass.putSerializable("user",user);
                     pass.putSerializable("allUsers", userAccountManager);
                     loginIntent.putExtras(pass);
+                    // pass user name to global context using application singleton
+                    // so that all activity knows current user
+                    MyApplication app = (MyApplication) getApplicationContext();
+                    app.setUser(username);
                     LoginActivity.this.startActivity(loginIntent);
             }}
         });
