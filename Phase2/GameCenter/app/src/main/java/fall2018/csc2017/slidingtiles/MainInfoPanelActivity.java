@@ -42,6 +42,8 @@ public class MainInfoPanelActivity extends AppCompatActivity
 
     private String fragment;
 
+    private String currentUser;
+
 
 
 
@@ -137,6 +139,10 @@ public class MainInfoPanelActivity extends AppCompatActivity
         this.user =(UserAccount) extra.getSerializable("user");
         this.users = (UserAccountManager) extra.getSerializable("allUsers");
         this.fragment = (String) extra.getString("fragment");
+
+        // use this to set user name on global
+        MyApplication app = (MyApplication) getApplicationContext();
+        currentUser = app.getCurrentUser();
     }
 
     @Override
