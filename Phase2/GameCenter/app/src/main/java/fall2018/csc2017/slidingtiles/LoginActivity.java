@@ -60,6 +60,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myDB = new DatabaseHelper(this);
+        if (!myDB.ifAccountManagerExists()) {
+            myDB.createUserAccountManager();
+        }
         setContentView(R.layout.activity_login);
         etUsername= findViewById(R.id.etUsername);
         etPassword= findViewById(R.id.password);
@@ -96,8 +99,8 @@ public class LoginActivity extends AppCompatActivity {
                 if(user!=null){
                     Intent loginIntent = new Intent(LoginActivity.this, MainInfoPanelActivity.class);
                     Bundle pass = new Bundle();
-                    pass.putSerializable("user",user);
-                    pass.putSerializable("allUsers", userAccountManager);
+//                    pass.putSerializable("user",user);
+//                    pass.putSerializable("allUsers", userAccountManager);
                     loginIntent.putExtras(pass);
                     // pass user name to global context using application singleton
                     // so that all activity knows current user

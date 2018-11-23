@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 
+import fall2018.csc2017.slidingtiles.LoginActivity;
 import fall2018.csc2017.slidingtiles.UserAccount;
 import fall2018.csc2017.slidingtiles.UserAccountManager;
 
@@ -41,7 +42,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String CREATE_TABLE = " CREATE TABLE " + TABLE_NAME + " (USERNAME TEXT PRIMARY KEY, " +
                 "USERACCOUNT OBJECT)";
         db.execSQL(CREATE_TABLE);
-        createUserAccountManager();
     }
 
     @Override
@@ -51,7 +51,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    private boolean createUserAccountManager() {
+    public boolean ifAccountManagerExists() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "select count(*) from " + TABLE_NAME + " where " + KEY_NAME + " like '" + USER_ACCOUNT_MANAGER+ "'";
+        Cursor res = db.rawQuery(query, null);
+        int num = res.getCount();
+        return num == 1;
+    }
+
+    public boolean createUserAccountManager() {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_USER, convertToJson(new UserAccountManager()));
@@ -73,15 +81,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(KEY_NAME, username);
         contentValues.put(KEY_USER, userAccount); //change default value of age = 0 and email = "" in regist activity
         long result = db.insert(TABLE_NAME,null ,contentValues);
+
         db.close();
 
         return result != -1;
     }
 
+    public void addUserToAccountManager(String username) throws Exception {
+        UserAccountManager accountManager = selectAccountManager();
+        accountManager.addUser(username);
+        boolean result = updateAccountManager(accountManager);
+        if (!result) {
+            throw new Exception("add user to account manager failed");
+        }
+    }
     public UserAccountManager selectAccountManager(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "select " + KEY_USER + " from " + TABLE_NAME  + " where " + KEY_NAME
-                + " = " + "UserAccountManager";
+                + " = '" + USER_ACCOUNT_MANAGER + "'";
         Cursor res = db.rawQuery(query, null);
 
         return convertToAccountManager(res.getString(0));
@@ -91,7 +108,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // query may has problem
     public UserAccount selectUser(String username){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "select " + KEY_USER + " from " + TABLE_NAME  + " where " + KEY_NAME + " = " + username;
+        String query = "select " + KEY_USER + " from " + TABLE_NAME  + " where " + KEY_NAME + " like '" + username + "'";
         Cursor res = db.rawQuery(query, null);
         if (res.getCount() == 1){
             return convertToUserAccount(res.getString(0));

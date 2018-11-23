@@ -96,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         }
 //        Tell the user the password and confirmed password are not the same
-        userAccountManager.AddUser(newUser.getName());
+        userAccountManager.addUser(newUser.getName());
         saveToFile(UserAccountManager.USERS);
         return true;
     }

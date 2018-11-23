@@ -38,8 +38,7 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
      * Add a new UserAccount.
      * @param u the new UserAccount to be added
      */
-    void AddUser(String u){
-
+    public void addUser(String u){
         userList.add(u);
     }
 
