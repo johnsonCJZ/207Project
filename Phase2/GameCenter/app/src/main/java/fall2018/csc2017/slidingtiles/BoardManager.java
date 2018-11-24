@@ -95,7 +95,7 @@ public class BoardManager extends Manager implements Serializable, Cloneable {
      *
      * @return whether the tiles are in row-major order
      */
-    boolean puzzleSolved() {
+    boolean isWon() {
         Iterator iter = board.iterator();
         Tile previous = (Tile) iter.next();
 

@@ -21,6 +21,17 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
         this.tiles = new Tile2048[dimension][dimension];
     }
 
+    void setUpTiles() {
+        for (int row = 0; row != dimension; row++) {
+            for (int col = 0; col != dimension; col++) {
+                this.setTile(row, col, new Tile2048());
+                Tile2048 tile = getTile(row, col);
+                tile.setX(col);
+                tile.setY(row);
+            }
+        }
+    }
+
     Tile2048 addTile() {
         ArrayList<Tile2048> empty = findEmpty();
         if (!empty.isEmpty()){ // add if not empty

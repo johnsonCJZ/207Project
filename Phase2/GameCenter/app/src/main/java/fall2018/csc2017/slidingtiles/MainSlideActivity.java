@@ -210,13 +210,13 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                     if (!isPaused) {
                         try {
                             Thread.sleep(10);
-                            if (boardManager.puzzleSolved()) {
+                            if (boardManager.isWon()) {
                                 this.interrupt();
                             }
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (boardManager.puzzleSolved() && !isPaused) {
+                                    if (boardManager.isWon() && !isPaused) {
                                         boardManager.setTime(count);
                                         isPaused = true;
                                         user.getHistory().put("resumeHistory", null);

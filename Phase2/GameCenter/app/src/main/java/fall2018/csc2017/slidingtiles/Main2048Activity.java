@@ -64,7 +64,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
                             runOnUiThread(new Runnable() {
                                               @Override
                                               public void run() {
-                                                  if ((boardManager.isWin() || boardManager.isLose())
+                                                  if ((boardManager.isWon() || boardManager.isLose())
                                                           && !isPaused) {
                                                       setIsWin();
                                                       isPaused = true;
@@ -154,7 +154,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
     }
 
     private void setIsWin() {
-        if (boardManager.isWin()) {
+        if (boardManager.isWon()) {
             isWin = true;
         }
     }
