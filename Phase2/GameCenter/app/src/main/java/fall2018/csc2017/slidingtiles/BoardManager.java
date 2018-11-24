@@ -21,6 +21,8 @@ public class BoardManager extends Manager implements Serializable, Cloneable {
      */
     private Board board;
 
+    private List<Tile> tiles = new ArrayList<>();
+
     /**
      * The linked list of history moves of the board.
      */
@@ -54,16 +56,62 @@ public class BoardManager extends Manager implements Serializable, Cloneable {
      */
     public BoardManager(int n) {
         this.time = 0.0;
-        List<Tile> tiles = new ArrayList<>();
         this.board = new Board(n);
         final int numTiles = board.getDimension() * board.getDimension();
         for (int tileNum = 0; tileNum != numTiles; tileNum++) {
             tiles.add(new Tile(tileNum));
         }
-
-        Collections.shuffle(tiles);
+        shuffle();
         board.setTiles(tiles);
         this.history.add(new HistoryNode(this.findBlankIndex(0)));
+    }
+
+    /**
+     * Return how many inversions occur in the list of tiles.
+     * An inversion is when a tile precedes another tile with a lower number on it.
+     * @return the number of inversion
+     */
+    int findInversion() {
+        int count = 0;
+        for (int i = 0; i < board.getDimension()-1; i++) {
+            if (tiles.get(i).getId() != 0){
+                for (int j = i+1; j < board.getDimension(); j++){
+                    if (tiles.get(j).getId() < tiles.get(i).getId() && tiles.get(j).getId() != 0){
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Shuffle the list of tiles until the state is solvable.
+     */
+    void shuffle() {
+        Collections.shuffle(tiles);
+        while (!isSolvable()) {
+            Collections.shuffle(tiles);
+        }
+    }
+
+    /**
+     * Return if the shuffled state can be solved.
+     * @return if the state is solvable.
+     */
+    boolean isSolvable() {
+        int inversion = findInversion();
+        if (board.getDimension() % 2 == 1) {
+            return inversion % 2 == 0;
+        }
+        else {
+            int i = 0;
+            while(tiles.get(i).getId() != 0){
+                i++;
+            }
+            int blankAtRowFromBottom = board.getDimension()- (i/board.getDimension());
+            return inversion % 2 != blankAtRowFromBottom % 2;
+        }
     }
 
     /**
