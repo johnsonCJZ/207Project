@@ -12,22 +12,27 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
+import fall2018.csc2017.slidingtiles.DataHolder;
 import fall2018.csc2017.slidingtiles.R;
 import fall2018.csc2017.slidingtiles.UserAccount;
 import fall2018.csc2017.slidingtiles.UserAccountManager;
+import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 public class GameStoreFragment extends Fragment {
+    DatabaseHelper myDB;
     private View view;
     private ImageButton minesweeper;
     private ImageButton slide;
     private ImageButton g2048;
     private UserAccount user;
     private UserAccountManager users;
+    private String currentUser;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        myDB = new DatabaseHelper(this.getContext());
         view = inflater.inflate(R.layout.activity_game_store_acivity, container, false);
         Toasty.info(getContext(), "Click logo to purchase game!", Toast.LENGTH_SHORT, true).show();
         minesweeper=view.findViewById(R.id.minesweeper);
@@ -40,8 +45,11 @@ public class GameStoreFragment extends Fragment {
 
         return view; }
     private void getUsers(){
-        user = (UserAccount) getArguments().getSerializable("user");
-        users = (UserAccountManager) getArguments().getSerializable("users");
+        currentUser = (String)DataHolder.getInstance().retrieve("current user");
+        user = myDB.selectUser(currentUser);
+        users = myDB.selectAccountManager();
+//        user = (UserAccount) getArguments().getSerializable("user");
+//        users = (UserAccountManager) getArguments().getSerializable("users");
     }
     private void addMineButton(){
         minesweeper.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +60,7 @@ public class GameStoreFragment extends Fragment {
                 }
                 else{
                     user.addGames("Minesweeper");
+                    myDB.updateUser(currentUser,user);
                     Toasty.success(getContext(), "Thank you for purchasing Minesweeper! Enjoy!", Toast.LENGTH_SHORT, true).show();
                 }
                 }
@@ -68,6 +77,7 @@ public class GameStoreFragment extends Fragment {
                     }
                     else{
                     user.addGames("G2048");
+                    myDB.updateUser(currentUser,user);
                     Toasty.success(getContext(), "Thank you for purchasing 2048! Enjoy!", Toast.LENGTH_SHORT, true).show();
                     } }
                     }
@@ -83,6 +93,7 @@ public class GameStoreFragment extends Fragment {
                     }
                     else{
                     user.addGames("Slide");
+                    myDB.updateUser(currentUser,user);
                     Toasty.success(getContext(), "Thank you for purchasing Slide! Enjoy!", Toast.LENGTH_SHORT, true).show();
                     }
                     }

@@ -46,9 +46,9 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
      * create a new UserAccountManager with empty memory
      */
     public UserAccountManager() {
-        slideTilesGlobalScoreBoard.put("history3x3", new ScoreBoard("SlidingTiles"));
-        slideTilesGlobalScoreBoard.put("history4x4", new ScoreBoard("SlidingTiles"));
-        slideTilesGlobalScoreBoard.put("history5x5", new ScoreBoard("SlidingTiles"));
+//        slideTilesGlobalScoreBoard.put("history3x3", new ScoreBoard("SlidingTiles"));
+//        slideTilesGlobalScoreBoard.put("history4x4", new ScoreBoard("SlidingTiles"));
+//        slideTilesGlobalScoreBoard.put("history5x5", new ScoreBoard("SlidingTiles"));
     }
     /**
      * Return a iterator of the UserAccountManager class.

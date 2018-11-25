@@ -21,7 +21,7 @@ import es.dmoral.toasty.Toasty;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 public class RegisterActivity extends AppCompatActivity {
-    DatabaseHelper myDB = new DatabaseHelper(this);
+    DatabaseHelper myDB;
     EditText username;
     EditText password;
     EditText confirm;
@@ -34,10 +34,12 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadFromFile();
-        if (userAccountManager == null){
-            userAccountManager = new UserAccountManager();
-        }
+        myDB = new DatabaseHelper(this);
+        userAccountManager = myDB.selectAccountManager();
+//        loadFromFile();
+//        if (userAccountManager == null){
+//            userAccountManager = new UserAccountManager();
+//        }
         setContentView(R.layout.activity_register);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
@@ -50,14 +52,8 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(registerButtonPushed()) {
-                    boolean update = myDB.createAndInsertNew(newUser.getName(), myDB.convertToJson(newUser));
-                    if (update) {
                         Intent registerIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                         RegisterActivity.this.startActivity(registerIntent);
-                    }
-                    else {
-                        Toasty.success(getApplicationContext(), "Please Try Again", Toast.LENGTH_SHORT, true).show();
-                    }
                 }
             }
         });
@@ -74,13 +70,12 @@ public class RegisterActivity extends AppCompatActivity {
         String confirmPW = confirm.getText().toString();
         String emails = email.getText().toString();
         ArrayList<String> userList = userAccountManager.getUserList();
-        newUser = new UserAccount(username, password);
         TextView textView = findViewById(R.id.textView7);
-        if(!(age.getText().toString().equals(""))){
-            Integer agei = Integer.parseInt(age.getText().toString());
-            newUser.setAge(agei);
+        if(!(this.age.getText().toString().equals(""))){
+            Integer age = Integer.parseInt(this.age.getText().toString());
+            newUser.setAge(age);
         }
-        if (!email.equals("")){
+        if (!email.getText().toString().equals("")){
             newUser.setEmail(emails);
         }
         if (!userList.isEmpty()){
@@ -90,37 +85,41 @@ public class RegisterActivity extends AppCompatActivity {
                     return false;
                 }
                 //tell the user the username already exists.
-        }}
+            }
+        }
         if (!password.equals(confirmPW)) {
             textView.setText("password doesn't match");
             return false;
         }
 //        Tell the user the password and confirmed password are not the same
+        newUser = new UserAccount(username, password);
         userAccountManager.addUser(newUser.getName());
-        saveToFile(UserAccountManager.USERS);
+        myDB.createAndInsertNew(newUser.getName(),newUser);
+        myDB.updateAccountManager(userAccountManager);
+//        saveToFile(UserAccountManager.USERS);
         return true;
     }
 
     /**
      * Load from pre-saved .ser file.
      */
-    private void loadFromFile() {
-
-        try {
-            InputStream inputStream = this.openFileInput(UserAccountManager.USERS);
-            if (inputStream != null) {
-                ObjectInputStream input = new ObjectInputStream(inputStream);
-                userAccountManager = (UserAccountManager) input.readObject();
-                inputStream.close();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        } catch (ClassNotFoundException e) {
-            Log.e("login activity", "File contained unexpected data type: " + e.toString());
-        }
-    }
+//    private void loadFromFile() {
+//
+//        try {
+//            InputStream inputStream = this.openFileInput(UserAccountManager.USERS);
+//            if (inputStream != null) {
+//                ObjectInputStream input = new ObjectInputStream(inputStream);
+//                userAccountManager = (UserAccountManager) input.readObject();
+//                inputStream.close();
+//            }
+//        } catch (FileNotFoundException e) {
+//            Log.e("login activity", "File not found: " + e.toString());
+//        } catch (IOException e) {
+//            Log.e("login activity", "Can not read file: " + e.toString());
+//        } catch (ClassNotFoundException e) {
+//            Log.e("login activity", "File contained unexpected data type: " + e.toString());
+//        }
+//    }
 
     /**
      * Save to file fileName.

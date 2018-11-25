@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
+import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 import fall2018.csc2017.slidingtiles.drop_down_menu.ContactsFragment;
 import fall2018.csc2017.slidingtiles.drop_down_menu.HelpsFragment;
 import fall2018.csc2017.slidingtiles.drop_down_menu.SettingsFragment;
@@ -29,6 +30,7 @@ import fall2018.csc2017.slidingtiles.ui.Games.SlideGameFragment;
 
 public class MainInfoPanelActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MenuItem.OnMenuItemClickListener {
+    DatabaseHelper myDB;
     Toolbar toolbar;
     DrawerLayout drawer;
     /**
@@ -45,10 +47,9 @@ public class MainInfoPanelActivity extends AppCompatActivity
     private String currentUser;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.myDB = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_bar_main_info_panel);
         setContentView(R.layout.nav_header_main_info_panel);
@@ -56,21 +57,21 @@ public class MainInfoPanelActivity extends AppCompatActivity
 
         getUsers();
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         if (fragment==null){
             ProfileFragment pp = new ProfileFragment();
-            pp.setArguments(passInfo());
+            passInfo();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     pp).commit();
             navigationView.setCheckedItem(R.id.profile);
@@ -79,49 +80,49 @@ public class MainInfoPanelActivity extends AppCompatActivity
             switch (fragment) {
                 case "Slide":
                     SlideGameFragment s =new SlideGameFragment();
-                    s.setArguments(passInfo());
+                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             s).commit();
                     navigationView.setCheckedItem(R.id.slide);
                     break;
                 case "Mine":
                     MinesweeperFragment m =new MinesweeperFragment();
-                    m.setArguments(passInfo());
+                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             m).commit();
                     navigationView.setCheckedItem(R.id.mine_sweeper);
                     break;
                 case "2048":
                     G2048Fragment g =new G2048Fragment();
-                    g.setArguments(passInfo());
+                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             g).commit();
                     navigationView.setCheckedItem(R.id.g2048);
                     break;
                 case "profile":
                     ProfileFragment p =new ProfileFragment();
-                    p.setArguments(passInfo());
+                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             p).commit();
                     navigationView.setCheckedItem(R.id.profile);
                     break;
                 case "store":
                     GameStoreFragment gs =new GameStoreFragment();
-                    gs.setArguments(passInfo());
+                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             gs).commit();
                     navigationView.setCheckedItem(R.id.game_store);
                     break;
                 case "tool":
                     ToolFragment t =new ToolFragment();
-                    t.setArguments(passInfo());
+                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             t).commit();
                     navigationView.setCheckedItem(R.id.toolbar);
                     break;
                 default:
                     ProfileFragment de =new ProfileFragment();
-                    de.setArguments(passInfo());
+                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             de).commit();
                     navigationView.setCheckedItem(R.id.profile);
@@ -129,19 +130,24 @@ public class MainInfoPanelActivity extends AppCompatActivity
         }
 
         View headerView = navigationView.getHeaderView(0);
-        TextView t = (TextView) headerView.findViewById(R.id.primary_username);
-        t.setText(user.getName());
+        TextView t = headerView.findViewById(R.id.primary_username);
+        t.setText(currentUser);
     }
 
     private void getUsers(){
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
-        this.user =(UserAccount) extra.getSerializable("user");
-        this.users = (UserAccountManager) extra.getSerializable("allUsers");
-        this.fragment = (String) extra.getString("fragment");
+        currentUser = (String)DataHolder.getInstance().retrieve("current user");
+        this.user = myDB.selectUser(currentUser);
+        this.users = myDB.selectAccountManager();
+        try {
+            this.fragment = extra.getString("fragment");
+        }
+        catch (NullPointerException e){
+            this.fragment = null;
+        }
 
         // use this to set user name on global
-        currentUser = (String)DataHolder.getInstance().retrieve("current user");
     }
 
     @Override
@@ -172,19 +178,19 @@ public class MainInfoPanelActivity extends AppCompatActivity
         switch (id){
             case R.id.action_settings:
                 SettingsFragment s = new SettingsFragment();
-                s.setArguments(passInfo());
+                passInfo();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         s).commit();
                 break;
             case R.id.action_helps:
                 HelpsFragment h = new HelpsFragment();
-                h.setArguments(passInfo());
+                passInfo();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         h).commit();
                 break;
             case R.id.action_contacts:
                 ContactsFragment c = new ContactsFragment();
-                c.setArguments(passInfo());
+                passInfo();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         c).commit();
                 break;
@@ -193,11 +199,10 @@ public class MainInfoPanelActivity extends AppCompatActivity
         return true;
     }
 
-    private Bundle passInfo(){
-        Bundle pass = new Bundle();
-        pass.putSerializable("user",this.user);
-        pass.putSerializable("allUsers", this.users);
-        return pass;
+    private void passInfo(){
+        user = myDB.selectUser(currentUser); //get updated after user bought games in game store
+        myDB.updateAccountManager(users);
+        myDB.updateUser(currentUser, user);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -209,20 +214,20 @@ public class MainInfoPanelActivity extends AppCompatActivity
         switch (id){
             case R.id.profile:
                 ProfileFragment p =new ProfileFragment();
-                p.setArguments(passInfo());
+                passInfo();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         p).commit();
                 break;
             case R.id.game_store:
                 GameStoreFragment gf = new GameStoreFragment();
-                gf.setArguments(passInfo());
+                passInfo();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         gf).commit();
                 break;
 
             case R.id.nav_manage:
                 ToolFragment t = new ToolFragment();
-                t.setArguments(passInfo());
+                passInfo();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         t).commit();
                 break;
@@ -233,7 +238,7 @@ public class MainInfoPanelActivity extends AppCompatActivity
                 }
                 else{
                     SlideGameFragment s =new SlideGameFragment();
-                    s.setArguments(passInfo());
+                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             s).commit();
                 }
@@ -245,7 +250,7 @@ public class MainInfoPanelActivity extends AppCompatActivity
                 }
                 else{
                     MinesweeperFragment m =new MinesweeperFragment();
-                    m.setArguments(passInfo());
+                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             m).commit();}
                 break;
@@ -256,7 +261,7 @@ public class MainInfoPanelActivity extends AppCompatActivity
                 }
                 else{
                     G2048Fragment g =new G2048Fragment();
-                    g.setArguments(passInfo());
+                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             g).commit();}
                 break;

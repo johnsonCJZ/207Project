@@ -66,6 +66,7 @@ public class SlideGameFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        myDB = new DatabaseHelper(this.getContext());
         username = (String) DataHolder.getInstance().retrieve("current user");
         getUser();
         View rootView = inflater.inflate(R.layout.slide_game_fragment, container, false);
@@ -81,9 +82,8 @@ public class SlideGameFragment extends Fragment {
     }
 
     private void getUser(){
-        user= (UserAccount) myDB.selectUser(username);
-        users= (UserAccountManager) myDB.selectAccountManager();
-
+        user= myDB.selectUser(username);
+        users= myDB.selectAccountManager();
     }
 
     /**
@@ -149,8 +149,8 @@ public class SlideGameFragment extends Fragment {
         Bundle pass = new Bundle();
         myDB.updateUser(username, this.user);
         myDB.updateAccountManager(this.users);
-        pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
-        pass.putSerializable("globalScoreBoard", this.globalScoreBoard);
+//        pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
+//        pass.putSerializable("globalScoreBoard", this.globalScoreBoard);
         tmp.putExtras(pass);
         startActivity(tmp);
     }
@@ -212,10 +212,13 @@ public class SlideGameFragment extends Fragment {
      */
     private void switchToDifficulty(){
         Intent tmp = new Intent(getActivity(), SlideDifficultyActivity.class);
-        Bundle pass = new Bundle();
-        pass.putSerializable("user",this.user);
-        pass.putSerializable("allUsers", this.users);
-        tmp.putExtras(pass);
+//        Bundle pass = new Bundle();
+        myDB.updateUser(username, this.user);
+        myDB.updateAccountManager(this.users);
+
+//        pass.putSerializable("user",this.user);
+//        pass.putSerializable("allUsers", this.users);
+//        tmp.putExtras(pass);
         startActivity(tmp);}
 
     /**
@@ -224,8 +227,10 @@ public class SlideGameFragment extends Fragment {
     private void switchToGame() {
         Intent tmp = new Intent(getActivity(), MainSlideActivity.class);
         Bundle pass = new Bundle();
-        pass.putSerializable("user",this.user);
-        pass.putSerializable("allUsers", this.users);
+//        pass.putSerializable("user",this.user);
+//        pass.putSerializable("allUsers", this.users);
+        myDB.updateUser(username, this.user);
+        myDB.updateAccountManager(this.users);
         pass.putSerializable("boardManager", this.boardManager);
         tmp.putExtras(pass);
         startActivity(tmp);
@@ -286,25 +291,21 @@ public class SlideGameFragment extends Fragment {
      * load from saved database
      * @param fileName name of database
      */
-    private void loadFromFile(String fileName) {
-
-        try {
-            InputStream inputStream = getActivity().openFileInput(fileName);
-            if (inputStream != null) {
-                ObjectInputStream input = new ObjectInputStream(inputStream);
-                users = (UserAccountManager) input.readObject();
-                inputStream.close();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        } catch (ClassNotFoundException e) {
-            Log.e("login activity", "File contained unexpected data type: " + e.toString());
-        }
-    }
-
-
-
-
+//    private void loadFromFile(String fileName) {
+//
+//        try {
+//            InputStream inputStream = getActivity().openFileInput(fileName);
+//            if (inputStream != null) {
+//                ObjectInputStream input = new ObjectInputStream(inputStream);
+//                users = (UserAccountManager) input.readObject();
+//                inputStream.close();
+//            }
+//        } catch (FileNotFoundException e) {
+//            Log.e("login activity", "File not found: " + e.toString());
+//        } catch (IOException e) {
+//            Log.e("login activity", "Can not read file: " + e.toString());
+//        } catch (ClassNotFoundException e) {
+//            Log.e("login activity", "File contained unexpected data type: " + e.toString());
+//        }
+//    }
 }

@@ -26,11 +26,13 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
+
 /**
  * The game activity.
  */
 public class  MineSweeperActivity extends AppCompatActivity implements Observer {
-
+    DatabaseHelper myDB;
     /**
      * The per-user scoreboard
      */
@@ -99,6 +101,7 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
      * UserAccountManager associated to the UserAccount.
      */
     private UserAccountManager users;
+    private String currentUser;
 
     /**
      * Update the backgrounds on the buttons to match the tiles.
@@ -133,8 +136,8 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
     private void switchToGameCenter() {
         Intent intent = new Intent(this, MainInfoPanelActivity.class);
         Bundle pass = new Bundle();
-        pass.putSerializable("user",this.user);
-        pass.putSerializable("allUsers", this.users);
+        myDB.updateAccountManager(users);
+//        pass.putSerializable("allUsers", this.users);
         pass.putString("fragment", "Mine");
         intent.putExtras(pass);
         startActivity(intent);
@@ -188,7 +191,8 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
         result[1] = score;
         personalScoreBoard.addAndSort(result);
         globalScoreBoard.addAndSort(result);
-        saveToFile(UserAccountManager.USERS);
+        myDB.updateAccountManager(users);
+//        saveToFile(UserAccountManager.USERS);
         return score;
 
     }
@@ -236,11 +240,8 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            getAllInfo(); // pass in all useful data from last activity, including boardManager
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        myDB = new DatabaseHelper(this);
+        getAllInfo(); // pass in all useful data from last activity, including boardManager
         setContentView(R.layout.activity_minesweeper);
         face = (ImageButton) findViewById(R.id.Thomas);
         face.setImageResource(R.drawable.normal);
@@ -322,8 +323,10 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
     private void switchToScoreBoard(){
         Intent tmp = new Intent(this, ScoreBoardTabLayoutActivity.class);
         Bundle pass = new Bundle();
-        pass.putSerializable("user",this.user);
-        pass.putSerializable("allUsers", this.users);
+        myDB.updateUser(currentUser, user);
+        myDB.updateAccountManager(users);
+//        pass.putSerializable("user",this.user);
+//        pass.putSerializable("allUsers", this.users);
         pass.putSerializable("scoreBoard", this.personalScoreBoard);
         tmp.putExtras(pass);
         startActivity(tmp);
@@ -390,14 +393,15 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
      * Receive all the info(User, Size, BoardManager, ScoreBoards)from previous activity/view.
      * @throws CloneNotSupportedException
      */
-    private void getAllInfo() throws CloneNotSupportedException {
+    private void getAllInfo() {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
 
         assert extra != null;
-        this.user = (UserAccount) extra.getSerializable("user");
-        this.users = (UserAccountManager) extra.getSerializable("allUsers");
-        loadFromFile();
+        currentUser = (String)DataHolder.getInstance().retrieve("current user");
+        this.user = myDB.selectUser(currentUser);
+        this.users = myDB.selectAccountManager();
+//        loadFromFile();
 
         this.boardManager = (MineSweeperManager) extra.getSerializable("boardManager");
         width = boardManager.getBoard().getW();

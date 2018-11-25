@@ -1,21 +1,13 @@
 package fall2018.csc2017.slidingtiles;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.util.ArrayList;
 
 import es.dmoral.toasty.Toasty;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
@@ -54,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Initialize login in activity
+     *
      * @param savedInstanceState
      */
     @Override
@@ -62,12 +55,15 @@ public class LoginActivity extends AppCompatActivity {
         myDB = new DatabaseHelper(this);
         if (!myDB.ifAccountManagerExists()) {
             myDB.createUserAccountManager();
+            userAccountManager = myDB.selectAccountManager();
+        } else {
+            userAccountManager = myDB.selectAccountManager();
         }
         setContentView(R.layout.activity_login);
-        etUsername= findViewById(R.id.etUsername);
-        etPassword= findViewById(R.id.password);
-        bLogIn= findViewById(R.id.bLogin);
-        massage =findViewById(R.id.massage);
+        etUsername = findViewById(R.id.etUsername);
+        etPassword = findViewById(R.id.password);
+        bLogIn = findViewById(R.id.bLogin);
+        massage = findViewById(R.id.massage);
         registerLink = findViewById(R.id.registerLink);
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,71 +78,42 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     *  Actions after login in button is triggered, jump to game center activity while passing info to
-     *  game center activity.
+     * Actions after login in button is triggered, jump to game center activity while passing info to
+     * game center activity.
      */
-    private void loginButtonPushed(){
+    private void loginButtonPushed() {
         bLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFromFile();
-                if (userAccountManager ==null){
-                    userAccountManager = new UserAccountManager();
-                }
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                UserAccount user = checkUserId(username,password);
-                if(user!=null){
+                if (userAccountManager.getUserList().contains(username) && ifPasswordCorrect(username, password)) {
+                    Toasty.success(getApplicationContext(), "Welcome!", Toast.LENGTH_SHORT, true).show();
+                    DataHolder.getInstance().save("current user", username);
                     Intent loginIntent = new Intent(LoginActivity.this, MainInfoPanelActivity.class);
-                    Bundle pass = new Bundle();
-//                    pass.putSerializable("user",user);
-//                    pass.putSerializable("allUsers", userAccountManager);
-                    loginIntent.putExtras(pass);
-                    // pass user name to global context using application singleton
-                    // so that all activity knows current user
-                    DataHolder.getInstance().save("current user", user.getName());
                     LoginActivity.this.startActivity(loginIntent);
-            }}
+                } else {
+                    Toasty.error(getApplicationContext(), "Wrong Username or Password", Toast.LENGTH_SHORT, true).show();
+                }
+            }
         });
     }
+    // pass user name to global context using application singleton
+    // so that all activity knows current user
 
     /**
      * Check if tempted user has legit id and username
+     *
      * @param username the username to check
      * @param password the password to check
      * @return the userAccount if the username and password are correctly matching
      */
-    private UserAccount checkUserId(String username, String password){
-        Context context = getApplicationContext();
+    private boolean ifPasswordCorrect(String username, String password) {
         UserAccount account = myDB.selectUser(username);
-            if(account != null && account.getPassword().equals(password)){
-                Toasty.success(context, "Welcome!", Toast.LENGTH_SHORT, true).show();
-                return account;
-            }
-        Toasty.error(context, "Wrong Username or Password", Toast.LENGTH_SHORT, true).show();
-        return null;}
-
-    /**
-     * load from pre-saved .ser file.
-     */
-    private void loadFromFile() {
-        try {
-            InputStream inputStream = this.openFileInput(UserAccountManager.USERS);
-            if (inputStream != null) {
-                ObjectInputStream input = new ObjectInputStream(inputStream);
-                userAccountManager = (UserAccountManager) input.readObject();
-                inputStream.close();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        } catch (ClassNotFoundException e) {
-            Log.e("login activity", "File contained unexpected data type: " + e.toString());
-        }
+        return account.getPassword().equals(password);
     }
 }
 
-
-
-
+            /**
+             * load from pre-saved .ser file.
+             */

@@ -8,8 +8,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import fall2018.csc2017.slidingtiles.InterfaceAdapter;
 import fall2018.csc2017.slidingtiles.LoginActivity;
+import fall2018.csc2017.slidingtiles.ScoreStrategy;
 import fall2018.csc2017.slidingtiles.UserAccount;
 import fall2018.csc2017.slidingtiles.UserAccountManager;
 
@@ -53,10 +56,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean ifAccountManagerExists() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "select count(*) from " + TABLE_NAME + " where " + KEY_NAME + " like '" + USER_ACCOUNT_MANAGER+ "'";
+        String query = "select count(*) from " + TABLE_NAME + " where " + KEY_NAME + " = '" + USER_ACCOUNT_MANAGER+ "'";
         Cursor res = db.rawQuery(query, null);
-        int num = res.getCount();
-        return num == 1;
+        res.moveToFirst();
+        return res.getInt(0) == 1;
     }
 
     public boolean createUserAccountManager() {
@@ -65,42 +68,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(KEY_USER, convertToJson(new UserAccountManager()));
         contentValues.put(KEY_NAME, USER_ACCOUNT_MANAGER);
         long result = db.insert(TABLE_NAME, null, contentValues);
-        db.close();
 
         return result != -1;
 
     }
     public String convertToJson(Object o) {
-    Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(ScoreStrategy.class, new InterfaceAdapter<ScoreStrategy>())
+                .create();
+//        Gson gson = new Gson();
         return gson.toJson(o);
     }
 
-    public boolean createAndInsertNew(String username, String userAccount) {
+    public boolean createAndInsertNew(String username, UserAccount userAccount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_NAME, username);
-        contentValues.put(KEY_USER, userAccount); //change default value of age = 0 and email = "" in regist activity
+        contentValues.put(KEY_USER, convertToJson(userAccount)); //change default value of age = 0 and email = "" in regist activity
         long result = db.insert(TABLE_NAME,null ,contentValues);
 
-        db.close();
 
         return result != -1;
     }
 
-    public void addUserToAccountManager(String username) throws Exception {
-        UserAccountManager accountManager = selectAccountManager();
-        accountManager.addUser(username);
-        boolean result = updateAccountManager(accountManager);
-        if (!result) {
-            throw new Exception("add user to account manager failed");
-        }
-    }
+//    public void addUserToAccountManager(String username) throws Exception {
+//        UserAccountManager accountManager = selectAccountManager();
+//        accountManager.addUser(username);
+//        boolean result = updateAccountManager(accountManager);
+//        if (!result) {
+//            throw new Exception("add user to account manager failed");
+//        }
+//    }
     public UserAccountManager selectAccountManager(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "select " + KEY_USER + " from " + TABLE_NAME  + " where " + KEY_NAME
                 + " = '" + USER_ACCOUNT_MANAGER + "'";
         Cursor res = db.rawQuery(query, null);
-
+        res.moveToFirst();
         return convertToAccountManager(res.getString(0));
     }
 
@@ -108,14 +111,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // query may has problem
     public UserAccount selectUser(String username){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "select " + KEY_USER + " from " + TABLE_NAME  + " where " + KEY_NAME + " like '" + username + "'";
+        String query = "select " + KEY_USER + " from " + TABLE_NAME  + " where " + KEY_NAME + " = '" + username + "'";
         Cursor res = db.rawQuery(query, null);
-        if (res.getCount() == 1){
-            return convertToUserAccount(res.getString(0));
-        }
-        else {
-            return null;
-        }
+        res.moveToFirst();
+        return convertToUserAccount(res.getString(0));
     }
 
     public boolean updateUser(String username, UserAccount userAccount) {
@@ -124,7 +123,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(KEY_NAME, username);
         contentValues.put(KEY_USER, convertToJson(userAccount));
         db.update(TABLE_NAME, contentValues, "USERNAME = ?",new String[] { username });
-        db.close();
 
         return true;
     }
@@ -135,7 +133,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(KEY_NAME, USER_ACCOUNT_MANAGER);
         contentValues.put(KEY_USER, convertToJson(userAccountManager));
         db.update(TABLE_NAME, contentValues, "USERNAME = ?",new String[] { USER_ACCOUNT_MANAGER });
-        db.close();
 
         return true;
     }
@@ -150,12 +147,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        return true;
 //    }
     private UserAccount convertToUserAccount(String jsonString){
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(ScoreStrategy.class, new InterfaceAdapter<ScoreStrategy>())
+                .create();
+//        Gson gson = new Gson();
         return gson.fromJson(jsonString, UserAccount.class);
     }
 
     private UserAccountManager convertToAccountManager(String jsonString){
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().registerTypeAdapter(ScoreStrategy.class, new InterfaceAdapter<ScoreStrategy>())
+                .create();
+//        Gson gson = new Gson();
         return gson.fromJson(jsonString, UserAccountManager.class);
     }
 

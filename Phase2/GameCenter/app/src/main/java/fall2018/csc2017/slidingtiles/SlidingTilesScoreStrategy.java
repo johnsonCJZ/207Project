@@ -5,7 +5,9 @@ import java.io.Serializable;
 /**
  * The Strategy to calculate the score of a sliding tiles game.
  */
-public class SlidingTilesScoreStrategy implements ScoreStrategy<BoardManager>, Serializable {
+public class SlidingTilesScoreStrategy implements ScoreStrategy, Serializable {
+    public SlidingTilesScoreStrategy() {
+    }
 
     /**
      * Calculate the score that is related to steps used to solve a board.
@@ -36,9 +38,9 @@ public class SlidingTilesScoreStrategy implements ScoreStrategy<BoardManager>, S
      * @return the score with respect to both time and steps
      */
     @Override
-    public int calculateScore(BoardManager boardManager) {
-        int stepScore = calStepScore(boardManager);
-        int timeScore = calTimeScore(boardManager);
+    public int calculateScore(Object boardManager) {
+        int stepScore = calStepScore((BoardManager) boardManager);
+        int timeScore = calTimeScore((BoardManager) boardManager);
 
         if (stepScore < 0) {stepScore = 0;}
         if (timeScore < 0) {timeScore = 0;}

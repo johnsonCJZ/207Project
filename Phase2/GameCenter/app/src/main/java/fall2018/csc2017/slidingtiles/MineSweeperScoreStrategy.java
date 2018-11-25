@@ -5,10 +5,10 @@ import java.io.Serializable;
 /**
  * The Strategy to calculate the score of a mine sweeper game.
  */
-class MineSweeperScoreStrategy implements ScoreStrategy<MineSweeperManager>, Serializable {
+class MineSweeperScoreStrategy implements ScoreStrategy, Serializable {
     @Override
-    public int calculateScore(MineSweeperManager boardManager) {
-        double time = boardManager.getTime();
+    public int calculateScore(Object boardManager) {
+        double time = ((MineSweeperManager) boardManager).getTime();
         return (int) time;
     }
 }

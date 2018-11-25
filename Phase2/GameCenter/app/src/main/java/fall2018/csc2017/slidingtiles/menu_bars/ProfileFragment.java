@@ -4,41 +4,35 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-
+import fall2018.csc2017.slidingtiles.DataHolder;
 import fall2018.csc2017.slidingtiles.R;
 import fall2018.csc2017.slidingtiles.UserAccount;
-import fall2018.csc2017.slidingtiles.UserAccountManager;
-
-import static android.content.Context.MODE_PRIVATE;
+import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 public class ProfileFragment extends Fragment {
+    DatabaseHelper myDB;
     private View view;
     private TextView username;
     private TextView age;
     private TextView email;
-    private UserAccount userAccount;
+    private UserAccount user;
 //    private UserAccountManager userAccountManager;
     private boolean isEnablbed = false;
     private Button editProfile;
     private Button changePs;
+    private String currentUser;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        myDB = new DatabaseHelper(this.getContext());
         view = inflater.inflate(R.layout.profile_fragment, container, false);
         username = view.findViewById(R.id.username);
         age = view.findViewById(R.id.age);
@@ -61,16 +55,19 @@ public class ProfileFragment extends Fragment {
     }
 
     private void getUserAccount() {
-        userAccount = (UserAccount) getArguments().getSerializable("user");
+        currentUser = (String)DataHolder.getInstance().retrieve("current user");
+        assert user != null;
+        user = myDB.selectUser(currentUser);
+//        user = (UserAccount) getArguments().getSerializable("user");
 //        userAccountManager = (UserAccountManager) getArguments().getSerializable("users");
     }
 
     private void setContents() {
-        username.setText(userAccount.getName());
-        if (userAccount.getAge() != null) {
-            age.setText(userAccount.getAge().toString());
+        username.setText(user.getName());
+        if (user.getAge() != null) {
+            age.setText(user.getAge().toString());
         }
-        email.setText(userAccount.getEmail());
+        email.setText(user.getEmail());
 
     }
 
@@ -96,10 +93,10 @@ public class ProfileFragment extends Fragment {
 //                    }
 //                }
 //            } else {
-//                userAccount.changeName(view.findViewById(R.id.username).toString());
+//                user.changeName(view.findViewById(R.id.username).toString());
 //            }
-            userAccount.setAge(Integer.getInteger(newAge));
-            userAccount.setEmail(email.toString());
+            user.setAge(Integer.getInteger(newAge));
+            user.setEmail(email.toString());
 //            saveToFile(UserAccountManager.USERS);
         }
     }
