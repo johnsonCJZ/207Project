@@ -64,9 +64,11 @@ public class UserAccount implements Serializable {
         history.put("history4x4", null);
         history.put("history5x5",null);
         history.put("resumeHistory", null);
-//        personalScoreBoard.put("history3x3", new ScoreBoard("SlidingTiles"));
-//        personalScoreBoard.put("history4x4", new ScoreBoard("SlidingTiles"));
-//        personalScoreBoard.put("history5x5", new ScoreBoard("SlidingTiles"));
+        personalScoreBoard.put("history3x3", new ScoreBoard("SlidingTiles"));
+        personalScoreBoard.put("history4x4", new ScoreBoard("SlidingTiles"));
+        personalScoreBoard.put("history5x5", new ScoreBoard("SlidingTiles"));
+        personalScoreBoard.put("2048", new ScoreBoard("2048"));
+        personalScoreBoard.put("Mine", new ScoreBoard("Mine"));
 
     }
 

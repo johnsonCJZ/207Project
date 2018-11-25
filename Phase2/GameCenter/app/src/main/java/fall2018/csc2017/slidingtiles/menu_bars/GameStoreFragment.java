@@ -48,8 +48,6 @@ public class GameStoreFragment extends Fragment {
         currentUser = (String)DataHolder.getInstance().retrieve("current user");
         user = myDB.selectUser(currentUser);
         users = myDB.selectAccountManager();
-//        user = (UserAccount) getArguments().getSerializable("user");
-//        users = (UserAccountManager) getArguments().getSerializable("users");
     }
     private void addMineButton(){
         minesweeper.setOnClickListener(new View.OnClickListener() {

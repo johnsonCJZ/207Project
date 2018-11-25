@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
+
 public class CreateNewOrLoad2048Activity extends AppCompatActivity {
+    DatabaseHelper myDB;
 
     private Board2048Manager boardManager;
 
@@ -16,6 +19,7 @@ public class CreateNewOrLoad2048Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.myDB = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_or_load2048);
         getUser();
@@ -50,17 +54,14 @@ public class CreateNewOrLoad2048Activity extends AppCompatActivity {
     private void switchToGame() {
         Intent tmp = new Intent(this, Main2048Activity.class);
         Bundle pass = new Bundle();
-        pass.putSerializable("user",user);
-        pass.putSerializable("allUsers", users);
         pass.putSerializable("boardManager", boardManager);
         tmp.putExtras(pass);
         startActivity(tmp);
     }
 
     private void getUser() {
-        Intent intentExtras = getIntent();
-        Bundle extra = intentExtras.getExtras();
-        this.user=(UserAccount) extra.getSerializable("user");
-        this.users = (UserAccountManager) extra.getSerializable("allUsers");
+        String currentUser = (String)DataHolder.getInstance().retrieve("current user");
+        this.user = myDB.selectUser(currentUser);
+        this.users = myDB.selectAccountManager();
     }
 }

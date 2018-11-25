@@ -14,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,6 +44,8 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
     private boolean isWin;
     private DatabaseHelper myDB;
     private String username;
+
+    private TextView scorePlace;
 
 
     @Override
@@ -114,6 +117,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
                     }
                 });
         addCheatButton();
+        scorePlace = findViewById(R.id.score);
     }
 
     private void cheat() {
@@ -126,8 +130,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
 
         assert extra != null;
         this.user = myDB.selectUser(username);
-        this.users = (UserAccountManager) extra.getSerializable("allUsers");
-        loadFromFile();
+        this.users = myDB.selectAccountManager();
 
         personalScoreBoard = user.getScoreBoard("2048");
         globalScoreBoard = users.getSlideTilesGlobalScoreBoard("2048");
@@ -178,6 +181,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
             nextPos++;
         }
         // add a tile if the board has been modified and it has empty spot
+        scorePlace.setText("Score: "+String.valueOf(calculateInGameScore()));
 
     }
 
@@ -208,29 +212,43 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
     }
 
     private void endAlert() {
+        int score = calculateInGameScore();
+        Object result[]= new Object[2];
+        result[0] = user.getName();
+        result[1] = score;
+        personalScoreBoard.addAndSort(result);
+        globalScoreBoard.addAndSort(result);
         AlertDialog.Builder builder = new AlertDialog.Builder(Main2048Activity.this);
-        int score = getScore();
         if (isWin) {
             builder.setMessage("You Win!");
         }
         else {
-            builder.setMessage("You Lose, get better next time.");
+            builder.setMessage("You Lose, get better next time. Your scored "+String.valueOf(score));
         }
         builder.setPositiveButton("Back To Game Center", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Main2048Activity.this.finish();
-                        switchToGameCenter();
-                    }
-                })
+            public void onClick(DialogInterface dialog, int id) {
+                Main2048Activity.this.finish();
+                switchToGameCenter();
+            }
+        })
                 .setNegativeButton("See My Rank ", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Main2048Activity.this.finish();
                         //user.getHistory().put("resumeHistory", null);
-                        //switchToGameCenter();
+                        switchToScoreBoard();
                     }
                 });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private void switchToScoreBoard(){
+        Intent tmp = new Intent(this, ScoreBoardTabLayoutActivity.class);
+        Bundle pass = new Bundle();
+        pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
+        pass.putSerializable("globalScoreBoard", this.globalScoreBoard);
+        tmp.putExtras(pass);
+        startActivity(tmp);
     }
 
     private void switchToGameCenter() {
@@ -291,6 +309,10 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
         } catch (ClassNotFoundException e) {
             Log.e("login activity", "File contained unexpected data type: " + e.toString());
         }
+    }
+
+    public int calculateInGameScore(){
+        return personalScoreBoard.calculateScore(boardManager);
     }
 
 

@@ -1,5 +1,6 @@
 package fall2018.csc2017.slidingtiles;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,16 +19,22 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
+
 public class ScoreBoardFragmentActivity extends Fragment {
     private View view;
     private ScoreBoard board;
     private TableLayout table;
+    private String currentUser;
+    private DatabaseHelper myDB;
     private UserAccount user;
 
     public ScoreBoardFragmentActivity(){}
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        this.myDB = new DatabaseHelper(getContext());
+        getUsers();
         view = inflater.inflate(R.layout.activity_score_board, container, false);
         table = view.findViewById(R.id.scoreboard_table);
         getBoard();
@@ -36,11 +43,18 @@ public class ScoreBoardFragmentActivity extends Fragment {
 
     private void getBoard(){
         board = (ScoreBoard) getArguments().getSerializable("board");
-        user=(UserAccount) getArguments().getSerializable("user");
         setBoard((ArrayList<Object[]>) board.getScoreList());
     }
 
 
+    private void getUsers(){
+        String currentUser = (String)DataHolder.getInstance().retrieve("current user");
+        this.user = myDB.selectUser(currentUser);
+
+
+
+        // use this to set user name on global
+    }
 
     private void setBoard(ArrayList<Object[]> scoreList) {
         String Name;

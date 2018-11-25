@@ -173,6 +173,8 @@ public class MainInfoPanelActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        // update info
+        getUsers();
 
         //noinspection SimplifiableIfStatement
         switch (id){
@@ -209,7 +211,8 @@ public class MainInfoPanelActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-
+        // update info
+        getUsers();
         int id = item.getItemId();
         switch (id){
             case R.id.profile:
