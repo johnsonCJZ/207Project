@@ -5,14 +5,27 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class MineSweeperTileTest {
+public class MineSweeperBoardAndTileTest {
 
+    private MineSweeperBoard board;
     private MineSweeperTile tile;
 
     @Before
     public void setUp() {
-        tile = new MineSweeperTile();
-        tile.setBackground();
+        board = new MineSweeperBoard(9,9,10);
+        board.setTiles();
+    }
+
+    @Test
+    public void testGetSurround() {
+        setUp();
+        assertEquals(3,board.getSurround(0).size());
+        assertEquals(8,board.getSurround(15).size());
+    }
+
+    @Test
+    public void testSetMines() {
+
     }
 
     @Test

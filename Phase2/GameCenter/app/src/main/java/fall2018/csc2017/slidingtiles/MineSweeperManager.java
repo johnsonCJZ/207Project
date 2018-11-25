@@ -30,9 +30,7 @@ public class MineSweeperManager extends Manager implements Serializable {
 
     int getTime() { return time; }
 
-    void setTime(int time) {
-        this.time = time;
-    }
+    void setTime(int time) {this.time = time;}
 
     private void setUpBoard() {
         lost = false;
@@ -40,30 +38,10 @@ public class MineSweeperManager extends Manager implements Serializable {
         board.setTiles();
     }
 
-    private void setMines(int position) {
-        int mine = board.getMine();
-        List<MineSweeperTile> startNine = board.getSurround(position);
-        Random r = new Random();
-        List<Integer> randomNum = new ArrayList<>();
-        int i = 0;
-
-        startNine.add(board.getTile(position));
-
-        while (i < mine) {
-            Integer num = r.nextInt(width * height);
-
-            if (!randomNum.contains(num) && !startNine.contains(board.getTile(num))) {
-                randomNum.add(num);
-                board.getTile(num).setMine();
-                minePosition.add(board.getTile(num));
-                i++;
-            }
-        }
-    }
 
     void touchMove(int position) {
         if (isFirst) {
-            setMines(position);
+            board.setMines(position);
             setNumbers();
             isFirst = false;
         }
@@ -76,9 +54,7 @@ public class MineSweeperManager extends Manager implements Serializable {
         }
     }
 
-    void mark(int position) {
-        board.flag(position);
-    }
+    void mark(int position) {board.flag(position);}
 
     private void setNumbers() {
         for (int i = 0; i < height; i++) {
