@@ -45,15 +45,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
     }
 
     boolean updateButtonPushed() {
-        String username = this.username.getText().toString();
-        String pwOrEmail = this.passwordOrEmail.getText().toString();
-        String newPw = this.newPw.getText().toString();
-        String confirm = confirmPw.getText().toString();
+        String usernameS= this.username.getText().toString();
+        String passwordOrEmailS = this.passwordOrEmail.getText().toString();
+        String newPwS = this.newPw.getText().toString();
+        String confirmS = confirmPw.getText().toString();
 //        ArrayList<UserAccount> userList = userAccountManager.getUserList();
         UserAccount user = userAccount;
 //        if (!userList.isEmpty()) {
 //            for (UserAccount account : userList) {
-//                if ((account.getName().equals(username))) {
+//                if ((account.getName().equals(usernameS))) {
 //                    user = account;
 //                }else{
 //                    message.setText("The user with the username doesn't exist");
@@ -61,15 +61,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
 //                }
 //            }
 //        }
-        if (!(user.getEmail() == pwOrEmail || user.getPassword() == pwOrEmail)) {
+        if (!(user.getEmail() == passwordOrEmailS || user.getPassword() == passwordOrEmailS)) {
             message.setText("The current password or email is not correct.");
             return false;
         }
-        if(!(newPw == confirm)){
+        if(!(newPwS == confirmS)){
             message.setText("The new password are not the same with the confirmed password.");
             return false;
         }
-        userAccount.changePassword(newPw);
+        userAccount.changePassword(newPwS);
         message.setText("Your password is successfully updated.");
         return true;
     }
