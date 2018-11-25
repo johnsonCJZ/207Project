@@ -20,6 +20,8 @@ public class BoardManager extends Manager implements Serializable, Cloneable {
      * The board being managed.
      */
     private Board board;
+    
+    private int dimension;
 
     private List<Tile> tiles = new ArrayList<>();
 
@@ -32,6 +34,23 @@ public class BoardManager extends Manager implements Serializable, Cloneable {
      * The index at which the element in history represents the current location of blank tile.
      */
     private int currIndex = 0;
+
+    /**
+     * Create a new BoardManager to manage a new shuffled n*n board.
+     * @param n the number of rows and columns
+     */
+    BoardManager(int n) {
+        this.time = 0.0;
+        this.board = new Board(n);
+        this.dimension = board.getDimension();
+        final int numTiles = dimension * dimension;
+        for (int tileNum = 0; tileNum != numTiles; tileNum++) {
+            tiles.add(new Tile(tileNum));
+        }
+        shuffle();
+        board.setTiles(tiles);
+        this.history.add(new HistoryNode(this.findBlankIndex(0)));
+    }
 
     /**
      * Return the current board.
@@ -51,31 +70,15 @@ public class BoardManager extends Manager implements Serializable, Cloneable {
     }
 
     /**
-     * Create a new BoardManager to manage a new shuffled n*n board.
-     * @param n the number of rows and columns
-     */
-    public BoardManager(int n) {
-        this.time = 0.0;
-        this.board = new Board(n);
-        final int numTiles = board.getDimension() * board.getDimension();
-        for (int tileNum = 0; tileNum != numTiles; tileNum++) {
-            tiles.add(new Tile(tileNum));
-        }
-        shuffle();
-        board.setTiles(tiles);
-        this.history.add(new HistoryNode(this.findBlankIndex(0)));
-    }
-
-    /**
      * Return how many inversions occur in the list of tiles.
      * An inversion is when a tile precedes another tile with a lower number on it.
      * @return the number of inversion
      */
     int findInversion() {
         int count = 0;
-        for (int i = 0; i < board.getDimension()-1; i++) {
+        for (int i = 0; i < dimension -1; i++) {
             if (tiles.get(i).getId() != 0){
-                for (int j = i+1; j < board.getDimension(); j++){
+                for (int j = i+1; j < dimension; j++){
                     if (tiles.get(j).getId() < tiles.get(i).getId() && tiles.get(j).getId() != 0){
                         count++;
                     }
@@ -101,7 +104,7 @@ public class BoardManager extends Manager implements Serializable, Cloneable {
      */
     boolean isSolvable() {
         int inversion = findInversion();
-        if (board.getDimension() % 2 == 1) {
+        if (dimension % 2 == 1) {
             return inversion % 2 == 0;
         }
         else {
@@ -109,7 +112,7 @@ public class BoardManager extends Manager implements Serializable, Cloneable {
             while(tiles.get(i).getId() != 0){
                 i++;
             }
-            int blankAtRowFromBottom = board.getDimension()- (i/board.getDimension());
+            int blankAtRowFromBottom = dimension- (i/dimension);
             return inversion % 2 != blankAtRowFromBottom % 2;
         }
     }
@@ -167,14 +170,14 @@ public class BoardManager extends Manager implements Serializable, Cloneable {
      */
     boolean isValidTap(int position) {
 
-        int row = position / board.getDimension();
-        int col = position % board.getDimension();
+        int row = position / dimension;
+        int col = position % dimension;
         int blankId = 0;
         // Are any of the 4 the blank tile?
         Tile above = row == 0 ? null : board.getTile(row - 1, col);
-        Tile below = row == board.getDimension() - 1 ? null : board.getTile(row + 1, col);
+        Tile below = row == dimension - 1 ? null : board.getTile(row + 1, col);
         Tile left = col == 0 ? null : board.getTile(row, col - 1);
-        Tile right = col == board.getDimension() - 1 ? null : board.getTile(row, col + 1);
+        Tile right = col == dimension - 1 ? null : board.getTile(row, col + 1);
         return (below != null && below.getId() == blankId)
                 || (above != null && above.getId() == blankId)
                 || (left != null && left.getId() == blankId)
@@ -188,8 +191,8 @@ public class BoardManager extends Manager implements Serializable, Cloneable {
      */
     void touchMove(int position) {
 
-        int row = position / board.getDimension();
-        int col = position % board.getDimension();
+        int row = position / dimension;
+        int col = position % dimension;
         int blankId = 0;
         int r_row;
         int r_col;
@@ -223,8 +226,8 @@ public class BoardManager extends Manager implements Serializable, Cloneable {
         int position = 0;
         for (Tile t : this.board){
             if (t.getId()==targetId){
-                result[0] = position / board.getDimension();
-                result[1] = position % board.getDimension();
+                result[0] = position / dimension;
+                result[1] = position % dimension;
                 break;
             }
             position ++;
