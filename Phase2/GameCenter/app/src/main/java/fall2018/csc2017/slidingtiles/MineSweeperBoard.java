@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Random;
 
 public class MineSweeperBoard extends Observable implements Serializable {
     private int w, h;
@@ -20,30 +21,41 @@ public class MineSweeperBoard extends Observable implements Serializable {
         tiles = new MineSweeperTile[h][w];
     }
 
-    int getW() {
-        return w;
-    }
+    int getW() {return w;}
 
-    int getH() {
-        return h;
-    }
+    int getH() {return h;}
 
-    int getMine() {
-        return mine;
-    }
+    int getMine() {return mine;}
 
     int getMineLeft() {return mineLeft;}
 
     List<MineSweeperTile> getMinePosition() {return minePosition;}
 
-    public MineSweeperTile[][] getTiles() {
-        return tiles;
-    }
+    MineSweeperTile[][] getTiles() {return tiles;}
 
-    public MineSweeperTile getTile(int position) {
+    MineSweeperTile getTile(int position) {
         int row = position / w;
         int col = position % w;
         return tiles[row][col];
+    }
+
+    void setMines(int position) {
+        int mine = getMine();
+        List<MineSweeperTile> startNine = getSurround(position);
+        startNine.add(getTile(position));
+        Random r = new Random();
+        List<Integer> randomNum = new ArrayList<>();
+        int i = 0;
+        while (i < mine) {
+            Integer num = r.nextInt(w * h);
+
+            if (!randomNum.contains(num) && !startNine.contains(getTile(num))) {
+                randomNum.add(num);
+                getTile(num).setMine();
+                minePosition.add(getTile(num));
+                i++;
+            }
+        }
     }
 
     void setTiles(){
@@ -79,11 +91,7 @@ public class MineSweeperBoard extends Observable implements Serializable {
     }
 
     void flag(int position) {
-        if (getTile(position).isFlagged()) {
-            getTile(position).unFlag();
-        } else if (getTile(position).isObscured()) {
-            getTile(position).flag();
-        }
+        getTile(position).flag();
         if (getTile(position).isFlagged()){mineLeft--;}
         else {mineLeft++;}
 

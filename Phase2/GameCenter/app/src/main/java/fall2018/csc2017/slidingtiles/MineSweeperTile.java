@@ -23,7 +23,7 @@ public class MineSweeperTile implements Serializable {
      */
     private int position;
 
-    MineSweeperTile(){
+    MineSweeperTile() {
         isMine = false;
         isFlagged = false;
         isObscured = true;
@@ -65,15 +65,14 @@ public class MineSweeperTile implements Serializable {
                     break;
             }
         }
-        else if (isFlagged()){
+        else if (isFlagged()) {
             background = R.drawable.mine_d;
-
         }
         else {background = R.drawable.mine_mask;}
     }
 
-    void showMine(){
-        if (isObscured()){
+    void showMine() {
+        if (isObscured()) {
             background = R.drawable.mine_b2;
         }
         else {
@@ -85,59 +84,36 @@ public class MineSweeperTile implements Serializable {
         return background;
     }
 
-    void setMine(){
+    void setMine() {
         isMine = true;
-    }
-
-    void flag()
-    {
-        isFlagged = true;
+        number = -1;
         setBackground();
     }
 
-    void unFlag()
-    {
-        isFlagged = false;
+    void flag() {
+        isFlagged = !isFlagged;
         setBackground();
     }
 
-    void reveal()
-    {
+    void reveal() {
         isObscured = false;
         setBackground();
     }
 
-    public void setNumber(int i)
-    {
+    public void setNumber(int i) {
         number = i;
         setBackground();
     }
 
-    boolean isMine()
-    {
-        return isMine;
-    }
+    boolean isMine() {return isMine;}
 
-    boolean isFlagged()
-    {
-        return isFlagged;
-    }
+    boolean isFlagged() {return isFlagged; }
 
-    boolean isObscured()
-    {
-        return isObscured;
-    }
+    boolean isObscured() {return isObscured;}
 
-    int getNumber()
-    {
-        return number;
-    }
+    int getNumber() {return number;}
 
-    int getPosition() {
-        return position;
-    }
+    int getPosition() {return position;}
 
-    void setPosition(int position) {
-        this.position = position;
-    }
+    void setPosition(int position) {this.position = position;}
 }

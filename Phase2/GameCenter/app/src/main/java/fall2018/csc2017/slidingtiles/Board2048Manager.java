@@ -14,24 +14,12 @@ public class Board2048Manager extends Manager implements Cloneable, Serializable
     Board2048Manager() {
         this.board = new Board2048();
         this.dimension = board.getDimension();
-        setTiles();
+        board.setUpTiles();
         board.addTile();
     }
 
     void cheat() {
         board.getTile(0,0).setValue(2048);
-    }
-
-    void setTiles() {
-        for (int row = 0; row != this.dimension; row++) {
-            for (int col = 0; col != this.dimension; col++) {
-                this.board.setTile(row, col, new Tile2048());
-                Tile2048 tile = board.getTile(row, col);
-                tile.setX(col);
-                tile.setY(row);
-            }
-        }
-
     }
 
     private boolean isFull() {
@@ -42,7 +30,7 @@ public class Board2048Manager extends Manager implements Cloneable, Serializable
         return !canMove();
     }
 
-    boolean isWin(){
+    boolean isWon(){
         for (Tile2048 tile : board) {
             if (tile.getValue() == 2048) {
                 return true;

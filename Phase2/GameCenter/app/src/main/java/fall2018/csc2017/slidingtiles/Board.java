@@ -11,7 +11,6 @@ import java.util.List;
 
 /**
  * The sliding tiles board.
- *
  */
 public class Board extends Observable implements Serializable, Iterable<Tile>{
 
@@ -120,7 +119,7 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
         // current position = 3*NUM_COLS + 2
 
         /**
-         * a new TileIterator takes tiles nd process it
+         * a new TileIterator takes tiles and process it
          *
          * @param tiles tiles from board
          */
@@ -144,7 +143,6 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
 
         /**
          * Return the next tile to be processed
-         *
          * @return the next tile object
          */
         @Override

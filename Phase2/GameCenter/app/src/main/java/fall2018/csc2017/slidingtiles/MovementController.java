@@ -30,7 +30,7 @@ class MovementController {
             BoardManager b = (BoardManager) boardManager;
             if (b.isValidTap(position)) {
                 b.touchMove(position);
-                if (b.puzzleSolved()) {
+                if (b.isWon()) {
                     Toasty.success(context, "YOU WIN!!", Toast.LENGTH_SHORT, true).show();
                 }
             } else {
