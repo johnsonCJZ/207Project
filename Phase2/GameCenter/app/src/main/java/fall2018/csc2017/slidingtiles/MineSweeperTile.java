@@ -87,17 +87,14 @@ public class MineSweeperTile implements Serializable {
 
     void setMine(){
         isMine = true;
+        number = -1;
+        setBackground();
     }
 
     void flag()
     {
-        isFlagged = true;
-        setBackground();
-    }
-
-    void unFlag()
-    {
-        isFlagged = false;
+        if (isFlagged) {isFlagged = false;}
+        else {isFlagged = true;}
         setBackground();
     }
 

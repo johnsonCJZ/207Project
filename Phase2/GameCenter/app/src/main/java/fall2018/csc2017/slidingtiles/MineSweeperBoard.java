@@ -79,11 +79,7 @@ public class MineSweeperBoard extends Observable implements Serializable {
     }
 
     void flag(int position) {
-        if (getTile(position).isFlagged()) {
-            getTile(position).unFlag();
-        } else if (getTile(position).isObscured()) {
-            getTile(position).flag();
-        }
+        getTile(position).flag();
         if (getTile(position).isFlagged()){mineLeft--;}
         else {mineLeft++;}
 
