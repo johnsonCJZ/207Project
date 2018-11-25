@@ -23,7 +23,6 @@ import es.dmoral.toasty.Toasty;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 public class RegisterActivity extends AppCompatActivity {
-    DatabaseHelper myDB = new DatabaseHelper(this);
     EditText username;
     EditText password;
     EditText confirm;
@@ -37,9 +36,11 @@ public class RegisterActivity extends AppCompatActivity {
     String confirmPWS;
     String emailS;
     String ageS;
+    DatabaseHelper myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        myDB = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
         if (userAccountManager == null){
             userAccountManager = new UserAccountManager();
@@ -135,42 +136,5 @@ public class RegisterActivity extends AppCompatActivity {
         Matcher matcher = regexP.matcher(info);
         return matcher.matches();
     }
-
-    /**
-     * Load from pre-saved .ser file.
-     */
-    private void loadFromFile() {
-
-        try {
-            InputStream inputStream = this.openFileInput(UserAccountManager.USERS);
-            if (inputStream != null) {
-                ObjectInputStream input = new ObjectInputStream(inputStream);
-                userAccountManager = (UserAccountManager) input.readObject();
-                inputStream.close();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        } catch (ClassNotFoundException e) {
-            Log.e("login activity", "File contained unexpected data type: " + e.toString());
-        }
-    }
-
-    /**
-     * Save to file fileName.
-     * @param fileName the file to save
-     */
-    public void saveToFile(String fileName) {
-        try {
-            ObjectOutputStream outputStream = new ObjectOutputStream(
-                    this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(userAccountManager);
-            outputStream.close();
-        } catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
-
 
 }
