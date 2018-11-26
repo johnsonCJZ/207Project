@@ -189,7 +189,6 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
         personalScoreBoard.addAndSort(result);
         globalScoreBoard.addAndSort(result);
         myDB.updateAccountManager(users);
-//        saveToFile(UserAccountManager.USERS);
         return score;
 
     }
@@ -266,6 +265,8 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
         face.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isPaused = false;
+                face.setImageResource(R.drawable.normal);
                 boardManager = new MineSweeperManager(height,width,mine);
                 boardManager.setTime(-1);
                 createTileButtons(getApplicationContext());
@@ -307,7 +308,8 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
         Bundle pass = new Bundle();
         myDB.updateUser(currentUser, user);
         myDB.updateAccountManager(users);
-        pass.putSerializable("scoreBoard", this.personalScoreBoard);
+        pass.putSerializable("personalScoreBoard",personalScoreBoard);
+        pass.putSerializable("globalScoreBoard",globalScoreBoard);
         tmp.putExtras(pass);
         startActivity(tmp);
     }
@@ -322,7 +324,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
             while(!isInterrupted()) {
                 if (!isPaused) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(10);
                         if (boardManager.isWon()) {
                             this.interrupt();
                         }
@@ -340,7 +342,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
                                     isPaused = true;
                                     user.getHistory().put("resumeHistory", null);
                                     face.setImageResource(R.drawable.sad);
-                                    addStartOver();
+
                                 }
                                 else {
                                     count = boardManager.getTime();
@@ -356,7 +358,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
                                             e.printStackTrace();
                                         }
                                     }
-                                    time.setText("Time: " +String.format("%03d", count) + " s");
+                                    time.setText("Time: " +String.format("%03d", count/100) + " s");
                                 }
                             }
                         });
@@ -386,28 +388,8 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
         height = boardManager.getBoard().getH();
         mine = boardManager.getBoard().getMine();
         assert this.boardManager != null;
-//        this.boardManager = (BoardManager) this.boardManager.clone();
-//        this.size = this.boardManager.getBoard().getDimension();
-//        switch (size) {
-//            case 3:
-//                this.personalScoreBoard = this.user.getScoreBoard("history3x3");
-//                this.globalScoreBoard = this.users.getSlideTilesGlobalScoreBoard("history3x3");
-//                break;
-//
-//            case 4:
-//                this.personalScoreBoard = this.user.getScoreBoard("history4x4");
-//                this.globalScoreBoard = this.users.getSlideTilesGlobalScoreBoard("history4x4");
-//                break;
-//
-//            case 5:
-//                this.personalScoreBoard = this.user.getScoreBoard("history5x5");
-//                this.globalScoreBoard = this.users.getSlideTilesGlobalScoreBoard("history5x5");
-//                break;
-//
-//            default:
-//                this.personalScoreBoard = this.user.getScoreBoard("history4x4");
-//                this.globalScoreBoard = this.users.getSlideTilesGlobalScoreBoard("history4x4");
-//        }
+        this.personalScoreBoard = user.getScoreBoard("Mine");
+        this.globalScoreBoard = users.getGlobalScoreBoard("Mine");
     }
 
     /**
@@ -439,20 +421,6 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
         super.onPause();
     }
 
-    /**
-     * Save the board manager to fileName.
-     * @param fileName the name of the file
-     */
-    public void saveToFile(String fileName) {
-        try {
-            ObjectOutputStream outputStream = new ObjectOutputStream(
-                    this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(users);
-            outputStream.close();
-        } catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
 
     @Override
     public void update(Observable o, Object arg) {
@@ -460,24 +428,5 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
         face.setImageResource(R.drawable.normal);
     }
 
-    /**
-     * Load from pre-saved .ser file.
-     */
-    private void loadFromFile() {
 
-        try {
-            InputStream inputStream = this.openFileInput(UserAccountManager.USERS);
-            if (inputStream != null) {
-                ObjectInputStream input = new ObjectInputStream(inputStream);
-                users = (UserAccountManager) input.readObject();
-                inputStream.close();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        } catch (ClassNotFoundException e) {
-            Log.e("login activity", "File contained unexpected data type: " + e.toString());
-        }
-    }
 }

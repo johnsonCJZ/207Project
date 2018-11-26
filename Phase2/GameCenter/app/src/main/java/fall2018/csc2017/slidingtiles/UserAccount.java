@@ -70,7 +70,7 @@ public class UserAccount implements Serializable {
         personalScoreBoard.put("history4x4", new ScoreBoard("SlidingTiles"));
         personalScoreBoard.put("history5x5", new ScoreBoard("SlidingTiles"));
         personalScoreBoard.put("2048", new ScoreBoard("2048"));
-        personalScoreBoard.put("Mine", new ScoreBoard("Mine"));
+        personalScoreBoard.put("Mine", new ScoreBoard("MineSweeper"));
 
     }
 
