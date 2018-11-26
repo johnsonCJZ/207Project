@@ -6,18 +6,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -101,6 +95,11 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
     private String currentUser;
 
     /**
+     * Mute the tiles in grid view
+     */
+    private boolean isMutted;
+
+    /**
      * Update the backgrounds on the buttons to match the tiles.
      */
     private void updateTileButtons() {
@@ -112,6 +111,12 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
         }
     }
 
+//    private void makeTilesUnable(){
+//        isMutted=true;
+//        for (Button b: tileButtons){
+//            b.setEnabled(false);
+//        }
+//    }
     void updateMineLeft(){
         final TextView mineLeft = findViewById(R.id.mineLeft);
         mineLeft.setText("Mine: " + String.valueOf(boardManager.getBoard().getMineLeft()));
@@ -237,6 +242,9 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
 
     private void setGridView(){
         gridView = findViewById(R.id.mine_grid);
+        if (gridView.isFrozen()){
+            gridView.cloneAsThawed();
+        }
         gridView.setNumColumns(boardManager.getBoard().getW());
         gridView.setBoardManager(boardManager);
         boardManager.getBoard().addObserver(this);
@@ -261,12 +269,11 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
 
 
     private void addStartOver(){
-        face.setImageResource(R.drawable.normal);
         face.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isPaused = false;
-                face.setImageResource(R.drawable.normal);
+//                face.setImageResource(R.drawable.normal);
                 boardManager = new MineSweeperManager(height,width,mine);
                 boardManager.setTime(-1);
                 createTileButtons(getApplicationContext());
@@ -345,7 +352,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
             while(!isInterrupted()) {
                 if (!isPaused) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                         if (boardManager.isWon()) {
                             this.interrupt();
                         }
@@ -356,6 +363,8 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
                                     boardManager.setTime(count);
                                     isPaused = true;
                                     user.getHistory().put("resumeHistory", null);
+                                    face.setImageResource(R.drawable.win);
+                                    gridView.freeze();
                                     winAlert();
                                 }
                                 else if (boardManager.isLost() && !isPaused){
@@ -363,6 +372,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
                                     isPaused = true;
                                     user.getHistory().put("resumeHistory", null);
                                     face.setImageResource(R.drawable.sad);
+                                    gridView.freeze();
                                     loseAlert();
                                 }
                                 else {
@@ -379,7 +389,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
                                             e.printStackTrace();
                                         }
                                     }
-                                    time.setText("Time: " +String.format("%03d", count/100) + " s");
+                                    time.setText("Time: " +String.format("%03d", count/10) + " s");
                                 }
                             }
                         });
@@ -418,6 +428,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
      * @param context the context
      */
     private void createTileButtons(final Context context) {
+        isMutted = false;
         MineSweeperBoard board = boardManager.getBoard();
         tileButtons = new ArrayList<>();
         for (int i = 0; i < width * height; i++) {

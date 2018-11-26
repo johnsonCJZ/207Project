@@ -53,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if(registerButtonPushed()) {
                     userAccountManager.addUser(newUser.getName());
                     myDB.updateAccountManager(userAccountManager);
+                    myDB.updateUser(newUser.getName(),newUser);
                     Intent registerIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                     RegisterActivity.this.startActivity(registerIntent);
                 }
@@ -83,20 +84,20 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean registerButtonPushed() {
         newUser = new UserAccount(usernameS, passwordS);
-        if (!myDB.createAndInsertNew(usernameS, newUser)){
-            Toasty.error(getApplicationContext(), "User Name Exists", Toast.LENGTH_SHORT, true).show();
-            return false;
-        }
-        if (!passwordS.equals(confirmPWS)) {
-            Toasty.error(getApplicationContext(), "password doesn't match.", Toast.LENGTH_SHORT, true).show();
-            return false;
-        }
         if(!validateInfo(usernameS, "^[a-z]{3,7}$")){
             Toasty.error(getApplicationContext(), "Illegal input of username.", Toast.LENGTH_SHORT, true).show();
             return false;
         }
         if(!(validateInfo(passwordS, "^[a-z0-9]{1,9}$"))){
             Toasty.error(getApplicationContext(), "Illegal input of password.", Toast.LENGTH_SHORT, true).show();
+            return false;
+        }
+        if (!passwordS.equals(confirmPWS)) {
+            Toasty.error(getApplicationContext(), "password doesn't match.", Toast.LENGTH_SHORT, true).show();
+            return false;
+        }
+        if (!myDB.createAndInsertNew(usernameS, newUser)){
+            Toasty.error(getApplicationContext(), "User Name Exists", Toast.LENGTH_SHORT, true).show();
             return false;
         }
         // check for optional settings

@@ -9,6 +9,7 @@ This extension of GridView contains built in logic for handling swipes between b
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.icu.util.Freezable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -19,7 +20,7 @@ import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
 
-public class GestureDetectGridView extends GridView {
+public class GestureDetectGridView extends GridView implements Freezable {
     public static final int SWIPE_MIN_DISTANCE = 100;
     public static final int SWIPE_MAX_OFF_PATH = 100;
     public static final int SWIPE_THRESHOLD_VELOCITY = 100;
@@ -54,15 +55,20 @@ public class GestureDetectGridView extends GridView {
         init(context);
     }
 
-    private void init(final Context context) {
+    private void init(final Context context) throws NullPointerException{
         mController = new MovementController();
         gDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onSingleTapConfirmed(MotionEvent event) {
+                try{
                 int position = GestureDetectGridView.this.pointToPosition
                         (Math.round(event.getX()), Math.round(event.getY()));
 
-                mController.processTapMovement(context, position);
+                mController.processTapMovement(context, position);}
+                catch(NullPointerException ex){
+                    ex.printStackTrace();
+                    Toasty.info(context, "Frozen", Toast.LENGTH_SHORT, true).show();
+                }
                 return true;
             }
 
@@ -113,6 +119,8 @@ public class GestureDetectGridView extends GridView {
         });
     }
 
+
+
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         int action = ev.getActionMasked();
@@ -149,5 +157,26 @@ public class GestureDetectGridView extends GridView {
         this.boardManager = boardManager;
         mController.setBoardManager(boardManager);
     }
+
+    @Override
+    public boolean isFrozen() {
+        if(mController==null){
+            return  true;
+        }
+        return false;
+    }
+
+    @Override
+    public Object freeze() {
+        mController=null;
+        return null;
+    }
+
+    @Override
+    public Object cloneAsThawed() {
+        mController=new MovementController();
+        return null;
+    }
+
 
 }

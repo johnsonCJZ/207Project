@@ -252,7 +252,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
         Bundle pass = new Bundle();
         myDB.updateUser(user.getName(), this.user);
         myDB.updateAccountManager(users);
-        pass.putString("fragment", "Slide");
+        pass.putString("fragment", "2048");
         intent.putExtras(pass);
         startActivity(intent);
         }
