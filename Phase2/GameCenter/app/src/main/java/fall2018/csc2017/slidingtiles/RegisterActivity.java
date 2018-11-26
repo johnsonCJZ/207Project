@@ -89,22 +89,13 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean registerButtonPushed() {
         ArrayList<String> userList = userAccountManager.getUserList();
-        newUser = new UserAccount(usernameS, passwordS);
         TextView message = findViewById(R.id.message);
-        if(!(ageS.equals(""))){
-            Integer ageI = Integer.parseInt(ageS);
-            newUser.setAge(ageI);
-        }
-        if (!email.equals("")){
-            newUser.setEmail(emailS);
-        }
+        // check for complementary settings
         if (!userList.isEmpty()){
-            for (String account : userList) {
-                if (account.equals(username)) {
-                    message.setText("this name is taken.");
-                    return false;
-                }
-            }}
+            if (userList.contains(username))
+                message.setText("this name is taken.");
+                return false;
+            }
         if (!passwordS.equals(confirmPWS)) {
             message.setText("password doesn't match.");
             return false;
@@ -117,13 +108,23 @@ public class RegisterActivity extends AppCompatActivity {
             message.setText("Illegal input of password.");
             return false;
         }
-        if(!validateInfo(emailS, "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")){
+        // check for optional settings
+        newUser = new UserAccount(usernameS, passwordS);
+        if(!validateInfo(ageS,"^[1-9][0-9]?$")&&!validateInfo(ageS,"^$")){
+            message.setText("Illegal input of age.");
+            return false;
+        }
+        if(!validateInfo(emailS, "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")
+                &&!validateInfo(ageS,"^$")){
             message.setText("Illegal input of  email address.");
             return false;
         }
-        if(!validateInfo(ageS,"^[1-9][0-9]?$")){
-            message.setText("Illegal input of age.");
-            return false;
+
+        if (!ageS.isEmpty()){
+            newUser.setAge(Integer.parseInt(ageS));}
+
+        if (!emailS.isEmpty()){
+            newUser.setEmail(emailS);
         }
         userAccountManager.addUser(newUser.getName());
         myDB.updateAccountManager(userAccountManager);
