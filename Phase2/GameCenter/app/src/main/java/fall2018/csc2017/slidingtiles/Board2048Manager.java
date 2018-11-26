@@ -4,12 +4,9 @@ import java.io.Serializable;
 
 public class Board2048Manager extends Manager implements Cloneable, Serializable {
     private Board2048 board;
-
     private Integer dimension;
 
-    Board2048 getBoard() {
-        return board;
-    }
+    Board2048 getBoard() {return board;}
 
     Board2048Manager() {
         this.board = new Board2048();
@@ -17,6 +14,8 @@ public class Board2048Manager extends Manager implements Cloneable, Serializable
         board.setUpTiles();
         board.addTile();
     }
+
+    int getScore() {return board.getScore();}
 
     void cheat() {
         board.getTile(0,0).setValue(2048);

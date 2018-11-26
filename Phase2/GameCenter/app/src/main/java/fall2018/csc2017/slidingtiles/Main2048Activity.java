@@ -165,20 +165,22 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
 
     private void updateTileButtons() {
         Board2048 board = boardManager.getBoard();
-        Tile2048 newTile = board.addTile();
-        if (newTile!=null){
-            newTile.setAnimation();
-        }
-        int nextPos = 0;
-        for (Button b : tileButtons) {
-            int row = nextPos / boardManager.getBoard().getDimension();
-            int col = nextPos % boardManager.getBoard().getDimension();
-            if (board.getTile(row, col).getFadeIn()){
-                addFadeInAnimation(b);
-                board.getTile(row, col).removeFadeIn();
+        if (board.isChanged()) {
+            Tile2048 newTile = board.addTile();
+            if (newTile != null) {
+                newTile.setAnimation();
             }
-            b.setBackgroundResource(board.getTile(row, col).getBackground());
-            nextPos++;
+            int nextPos = 0;
+            for (Button b : tileButtons) {
+                int row = nextPos / boardManager.getBoard().getDimension();
+                int col = nextPos % boardManager.getBoard().getDimension();
+                if (board.getTile(row, col).getFadeIn()) {
+                    addFadeInAnimation(b);
+                    board.getTile(row, col).removeFadeIn();
+                }
+                b.setBackgroundResource(board.getTile(row, col).getBackground());
+                nextPos++;
+            }
         }
         // add a tile if the board has been modified and it has empty spot
         scorePlace.setText("Score: "+String.valueOf(personalScoreBoard.calculateScore(boardManager)));

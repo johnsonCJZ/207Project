@@ -10,7 +10,7 @@ import java.util.Observable;
 
 public class Board2048 extends Observable implements Serializable, Iterable<Tile2048> {
     final static int dimension = 4;
-
+    private int score = 0;
     private Tile2048[][] tiles;
     private boolean isChanged = false;
 
@@ -32,14 +32,19 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
         }
     }
 
+    boolean isChanged() {return isChanged;}
+
+    int getScore() {return score;}
+
     Tile2048 addTile() {
         ArrayList<Tile2048> empty = findEmpty();
-        if (!empty.isEmpty()){ // add if not empty
+        //if (!empty.isEmpty()){ // add if not empty
         Tile2048 randomTile = empty.get((int) (Math.random() * empty.size()));
         randomTile.random();
+        isChanged = false;
         return randomTile;
-        }
-        return null;
+        //}
+        //return null;
     }
 
     ArrayList<Tile2048> findEmpty() {
@@ -81,6 +86,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
                         Integer valueJ = tileArray[j].getValue();
                         if (valueI.equals(valueJ)){
                             temp.add(valueI*2);
+                            score = score + valueI * 2;
                             i=j+1;
                         }
                         else{

@@ -21,6 +21,13 @@ public class MineSweeperBoardAndTileTest {
         setUp();
         assertEquals(3,board.getSurround(0).size());
         assertEquals(8,board.getSurround(15).size());
+        for (MineSweeperTile tile: board.getSurround(15)) {
+            int tileRow = tile.getPosition()/board.getW();
+            int tileCol = tile.getPosition()%board.getW();
+            int row = 15/board.getW();
+            int col = 15%board.getW();
+            assertTrue(tileRow - row <= 1 && tileRow - row >= -1 && tileCol - col <= 1 && tileCol - col >= -1);
+        }
     }
 
     @Test
