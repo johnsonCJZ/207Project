@@ -38,6 +38,8 @@ public class G2048Fragment extends Fragment {
         Image2048 = (ImageButton) view.findViewById(R.id.g_2048);
         Toasty.success(getContext(), "Press 2048 logo to start", Toast.LENGTH_LONG, true).show();
         addStartButton();
+        // set current game
+        DataHolder.getInstance().save("current game", "2048");
 //        getUser();
         return view;
     }

@@ -285,15 +285,36 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
 
                 .setPositiveButton("See my rank", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        MainMineSweeperActivity.this.finish();
                         switchToScoreBoard();
                     }
                 })
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        MainMineSweeperActivity.this.finish();
                         user.getHistory().put("resumeHistory", null);
-                        switchToGameCenter();
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    /**
+     * Alert when a puzzle is solved.
+     */
+    private void loseAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainMineSweeperActivity.this);
+        int score = getScore();
+        builder.setMessage("You have lost! you got " + String.valueOf(score) + " !")
+
+                .setPositiveButton("See my rank", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        switchToScoreBoard();
+                    }
+                })
+                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        user.getHistory().put("resumeHistory", null);
+                        dialog.dismiss();
                     }
                 });
         AlertDialog alert = builder.create();
@@ -324,7 +345,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
             while(!isInterrupted()) {
                 if (!isPaused) {
                     try {
-                        Thread.sleep(10);
+                        Thread.sleep(1000);
                         if (boardManager.isWon()) {
                             this.interrupt();
                         }
@@ -342,7 +363,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
                                     isPaused = true;
                                     user.getHistory().put("resumeHistory", null);
                                     face.setImageResource(R.drawable.sad);
-
+                                    loseAlert();
                                 }
                                 else {
                                     count = boardManager.getTime();

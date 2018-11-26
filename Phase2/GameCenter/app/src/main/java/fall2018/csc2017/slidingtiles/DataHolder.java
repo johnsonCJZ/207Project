@@ -7,7 +7,7 @@ import java.util.Map;
 public class DataHolder {
     Map<String, WeakReference<Object>> data = new HashMap<String, WeakReference<Object>>();
 
-    void save(String id, Object object) {
+    public void save(String id, Object object) {
         data.put(id, new WeakReference<Object>(object));
     }
 

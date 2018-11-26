@@ -1,6 +1,7 @@
 package fall2018.csc2017.slidingtiles;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -35,6 +36,8 @@ public class ScoreBoardTabLayoutActivity extends AppCompatActivity {
     private DatabaseHelper myDB;
 
     private String username;
+
+    private String fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +77,7 @@ public class ScoreBoardTabLayoutActivity extends AppCompatActivity {
      */
     private void getUsers(){
         this.user=myDB.selectUser(username);
+        this.fragment=(String)DataHolder.getInstance().retrieve("current game");
     }
 
     /**
@@ -106,6 +110,15 @@ public class ScoreBoardTabLayoutActivity extends AppCompatActivity {
                 t2.setText("");
             }
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, MainInfoPanelActivity.class);
+        Bundle extra = new Bundle();
+        extra.putString("fragment",fragment);
+        intent.putExtras(extra);
+        startActivity(intent);
     }
 
 

@@ -44,6 +44,8 @@ public class MinesweeperFragment extends Fragment {
         getUser();
         addImageAnim();
         addStartButton();
+        // set current game
+        DataHolder.getInstance().save("current game", "Mine");
         return view;
     }
 

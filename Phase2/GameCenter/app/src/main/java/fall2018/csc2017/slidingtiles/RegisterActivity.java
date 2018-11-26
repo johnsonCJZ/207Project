@@ -51,16 +51,10 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 updateInfo();
                 if(registerButtonPushed()) {
-                    boolean update = myDB.createAndInsertNew(newUser.getName(), newUser);
                     userAccountManager.addUser(newUser.getName());
                     myDB.updateAccountManager(userAccountManager);
-                    if (update) {
-                        Intent registerIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                        RegisterActivity.this.startActivity(registerIntent);
-                    }
-                    else {
-                        Toasty.error(getApplicationContext(), "User Name Exists", Toast.LENGTH_SHORT, true).show();
-                    }
+                    Intent registerIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    RegisterActivity.this.startActivity(registerIntent);
                 }
             }
         });
@@ -88,35 +82,32 @@ public class RegisterActivity extends AppCompatActivity {
     //TODO: age and email imput can be every thing, write a regex, logic is wrong SUMMER!
 
     private boolean registerButtonPushed() {
-        ArrayList<String> userList = userAccountManager.getUserList();
-        TextView message = findViewById(R.id.message);
-        // check for complementary settings
-        if (!userList.isEmpty()){
-            if (userList.contains(username))
-                message.setText("this name is taken.");
-                return false;
-            }
+        newUser = new UserAccount(usernameS, passwordS);
+        if (!myDB.createAndInsertNew(usernameS, newUser)){
+            Toasty.error(getApplicationContext(), "User Name Exists", Toast.LENGTH_SHORT, true).show();
+            return false;
+        }
         if (!passwordS.equals(confirmPWS)) {
-            message.setText("password doesn't match.");
+            Toasty.error(getApplicationContext(), "password doesn't match.", Toast.LENGTH_SHORT, true).show();
             return false;
         }
         if(!validateInfo(usernameS, "^[a-z]{3,7}$")){
-            message.setText("Illegal input of username.");
+            Toasty.error(getApplicationContext(), "Illegal input of username.", Toast.LENGTH_SHORT, true).show();
             return false;
         }
         if(!(validateInfo(passwordS, "^[a-z0-9]{1,9}$"))){
-            message.setText("Illegal input of password.");
+            Toasty.error(getApplicationContext(), "Illegal input of password.", Toast.LENGTH_SHORT, true).show();
             return false;
         }
         // check for optional settings
-        newUser = new UserAccount(usernameS, passwordS);
+
         if(!validateInfo(ageS,"^[1-9][0-9]?$")&&!validateInfo(ageS,"^$")){
-            message.setText("Illegal input of age.");
+            Toasty.error(getApplicationContext(), "Illegal input of age.", Toast.LENGTH_SHORT, true).show();
             return false;
         }
         if(!validateInfo(emailS, "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")
                 &&!validateInfo(ageS,"^$")){
-            message.setText("Illegal input of  email address.");
+            Toasty.error(getApplicationContext(), "Illegal input of  email address.", Toast.LENGTH_SHORT, true).show();
             return false;
         }
 

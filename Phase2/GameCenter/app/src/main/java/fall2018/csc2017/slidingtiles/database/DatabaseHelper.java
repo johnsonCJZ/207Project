@@ -3,6 +3,8 @@ package fall2018.csc2017.slidingtiles.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
@@ -79,15 +81,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return gson.toJson(o);
     }
 
-    public boolean createAndInsertNew(String username, UserAccount userAccount) {
+    public boolean createAndInsertNew(String username, UserAccount userAccount) throws SQLException {
+        boolean found;
+        long result;
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_NAME, username);
         contentValues.put(KEY_USER, convertToJson(userAccount)); //change default value of age = 0 and email = "" in regist activity
-        long result = db.insert(TABLE_NAME,null ,contentValues);
-
-
-        return result != -1;
+        try{result = db.insertOrThrow(TABLE_NAME, null, contentValues);}
+        catch(Exception e){
+            e.printStackTrace();
+            result = -1;
+        }
+        found = result != -1;
+        return found;
     }
 
 //    public void addUserToAccountManager(String username) throws Exception {

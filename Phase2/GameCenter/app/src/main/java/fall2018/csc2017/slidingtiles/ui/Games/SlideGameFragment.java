@@ -78,6 +78,8 @@ public class SlideGameFragment extends Fragment {
         addLoadButtonListener();
         addResumeButtonListener();
         addScoreBoardListener();
+        // set current game
+        DataHolder.getInstance().save("current game", "Slide");
         return rootView;
     }
 
