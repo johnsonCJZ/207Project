@@ -358,7 +358,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
                                     user.getHistory().put("resumeHistory", null);
                                     winAlert();
                                 }
-                                else if (boardManager.isLost()){
+                                else if (boardManager.isLost() && !isPaused){
                                     boardManager.setTime(count);
                                     isPaused = true;
                                     user.getHistory().put("resumeHistory", null);
