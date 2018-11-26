@@ -117,24 +117,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return convertToUserAccount(res.getString(0));
     }
 
-    public boolean updateUser(String username, UserAccount userAccount) {
+    public void updateUser(String username, UserAccount userAccount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_NAME, username);
         contentValues.put(KEY_USER, convertToJson(userAccount));
         db.update(TABLE_NAME, contentValues, "USERNAME = ?",new String[] { username });
 
-        return true;
     }
 
-    public boolean updateAccountManager(UserAccountManager userAccountManager) {
+    public void updateAccountManager(UserAccountManager userAccountManager) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_NAME, USER_ACCOUNT_MANAGER);
         contentValues.put(KEY_USER, convertToJson(userAccountManager));
         db.update(TABLE_NAME, contentValues, "USERNAME = ?",new String[] { USER_ACCOUNT_MANAGER });
-
-        return true;
+        
     }
 
 //    public boolean updateScoreBoard(String colName, String username, ScoreBoard scoreBoard){
@@ -168,4 +166,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public boolean hasUser(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "select count(*) from " + TABLE_NAME + " where " + KEY_NAME + " = '" + username+ "'";
+        Cursor res = db.rawQuery(query, null);
+        res.moveToFirst();
+        return res.getInt(0) == 1;
+    }
 }

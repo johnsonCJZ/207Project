@@ -42,9 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         myDB = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
-        if (userAccountManager == null){
-            userAccountManager = new UserAccountManager();
-        }
+        userAccountManager = myDB.selectAccountManager();
         setContentView(R.layout.activity_register);
         updateInfo();
 
@@ -54,6 +52,8 @@ public class RegisterActivity extends AppCompatActivity {
                 updateInfo();
                 if(registerButtonPushed()) {
                     boolean update = myDB.createAndInsertNew(newUser.getName(), newUser);
+                    userAccountManager.addUser(newUser.getName());
+                    myDB.updateAccountManager(userAccountManager);
                     if (update) {
                         Intent registerIntent = new Intent(RegisterActivity.this, LoginActivity.class);
                         RegisterActivity.this.startActivity(registerIntent);
@@ -126,8 +126,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (!emailS.isEmpty()){
             newUser.setEmail(emailS);
         }
-        userAccountManager.addUser(newUser.getName());
-        myDB.updateAccountManager(userAccountManager);
+
         return true;
     }
 

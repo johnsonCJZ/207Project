@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                if (userAccountManager.getUserList().contains(username) && ifPasswordCorrect(username, password)) {
+                if (myDB.hasUser(username) && ifPasswordCorrect(username, password)) {
                     Toasty.success(getApplicationContext(), "Welcome!", Toast.LENGTH_SHORT, true).show();
                     DataHolder.getInstance().save("current user", username);
                     Intent loginIntent = new Intent(LoginActivity.this, MainInfoPanelActivity.class);
