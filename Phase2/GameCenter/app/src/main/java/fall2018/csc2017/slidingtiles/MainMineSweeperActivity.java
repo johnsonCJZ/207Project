@@ -9,11 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.FileNotFoundException;
@@ -31,7 +28,7 @@ import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 /**
  * The game activity.
  */
-public class  MineSweeperActivity extends AppCompatActivity implements Observer {
+public class MainMineSweeperActivity extends AppCompatActivity implements Observer {
     DatabaseHelper myDB;
     /**
      * The per-user scoreboard
@@ -157,13 +154,13 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
                         } catch (CloneNotSupportedException e) {
                             e.printStackTrace();
                         }
-                        MineSweeperActivity.this.finish();
+                        MainMineSweeperActivity.this.finish();
                         switchToGameCenter();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        MineSweeperActivity.this.finish();
+                        MainMineSweeperActivity.this.finish();
                         switchToGameCenter();
                     }
                 });
@@ -203,23 +200,8 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
      * @throws CloneNotSupportedException
      */
     private void saveHistory(DialogInterface dialog) throws CloneNotSupportedException {
-//        switch (size) {
-//            case 3:
-//                user.getHistory().put("history3x3", (BoardManager) boardManager.clone());
-//                saveToFile(UserAccountManager.USERS);
-//                break;
-//            case 4:
-//                user.getHistory().put("history4x4",(BoardManager) boardManager.clone());
-//                saveToFile(UserAccountManager.USERS);
-//                break;
-//
-//            case 5:
-//                user.getHistory().put("history5x5",(BoardManager) boardManager.clone());
-//                saveToFile(UserAccountManager.USERS);
-//                break;
-//        }
-//        dialog.cancel();
-
+        user.getHistory().put("Mine", boardManager);
+        dialog.cancel();
     }
 
     /**
@@ -296,19 +278,19 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
      * Alert when a puzzle is solved.
      */
     private void winAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MineSweeperActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainMineSweeperActivity.this);
         int score = getScore();
         builder.setMessage("you got " + String.valueOf(score) + " !")
 
                 .setPositiveButton("See my rank", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        MineSweeperActivity.this.finish();
+                        MainMineSweeperActivity.this.finish();
                         switchToScoreBoard();
                     }
                 })
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        MineSweeperActivity.this.finish();
+                        MainMineSweeperActivity.this.finish();
                         user.getHistory().put("resumeHistory", null);
                         switchToGameCenter();
                     }
@@ -325,8 +307,6 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
         Bundle pass = new Bundle();
         myDB.updateUser(currentUser, user);
         myDB.updateAccountManager(users);
-//        pass.putSerializable("user",this.user);
-//        pass.putSerializable("allUsers", this.users);
         pass.putSerializable("scoreBoard", this.personalScoreBoard);
         tmp.putExtras(pass);
         startActivity(tmp);
@@ -397,11 +377,9 @@ public class  MineSweeperActivity extends AppCompatActivity implements Observer 
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
 
-        assert extra != null;
         currentUser = (String)DataHolder.getInstance().retrieve("current user");
         this.user = myDB.selectUser(currentUser);
         this.users = myDB.selectAccountManager();
-//        loadFromFile();
 
         this.boardManager = (MineSweeperManager) extra.getSerializable("boardManager");
         width = boardManager.getBoard().getW();

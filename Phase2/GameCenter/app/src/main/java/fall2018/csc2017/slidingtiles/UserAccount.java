@@ -32,7 +32,7 @@ public class UserAccount implements Serializable {
     /**
      * The sliding tiles game history of the UserAccount.
      */
-    private HashMap<String, BoardManager> history = new HashMap<>();
+    private HashMap<String, Manager> history = new HashMap<>();
 
     /**
      * The sliding tiles score list of the UserAccount
@@ -64,6 +64,8 @@ public class UserAccount implements Serializable {
         history.put("history4x4", null);
         history.put("history5x5",null);
         history.put("resumeHistory", null);
+        history.put("Mine", null);
+        history.put("2048", null);
         personalScoreBoard.put("history3x3", new ScoreBoard("SlidingTiles"));
         personalScoreBoard.put("history4x4", new ScoreBoard("SlidingTiles"));
         personalScoreBoard.put("history5x5", new ScoreBoard("SlidingTiles"));
@@ -155,7 +157,7 @@ public class UserAccount implements Serializable {
      * The getter for the History of the UserAccount.
      * @return the History
      */
-    public HashMap<String, BoardManager> getHistory(){
+    public HashMap<String, Manager> getHistory(){
         return history;
     }
 

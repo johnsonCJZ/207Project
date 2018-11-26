@@ -25,7 +25,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Main2048Activity" />
         <activity android:name=".ScoreBoardTabLayoutActivity" />
-        <activity android:name=".MineSweeperActivity" />
+        <activity android:name=".MainMineSweeperActivity" />
         <activity android:name=".MinesweeperDifficultyActivity" />
         <activity android:name=".CreateNewOrLoad2048Activity"></activity>
     </application>

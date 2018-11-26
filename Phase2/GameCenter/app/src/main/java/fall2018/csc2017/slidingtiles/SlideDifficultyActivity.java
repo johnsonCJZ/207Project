@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
+
 
 public class SlideDifficultyActivity extends AppCompatActivity {
 
@@ -19,13 +21,14 @@ public class SlideDifficultyActivity extends AppCompatActivity {
      */
     private UserAccount user;
 
-    /**
-     * The UserAccountManager
-     */
-    private UserAccountManager users;
+
+    private DatabaseHelper myDB;
+
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        myDB = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slide_difficulty);
         getUser();
@@ -45,10 +48,8 @@ public class SlideDifficultyActivity extends AppCompatActivity {
      * Receive UserAccount and UserAccountManager from the previous activity/view.
      */
     private void getUser(){
-        Intent intentExtras = getIntent();
-        Bundle extra = intentExtras.getExtras();
-        this.user=(UserAccount) extra.getSerializable("user");
-        this.users = (UserAccountManager) extra.getSerializable("allUsers");
+        username = (String)DataHolder.getInstance().retrieve("current user");
+        this.user=myDB.selectUser(username);
     }
 
     /**
@@ -102,8 +103,6 @@ public class SlideDifficultyActivity extends AppCompatActivity {
     private void switchToGame() {
         Intent tmp = new Intent(this, MainSlideActivity.class);
         Bundle pass = new Bundle();
-        pass.putSerializable("user",user);
-        pass.putSerializable("allUsers", users);
         pass.putSerializable("boardManager", boardManager);
         tmp.putExtras(pass);
         startActivity(tmp);

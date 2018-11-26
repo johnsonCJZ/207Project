@@ -1,9 +1,7 @@
 package fall2018.csc2017.slidingtiles.ui.Games;
 
 import android.content.Intent;
-import android.media.Image;
 import android.support.v4.app.Fragment;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,11 +15,9 @@ import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
 import fall2018.csc2017.slidingtiles.DataHolder;
-import fall2018.csc2017.slidingtiles.MineSweeperActivity;
 import fall2018.csc2017.slidingtiles.MineSweeperManager;
 import fall2018.csc2017.slidingtiles.MinesweeperDifficultyActivity;
 import fall2018.csc2017.slidingtiles.R;
-import fall2018.csc2017.slidingtiles.ScoreBoardTabLayoutActivity;
 import fall2018.csc2017.slidingtiles.UserAccount;
 import fall2018.csc2017.slidingtiles.UserAccountManager;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
@@ -29,11 +25,11 @@ import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 public class MinesweeperFragment extends Fragment {
     private UserAccount user;
     private View view;
-//    private UserAccountManager users;
+    private UserAccountManager users;
     private ImageView thomas;
-//    private MineSweeperManager boardManager;
-//    private DatabaseHelper myDB;
-//    private String username;
+    private MineSweeperManager boardManager;
+    private DatabaseHelper myDB;
+    private String username;
 
     public MinesweeperFragment(){}
 
@@ -42,10 +38,10 @@ public class MinesweeperFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-//        myDB = new DatabaseHelper(this.getContext());
-//        username = (String) DataHolder.getInstance().retrieve("current user");
+        myDB = new DatabaseHelper(this.getContext());
+        username = (String) DataHolder.getInstance().retrieve("current user");
         view = inflater.inflate(R.layout.minesweeper_fragment, container, false);
-//        getUser();
+        getUser();
         addImageAnim();
         addStartButton();
         return view;
@@ -57,22 +53,16 @@ public class MinesweeperFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent tmp = new Intent(getActivity(), MinesweeperDifficultyActivity.class);
-//                Bundle pass = new Bundle();
-//                pass.putSerializable("user",user);
-//                pass.putSerializable("allUsers", users);
-//                pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
-//                pass.putSerializable("globalScoreBoard", this.globalScoreBoard);
-//                tmp.putExtras(pass);
                 startActivity(tmp);
             }
 
         });
     }
 
-//    private void getUser(){
-//        user= (UserAccount) getArguments().getSerializable("user");
-//        users= (UserAccountManager) getArguments().getSerializable("allUsers");
-//    }
+    private void getUser(){
+        user= myDB.selectUser(username);
+        users= myDB.selectAccountManager();
+    }
 
     private void addImageAnim(){
         thomas = (ImageView) view.findViewById(R.id.Thomas);

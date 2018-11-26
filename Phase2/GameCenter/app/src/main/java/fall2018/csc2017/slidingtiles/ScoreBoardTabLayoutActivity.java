@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
+
 public class ScoreBoardTabLayoutActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
@@ -24,19 +26,20 @@ public class ScoreBoardTabLayoutActivity extends AppCompatActivity {
      * User playing game
      */
     private UserAccount user;
-    /**
-     * All users in database
-     */
-    private UserAccountManager users;
 
     /**
      * Initialize activity with corresponding user and data
      * @param savedInstanceState
      */
 
+    private DatabaseHelper myDB;
+
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        myDB = new DatabaseHelper(this);
+        username = (String)DataHolder.getInstance().retrieve("current user");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score_board_tab_layout);
         tabLayout =(TabLayout) findViewById(R.id.tabs);
@@ -51,7 +54,6 @@ public class ScoreBoardTabLayoutActivity extends AppCompatActivity {
     private Bundle passInfoToFragment(ScoreBoard s){
         Bundle pass = new Bundle();
         pass.putSerializable("board",s);
-        pass.putSerializable("user",user);
         return pass;
     }
 
@@ -62,26 +64,16 @@ public class ScoreBoardTabLayoutActivity extends AppCompatActivity {
         g.setArguments(passInfoToFragment(this.globalScoreBoard));
         p.setArguments(passInfoToFragment(this.personalScoreBoard));
         adaptor.addFragment(g,"global");
-        adaptor.addFragment(p,"Personal");
+        adaptor.addFragment(p,"personal");
         viewPager.setAdapter(adaptor);
         tabLayout.setupWithViewPager(viewPager);
-    }
-
-    private Bundle passInfo(){
-        Bundle pass = new Bundle();
-        pass.putSerializable("user",this.user);
-        pass.putSerializable("allUsers", this.users);
-        return pass;
     }
 
     /**
      * get user info and data from last activity
      */
     private void getUsers(){
-        Intent intentExtras = getIntent();
-        Bundle extra = intentExtras.getExtras();
-        this.user=(UserAccount) extra.getSerializable("user");
-        this.users = (UserAccountManager) extra.getSerializable("allUsers");
+        this.user=myDB.selectUser(username);
     }
 
     /**

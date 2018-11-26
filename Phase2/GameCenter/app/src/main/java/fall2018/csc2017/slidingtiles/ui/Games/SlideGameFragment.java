@@ -114,15 +114,15 @@ public class SlideGameFragment extends Fragment {
                 switch (which) {
                     case 0: // 3x3
                         personalScoreBoard = user.getScoreBoard("history3x3");
-                        globalScoreBoard = users.getSlideTilesGlobalScoreBoard("history3x3");
+                        globalScoreBoard = users.getGlobalScoreBoard("history3x3");
                         break;
                     case 1: // 4x4
                         personalScoreBoard = user.getScoreBoard("history4x4");
-                        globalScoreBoard = users.getSlideTilesGlobalScoreBoard("history4x4");
+                        globalScoreBoard = users.getGlobalScoreBoard("history4x4");
                         break;
                     case 2: // 5x5
                         personalScoreBoard = user.getScoreBoard("history5x5");
-                        globalScoreBoard = users.getSlideTilesGlobalScoreBoard("history5x5");
+                        globalScoreBoard = users.getGlobalScoreBoard("history5x5");
                         break;
                 }
                 if(personalScoreBoard != null && globalScoreBoard!=null){
@@ -149,8 +149,8 @@ public class SlideGameFragment extends Fragment {
         Bundle pass = new Bundle();
         myDB.updateUser(username, this.user);
         myDB.updateAccountManager(this.users);
-//        pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
-//        pass.putSerializable("globalScoreBoard", this.globalScoreBoard);
+        pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
+        pass.putSerializable("globalScoreBoard", this.globalScoreBoard);
         tmp.putExtras(pass);
         startActivity(tmp);
     }
@@ -174,13 +174,9 @@ public class SlideGameFragment extends Fragment {
         resumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = user.getHistory().get("resumeHistory");
+                boardManager = (BoardManager) user.getHistory().get("resumeHistory");
                 if (boardManager != null) {
-                    try {
-                        boardManager = (BoardManager) user.getHistory().get("resumeHistory").clone();
-                    } catch (CloneNotSupportedException e) {
-                        e.printStackTrace();
-                    }
+                        boardManager = (BoardManager) user.getHistory().get("resumeHistory");
                     user.getHistory().put("resumeHistory", null);
                     switchToGame();
                 }
@@ -212,13 +208,8 @@ public class SlideGameFragment extends Fragment {
      */
     private void switchToDifficulty(){
         Intent tmp = new Intent(getActivity(), SlideDifficultyActivity.class);
-//        Bundle pass = new Bundle();
         myDB.updateUser(username, this.user);
         myDB.updateAccountManager(this.users);
-
-//        pass.putSerializable("user",this.user);
-//        pass.putSerializable("allUsers", this.users);
-//        tmp.putExtras(pass);
         startActivity(tmp);}
 
     /**
@@ -227,8 +218,6 @@ public class SlideGameFragment extends Fragment {
     private void switchToGame() {
         Intent tmp = new Intent(getActivity(), MainSlideActivity.class);
         Bundle pass = new Bundle();
-//        pass.putSerializable("user",this.user);
-//        pass.putSerializable("allUsers", this.users);
         myDB.updateUser(username, this.user);
         myDB.updateAccountManager(this.users);
         pass.putSerializable("boardManager", this.boardManager);
@@ -257,13 +246,13 @@ public class SlideGameFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: // 3x3
-                        boardManager = user.getHistory().get("history3x3");
+                        boardManager = (BoardManager) user.getHistory().get("history3x3");
                         break;
                     case 1: // 4x4
-                        boardManager = user.getHistory().get("history4x4");
+                        boardManager = (BoardManager) user.getHistory().get("history4x4");
                         break;
                     case 2: // 5x5
-                        boardManager = user.getHistory().get("history5x5");
+                        boardManager = (BoardManager) user.getHistory().get("history5x5");
                         break;
                 }
                 if(boardManager!=null){
@@ -287,25 +276,4 @@ public class SlideGameFragment extends Fragment {
         dialog.show();
     }
 
-    /**
-     * load from saved database
-     * @param fileName name of database
-     */
-//    private void loadFromFile(String fileName) {
-//
-//        try {
-//            InputStream inputStream = getActivity().openFileInput(fileName);
-//            if (inputStream != null) {
-//                ObjectInputStream input = new ObjectInputStream(inputStream);
-//                users = (UserAccountManager) input.readObject();
-//                inputStream.close();
-//            }
-//        } catch (FileNotFoundException e) {
-//            Log.e("login activity", "File not found: " + e.toString());
-//        } catch (IOException e) {
-//            Log.e("login activity", "Can not read file: " + e.toString());
-//        } catch (ClassNotFoundException e) {
-//            Log.e("login activity", "File contained unexpected data type: " + e.toString());
-//        }
-//    }
 }

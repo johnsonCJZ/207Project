@@ -103,8 +103,6 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     private void switchToGameCenter() {
         Intent intent = new Intent(this, MainInfoPanelActivity.class);
         Bundle pass = new Bundle();
-        pass.putSerializable("user",this.user);
-        pass.putSerializable("allUsers", this.users);
         pass.putString("fragment", "Slide");
         intent.putExtras(pass);
         startActivity(intent);
@@ -197,7 +195,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         myDB = new DatabaseHelper(this);
         username = (String) DataHolder.getInstance().retrieve("current user");
         super.onCreate(savedInstanceState);
-            getAllInfo(); // pass in all useful data from last activity, including boardManager
+        getAllInfo(); // pass in all useful data from last activity, including boardManager
         createTileButtons(this);
         setContentView(R.layout.activity_main);
         final TextView time = findViewById(R.id.textView6);
@@ -275,13 +273,12 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
      * Alert when a puzzle is solved.
      */
     private void winAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainSlideActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         int score = getScore();
         builder.setMessage("you got " + String.valueOf(score) + " !")
 
                 .setPositiveButton("See my rank", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        MainSlideActivity.this.finish();
                         switchToScoreBoard();
                     }
                 })
@@ -361,6 +358,10 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         Intent tmp = new Intent(this, ScoreBoardTabLayoutActivity.class);
         myDB.updateUser(user.getName(), this.user);
         myDB.updateAccountManager(users);
+        Bundle pass = new Bundle();
+        pass.putSerializable("personalScoreBoard",personalScoreBoard);
+        pass.putSerializable("globalScoreBoard",globalScoreBoard);
+        tmp.putExtras(pass);
         startActivity(tmp);
     }
 
@@ -374,30 +375,28 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         assert extra != null;
         this.user = myDB.selectUser(username);
         this.users = myDB.selectAccountManager();
-//        loadFromFile();
 
         this.boardManager = (BoardManager) extra.getSerializable("boardManager");
-        assert this.boardManager != null;
         this.size = this.boardManager.getBoard().getDimension();
         switch (size) {
             case 3:
                 this.personalScoreBoard = this.user.getScoreBoard("history3x3");
-                this.globalScoreBoard = this.users.getSlideTilesGlobalScoreBoard("history3x3");
+                this.globalScoreBoard = this.users.getGlobalScoreBoard("history3x3");
                 break;
 
             case 4:
                 this.personalScoreBoard = this.user.getScoreBoard("history4x4");
-                this.globalScoreBoard = this.users.getSlideTilesGlobalScoreBoard("history4x4");
+                this.globalScoreBoard = this.users.getGlobalScoreBoard("history4x4");
                 break;
 
             case 5:
                 this.personalScoreBoard = this.user.getScoreBoard("history5x5");
-                this.globalScoreBoard = this.users.getSlideTilesGlobalScoreBoard("history5x5");
+                this.globalScoreBoard = this.users.getGlobalScoreBoard("history5x5");
                 break;
 
             default:
                 this.personalScoreBoard = this.user.getScoreBoard("history4x4");
-                this.globalScoreBoard = this.users.getSlideTilesGlobalScoreBoard("history4x4");
+                this.globalScoreBoard = this.users.getGlobalScoreBoard("history4x4");
         }
     }
 

@@ -95,7 +95,7 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
         }
     }
 
-    public ScoreBoard getSlideTilesGlobalScoreBoard(String tag) {
+    public ScoreBoard getGlobalScoreBoard(String tag) {
         return GlobalScoreBoard.get(tag);
     }
 }

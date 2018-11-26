@@ -64,6 +64,9 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
                     if (!isPaused) {
                         try {
                             Thread.sleep(500);
+                            if (boardManager.isWon()) {
+                                this.interrupt();
+                            }
                             runOnUiThread(new Runnable() {
                                               @Override
                                               public void run() {
@@ -71,7 +74,6 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
                                                           && !isPaused) {
                                                       setIsWin();
                                                       isPaused = true;
-//                                        user.getHistory().put("resumeHistory", null);
                                                       endAlert();
                                                   } else {
                                                       if (tempCount < 2) {
@@ -133,10 +135,8 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
         this.users = myDB.selectAccountManager();
 
         personalScoreBoard = user.getScoreBoard("2048");
-        globalScoreBoard = users.getSlideTilesGlobalScoreBoard("2048");
+        globalScoreBoard = users.getGlobalScoreBoard("2048");
         this.boardManager = (Board2048Manager) extra.getSerializable("boardManager");
-        assert this.boardManager != null;
-//        this.size = this.boardManager.getBoard().getDimension();
     }
 
 
@@ -181,7 +181,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
             nextPos++;
         }
         // add a tile if the board has been modified and it has empty spot
-        scorePlace.setText("Score: "+String.valueOf(calculateInGameScore()));
+        scorePlace.setText("Score: "+String.valueOf(personalScoreBoard.calculateScore(boardManager)));
 
     }
 
@@ -212,13 +212,8 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
     }
 
     private void endAlert() {
-        int score = calculateInGameScore();
-        Object result[]= new Object[2];
-        result[0] = user.getName();
-        result[1] = score;
-        personalScoreBoard.addAndSort(result);
-        globalScoreBoard.addAndSort(result);
-        AlertDialog.Builder builder = new AlertDialog.Builder(Main2048Activity.this);
+        int score = getScore();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if (isWin) {
             builder.setMessage("You Win!");
         }
@@ -227,14 +222,13 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
         }
         builder.setPositiveButton("Back To Game Center", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                Main2048Activity.this.finish();
                 switchToGameCenter();
             }
         })
                 .setNegativeButton("See My Rank ", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Main2048Activity.this.finish();
-                        //user.getHistory().put("resumeHistory", null);
+                        user.getHistory().put("resumeHistory", null);
                         switchToScoreBoard();
                     }
                 });
@@ -243,6 +237,8 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
     }
 
     private void switchToScoreBoard(){
+        myDB.updateUser(user.getName(), this.user);
+        myDB.updateAccountManager(users);
         Intent tmp = new Intent(this, ScoreBoardTabLayoutActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
@@ -252,12 +248,13 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
     }
 
     private void switchToGameCenter() {
-            Intent intent = new Intent(this, MainInfoPanelActivity.class);
-            Bundle pass = new Bundle();
-            loadFromFile();
-            pass.putString("fragment", "Slide");
-            intent.putExtras(pass);
-            startActivity(intent);
+        Intent intent = new Intent(this, MainInfoPanelActivity.class);
+        Bundle pass = new Bundle();
+        myDB.updateUser(user.getName(), this.user);
+        myDB.updateAccountManager(users);
+        pass.putString("fragment", "Slide");
+        intent.putExtras(pass);
+        startActivity(intent);
         }
 
     private int getScore() {
@@ -268,21 +265,10 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
         result[1] = score;
         personalScoreBoard.addAndSort(result);
         globalScoreBoard.addAndSort(result);
-        saveToFile(UserAccountManager.USERS);
         return score;
 
     }
 
-    public void saveToFile(String fileName) {
-        try {
-            ObjectOutputStream outputStream = new ObjectOutputStream(
-                    this.openFileOutput(fileName, MODE_PRIVATE));
-            outputStream.writeObject(users);
-            outputStream.close();
-        } catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
-        }
-    }
 
     @Override
     public void update(Observable o, Object arg) {
@@ -294,26 +280,6 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
 
     }
 
-    private void loadFromFile() {
-        try {
-            InputStream inputStream = this.openFileInput(UserAccountManager.USERS);
-            if (inputStream != null) {
-                ObjectInputStream input = new ObjectInputStream(inputStream);
-                users = (UserAccountManager) input.readObject();
-                inputStream.close();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        } catch (ClassNotFoundException e) {
-            Log.e("login activity", "File contained unexpected data type: " + e.toString());
-        }
-    }
-
-    public int calculateInGameScore(){
-        return personalScoreBoard.calculateScore(boardManager);
-    }
 
 
 }
