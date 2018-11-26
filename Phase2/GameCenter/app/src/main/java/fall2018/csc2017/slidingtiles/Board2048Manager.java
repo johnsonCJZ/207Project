@@ -13,6 +13,7 @@ public class Board2048Manager extends Manager implements Cloneable, Serializable
         this.dimension = board.getDimension();
         board.setUpTiles();
         board.addTile();
+        board.addTile();
     }
 
     int getScore() {return board.getScore();}
