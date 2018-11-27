@@ -48,22 +48,22 @@ public class InputListener extends GestureDetector.SimpleOnGestureListener   {
                 // up to down swipe
                 if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE
                         && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                    boardManager.moveDown();
+                    boardManager.move("DOWN");
                 }
                 // down to up swipe
                 else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE
                         && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                    boardManager.moveUp();
+                    boardManager.move("UP");
             }   }
             // right to left swipe
             if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
                     && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                boardManager.moveLeft();
+                boardManager.move("LEFT");
             }
             // left to right swipe
             else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
                     && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                boardManager.moveRight();
+                boardManager.move("RIGHT");
 
 
             }
@@ -127,7 +127,7 @@ public class InputListener extends GestureDetector.SimpleOnGestureListener   {
                             moved = true;
                             previousDirection = previousDirection * 2;
                             veryLastDirection = 2;
-                            boardManager.moveDown();
+                            boardManager.move("DOWN");
                             // this is when swipe down
 
                         } else if (((dy <= -SWIPE_THRESHOLD_VELOCITY && previousDirection == 1) || y
@@ -136,7 +136,7 @@ public class InputListener extends GestureDetector.SimpleOnGestureListener   {
                             moved = true;
                             previousDirection = previousDirection * 3;
                             veryLastDirection = 3;
-                            boardManager.moveUp();
+                            boardManager.move("UP");
                             // this is when swipe up
 
                         } else if (((dx >= SWIPE_THRESHOLD_VELOCITY && previousDirection == 1) || x
@@ -145,7 +145,7 @@ public class InputListener extends GestureDetector.SimpleOnGestureListener   {
                             moved = true;
                             previousDirection = previousDirection * 5;
                             veryLastDirection = 5;
-                            boardManager.moveRight();
+                            boardManager.move("RIGHT");
                             // this is when swipe right
 
                         } else if (((dx <= -SWIPE_THRESHOLD_VELOCITY && previousDirection == 1) || x
@@ -154,7 +154,7 @@ public class InputListener extends GestureDetector.SimpleOnGestureListener   {
                             moved = true;
                             previousDirection = previousDirection * 7;
                             veryLastDirection = 7;
-                            boardManager.moveLeft();
+                            boardManager.move("LEFT");
                             // this is when swipe left
 
                         }

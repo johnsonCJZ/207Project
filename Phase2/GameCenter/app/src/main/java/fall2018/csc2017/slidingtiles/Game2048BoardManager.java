@@ -39,20 +39,8 @@ public class Game2048BoardManager extends BoardManager implements Cloneable, Ser
         return false;
     }
 
-    void moveUp() {
-        board.merge("UP");
-    }
-
-    void moveDown() {
-        board.merge("DOWN");
-    }
-
-    void moveLeft() {
-        board.merge("LEFT");
-    }
-
-    void moveRight() {
-        board.merge("RIGHT");
+    void move(String direction) {
+        board.merge(direction);
     }
 
     private boolean canMove() {
