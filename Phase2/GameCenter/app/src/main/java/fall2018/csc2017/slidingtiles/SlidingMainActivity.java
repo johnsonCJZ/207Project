@@ -27,7 +27,7 @@ import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 /**
  * The game activity.
  */
-public class MainSlideActivity extends AppCompatActivity implements Observer {
+public class SlidingMainActivity extends AppCompatActivity implements Observer {
     DatabaseHelper myDB;
     /**
      * The per-user scoreboard
@@ -101,7 +101,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
      * Switch to MainPanelActivity.
      */
     private void switchToGameCenter() {
-        Intent intent = new Intent(this, MainInfoPanelActivity.class);
+        Intent intent = new Intent(this, InfoPanelMainActivity.class);
         Bundle pass = new Bundle();
         pass.putString("fragment", "Slide");
         intent.putExtras(pass);
@@ -118,13 +118,13 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                             saveHistory(dialog);
-                        MainSlideActivity.this.finish();
+                        SlidingMainActivity.this.finish();
                         switchToGameCenter();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        MainSlideActivity.this.finish();
+                        SlidingMainActivity.this.finish();
                         switchToGameCenter();
                     }
                 });
@@ -284,7 +284,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                 })
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        MainSlideActivity.this.finish();
+                        SlidingMainActivity.this.finish();
                         user.getHistory().put("resumeHistory", null);
                         switchToGameCenter();
                     }

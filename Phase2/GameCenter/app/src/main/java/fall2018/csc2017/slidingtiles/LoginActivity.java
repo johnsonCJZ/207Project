@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (myDB.hasUser(username) && ifPasswordCorrect(username, password)) {
                     Toasty.success(getApplicationContext(), "Welcome!", Toast.LENGTH_SHORT, true).show();
                     DataHolder.getInstance().save("current user", username);
-                    Intent loginIntent = new Intent(LoginActivity.this, MainInfoPanelActivity.class);
+                    Intent loginIntent = new Intent(LoginActivity.this, InfoPanelMainActivity.class);
                     LoginActivity.this.startActivity(loginIntent);
                 } else {
                     Toasty.error(getApplicationContext(), "Wrong Username or Password", Toast.LENGTH_SHORT, true).show();

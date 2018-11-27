@@ -94,7 +94,7 @@ public class InputListener extends GestureDetector.SimpleOnGestureListener   {
             case MotionEvent.ACTION_MOVE:
                 x = event.getX();
                 y = event.getY();
-                if (!Main2048Activity.isPaused) {
+                if (!Game2048MainActivity.isPaused) {
                     float dx = x - previousX;
                     if (Math.abs(lastdx + dx) < Math.abs(lastdx) + Math.abs(dx)
                             && Math.abs(dx) > RESET_STARTING

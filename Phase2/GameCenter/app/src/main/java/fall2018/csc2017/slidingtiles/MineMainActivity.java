@@ -22,7 +22,7 @@ import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 /**
  * The game activity.
  */
-public class MainMineSweeperActivity extends AppCompatActivity implements Observer {
+public class MineMainActivity extends AppCompatActivity implements Observer {
     DatabaseHelper myDB;
     /**
      * The per-user scoreboard
@@ -136,7 +136,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
      * Switch to GameCenterActivity.
      */
     private void switchToGameCenter() {
-        Intent intent = new Intent(this, MainInfoPanelActivity.class);
+        Intent intent = new Intent(this, InfoPanelMainActivity.class);
         Bundle pass = new Bundle();
         myDB.updateAccountManager(users);
 //        pass.putSerializable("allUsers", this.users);
@@ -159,13 +159,13 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
                         } catch (CloneNotSupportedException e) {
                             e.printStackTrace();
                         }
-                        MainMineSweeperActivity.this.finish();
+                        MineMainActivity.this.finish();
                         switchToGameCenter();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        MainMineSweeperActivity.this.finish();
+                        MineMainActivity.this.finish();
                         switchToGameCenter();
                     }
                 });
@@ -286,7 +286,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
      * Alert when a puzzle is solved.
      */
     private void winAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainMineSweeperActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MineMainActivity.this);
         int score = getScore();
         builder.setMessage("you got " + String.valueOf(score) + " !")
 
@@ -309,7 +309,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
      * Alert when a puzzle is solved.
      */
     private void loseAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainMineSweeperActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MineMainActivity.this);
         int score = getScore();
         builder.setMessage("You have lost! you got " + String.valueOf(score) + " !")
 

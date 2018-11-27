@@ -28,7 +28,7 @@ import fall2018.csc2017.slidingtiles.ui.Games.G2048Fragment;
 import fall2018.csc2017.slidingtiles.ui.Games.MinesweeperFragment;
 import fall2018.csc2017.slidingtiles.ui.Games.SlideGameFragment;
 
-public class MainInfoPanelActivity extends AppCompatActivity
+public class InfoPanelMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MenuItem.OnMenuItemClickListener {
     DatabaseHelper myDB;
     Toolbar toolbar;

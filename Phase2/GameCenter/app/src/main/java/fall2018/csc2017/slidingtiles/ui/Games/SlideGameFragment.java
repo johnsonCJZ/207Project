@@ -208,10 +208,10 @@ public class SlideGameFragment extends Fragment {
         startActivity(tmp);}
 
     /**
-     * start playing game with MainSlideActivity
+     * start playing game with SlidingMainActivity
      */
     private void switchToGame() {
-        Intent tmp = new Intent(getActivity(), MainSlideActivity.class);
+        Intent tmp = new Intent(getActivity(), SlidingMainActivity.class);
         Bundle pass = new Bundle();
         myDB.updateUser(username, this.user);
         myDB.updateAccountManager(this.users);

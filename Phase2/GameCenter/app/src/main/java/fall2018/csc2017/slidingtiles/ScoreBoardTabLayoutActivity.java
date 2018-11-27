@@ -1,7 +1,6 @@
 package fall2018.csc2017.slidingtiles;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -114,7 +113,7 @@ public class ScoreBoardTabLayoutActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        Intent intent = new Intent(this, MainInfoPanelActivity.class);
+        Intent intent = new Intent(this, InfoPanelMainActivity.class);
         Bundle extra = new Bundle();
         extra.putString("fragment",fragment);
         intent.putExtras(extra);

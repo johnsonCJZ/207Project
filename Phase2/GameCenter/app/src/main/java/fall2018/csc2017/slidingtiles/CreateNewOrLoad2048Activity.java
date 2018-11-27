@@ -52,7 +52,7 @@ public class CreateNewOrLoad2048Activity extends AppCompatActivity {
     }
 
     private void switchToGame() {
-        Intent tmp = new Intent(this, Main2048Activity.class);
+        Intent tmp = new Intent(this, Game2048MainActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("boardManager", boardManager);
         tmp.putExtras(pass);

@@ -95,7 +95,7 @@ public class MineDifficultyActivity extends AppCompatActivity {
     }
 
     private void switchToGame(){
-        Intent tmp = new Intent(this, MainMineSweeperActivity.class);
+        Intent tmp = new Intent(this, MineMainActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("boardManager", boardManager);
         tmp.putExtras(pass);

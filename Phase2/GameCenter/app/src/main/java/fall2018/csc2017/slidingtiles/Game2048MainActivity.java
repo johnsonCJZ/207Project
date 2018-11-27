@@ -21,7 +21,7 @@ import java.util.Observer;
 
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
-public class Main2048Activity extends AppCompatActivity implements Observer {
+public class Game2048MainActivity extends AppCompatActivity implements Observer {
     private ScoreBoard personalScoreBoard;
     private ScoreBoard globalScoreBoard;
     private Game2048BoardManager boardManager;
@@ -223,7 +223,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
         })
                 .setNegativeButton("See My Rank ", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Main2048Activity.this.finish();
+                        Game2048MainActivity.this.finish();
                         user.getHistory().put("resumeHistory", null);
                         switchToScoreBoard();
                     }
@@ -244,7 +244,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
     }
 
     private void switchToGameCenter() {
-        Intent intent = new Intent(this, MainInfoPanelActivity.class);
+        Intent intent = new Intent(this, InfoPanelMainActivity.class);
         Bundle pass = new Bundle();
         myDB.updateUser(user.getName(), this.user);
         myDB.updateAccountManager(users);

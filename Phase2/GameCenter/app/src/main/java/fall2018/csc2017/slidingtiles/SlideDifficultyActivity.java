@@ -101,7 +101,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
      * Switch to game activity/view.
      */
     private void switchToGame() {
-        Intent tmp = new Intent(this, MainSlideActivity.class);
+        Intent tmp = new Intent(this, SlidingMainActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("slidingBoardManager", slidingBoardManager);
         tmp.putExtras(pass);
