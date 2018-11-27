@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class SlidingBoard2048Test {
+public class SlidingGame2048BoardTest {
 
     @Test
     public void merge() {

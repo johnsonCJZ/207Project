@@ -11,7 +11,7 @@ import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 public class CreateNewOrLoad2048Activity extends AppCompatActivity {
     DatabaseHelper myDB;
 
-    private Board2048BoardManager boardManager;
+    private Game2048BoardManager boardManager;
 
     private UserAccount user;
 
@@ -32,7 +32,7 @@ public class CreateNewOrLoad2048Activity extends AppCompatActivity {
 //        startButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                boardManager = new Board2048BoardManager();
+//                boardManager = new Game2048BoardManager();
 //                clearResumeHistory();
 //                switchToGame();
 //            }
@@ -44,7 +44,7 @@ public class CreateNewOrLoad2048Activity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = new Board2048BoardManager();
+                boardManager = new Game2048BoardManager();
 //                clearResumeHistory();
                 switchToGame();
             }

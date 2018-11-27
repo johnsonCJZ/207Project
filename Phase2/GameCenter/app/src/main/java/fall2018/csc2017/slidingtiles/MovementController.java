@@ -60,26 +60,26 @@ class MovementController {
     }
 
     void processLeftSwipe() {
-        if (boardBoardManager instanceof Board2048BoardManager) {
-            ((Board2048BoardManager) boardBoardManager).moveLeft();
+        if (boardBoardManager instanceof Game2048BoardManager) {
+            ((Game2048BoardManager) boardBoardManager).moveLeft();
         }
     }
 
     void processRightSwipe() {
-        if (boardBoardManager instanceof Board2048BoardManager) {
-            ((Board2048BoardManager) boardBoardManager).moveRight();
+        if (boardBoardManager instanceof Game2048BoardManager) {
+            ((Game2048BoardManager) boardBoardManager).moveRight();
         }
     }
 
     void processDownSwipe() {
-        if (boardBoardManager instanceof Board2048BoardManager) {
-            ((Board2048BoardManager) boardBoardManager).moveDown();
+        if (boardBoardManager instanceof Game2048BoardManager) {
+            ((Game2048BoardManager) boardBoardManager).moveDown();
         }
     }
 
     void processUpSwipe() {
-        if (boardBoardManager instanceof Board2048BoardManager) {
-            ((Board2048BoardManager) boardBoardManager).moveUp();
+        if (boardBoardManager instanceof Game2048BoardManager) {
+            ((Game2048BoardManager) boardBoardManager).moveUp();
         }
     }
 }

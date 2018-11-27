@@ -2,7 +2,7 @@ package fall2018.csc2017.slidingtiles;
 
 import java.io.Serializable;
 
-public class Tile2048 extends Tile implements Serializable {
+public class Game2048Tile extends Tile implements Serializable {
     private int x;
 
     private int y;
@@ -13,7 +13,7 @@ public class Tile2048 extends Tile implements Serializable {
 
     private boolean fadeIn;
 
-    public Tile2048() {
+    public Game2048Tile() {
         this.background = R.drawable.tile_2048_0;
         this.value = 0;
         fadeIn = false;
@@ -119,10 +119,10 @@ public class Tile2048 extends Tile implements Serializable {
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
-        } else if (!(obj instanceof Tile2048)) {
+        } else if (!(obj instanceof Game2048Tile)) {
             return false;
         } else {
-            return ((Tile2048) obj).getValue() == this.value;
+            return ((Game2048Tile) obj).getValue() == this.value;
         }
     }
 

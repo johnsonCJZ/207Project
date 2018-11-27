@@ -2,14 +2,14 @@ package fall2018.csc2017.slidingtiles;
 
 import java.io.Serializable;
 
-public class Board2048BoardManager extends BoardManager implements Cloneable, Serializable {
-    private Board2048 board;
+public class Game2048BoardManager extends BoardManager implements Cloneable, Serializable {
+    private Game2048Board board;
     private Integer dimension;
 
-    Board2048 getBoard() {return board;}
+    Game2048Board getBoard() {return board;}
 
-    Board2048BoardManager() {
-        this.board = new Board2048();
+    Game2048BoardManager() {
+        this.board = new Game2048Board();
         this.dimension = board.getDimension();
         board.setUpTiles();
         board.addTile();
@@ -31,7 +31,7 @@ public class Board2048BoardManager extends BoardManager implements Cloneable, Se
     }
 
     boolean isWon(){
-        for (Tile2048 tile : board) {
+        for (Game2048Tile tile : board) {
             if (tile.getValue() == 2048) {
                 return true;
             }
@@ -61,7 +61,7 @@ public class Board2048BoardManager extends BoardManager implements Cloneable, Se
         } else {
             for (int i = 0; i < dimension; i++) {
                 for (int j = 0; j < dimension; j++) {
-                    Tile2048 tile = board.getTile(i, j);
+                    Game2048Tile tile = board.getTile(i, j);
                 if ((i < dimension - 1 && tile.equals(board.getTile(i + 1, j)))
                     || (j < dimension - 1 && tile.equals(board.getTile(i, j+1)))) {
                     return true;

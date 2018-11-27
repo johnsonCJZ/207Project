@@ -5,49 +5,45 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class SlidingTile2048Test {
+public class SlidingBoard2048GameManagerTestBoard {
 
     @Before
     public void setUp() throws Exception {
     }
 
     @Test
-    public void isEmpty() {
+    public void getBoard() {
     }
 
     @Test
-    public void random() {
+    public void cheat() {
     }
 
     @Test
-    public void getBackground() {
+    public void setTiles() {
     }
 
     @Test
-    public void updateBackground() {
+    public void isLose() {
     }
 
     @Test
-    public void getX() {
+    public void isWin() {
     }
 
     @Test
-    public void getY() {
+    public void moveUp() {
     }
 
     @Test
-    public void setX() {
+    public void moveDown() {
     }
 
     @Test
-    public void setY() {
+    public void moveLeft() {
     }
 
     @Test
-    public void getValue() {
-    }
-
-    @Test
-    public void setValue() {
+    public void moveRight() {
     }
 }

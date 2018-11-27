@@ -24,7 +24,7 @@ import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 public class Main2048Activity extends AppCompatActivity implements Observer {
     private ScoreBoard personalScoreBoard;
     private ScoreBoard globalScoreBoard;
-    private Board2048BoardManager boardManager;
+    private Game2048BoardManager boardManager;
     private GestureDetectGridView gridView;
     private ArrayList<Button> tileButtons;
     private UserAccount user;
@@ -130,7 +130,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
 
         personalScoreBoard = user.getScoreBoard("2048");
         globalScoreBoard = users.getGlobalScoreBoard("2048");
-        this.boardManager = (Board2048BoardManager) extra.getSerializable("boardManager");
+        this.boardManager = (Game2048BoardManager) extra.getSerializable("boardManager");
     }
 
 
@@ -158,9 +158,9 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
 
 
     private void updateTileButtons() {
-        Board2048 board = boardManager.getBoard();
+        Game2048Board board = boardManager.getBoard();
         if (board.isChanged()) {
-            Tile2048 newTile = board.addTile();
+            Game2048Tile newTile = board.addTile();
             if (newTile != null) {
                 newTile.setAnimation();
             }
@@ -195,7 +195,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
     }
 
     private void createTileButtons(Context context) {
-        Board2048 board = boardManager.getBoard();
+        Game2048Board board = boardManager.getBoard();
         ArrayList tileButtons = new ArrayList<>();
         for (int row = 0; row != boardManager.getBoard().getDimension(); row++) {
             for (int col = 0; col != boardManager.getBoard().getDimension(); col++) {

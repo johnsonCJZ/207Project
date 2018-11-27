@@ -8,24 +8,24 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Observable;
 
-public class Board2048 extends Observable implements Serializable, Iterable<Tile2048> {
+public class Game2048Board extends Observable implements Serializable, Iterable<Game2048Tile> {
     final static int dimension = 4;
     private int score = 0;
-    private Tile2048[][] tiles;
+    private Game2048Tile[][] tiles;
     private boolean isChanged = false;
 
     /**
      * A new empty board of 4*4 slidingTiles.
      */
-    Board2048() {
-        this.tiles = new Tile2048[dimension][dimension];
+    Game2048Board() {
+        this.tiles = new Game2048Tile[dimension][dimension];
     }
 
     void setUpTiles() {
         for (int row = 0; row != dimension; row++) {
             for (int col = 0; col != dimension; col++) {
-                this.setTile(row, col, new Tile2048());
-                Tile2048 tile = getTile(row, col);
+                this.setTile(row, col, new Game2048Tile());
+                Game2048Tile tile = getTile(row, col);
                 tile.setX(col);
                 tile.setY(row);
             }
@@ -36,10 +36,10 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
 
     int getScore() {return score;}
 
-    Tile2048 addTile() {
-        ArrayList<Tile2048> empty = findEmpty();
+    Game2048Tile addTile() {
+        ArrayList<Game2048Tile> empty = findEmpty();
         //if (!empty.isEmpty()){ // add if not empty
-        Tile2048 randomTile = empty.get((int) (Math.random() * empty.size()));
+        Game2048Tile randomTile = empty.get((int) (Math.random() * empty.size()));
         randomTile.random();
         isChanged = false;
         return randomTile;
@@ -47,9 +47,9 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
         //return null;
     }
 
-    ArrayList<Tile2048> findEmpty() {
-        ArrayList<Tile2048> result = new ArrayList<>();
-        for (Tile2048 tile : this) {
+    ArrayList<Game2048Tile> findEmpty() {
+        ArrayList<Game2048Tile> result = new ArrayList<>();
+        for (Game2048Tile tile : this) {
             if (tile.isEmpty()) {
                 result.add(tile);
             }
@@ -57,15 +57,15 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
         return result;
     }
 
-    private Tile2048[] getColumn(int col) {
-        Tile2048[] result = new Tile2048[dimension];
+    private Game2048Tile[] getColumn(int col) {
+        Game2048Tile[] result = new Game2048Tile[dimension];
         for (int i = 0; i < dimension; i++){
             result[i] = tiles[i][col];
         }
         return result;
     }
 
-    void mergeList(Tile2048[] tileArray, String direction){
+    void mergeList(Game2048Tile[] tileArray, String direction){
         ArrayList<Integer> temp = new ArrayList<>(dimension);
         int i;
         switch (direction) {
@@ -191,10 +191,10 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
         notifyObservers();
     }
 
-//    private void mergeToRight(Tile2048[] tileArray) {
+//    private void mergeToRight(Game2048Tile[] tileArray) {
 //        moveEmpty(tileArray, "RIGHT");
 //        for (int j = dimension - 1; j > 0; j--) {
-//            Tile2048 tile = tileArray[j];
+//            Game2048Tile tile = tileArray[j];
 //            if (tile.getValue() != 0 && tile.equals(tileArray[j - 1])) {
 //                tile.setValue(tile.getValue() * 2);
 //                move(tileArray, j - 1, "RIGHT");
@@ -203,10 +203,10 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
 //        }
 //    }
 
-//    private void mergeToLeft(Tile2048[] tileArray) {
+//    private void mergeToLeft(Game2048Tile[] tileArray) {
 //        moveEmpty(tileArray, "LEFT");
 //        for (int j = 0; j < dimension - 1; j++) {
-//            Tile2048 tile = tileArray[j];
+//            Game2048Tile tile = tileArray[j];
 //            if (tile.getValue() != 0 && tile.equals(tileArray[j + 1])) {
 //                tile.setValue(tile.getValue() * 2);
 //                move(tileArray, j + 1, "LEFT");
@@ -216,7 +216,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
 //    }
 
 
-//    private void move(Tile2048[] tileArray, int col, String direction) {
+//    private void move(Game2048Tile[] tileArray, int col, String direction) {
 //        int i = col;
 //        Integer value = tileArray[i].getValue();
 //        if (direction.equals("LEFT")) {
@@ -238,7 +238,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
 //        }
 //    }
 
-    Tile2048 getTile(int x, int y) {
+    Game2048Tile getTile(int x, int y) {
         return tiles[x][y];
     }
 
@@ -246,28 +246,28 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
         return dimension;
     }
 
-    Tile2048[][] getTiles() {
+    Game2048Tile[][] getTiles() {
         return tiles;
     }
 
-    void setTile(int x, int y, Tile2048 tile){
+    void setTile(int x, int y, Game2048Tile tile){
         this.tiles[x][y] = tile;
     }
 
     @NonNull
     @Override
-    public Iterator<Tile2048> iterator() {
+    public Iterator<Game2048Tile> iterator() {
         return new Tile2048Iterator(tiles);
     }
 
     /**
      * internal nested iterator iterates through 2-D array slidingTiles
      */
-    private class Tile2048Iterator implements Iterator<Tile2048> {
+    private class Tile2048Iterator implements Iterator<Game2048Tile> {
         int currentRow = 0;
         int currentCol = 0;
         int currentPosition = -1;
-        Tile2048[][] tiles;
+        Game2048Tile[][] tiles;
         // eg. (row, col) = (3, 2), then it is indeed at row 3, column 2 (start from 0 ......> 3)
         // we have 3 complete rows, and to make complete: + 2
         // current position = 3*NUM_COLS + 2
@@ -277,7 +277,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
          *
          * @param tiles slidingTiles from board
          */
-        Tile2048Iterator(Tile2048[][] tiles) {
+        Tile2048Iterator(Game2048Tile[][] tiles) {
             this.tiles = tiles;
         }
 
@@ -301,7 +301,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
          * @return the next tile object
          */
         @Override
-        public Tile2048 next() {
+        public Game2048Tile next() {
             if (!this.hasNext()) {
                 throw new NoSuchElementException();
             } else {
