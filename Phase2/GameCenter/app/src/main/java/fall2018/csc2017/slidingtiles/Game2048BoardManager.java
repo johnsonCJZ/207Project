@@ -27,7 +27,7 @@ public class Game2048BoardManager extends BoardManager implements Cloneable, Ser
     }
 
     boolean isLose() {
-        return !canMove();
+        return !isWon() && !canMove();
     }
 
     boolean isWon(){
