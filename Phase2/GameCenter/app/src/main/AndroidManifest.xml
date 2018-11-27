@@ -18,7 +18,7 @@
         </activity>
         <activity android:name=".SlidingMainActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".SlideDifficultyActivity" />
+        <activity android:name=".SlidingDifficultyActivity" />
         <activity
             android:name=".InfoPanelMainActivity"
             android:label="@string/title_activity_main_info_panel"

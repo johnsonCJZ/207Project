@@ -9,7 +9,7 @@ import android.widget.Button;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 
-public class SlideDifficultyActivity extends AppCompatActivity {
+public class SlidingDifficultyActivity extends AppCompatActivity {
 
     /**
      * The SlidingBoardManager
