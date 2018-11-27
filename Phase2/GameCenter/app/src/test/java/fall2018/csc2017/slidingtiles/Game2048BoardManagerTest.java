@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class Board2048ManagerTest {
+public class Game2048BoardManagerTest {
 
     private void setBoard(int largestTile, Game2048Board board){
         int n = 2;
