@@ -163,14 +163,14 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     private void saveHistory(DialogInterface dialog) {
         switch (size) {
             case 3:
-                user.getHistory().put("history3x3", (SlidingBoardManager) slidingBoardManager);
+                user.setHistory("history3x3", (SlidingBoardManager) slidingBoardManager, myDB);
                 break;
             case 4:
-                user.getHistory().put("history4x4",(SlidingBoardManager) slidingBoardManager);
+                user.setHistory("history4x4",(SlidingBoardManager) slidingBoardManager, myDB);
                 break;
 
             case 5:
-                user.getHistory().put("history5x5",(SlidingBoardManager) slidingBoardManager);
+                user.setHistory("history5x5",(SlidingBoardManager) slidingBoardManager, myDB);
                 break;
                 }
                 dialog.cancel();
@@ -182,7 +182,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
      */
     private void autoSave() {
         slidingBoardManager.setTime(count);
-        user.getHistory().put("resumeHistory", (SlidingBoardManager) slidingBoardManager);
+        user.setHistory("resumeHistory", (SlidingBoardManager) slidingBoardManager, myDB);
     }
 
 

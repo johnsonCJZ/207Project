@@ -25,6 +25,7 @@ public class MineDifficultyActivity extends AppCompatActivity {
         getUser();
         addStartButton();
         addResumeButton();
+        addLoadButton();
     }
 
     private void addResumeButton(){
@@ -32,7 +33,7 @@ public class MineDifficultyActivity extends AppCompatActivity {
         resume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = (MineBoardManager) user.getHistory().get("Mine");
+                boardManager = (MineBoardManager) user.getSpecificHistory("ResumeHistoryMine");
                 if (boardManager!=null){
                     switchToGame();}
                     else{
@@ -48,6 +49,21 @@ public class MineDifficultyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selectDifficulty();
+            }
+        });
+    }
+
+    private void addLoadButton(){
+        Button load = findViewById(R.id.load);
+        load.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                boardManager = (MineBoardManager) user.getSpecificHistory("HistoryMine");
+                if (boardManager!=null){
+                    switchToGame();}
+                else{
+                    Toasty.info(getApplicationContext(), "No game history",Toast.LENGTH_SHORT, true).show();
+                }
             }
         });
     }

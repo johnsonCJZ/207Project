@@ -8,9 +8,12 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
-
+import fall2018.csc2017.slidingtiles.BoardManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 
 import fall2018.csc2017.slidingtiles.InterfaceAdapter;
 import fall2018.csc2017.slidingtiles.LoginActivity;
@@ -141,6 +144,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_NAME, contentValues, "USERNAME = ?",new String[] { USER_ACCOUNT_MANAGER });
         
     }
+
+    public String convertBoardManagerToJson(BoardManager board){
+        Type type = new TypeToken<BoardManager>(){}.getType();
+        Gson gson = new Gson();
+        return gson.toJson(board, type);
+    }
+
 
 //    public boolean updateScoreBoard(String colName, String username, ScoreBoard scoreBoard){
 //        SQLiteDatabase db = this.getWritableDatabase();

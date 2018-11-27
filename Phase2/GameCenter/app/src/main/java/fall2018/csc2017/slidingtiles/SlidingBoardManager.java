@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Manage a slidingBoard, including swapping slidingTiles, checking for a win, and managing taps.
  */
-public class SlidingBoardManager extends BoardManager implements Serializable, Cloneable {
+public class SlidingBoardManager extends BoardManager implements Serializable {
 
     /**
      * The time for how long the slidingBoard has been played.
@@ -39,7 +39,7 @@ public class SlidingBoardManager extends BoardManager implements Serializable, C
      * Create a new SlidingBoardManager to manage a new shuffled n*n slidingBoard.
      * @param n the number of rows and columns
      */
-    SlidingBoardManager(int n) {
+    public SlidingBoardManager(int n) {
         this.time = 0.0;
         this.slidingBoard = new SlidingBoard(n);
         this.dimension = slidingBoard.getDimension();
@@ -55,19 +55,10 @@ public class SlidingBoardManager extends BoardManager implements Serializable, C
     /**
      * Return the current slidingBoard.
      */
-    SlidingBoard getSlidingBoard() {
+    public SlidingBoard getSlidingBoard() {
         return slidingBoard;
     }
 
-    /**
-     * Return a copy of the SlidingBoardManager.
-     * @return a copy of the SlidingBoardManager.
-     * @throws CloneNotSupportedException
-     */
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
 
     /**
      * Return how many inversions occur in the list of slidingTiles.

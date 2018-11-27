@@ -1,6 +1,10 @@
 package fall2018.csc2017.slidingtiles;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -10,15 +14,16 @@ public class MineBoard extends Observable implements Serializable {
     private int w, h;
     private int mine;
     private int mineLeft;
-    private MineTile[][] tiles;
-    private List<MineTile> minePosition = new ArrayList<>();
+    private List<MineTile> tiles;
+    private List<MineTile> minePosition;
 
     MineBoard(int x, int y, int m) {
         mine = m;
         mineLeft = m;
         this.h = x;
         this.w = y;
-        tiles = new MineTile[h][w];
+        this.tiles = new ArrayList<>();
+        this.minePosition = new ArrayList<>();
     }
 
     int getW() {return w;}
@@ -31,12 +36,12 @@ public class MineBoard extends Observable implements Serializable {
 
     List<MineTile> getMinePosition() {return minePosition;}
 
-    MineTile[][] getTiles() {return tiles;}
+    List<MineTile> getTiles() {return tiles;}
+
 
     MineTile getTile(int position) {
-        int row = position / w;
-        int col = position % w;
-        return tiles[row][col];
+        List<MineTile> tile =  tiles;
+        return tile.get(position);
     }
 
     void setMines(int position) {
@@ -59,13 +64,11 @@ public class MineBoard extends Observable implements Serializable {
     }
 
     void setTiles(){
-        for (int i = 0; i < h; i++) {
-            for (int j = 0; j < w; j++) {
-                MineTile tile = new MineTile();
-                tiles[i][j] = tile;
-                tile.setPosition((i * w + j));
-                tile.setBackground();
-            }
+        for (int i = 0; i < w*h; i++) {
+            MineTile tile = new MineTile();
+            tiles.add(tile);
+            tile.setPosition(i);
+            tile.setBackground();
         }
     }
 
@@ -105,28 +108,28 @@ public class MineBoard extends Observable implements Serializable {
         List<MineTile> surround = new ArrayList<>();
 
         if (row != 0 && col != 0) {
-            surround.add(getTiles()[row - 1][col - 1]);
+            surround.add(getTiles().get(position-w-1));
         }
         if (row != 0 && col != w - 1) {
-            surround.add(getTiles()[row - 1][col + 1]);
+            surround.add(getTiles().get(position-w+1));
         }
         if (row != 0) {
-            surround.add(getTiles()[row - 1][col]);
+            surround.add(getTiles().get(position-w));
         }
         if (row != h - 1 && col != 0) {
-            surround.add(getTiles()[row + 1][col - 1]);
+            surround.add(getTiles().get(position+w-1));
         }
         if (row != h - 1 && col != w - 1) {
-            surround.add(getTiles()[row + 1][col + 1]);
+            surround.add(getTiles().get(position+w+1));
         }
         if (row != h - 1) {
-            surround.add(getTiles()[row + 1][col]);
+            surround.add(getTiles().get(position+w));
         }
         if (col != 0) {
-            surround.add(getTiles()[row][col - 1]);
+            surround.add(getTiles().get(position-1));
         }
         if (col != w - 1) {
-            surround.add(getTiles()[row][col + 1]);
+            surround.add(getTiles().get(position+1));
         }
         return surround;
     }

@@ -1,8 +1,13 @@
 package fall2018.csc2017.slidingtiles;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
+import fall2018.csc2017.slidingtiles.ui.Games.SlideGameFragment;
 
 /**
  * Represent a user's user account.
@@ -32,7 +37,7 @@ public class UserAccount implements Serializable {
     /**
      * The sliding slidingTiles game history of the UserAccount.
      */
-    private HashMap<String, BoardManager> history = new HashMap<>();
+    private HashMap<String, String> history = new HashMap<>();
 
     /**
      * The sliding slidingTiles score list of the UserAccount
@@ -63,9 +68,11 @@ public class UserAccount implements Serializable {
         history.put("history3x3", null);
         history.put("history4x4", null);
         history.put("history5x5",null);
-        history.put("resumeHistory", null);
-        history.put("Mine", null);
-        history.put("2048", null);
+        history.put("resumeHistorySlide", null);
+        history.put("resumeHistoryMine", null);
+        history.put("resumeHistory2048", null);
+        history.put("historyMine",null);
+        history.put("history2048",null);
         personalScoreBoard.put("history3x3", new ScoreBoard("SlidingTiles"));
         personalScoreBoard.put("history4x4", new ScoreBoard("SlidingTiles"));
         personalScoreBoard.put("history5x5", new ScoreBoard("SlidingTiles"));
@@ -142,13 +149,14 @@ public class UserAccount implements Serializable {
      */
     public ArrayList<Integer> getUserScoreList(){return this.userScoreList;}
 
-    public boolean setHistory(String key, SlidingBoardManager item){
+    public boolean setHistory(String key, BoardManager item, DatabaseHelper myDB){
+        String userJson = myDB.convertBoardManagerToJson(item);
         if (history.get(key) == null) {
-            history.put(key, item);
+            history.put(key, userJson);
             return true;
         }
         else {
-            history.replace(key, item);
+            history.replace(key, userJson);
             return false;
         }
     }
@@ -157,7 +165,7 @@ public class UserAccount implements Serializable {
      * The getter for the History of the UserAccount.
      * @return the History
      */
-    public HashMap<String, BoardManager> getHistory(){
+    public HashMap<String, String> getHistory(){
         return history;
     }
 
@@ -177,6 +185,22 @@ public class UserAccount implements Serializable {
     public void addGames(String game){
         this.games.add(game);
     }
+
+    public BoardManager getSpecificHistory(String key){
+        Gson gson = new Gson();
+        String userJson = this.getHistory().get(key);
+        String currentGame = (String) DataHolder.getInstance().retrieve("current game");
+        switch (currentGame){
+            case "Slide":
+                return gson.fromJson(userJson, SlidingBoardManager.class);
+            case "Mine":
+                return gson.fromJson(userJson, MineBoardManager.class);
+            case "2048":
+                return gson.fromJson(userJson, Game2048BoardManager.class);
+        }
+        return null;
+    }
+
 
     public ArrayList<String> getGames() {
         return games;

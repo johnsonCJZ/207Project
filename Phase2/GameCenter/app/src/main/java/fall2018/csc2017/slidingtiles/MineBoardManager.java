@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MineBoardManager extends BoardManager implements Serializable {
     private MineBoard board;
-    private MineTile[][] tiles;
+    private List<MineTile> tiles;
     private int width;
     private int height;
     private int time;
@@ -55,32 +55,33 @@ public class MineBoardManager extends BoardManager implements Serializable {
     void mark(int position) {board.flag(position);}
 
     private void setNumbers() {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
+        for (int pos = 0; pos < height*width; pos++) {
+            //if the tile is a mine, set the number to -1.
+            if (tiles.get(pos).isMine()) {
+                tiles.get(pos).setNumber(-1);
+            }
 
-                //if the tile is a mine, set the number to -1.
-                if (tiles[i][j].isMine()) {
-                    tiles[i][j].setNumber(-1);
-                }
+            //if the tile isn't a mine, set the number to be the number of mines surrounds it.
+            else {
+                int count = 0;
+                int i = pos / width;
+                int j = pos % width;
 
-                //if the tile isn't a mine, set the number to be the number of mines surrounds it.
-                else {
-                    int count = 0;
-                    if (i > 0 && j > 0 && tiles[i - 1][j - 1].isMine()) count++; //upper-left tile
-                    if (j > 0 && tiles[i][j - 1].isMine()) count++; //left tile
-                    if (i < height - 1 && j > 0 && tiles[i + 1][j - 1].isMine())
-                        count++; //lower-left
-                    if (i > 0 && tiles[i - 1][j].isMine()) count++; // upper tile
-                    if (i < height - 1 && tiles[i + 1][j].isMine()) count++; // lower tile
-                    if (i > 0 && j < width - 1 && tiles[i - 1][j + 1].isMine())
-                        count++; //upper-right
-                    if (j < width - 1 && tiles[i][j + 1].isMine()) count++; //right tile
-                    if (i < height - 1 && j < width - 1 && tiles[i + 1][j + 1].isMine())
-                        count++; //lower-right tile
-                    tiles[i][j].setNumber(count);
-                }
+                if (i > 0 && j > 0 && tiles.get(pos-width-1).isMine()) count++; //upper-left tile
+                if (j > 0 && tiles.get(pos-1).isMine()) count++; //left tile
+                if (i < height - 1 && j > 0 && tiles.get(pos+width-1).isMine())
+                    count++; //lower-left
+                if (i > 0 && tiles.get(pos-width).isMine()) count++; // upper tile
+                if (i < height - 1 && tiles.get(pos+width).isMine()) count++; // lower tile
+                if (i > 0 && j < width - 1 && tiles.get(pos-width+1).isMine())
+                    count++; //upper-right
+                if (j < width - 1 && tiles.get(pos+1).isMine()) count++; //right tile
+                if (i < height - 1 && j < width - 1 && tiles.get(pos+width+1).isMine())
+                    count++; //lower-right tile
+                tiles.get(pos).setNumber(count);
             }
         }
+
     }
 
     boolean isLost() {

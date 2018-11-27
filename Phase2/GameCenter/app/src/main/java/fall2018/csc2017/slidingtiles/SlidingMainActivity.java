@@ -117,7 +117,7 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
 
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                            saveHistory(dialog);
+                        saveHistory(dialog);
                         SlidingMainActivity.this.finish();
                         switchToGameCenter();
                     }
@@ -163,18 +163,18 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
     private void saveHistory(DialogInterface dialog) {
         switch (size) {
             case 3:
-                user.getHistory().put("history3x3", (SlidingBoardManager) slidingBoardManager);
+                user.setHistory("history3x3",(BoardManager) slidingBoardManager,myDB);
                 break;
             case 4:
-                user.getHistory().put("history4x4",(SlidingBoardManager) slidingBoardManager);
+                user.setHistory("history4x4",(BoardManager) slidingBoardManager,myDB);
                 break;
 
             case 5:
-                user.getHistory().put("history5x5",(SlidingBoardManager) slidingBoardManager);
+                user.setHistory("history5x5",(BoardManager) slidingBoardManager,myDB);
                 break;
-                }
-                dialog.cancel();
-
+        }
+        myDB.updateUser(username,user);
+        dialog.cancel();
     }
 
     /**
@@ -182,7 +182,7 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
      */
     private void autoSave() {
         slidingBoardManager.setTime(count);
-        user.getHistory().put("resumeHistory", (SlidingBoardManager) slidingBoardManager);
+        user.setHistory("resumeHistory", (BoardManager) slidingBoardManager,myDB);
     }
 
 
@@ -377,7 +377,10 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
         this.users = myDB.selectAccountManager();
 
         this.slidingBoardManager = (SlidingBoardManager) extra.getSerializable("slidingBoardManager");
-        this.size = this.slidingBoardManager.getSlidingBoard().getDimension();
+        this.size = extra.getInt("size");
+        if (slidingBoardManager.getSlidingBoard()!=null){
+            this.size = slidingBoardManager.getSlidingBoard().getDimension();
+        }
         switch (size) {
             case 3:
                 this.personalScoreBoard = this.user.getScoreBoard("history3x3");
@@ -407,8 +410,8 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
     private void createTileButtons(Context context) {
         SlidingBoard slidingBoard = slidingBoardManager.getSlidingBoard();
         tileButtons = new ArrayList<>();
-        for (int row = 0; row != slidingBoardManager.getSlidingBoard().getDimension(); row++) {
-            for (int col = 0; col != slidingBoardManager.getSlidingBoard().getDimension(); col++) {
+        for (int row = 0; row != size; row++) {
+            for (int col = 0; col != size; col++) {
                 Button tmp = new Button(context);
                 tmp.setBackgroundResource(slidingBoard.getTile(row, col).getBackground());
                 this.tileButtons.add(tmp);

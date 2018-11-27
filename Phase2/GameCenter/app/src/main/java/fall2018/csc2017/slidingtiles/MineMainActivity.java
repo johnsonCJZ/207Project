@@ -154,12 +154,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
 
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        try {
-                            saveHistory(dialog);
-                        } catch (CloneNotSupportedException e) {
-                            e.printStackTrace();
-                        }
-                        MineMainActivity.this.finish();
+                        saveHistory(dialog);
                         switchToGameCenter();
                     }
                 })
@@ -201,21 +196,19 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
     /**
      * Save the game history.
      * @param dialog
-     * @throws CloneNotSupportedException
      */
-    private void saveHistory(DialogInterface dialog) throws CloneNotSupportedException {
-        user.getHistory().put("Mine", boardManager);
+    private void saveHistory(DialogInterface dialog){
+        user.setHistory("historyMine", boardManager,myDB);
         dialog.cancel();
     }
 
     /**
      * Automatically save the game for resuming.
-     * @throws CloneNotSupportedException
      */
-    private void autoSave() throws CloneNotSupportedException {
-//        boardManager.setTime(count);
-//        user.getHistory().put("resumeHistory", (SlidingBoardManager) boardManager.clone());
-//        saveToFile(UserAccountManager.USERS);
+    private void autoSave(){
+        boardManager.setTime(count);
+        user.setHistory("resumeHistoryMine", boardManager, myDB);
+
     }
 
 
@@ -342,6 +335,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
         startActivity(tmp);
     }
 
+
     private Thread time(){
         final TextView time = findViewById(R.id.time);
         count = boardManager.getTime();
@@ -362,7 +356,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
                                 if (boardManager.isWon() && !isPaused) {
                                     boardManager.setTime(count);
                                     isPaused = true;
-                                    user.getHistory().put("resumeHistory", null);
+                                    user.getHistory().put("resumeHistoryMine", null);
                                     face.setImageResource(R.drawable.win);
                                     gridView.freeze();
                                     winAlert();
@@ -370,7 +364,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
                                 else if (boardManager.isLost() && !isPaused){
                                     boardManager.setTime(count);
                                     isPaused = true;
-                                    user.getHistory().put("resumeHistory", null);
+                                    user.getHistory().put("resumeHistoryMine", null);
                                     face.setImageResource(R.drawable.sad);
                                     gridView.freeze();
                                     loseAlert();
@@ -382,12 +376,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
                                     if (tempCount < 2) {
                                         tempCount += 1;
                                     } else {
-                                        tempCount = 0;
-                                        try {
-                                            autoSave();
-                                        } catch (CloneNotSupportedException e) {
-                                            e.printStackTrace();
-                                        }
+                                        autoSave();
                                     }
                                     time.setText("Time: " +String.format("%03d", count/10) + " s");
                                 }

@@ -55,6 +55,8 @@ public class SlideGameFragment extends Fragment {
 
     private Button loadButton;
 
+    private int boardSize;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -169,10 +171,10 @@ public class SlideGameFragment extends Fragment {
         resumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                slidingBoardManager = (SlidingBoardManager) user.getHistory().get("resumeHistory");
+                slidingBoardManager = (SlidingBoardManager) user.getSpecificHistory("resumeHistory");
                 if (slidingBoardManager != null) {
-                        slidingBoardManager = (SlidingBoardManager) user.getHistory().get("resumeHistory");
-                    user.getHistory().put("resumeHistory", null);
+                    slidingBoardManager = (SlidingBoardManager) user.getSpecificHistory("resumeHistory");
+                    user.getHistory().put("resumeHistorySlide", null);
                     switchToGame();
                 }
                 else {
@@ -214,24 +216,18 @@ public class SlideGameFragment extends Fragment {
         Intent tmp = new Intent(getActivity(), SlidingMainActivity.class);
         Bundle pass = new Bundle();
         myDB.updateUser(username, this.user);
-        myDB.updateAccountManager(this.users);
         pass.putSerializable("slidingBoardManager", this.slidingBoardManager);
+        pass.putInt("size",boardSize);
         tmp.putExtras(pass);
         startActivity(tmp);
     }
 
-    /**
-     * get correct user info
-     */
-    private void updateUser(){
-        this.user = myDB.selectUser(username);
-    }
 
     /**
      * load game
      */
     private void load(){
-        updateUser();
+        this.user = myDB.selectUser(username);
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Choose an memory");
         // add a list
@@ -241,21 +237,22 @@ public class SlideGameFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: // 3x3
-                        slidingBoardManager = (SlidingBoardManager) user.getHistory().get("history3x3");
+                        slidingBoardManager = (SlidingBoardManager) user.getSpecificHistory("history3x3");
+                        if (slidingBoardManager.getSlidingBoard() == null){
+                            System.out.println("+++++++++++++++++++++++++++++++");
+                        }
+                        boardSize = 3;
                         break;
                     case 1: // 4x4
-                        slidingBoardManager = (SlidingBoardManager) user.getHistory().get("history4x4");
+                        slidingBoardManager = (SlidingBoardManager) user.getSpecificHistory("history4x4");
+                        boardSize = 4;
                         break;
                     case 2: // 5x5
-                        slidingBoardManager = (SlidingBoardManager) user.getHistory().get("history5x5");
+                        slidingBoardManager = (SlidingBoardManager) user.getSpecificHistory("history5x5");
+                        boardSize = 5;
                         break;
                 }
                 if(slidingBoardManager !=null){
-                    try {
-                        slidingBoardManager = (SlidingBoardManager) slidingBoardManager.clone();
-                    } catch (CloneNotSupportedException e) {
-                        e.printStackTrace();
-                    }
                     switchToGame();
                 }
                 else{
