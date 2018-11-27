@@ -237,26 +237,24 @@ public class SlidingBoardManager extends BoardManager implements Serializable, C
     }
 
     /**
-     * Undo swipe operations.
+     * Perform undo operation if i is -1 and perform redo operation if i is 1
+     * @param i is -1 or 1 to indicate performing undo or redo
      */
-    public void undo() {
-        if (history.getSize() > 1) {
-            int[] currPosition = history.get(currIndex).getData();
-            int[] prePosition = history.get(currIndex-1).getData();
-            slidingBoard.swapTiles(prePosition[0], prePosition[1], currPosition[0], currPosition[1]);
-            currIndex--;
-        }
-    }
-
-    /**
-     * Redo the swipe operations that have been undone.
-     */
-    public void redo() {
-        if (history.get(currIndex).next != null) {
-            int[] currPosition = history.get(currIndex).getData();
-            int[] postPosition = history.get(currIndex+1).getData();
-            slidingBoard.swapTiles(postPosition[0], postPosition[1], currPosition[0], currPosition[1]);
+    public void readHistory(int i) {
+        int[] currPosition = new int[2];
+        int[] postPosition = new int[2];
+        //redo
+        if (i == 1 && history.get(currIndex).next != null) {
+            currPosition = history.get(currIndex).getData();
+            postPosition = history.get(currIndex+1).getData();
             currIndex++;
         }
+        // undo
+        else if (i == -1 && history.getSize() > 1){
+            currPosition = history.get(currIndex).getData();
+            postPosition = history.get(currIndex-1).getData();
+            currIndex--;
+        }
+        slidingBoard.swapTiles(postPosition[0], postPosition[1], currPosition[0], currPosition[1]);
     }
 }

@@ -315,7 +315,7 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
         undo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                slidingBoardManager.undo();
+                slidingBoardManager.readHistory(-1);
                 display();
             }
         });
@@ -329,7 +329,7 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
         redo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                slidingBoardManager.redo();
+                slidingBoardManager.readHistory(1);
                 display();
             }
 
