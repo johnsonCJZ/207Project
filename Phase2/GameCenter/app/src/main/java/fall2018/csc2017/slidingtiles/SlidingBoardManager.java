@@ -43,13 +43,22 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
         this.time = 0.0;
         this.slidingBoard = new SlidingBoard(n);
         this.dimension = slidingBoard.getDimension();
-        final int numTiles = dimension * dimension;
+        int numTiles = dimension * dimension;
         for (int tileNum = 0; tileNum != numTiles; tileNum++) {
             slidingTiles.add(new SlidingTile(tileNum));
         }
         shuffle();
         slidingBoard.setSlidingTiles(slidingTiles);
         this.history.add(new HistoryNode(this.findBlankIndex(0)));
+    }
+
+    public SlidingBoardManager(int dimension, double time, List<SlidingTile> slidingTiles, History history){
+        this.time = time;
+        this.slidingBoard = new SlidingBoard(dimension);
+        this.dimension = dimension;
+        this.slidingTiles = slidingTiles;
+        slidingBoard.setSlidingTiles(slidingTiles);
+        this.history=history;
     }
 
     /**

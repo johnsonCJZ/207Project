@@ -34,30 +34,30 @@ public class Memory {
 //                }
 //                size = board.size();
 //                time = ((SlidingBoardManager) manager).getTime();
-                break;
-            case "2048":
-                Iterator itr3 = ((Game2048BoardManager)manager).getBoard().iterator();
-                while(itr3.hasNext()){
-                    Game2048Tile tile = (Game2048Tile) itr3.next();
-                    board.add(tile.getValue());
-                }
-                size = ((Game2048BoardManager) manager).getBoard().getDimension();
-                break;
+//                break;
+//            case "2048":
+//                Iterator itr3 = ((Game2048BoardManager)manager).getBoard().iterator();
+//                while(itr3.hasNext()){
+//                    Game2048Tile tile = (Game2048Tile) itr3.next();
+//                    board.add(tile.getValue());
+//                }
+//                size = ((Game2048BoardManager) manager).getBoard().getDimension();
+//                break;
 
         }
         return this;
     }
 
-    public BoardManager copy(Memory memory, String type){
+    public BoardManager copy(String type){
         switch(type){
             case "Slide":
-                SlidingBoardManager slidingBoardManager  =new SlidingBoardManager(memory.getSize());
+                SlidingBoardManager slidingBoardManager  =new SlidingBoardManager(this.getSize());
                 List<SlidingTile> temp1 = new ArrayList<>();
-                for (int i : memory.getBoard()){
+                for (int i : this.getBoard()){
                     temp1.add(new SlidingTile(i));
                 }
                 slidingBoardManager.setSlidingTiles(temp1);
-                slidingBoardManager.setTime(memory.getTime());
+                slidingBoardManager.setTime(this.getTime());
                 return slidingBoardManager;
             case "2048":
                 Game2048BoardManager game2048BoardManager = new Game2048BoardManager();
