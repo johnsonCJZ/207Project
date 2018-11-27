@@ -70,7 +70,7 @@ public class MineDifficultyActivity extends AppCompatActivity {
                         switchToGame();
                         break;
                     case 2: // 5x5
-                        boardManager = new MineBoardManager(20, 20, 84);
+                        boardManager = new MineBoardManager(20, 20, 80);
                         switchToGame();
                         break;
                 }

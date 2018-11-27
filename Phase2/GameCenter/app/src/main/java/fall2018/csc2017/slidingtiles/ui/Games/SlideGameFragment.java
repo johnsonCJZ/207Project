@@ -202,7 +202,7 @@ public class SlideGameFragment extends Fragment {
      * start SlideDifficultActivity and pass useful info and data to next activity
      */
     private void switchToDifficulty(){
-        Intent tmp = new Intent(getActivity(), SlideDifficultyActivity.class);
+        Intent tmp = new Intent(getActivity(), SlidingDifficultyActivity.class);
         myDB.updateUser(username, this.user);
         myDB.updateAccountManager(this.users);
         startActivity(tmp);}
