@@ -160,7 +160,12 @@ public class SlidingBoard extends Observable implements Serializable, Iterable<S
                 return this.slidingTiles[currentRow][currentCol];
             }
         }
-    }}
+    }
+
+    public SlidingTile[][] getTiles(){
+        return this.slidingTiles;
+    }
+}
 
 
 

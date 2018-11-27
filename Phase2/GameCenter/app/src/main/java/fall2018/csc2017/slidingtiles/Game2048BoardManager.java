@@ -1,8 +1,10 @@
 package fall2018.csc2017.slidingtiles;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.List;
 
-public class Game2048BoardManager extends BoardManager implements Cloneable, Serializable {
+public class Game2048BoardManager extends BoardManager implements Serializable {
     private Game2048Board board;
     private Integer dimension;
 
@@ -14,6 +16,13 @@ public class Game2048BoardManager extends BoardManager implements Cloneable, Ser
         board.setUpTiles();
         board.addTile();
         board.addTile();
+    }
+
+    Game2048BoardManager(List<Game2048Tile> list){
+        Iterator itr = this.board.iterator();
+        while (itr.hasNext()){
+            itr.next
+        }
     }
 
     int getScore() {return board.getScore();}

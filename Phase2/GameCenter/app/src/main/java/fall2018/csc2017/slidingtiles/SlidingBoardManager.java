@@ -248,4 +248,8 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
         }
         slidingBoard.swapTiles(postPosition[0], postPosition[1], currPosition[0], currPosition[1]);
     }
+
+    public void setSlidingTiles(List<SlidingTile> slidingTiles) {
+        this.slidingTiles = slidingTiles;
+    }
 }

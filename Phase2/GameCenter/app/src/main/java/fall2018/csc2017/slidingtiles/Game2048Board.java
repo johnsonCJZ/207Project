@@ -65,6 +65,10 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
         return result;
     }
 
+    public void setTiles(Game2048Tile[][] tiles){
+        this.tiles = tiles;
+    }
+
     void mergeList(Game2048Tile[] tileArray, String direction){
         ArrayList<Integer> temp = new ArrayList<>(dimension);
         int i;
