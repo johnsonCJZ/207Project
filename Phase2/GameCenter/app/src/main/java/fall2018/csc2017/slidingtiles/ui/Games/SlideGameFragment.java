@@ -40,7 +40,7 @@ public class SlideGameFragment extends Fragment {
     /**
      * slidingBoardManager in user
      */
-    private SlidingBoardBoardManager slidingBoardManager;
+    private SlidingBoardManager slidingBoardManager;
 
     /**
      * board type judgement
@@ -169,9 +169,9 @@ public class SlideGameFragment extends Fragment {
         resumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                slidingBoardManager = (SlidingBoardBoardManager) user.getHistory().get("resumeHistory");
+                slidingBoardManager = (SlidingBoardManager) user.getHistory().get("resumeHistory");
                 if (slidingBoardManager != null) {
-                        slidingBoardManager = (SlidingBoardBoardManager) user.getHistory().get("resumeHistory");
+                        slidingBoardManager = (SlidingBoardManager) user.getHistory().get("resumeHistory");
                     user.getHistory().put("resumeHistory", null);
                     switchToGame();
                 }
@@ -241,18 +241,18 @@ public class SlideGameFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: // 3x3
-                        slidingBoardManager = (SlidingBoardBoardManager) user.getHistory().get("history3x3");
+                        slidingBoardManager = (SlidingBoardManager) user.getHistory().get("history3x3");
                         break;
                     case 1: // 4x4
-                        slidingBoardManager = (SlidingBoardBoardManager) user.getHistory().get("history4x4");
+                        slidingBoardManager = (SlidingBoardManager) user.getHistory().get("history4x4");
                         break;
                     case 2: // 5x5
-                        slidingBoardManager = (SlidingBoardBoardManager) user.getHistory().get("history5x5");
+                        slidingBoardManager = (SlidingBoardManager) user.getHistory().get("history5x5");
                         break;
                 }
                 if(slidingBoardManager !=null){
                     try {
-                        slidingBoardManager = (SlidingBoardBoardManager) slidingBoardManager.clone();
+                        slidingBoardManager = (SlidingBoardManager) slidingBoardManager.clone();
                     } catch (CloneNotSupportedException e) {
                         e.printStackTrace();
                     }

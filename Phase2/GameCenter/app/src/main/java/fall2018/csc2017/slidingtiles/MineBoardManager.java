@@ -3,18 +3,18 @@ package fall2018.csc2017.slidingtiles;
 import java.io.Serializable;
 import java.util.List;
 
-public class MineSweeperBoardManager extends BoardManager implements Serializable {
-    private MineSweeperBoard board;
-    private MineSweeperTile[][] tiles;
+public class MineBoardManager extends BoardManager implements Serializable {
+    private MineBoard board;
+    private MineTile[][] tiles;
     private int width;
     private int height;
     private int time;
     private boolean isFirst = true;
     private boolean lost = false;
-    private List<MineSweeperTile> minePosition;
+    private List<MineTile> minePosition;
 
-    MineSweeperBoardManager(int x, int y, int m) {
-        board = new MineSweeperBoard(x, y, m);
+    MineBoardManager(int x, int y, int m) {
+        board = new MineBoard(x, y, m);
         tiles=board.getTiles();
         width = board.getW();
         height = board.getH();
@@ -22,7 +22,7 @@ public class MineSweeperBoardManager extends BoardManager implements Serializabl
         setUpBoard();
     }
 
-    MineSweeperBoard getBoard() {
+    MineBoard getBoard() {
         return board;
     }
 
@@ -43,7 +43,7 @@ public class MineSweeperBoardManager extends BoardManager implements Serializabl
             setNumbers();
             isFirst = false;
         }
-        MineSweeperTile currTile = board.getTile(position);
+        MineTile currTile = board.getTile(position);
         if (!currTile.isFlagged()) {
             board.reveal(position);
             if (currTile.isMine()) {

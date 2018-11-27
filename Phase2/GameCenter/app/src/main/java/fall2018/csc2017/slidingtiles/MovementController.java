@@ -26,8 +26,8 @@ class MovementController {
      * @param position the position where a tap occurred
      */
     void processTapMovement(Context context, int position) {
-        if (boardBoardManager instanceof SlidingBoardBoardManager) {
-            SlidingBoardBoardManager b = (SlidingBoardBoardManager) boardBoardManager;
+        if (boardBoardManager instanceof SlidingBoardManager) {
+            SlidingBoardManager b = (SlidingBoardManager) boardBoardManager;
             if (b.isValidTap(position)) {
                 b.touchMove(position);
                 if (b.isWon()) {
@@ -37,8 +37,8 @@ class MovementController {
                 Toasty.warning(context, "Invalid Tap!", Toast.LENGTH_SHORT, true).show();
             }
         }
-        else if (boardBoardManager instanceof MineSweeperBoardManager) {
-            MineSweeperBoardManager b = (MineSweeperBoardManager) boardBoardManager;
+        else if (boardBoardManager instanceof MineBoardManager) {
+            MineBoardManager b = (MineBoardManager) boardBoardManager;
             b.touchMove(position);
             if (b.isLost()) {
                 Toasty.warning(context, "YOU LOST!", Toast.LENGTH_SHORT, true).show();
@@ -51,8 +51,8 @@ class MovementController {
     }
 
     void processLongPressMovement(Context context, int position){
-        if (boardBoardManager instanceof MineSweeperBoardManager) {
-            MineSweeperBoardManager b = (MineSweeperBoardManager) boardBoardManager;
+        if (boardBoardManager instanceof MineBoardManager) {
+            MineBoardManager b = (MineBoardManager) boardBoardManager;
             if (b.getBoard().getTile(position).isObscured()) {
                 b.mark(position);
                 }

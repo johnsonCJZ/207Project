@@ -15,8 +15,8 @@ import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
 import fall2018.csc2017.slidingtiles.DataHolder;
-import fall2018.csc2017.slidingtiles.MineSweeperBoardManager;
-import fall2018.csc2017.slidingtiles.MinesweeperDifficultyActivity;
+import fall2018.csc2017.slidingtiles.MineBoardManager;
+import fall2018.csc2017.slidingtiles.MineDifficultyActivity;
 import fall2018.csc2017.slidingtiles.R;
 import fall2018.csc2017.slidingtiles.UserAccount;
 import fall2018.csc2017.slidingtiles.UserAccountManager;
@@ -27,7 +27,7 @@ public class MinesweeperFragment extends Fragment {
     private View view;
     private UserAccountManager users;
     private ImageView thomas;
-    private MineSweeperBoardManager boardManager;
+    private MineBoardManager boardManager;
     private DatabaseHelper myDB;
     private String username;
 
@@ -54,7 +54,7 @@ public class MinesweeperFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
-                Intent tmp = new Intent(getActivity(), MinesweeperDifficultyActivity.class);
+                Intent tmp = new Intent(getActivity(), MineDifficultyActivity.class);
                 startActivity(tmp);
             }
 

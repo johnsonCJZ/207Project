@@ -49,7 +49,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     /**
      * The board manager.
      */
-    private SlidingBoardBoardManager slidingBoardManager;
+    private SlidingBoardManager slidingBoardManager;
 
     /**
      * The buttons to display.
@@ -163,14 +163,14 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     private void saveHistory(DialogInterface dialog) {
         switch (size) {
             case 3:
-                user.getHistory().put("history3x3", (SlidingBoardBoardManager) slidingBoardManager);
+                user.getHistory().put("history3x3", (SlidingBoardManager) slidingBoardManager);
                 break;
             case 4:
-                user.getHistory().put("history4x4",(SlidingBoardBoardManager) slidingBoardManager);
+                user.getHistory().put("history4x4",(SlidingBoardManager) slidingBoardManager);
                 break;
 
             case 5:
-                user.getHistory().put("history5x5",(SlidingBoardBoardManager) slidingBoardManager);
+                user.getHistory().put("history5x5",(SlidingBoardManager) slidingBoardManager);
                 break;
                 }
                 dialog.cancel();
@@ -182,7 +182,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
      */
     private void autoSave() {
         slidingBoardManager.setTime(count);
-        user.getHistory().put("resumeHistory", (SlidingBoardBoardManager) slidingBoardManager);
+        user.getHistory().put("resumeHistory", (SlidingBoardManager) slidingBoardManager);
     }
 
 
@@ -366,7 +366,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
     /**
-     * Receive all the info(User, Size, SlidingBoardBoardManager, ScoreBoards)from previous activity/view.
+     * Receive all the info(User, Size, SlidingBoardManager, ScoreBoards)from previous activity/view.
      */
     private void getAllInfo(){
         Intent intentExtras = getIntent();
@@ -376,7 +376,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         this.user = myDB.selectUser(username);
         this.users = myDB.selectAccountManager();
 
-        this.slidingBoardManager = (SlidingBoardBoardManager) extra.getSerializable("slidingBoardManager");
+        this.slidingBoardManager = (SlidingBoardManager) extra.getSerializable("slidingBoardManager");
         this.size = this.slidingBoardManager.getSlidingBoard().getDimension();
         switch (size) {
             case 3:

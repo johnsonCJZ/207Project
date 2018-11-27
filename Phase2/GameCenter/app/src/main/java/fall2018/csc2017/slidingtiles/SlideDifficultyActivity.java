@@ -12,9 +12,9 @@ import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 public class SlideDifficultyActivity extends AppCompatActivity {
 
     /**
-     * The SlidingBoardBoardManager
+     * The SlidingBoardManager
      */
-    private SlidingBoardBoardManager slidingBoardManager;
+    private SlidingBoardManager slidingBoardManager;
 
     /**
      * The UserAccount
@@ -60,7 +60,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    slidingBoardManager = new SlidingBoardBoardManager(4);
+                    slidingBoardManager = new SlidingBoardManager(4);
                     clearResumeHistory();
                     switchToGame();
                 }
@@ -75,7 +75,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    slidingBoardManager = new SlidingBoardBoardManager(3);
+                    slidingBoardManager = new SlidingBoardManager(3);
                     clearResumeHistory();
                     switchToGame();
                 }
@@ -90,7 +90,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    slidingBoardManager = new SlidingBoardBoardManager(5);
+                    slidingBoardManager = new SlidingBoardManager(5);
                     clearResumeHistory();
                     switchToGame();
                 }

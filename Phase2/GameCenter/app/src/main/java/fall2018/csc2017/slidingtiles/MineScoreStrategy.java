@@ -5,22 +5,22 @@ import java.io.Serializable;
 /**
  * The Strategy to calculate the score of a mine sweeper game.
  */
-class MineSweeperScoreStrategy implements ScoreStrategy, Serializable {
+class MineScoreStrategy implements ScoreStrategy, Serializable {
     @Override
     public int calculateScore(Object boardManager) {
-        MineSweeperBoard board =  ((MineSweeperBoardManager) boardManager).getBoard();
+        MineBoard board =  ((MineBoardManager) boardManager).getBoard();
         int boardScore=0;
-        if (((MineSweeperBoardManager)boardManager).isWon()){
+        if (((MineBoardManager)boardManager).isWon()){
             boardScore = board.getH()*board.getW();
         }
         else{
-            for (MineSweeperTile t : board.getMinePosition()){
+            for (MineTile t : board.getMinePosition()){
                 if (t.isFlagged()){
                     boardScore++;
                 }
             }
         }
-        double time = ((MineSweeperBoardManager)boardManager).getTime();
+        double time = ((MineBoardManager)boardManager).getTime();
         int timeScore = 10*(int)(1/time);
         return timeScore+boardScore;
     }

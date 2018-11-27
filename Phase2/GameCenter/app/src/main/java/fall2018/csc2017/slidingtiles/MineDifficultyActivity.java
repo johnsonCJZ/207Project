@@ -12,9 +12,9 @@ import android.widget.Toast;
 import es.dmoral.toasty.Toasty;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
-public class MinesweeperDifficultyActivity extends AppCompatActivity {
+public class MineDifficultyActivity extends AppCompatActivity {
     UserAccount user;
-    MineSweeperBoardManager boardManager;
+    MineBoardManager boardManager;
     DatabaseHelper myDB;
     String username;
 
@@ -32,7 +32,7 @@ public class MinesweeperDifficultyActivity extends AppCompatActivity {
         resume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = (MineSweeperBoardManager) user.getHistory().get("Mine");
+                boardManager = (MineBoardManager) user.getHistory().get("Mine");
                 if (boardManager!=null){
                     switchToGame();}
                     else{
@@ -62,15 +62,15 @@ public class MinesweeperDifficultyActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: // 3x3
-                        boardManager =new MineSweeperBoardManager(9, 9, 10);
+                        boardManager =new MineBoardManager(9, 9, 10);
                         switchToGame();
                         break;
                     case 1: // 4x4
-                        boardManager = new MineSweeperBoardManager(16, 16, 40);
+                        boardManager = new MineBoardManager(16, 16, 40);
                         switchToGame();
                         break;
                     case 2: // 5x5
-                        boardManager = new MineSweeperBoardManager(20, 20, 84);
+                        boardManager = new MineBoardManager(20, 20, 84);
                         switchToGame();
                         break;
                 }

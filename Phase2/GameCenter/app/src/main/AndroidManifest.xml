@@ -26,7 +26,7 @@
         <activity android:name=".Main2048Activity" />
         <activity android:name=".ScoreBoardTabLayoutActivity" />
         <activity android:name=".MainMineSweeperActivity" />
-        <activity android:name=".MinesweeperDifficultyActivity" />
+        <activity android:name=".MineDifficultyActivity" />
         <activity android:name=".CreateNewOrLoad2048Activity"></activity>
     </application>
 

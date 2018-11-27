@@ -21,10 +21,10 @@ public class ScoreBoard implements Serializable {
                 setScoreStrategy(new Game2048ScoreStrategy());
                 break;
             case "MineSweeper":
-                setScoreStrategy(new MineSweeperScoreStrategy());
+                setScoreStrategy(new MineScoreStrategy());
                 break;
             case "SlidingTiles":
-                setScoreStrategy(new SlidingTilesScoreStrategy());
+                setScoreStrategy(new SlidingScoreStrategy());
                 break;
         }
     }

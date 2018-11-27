@@ -7,12 +7,12 @@ import static org.junit.Assert.*;
 
 public class MineSweeperSlidingBoardAndSlidingTileTest {
 
-    private MineSweeperBoard board;
-    private MineSweeperTile tile;
+    private MineBoard board;
+    private MineTile tile;
 
     @Before
     public void setUp() {
-        board = new MineSweeperBoard(9,9,10);
+        board = new MineBoard(9,9,10);
         board.setTiles();
     }
 
@@ -21,7 +21,7 @@ public class MineSweeperSlidingBoardAndSlidingTileTest {
         setUp();
         assertEquals(3,board.getSurround(0).size());
         assertEquals(8,board.getSurround(15).size());
-        for (MineSweeperTile tile: board.getSurround(15)) {
+        for (MineTile tile: board.getSurround(15)) {
             int tileRow = tile.getPosition()/board.getW();
             int tileCol = tile.getPosition()%board.getW();
             int row = 15/board.getW();

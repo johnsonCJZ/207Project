@@ -20,7 +20,7 @@ public class G2048Fragment extends Fragment {
     //    private UserAccount user;
 //    private UserAccountManager users;
     private ImageButton Image2048;
-//    private MineSweeperBoardManager boardManager;
+//    private MineBoardManager boardManager;
 //    private String username;
 
     @Nullable

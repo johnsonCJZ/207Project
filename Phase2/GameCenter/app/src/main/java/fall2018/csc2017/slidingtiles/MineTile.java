@@ -2,7 +2,7 @@ package fall2018.csc2017.slidingtiles;
 
 import java.io.Serializable;
 
-public class MineSweeperTile implements Serializable {
+public class MineTile implements Serializable {
     /**
      * The background id to find the tile image.
      */
@@ -19,11 +19,11 @@ public class MineSweeperTile implements Serializable {
     private int number;
 
     /**
-     * The position of the tile in a MineSweeperBoard.
+     * The position of the tile in a MineBoard.
      */
     private int position;
 
-    MineSweeperTile() {
+    MineTile() {
         isMine = false;
         isFlagged = false;
         isObscured = true;

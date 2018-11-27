@@ -142,7 +142,7 @@ public class UserAccount implements Serializable {
      */
     public ArrayList<Integer> getUserScoreList(){return this.userScoreList;}
 
-    public boolean setHistory(String key, SlidingBoardBoardManager item){
+    public boolean setHistory(String key, SlidingBoardManager item){
         if (history.get(key) == null) {
             history.put(key, item);
             return true;
