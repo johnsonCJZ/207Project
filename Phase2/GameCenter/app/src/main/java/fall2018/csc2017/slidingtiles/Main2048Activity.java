@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AlphaAnimation;
@@ -16,11 +15,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -30,7 +24,7 @@ import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 public class Main2048Activity extends AppCompatActivity implements Observer {
     private ScoreBoard personalScoreBoard;
     private ScoreBoard globalScoreBoard;
-    private Board2048Manager boardManager;
+    private Board2048BoardManager boardManager;
     private GestureDetectGridView gridView;
     private ArrayList<Button> tileButtons;
     private UserAccount user;
@@ -99,7 +93,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
         // Add View to activity
         gridView = (GestureDetectGridView)findViewById(R.id.grid2048);
         gridView.setNumColumns(boardManager.getBoard().getDimension());
-        gridView.setBoardManager(boardManager);
+        gridView.setBoardBoardManager(boardManager);
         boardManager.getBoard().addObserver(this);
         // Observer sets up desired dimensions as well as calls our display function
         gridView.getViewTreeObserver().addOnGlobalLayoutListener(
@@ -136,7 +130,7 @@ public class Main2048Activity extends AppCompatActivity implements Observer {
 
         personalScoreBoard = user.getScoreBoard("2048");
         globalScoreBoard = users.getGlobalScoreBoard("2048");
-        this.boardManager = (Board2048Manager) extra.getSerializable("boardManager");
+        this.boardManager = (Board2048BoardManager) extra.getSerializable("boardManager");
     }
 
 

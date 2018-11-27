@@ -14,17 +14,13 @@ import android.widget.Toast;
 import es.dmoral.toasty.Toasty;
 import fall2018.csc2017.slidingtiles.CreateNewOrLoad2048Activity;
 import fall2018.csc2017.slidingtiles.DataHolder;
-import fall2018.csc2017.slidingtiles.MineSweeperManager;
 import fall2018.csc2017.slidingtiles.R;
-import fall2018.csc2017.slidingtiles.UserAccount;
-import fall2018.csc2017.slidingtiles.UserAccountManager;
-import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 public class G2048Fragment extends Fragment {
     //    private UserAccount user;
 //    private UserAccountManager users;
     private ImageButton Image2048;
-//    private MineSweeperManager boardManager;
+//    private MineSweeperBoardManager boardManager;
 //    private String username;
 
     @Nullable

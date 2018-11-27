@@ -44,7 +44,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
     /**
      * The MineSweeperBoard manager.
      */
-    private MineSweeperManager boardManager;
+    private MineSweeperBoardManager boardManager;
 
     /**
      * The buttons to display.
@@ -95,12 +95,12 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
     private String currentUser;
 
     /**
-     * Mute the tiles in grid view
+     * Mute the slidingTiles in grid view
      */
     private boolean isMutted;
 
     /**
-     * Update the backgrounds on the buttons to match the tiles.
+     * Update the backgrounds on the buttons to match the slidingTiles.
      */
     private void updateTileButtons() {
         MineSweeperBoard board = boardManager.getBoard();
@@ -214,7 +214,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
      */
     private void autoSave() throws CloneNotSupportedException {
 //        boardManager.setTime(count);
-//        user.getHistory().put("resumeHistory", (BoardManager) boardManager.clone());
+//        user.getHistory().put("resumeHistory", (SlidingBoardBoardManager) boardManager.clone());
 //        saveToFile(UserAccountManager.USERS);
     }
 
@@ -246,7 +246,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
             gridView.cloneAsThawed();
         }
         gridView.setNumColumns(boardManager.getBoard().getW());
-        gridView.setBoardManager(boardManager);
+        gridView.setBoardBoardManager(boardManager);
         boardManager.getBoard().addObserver(this);
         // Observer sets up desired dimensions as well as calls our display function
         gridView.getViewTreeObserver().addOnGlobalLayoutListener(
@@ -274,7 +274,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
             public void onClick(View v) {
                 isPaused = false;
 //                face.setImageResource(R.drawable.normal);
-                boardManager = new MineSweeperManager(height,width,mine);
+                boardManager = new MineSweeperBoardManager(height,width,mine);
                 boardManager.setTime(-1);
                 createTileButtons(getApplicationContext());
                 setGridView();
@@ -403,7 +403,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
     return t;}
 
     /**
-     * Receive all the info(User, Size, BoardManager, ScoreBoards)from previous activity/view.
+     * Receive all the info(User, Size, SlidingBoardBoardManager, ScoreBoards)from previous activity/view.
      * @throws CloneNotSupportedException
      */
     private void getAllInfo() {
@@ -414,7 +414,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
         this.user = myDB.selectUser(currentUser);
         this.users = myDB.selectAccountManager();
 
-        this.boardManager = (MineSweeperManager) extra.getSerializable("boardManager");
+        this.boardManager = (MineSweeperBoardManager) extra.getSerializable("boardManager");
         width = boardManager.getBoard().getW();
         height = boardManager.getBoard().getH();
         mine = boardManager.getBoard().getMine();
@@ -424,7 +424,7 @@ public class MainMineSweeperActivity extends AppCompatActivity implements Observ
     }
 
     /**
-     * Create the buttons for displaying the tiles.
+     * Create the buttons for displaying the slidingTiles.
      * @param context the context
      */
     private void createTileButtons(final Context context) {

@@ -49,7 +49,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     /**
      * The board manager.
      */
-    private BoardManager boardManager;
+    private SlidingBoardBoardManager slidingBoardManager;
 
     /**
      * The buttons to display.
@@ -111,7 +111,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     @Override
     public void onBackPressed() {
         isPaused = true;
-        boardManager.setTime(count);
+        slidingBoardManager.setTime(count);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Do you want to save/override this game?")
 
@@ -146,7 +146,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
      */
     private int getScore(){
         int score;
-        score = personalScoreBoard.calculateScore(boardManager);
+        score = personalScoreBoard.calculateScore(slidingBoardManager);
         Object[] result = new Object[2];
         result[0] = user.getName();
         result[1] = score;
@@ -163,14 +163,14 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     private void saveHistory(DialogInterface dialog) {
         switch (size) {
             case 3:
-                user.getHistory().put("history3x3", (BoardManager) boardManager);
+                user.getHistory().put("history3x3", (SlidingBoardBoardManager) slidingBoardManager);
                 break;
             case 4:
-                user.getHistory().put("history4x4",(BoardManager) boardManager);
+                user.getHistory().put("history4x4",(SlidingBoardBoardManager) slidingBoardManager);
                 break;
 
             case 5:
-                user.getHistory().put("history5x5",(BoardManager) boardManager);
+                user.getHistory().put("history5x5",(SlidingBoardBoardManager) slidingBoardManager);
                 break;
                 }
                 dialog.cancel();
@@ -181,8 +181,8 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
      * Automatically save the game for resuming.
      */
     private void autoSave() {
-        boardManager.setTime(count);
-        user.getHistory().put("resumeHistory", (BoardManager) boardManager);
+        slidingBoardManager.setTime(count);
+        user.getHistory().put("resumeHistory", (SlidingBoardBoardManager) slidingBoardManager);
     }
 
 
@@ -195,11 +195,11 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         myDB = new DatabaseHelper(this);
         username = (String) DataHolder.getInstance().retrieve("current user");
         super.onCreate(savedInstanceState);
-        getAllInfo(); // pass in all useful data from last activity, including boardManager
+        getAllInfo(); // pass in all useful data from last activity, including slidingBoardManager
         createTileButtons(this);
         setContentView(R.layout.activity_main);
         final TextView time = findViewById(R.id.textView6);
-        count=boardManager.getTime();
+        count= slidingBoardManager.getTime();
         isPaused = false;
         Thread t = new Thread(){
             @Override
@@ -208,14 +208,14 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                     if (!isPaused) {
                         try {
                             Thread.sleep(10);
-                            if (boardManager.isWon()) {
+                            if (slidingBoardManager.isWon()) {
                                 this.interrupt();
                             }
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (boardManager.isWon() && !isPaused) {
-                                        boardManager.setTime(count);
+                                    if (slidingBoardManager.isWon() && !isPaused) {
+                                        slidingBoardManager.setTime(count);
                                         isPaused = true;
                                         user.getHistory().put("resumeHistory", null);
                                         winAlert();
@@ -244,9 +244,9 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
 
         // Add View to activity
         gridView = findViewById(R.id.grid);
-        gridView.setNumColumns(boardManager.getBoard().getDimension());
-        gridView.setBoardManager(boardManager);
-        boardManager.getBoard().addObserver(this);
+        gridView.setNumColumns(slidingBoardManager.getSlidingBoard().getDimension());
+        gridView.setBoardBoardManager(slidingBoardManager);
+        slidingBoardManager.getSlidingBoard().addObserver(this);
         // Observer sets up desired dimensions as well as calls our display function
         gridView.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -257,8 +257,8 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                         int displayWidth = gridView.getMeasuredWidth();
                         int displayHeight = gridView.getMeasuredHeight();
 
-                        columnWidth = displayWidth / boardManager.getBoard().getDimension();
-                        columnHeight = displayHeight / boardManager.getBoard().getDimension();
+                        columnWidth = displayWidth / slidingBoardManager.getSlidingBoard().getDimension();
+                        columnHeight = displayHeight / slidingBoardManager.getSlidingBoard().getDimension();
 
                         display();
 
@@ -315,7 +315,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         undo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager.undo();
+                slidingBoardManager.undo();
                 display();
             }
         });
@@ -329,7 +329,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         redo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager.redo();
+                slidingBoardManager.redo();
                 display();
             }
 
@@ -341,14 +341,14 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
      * not be saved into history. This functionality will be removed in Phase 2.
      */
     private void cheat() {
-        List<Tile> tiles = new ArrayList<>();
+        List<SlidingTile> slidingTiles = new ArrayList<>();
         int numTiles = size*size;
         for (int tileNum = 1; tileNum != numTiles-1; tileNum++) {
-            tiles.add(new Tile(tileNum));
+            slidingTiles.add(new SlidingTile(tileNum));
         }
-        tiles.add(new Tile(0));
-        tiles.add(new Tile(numTiles-1));
-        boardManager.getBoard().setTiles(tiles);
+        slidingTiles.add(new SlidingTile(0));
+        slidingTiles.add(new SlidingTile(numTiles-1));
+        slidingBoardManager.getSlidingBoard().setSlidingTiles(slidingTiles);
     }
 
     /**
@@ -366,7 +366,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
     /**
-     * Receive all the info(User, Size, BoardManager, ScoreBoards)from previous activity/view.
+     * Receive all the info(User, Size, SlidingBoardBoardManager, ScoreBoards)from previous activity/view.
      */
     private void getAllInfo(){
         Intent intentExtras = getIntent();
@@ -376,8 +376,8 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
         this.user = myDB.selectUser(username);
         this.users = myDB.selectAccountManager();
 
-        this.boardManager = (BoardManager) extra.getSerializable("boardManager");
-        this.size = this.boardManager.getBoard().getDimension();
+        this.slidingBoardManager = (SlidingBoardBoardManager) extra.getSerializable("slidingBoardManager");
+        this.size = this.slidingBoardManager.getSlidingBoard().getDimension();
         switch (size) {
             case 3:
                 this.personalScoreBoard = this.user.getScoreBoard("history3x3");
@@ -401,31 +401,31 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     }
 
     /**
-     * Create the buttons for displaying the tiles.
+     * Create the buttons for displaying the slidingTiles.
      * @param context the context
      */
     private void createTileButtons(Context context) {
-        Board board = boardManager.getBoard();
+        SlidingBoard slidingBoard = slidingBoardManager.getSlidingBoard();
         tileButtons = new ArrayList<>();
-        for (int row = 0; row != boardManager.getBoard().getDimension(); row++) {
-            for (int col = 0; col != boardManager.getBoard().getDimension(); col++) {
+        for (int row = 0; row != slidingBoardManager.getSlidingBoard().getDimension(); row++) {
+            for (int col = 0; col != slidingBoardManager.getSlidingBoard().getDimension(); col++) {
                 Button tmp = new Button(context);
-                tmp.setBackgroundResource(board.getTile(row, col).getBackground());
+                tmp.setBackgroundResource(slidingBoard.getTile(row, col).getBackground());
                 this.tileButtons.add(tmp);
             }
         }
     }
 
     /**
-     * Update the backgrounds on the buttons to match the tiles.
+     * Update the backgrounds on the buttons to match the slidingTiles.
      */
     private void updateTileButtons() {
-        Board board = boardManager.getBoard();
+        SlidingBoard slidingBoard = slidingBoardManager.getSlidingBoard();
         int nextPos = 0;
         for (Button b : tileButtons) {
-            int row = nextPos / boardManager.getBoard().getDimension();
-            int col = nextPos % boardManager.getBoard().getDimension();
-            b.setBackgroundResource(board.getTile(row, col).getBackground());
+            int row = nextPos / slidingBoardManager.getSlidingBoard().getDimension();
+            int col = nextPos % slidingBoardManager.getSlidingBoard().getDimension();
+            b.setBackgroundResource(slidingBoard.getTile(row, col).getBackground());
             nextPos++;
         }
     }

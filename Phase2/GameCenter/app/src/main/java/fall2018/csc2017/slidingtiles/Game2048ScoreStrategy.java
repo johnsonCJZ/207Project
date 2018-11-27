@@ -8,8 +8,8 @@ public class Game2048ScoreStrategy implements ScoreStrategy, Serializable {
 
     @Override
     public int calculateScore(Object o) {
-        Board2048Manager boardManager = (Board2048Manager) o;
-        //        for (Tile2048 tile: ((Board2048Manager)boardManager).getBoard()) {
+        Board2048BoardManager boardManager = (Board2048BoardManager) o;
+        //        for (Tile2048 tile: ((Board2048BoardManager)boardManager).getSlidingBoard()) {
 //            score += tile.getValue();
 //        }
         return boardManager.getScore();

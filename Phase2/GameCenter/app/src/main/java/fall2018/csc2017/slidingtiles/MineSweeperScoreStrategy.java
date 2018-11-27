@@ -8,9 +8,9 @@ import java.io.Serializable;
 class MineSweeperScoreStrategy implements ScoreStrategy, Serializable {
     @Override
     public int calculateScore(Object boardManager) {
-        MineSweeperBoard board =  ((MineSweeperManager) boardManager).getBoard();
+        MineSweeperBoard board =  ((MineSweeperBoardManager) boardManager).getBoard();
         int boardScore=0;
-        if (((MineSweeperManager)boardManager).isWon()){
+        if (((MineSweeperBoardManager)boardManager).isWon()){
             boardScore = board.getH()*board.getW();
         }
         else{
@@ -20,7 +20,7 @@ class MineSweeperScoreStrategy implements ScoreStrategy, Serializable {
                 }
             }
         }
-        double time = ((MineSweeperManager)boardManager).getTime();
+        double time = ((MineSweeperBoardManager)boardManager).getTime();
         int timeScore = 10*(int)(1/time);
         return timeScore+boardScore;
     }

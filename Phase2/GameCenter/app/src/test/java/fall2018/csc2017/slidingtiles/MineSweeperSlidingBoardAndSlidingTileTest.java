@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class MineSweeperBoardAndTileTest {
+public class MineSweeperSlidingBoardAndSlidingTileTest {
 
     private MineSweeperBoard board;
     private MineSweeperTile tile;

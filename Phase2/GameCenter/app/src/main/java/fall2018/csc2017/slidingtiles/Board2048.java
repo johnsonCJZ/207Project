@@ -15,7 +15,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
     private boolean isChanged = false;
 
     /**
-     * A new empty board of 4*4 tiles.
+     * A new empty board of 4*4 slidingTiles.
      */
     Board2048() {
         this.tiles = new Tile2048[dimension][dimension];
@@ -261,7 +261,7 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
     }
 
     /**
-     * internal nested iterator iterates through 2-D array tiles
+     * internal nested iterator iterates through 2-D array slidingTiles
      */
     private class Tile2048Iterator implements Iterator<Tile2048> {
         int currentRow = 0;
@@ -273,9 +273,9 @@ public class Board2048 extends Observable implements Serializable, Iterable<Tile
         // current position = 3*NUM_COLS + 2
 
         /**
-         * a new TileIterator takes tiles nd process it
+         * a new TileIterator takes slidingTiles nd process it
          *
-         * @param tiles tiles from board
+         * @param tiles slidingTiles from board
          */
         Tile2048Iterator(Tile2048[][] tiles) {
             this.tiles = tiles;

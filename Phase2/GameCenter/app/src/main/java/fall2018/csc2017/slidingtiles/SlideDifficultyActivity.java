@@ -12,9 +12,9 @@ import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 public class SlideDifficultyActivity extends AppCompatActivity {
 
     /**
-     * The BoardManager
+     * The SlidingBoardBoardManager
      */
-    private BoardManager boardManager;
+    private SlidingBoardBoardManager slidingBoardManager;
 
     /**
      * The UserAccount
@@ -60,7 +60,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    boardManager = new BoardManager(4);
+                    slidingBoardManager = new SlidingBoardBoardManager(4);
                     clearResumeHistory();
                     switchToGame();
                 }
@@ -75,7 +75,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    boardManager = new BoardManager(3);
+                    slidingBoardManager = new SlidingBoardBoardManager(3);
                     clearResumeHistory();
                     switchToGame();
                 }
@@ -90,7 +90,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    boardManager = new BoardManager(5);
+                    slidingBoardManager = new SlidingBoardBoardManager(5);
                     clearResumeHistory();
                     switchToGame();
                 }
@@ -103,7 +103,7 @@ public class SlideDifficultyActivity extends AppCompatActivity {
     private void switchToGame() {
         Intent tmp = new Intent(this, MainSlideActivity.class);
         Bundle pass = new Bundle();
-        pass.putSerializable("boardManager", boardManager);
+        pass.putSerializable("slidingBoardManager", slidingBoardManager);
         tmp.putExtras(pass);
         startActivity(tmp);
     }

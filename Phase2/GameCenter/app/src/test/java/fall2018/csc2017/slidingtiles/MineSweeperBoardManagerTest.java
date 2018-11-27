@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class MineSweeperManagerTest {
+public class MineSweeperBoardManagerTest {
 
     @Before
     public void setUp() throws Exception {

@@ -10,9 +10,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * The sliding tiles board.
+ * The sliding slidingTiles board.
  */
-public class Board extends Observable implements Serializable, Iterable<Tile>{
+public class SlidingBoard extends Observable implements Serializable, Iterable<SlidingTile>{
 
     /**
      * The number of rows and columns.
@@ -20,29 +20,29 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
     private int dimension;
 
     /**
-     * The tiles on the board in row-major order.
+     * The slidingTiles on the board in row-major order.
      */
-    private Tile[][] tiles;
+    private SlidingTile[][] slidingTiles;
 
     /**
-     * A new empty board of n*n tiles.
+     * A new empty board of n*n slidingTiles.
      * @param n the number of rows and columns of the board
      */
-    Board(int n) {
+    SlidingBoard(int n) {
         this.dimension = n;
-        tiles= new Tile[dimension][dimension];
+        slidingTiles = new SlidingTile[dimension][dimension];
     }
 
     /**
-     * Set the tiles to tiles.
-     * @param tiles the tiles for the board
+     * Set the slidingTiles to slidingTiles.
+     * @param slidingTiles the slidingTiles for the board
      */
-    void setTiles(List<Tile> tiles) {
-        Iterator<Tile> iter = tiles.iterator();
+    void setSlidingTiles(List<SlidingTile> slidingTiles) {
+        Iterator<SlidingTile> iter = slidingTiles.iterator();
 
         for (int row = 0; row != this.dimension; row++) {
             for (int col = 0; col != this.dimension; col++) {
-                this.tiles[row][col] = iter.next();
+                this.slidingTiles[row][col] = iter.next();
             }
         }
 
@@ -69,12 +69,12 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
      * @param col the tile column
      * @return the tile at (row, col)
      */
-    Tile getTile(int row, int col) {
-        return tiles[row][col];
+    SlidingTile getTile(int row, int col) {
+        return slidingTiles[row][col];
     }
 
     /**
-     * Swap the tiles at (row1, col1) and (row2, col2)
+     * Swap the slidingTiles at (row1, col1) and (row2, col2)
      *
      * @param row1 the first tile row
      * @param col1 the first tile col
@@ -82,10 +82,10 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
      * @param col2 the second tile col
      */
     void swapTiles(int row1, int col1, int row2, int col2) {
-        Tile temp1 = this.tiles[row1][col1];
-        Tile temp2 = this.tiles[row2][col2];
-        this.tiles[row1][col1] = temp2;
-        this.tiles[row2][col2] = temp1;
+        SlidingTile temp1 = this.slidingTiles[row1][col1];
+        SlidingTile temp2 = this.slidingTiles[row2][col2];
+        this.slidingTiles[row1][col1] = temp2;
+        this.slidingTiles[row2][col2] = temp1;
 
         setChanged();
         notifyObservers();
@@ -93,38 +93,38 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
 
     @Override
     public String toString() {
-        return "Board{" +
-                "tiles=" + Arrays.toString(tiles) +
+        return "SlidingBoard{" +
+                "slidingTiles=" + Arrays.toString(slidingTiles) +
                 '}';
     }
 
     @NonNull
     @Override
-    public Iterator<Tile> iterator() {
-        return new TileIterator(tiles);
+    public Iterator<SlidingTile> iterator() {
+        return new TileIterator(slidingTiles);
 
     }
 
     /**
-     * internal nested iterator iterates through 2-D array tiles
+     * internal nested iterator iterates through 2-D array slidingTiles
      *
      */
-    private class TileIterator implements Iterator<Tile> {
+    private class TileIterator implements Iterator<SlidingTile> {
         int currentRow = 0;
         int currentCol = 0;
         int currentPosition = -1;
-        Tile[][] tiles;
+        SlidingTile[][] slidingTiles;
         // eg. (row, col) = (3, 2), then it is indeed at row 3, column 2 (start from 0 ......> 3)
         // we have 3 complete rows, and to make complete: + 2
         // current position = 3*NUM_COLS + 2
 
         /**
-         * a new TileIterator takes tiles and process it
+         * a new TileIterator takes slidingTiles and process it
          *
-         * @param tiles tiles from board
+         * @param slidingTiles slidingTiles from board
          */
-        TileIterator(Tile[][] tiles){
-            this.tiles = tiles;
+        TileIterator(SlidingTile[][] slidingTiles){
+            this.slidingTiles = slidingTiles;
         }
 
         /**
@@ -146,14 +146,14 @@ public class Board extends Observable implements Serializable, Iterable<Tile>{
          * @return the next tile object
          */
         @Override
-        public Tile next() {
+        public SlidingTile next() {
             if (!this.hasNext()) {
                 throw new NoSuchElementException();
             } else {
                 currentPosition++;
                 currentRow = currentPosition / dimension;
                 currentCol = currentPosition % dimension;
-                return this.tiles[currentRow][currentCol];
+                return this.slidingTiles[currentRow][currentCol];
             }
         }
     }}

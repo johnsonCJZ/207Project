@@ -30,17 +30,17 @@ public class UserAccount implements Serializable {
     private String email;
 
     /**
-     * The sliding tiles game history of the UserAccount.
+     * The sliding slidingTiles game history of the UserAccount.
      */
-    private HashMap<String, Manager> history = new HashMap<>();
+    private HashMap<String, BoardManager> history = new HashMap<>();
 
     /**
-     * The sliding tiles score list of the UserAccount
+     * The sliding slidingTiles score list of the UserAccount
      */
     private ArrayList<Integer> userScoreList = new ArrayList<>();
 
     /**
-     * The archive of the game sliding tiles.
+     * The archive of the game sliding slidingTiles.
      */
     private HashMap<String,ScoreBoard> personalScoreBoard = new HashMap<>();
 
@@ -142,7 +142,7 @@ public class UserAccount implements Serializable {
      */
     public ArrayList<Integer> getUserScoreList(){return this.userScoreList;}
 
-    public boolean setHistory(String key, BoardManager item){
+    public boolean setHistory(String key, SlidingBoardBoardManager item){
         if (history.get(key) == null) {
             history.put(key, item);
             return true;
@@ -157,7 +157,7 @@ public class UserAccount implements Serializable {
      * The getter for the History of the UserAccount.
      * @return the History
      */
-    public HashMap<String, Manager> getHistory(){
+    public HashMap<String, BoardManager> getHistory(){
         return history;
     }
 

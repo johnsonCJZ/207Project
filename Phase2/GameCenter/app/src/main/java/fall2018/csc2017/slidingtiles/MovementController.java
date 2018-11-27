@@ -10,14 +10,14 @@ import es.dmoral.toasty.Toasty;
  */
 class MovementController {
 
-    private Manager boardManager = null;
+    private BoardManager boardBoardManager = null;
 
     /**
-     * Set the boardManager to boardManager.
-     * @param boardManager the BoardManger to set
+     * Set the boardBoardManager to boardBoardManager.
+     * @param boardBoardManager the BoardManger to set
      */
-    void setBoardManager(Manager boardManager) {
-        this.boardManager = boardManager;
+    void setBoardBoardManager(BoardManager boardBoardManager) {
+        this.boardBoardManager = boardBoardManager;
     }
 
     /**
@@ -26,8 +26,8 @@ class MovementController {
      * @param position the position where a tap occurred
      */
     void processTapMovement(Context context, int position) {
-        if (boardManager instanceof BoardManager) {
-            BoardManager b = (BoardManager) boardManager;
+        if (boardBoardManager instanceof SlidingBoardBoardManager) {
+            SlidingBoardBoardManager b = (SlidingBoardBoardManager) boardBoardManager;
             if (b.isValidTap(position)) {
                 b.touchMove(position);
                 if (b.isWon()) {
@@ -37,8 +37,8 @@ class MovementController {
                 Toasty.warning(context, "Invalid Tap!", Toast.LENGTH_SHORT, true).show();
             }
         }
-        else if (boardManager instanceof MineSweeperManager) {
-            MineSweeperManager b = (MineSweeperManager) boardManager;
+        else if (boardBoardManager instanceof MineSweeperBoardManager) {
+            MineSweeperBoardManager b = (MineSweeperBoardManager) boardBoardManager;
             b.touchMove(position);
             if (b.isLost()) {
                 Toasty.warning(context, "YOU LOST!", Toast.LENGTH_SHORT, true).show();
@@ -51,8 +51,8 @@ class MovementController {
     }
 
     void processLongPressMovement(Context context, int position){
-        if (boardManager instanceof MineSweeperManager) {
-            MineSweeperManager b = (MineSweeperManager) boardManager;
+        if (boardBoardManager instanceof MineSweeperBoardManager) {
+            MineSweeperBoardManager b = (MineSweeperBoardManager) boardBoardManager;
             if (b.getBoard().getTile(position).isObscured()) {
                 b.mark(position);
                 }
@@ -60,26 +60,26 @@ class MovementController {
     }
 
     void processLeftSwipe() {
-        if (boardManager instanceof  Board2048Manager) {
-            ((Board2048Manager) boardManager).moveLeft();
+        if (boardBoardManager instanceof Board2048BoardManager) {
+            ((Board2048BoardManager) boardBoardManager).moveLeft();
         }
     }
 
     void processRightSwipe() {
-        if (boardManager instanceof  Board2048Manager) {
-            ((Board2048Manager) boardManager).moveRight();
+        if (boardBoardManager instanceof Board2048BoardManager) {
+            ((Board2048BoardManager) boardBoardManager).moveRight();
         }
     }
 
     void processDownSwipe() {
-        if (boardManager instanceof  Board2048Manager) {
-            ((Board2048Manager) boardManager).moveDown();
+        if (boardBoardManager instanceof Board2048BoardManager) {
+            ((Board2048BoardManager) boardBoardManager).moveDown();
         }
     }
 
     void processUpSwipe() {
-        if (boardManager instanceof  Board2048Manager) {
-            ((Board2048Manager) boardManager).moveUp();
+        if (boardBoardManager instanceof Board2048BoardManager) {
+            ((Board2048BoardManager) boardBoardManager).moveUp();
         }
     }
 }

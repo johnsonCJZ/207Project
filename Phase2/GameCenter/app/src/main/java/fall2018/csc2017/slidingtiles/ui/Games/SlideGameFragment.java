@@ -7,17 +7,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
 
 import fall2018.csc2017.slidingtiles.R;
 import fall2018.csc2017.slidingtiles.*;
@@ -45,9 +38,9 @@ public class SlideGameFragment extends Fragment {
     private ScoreBoard globalScoreBoard;
 
     /**
-     * boardManager in user
+     * slidingBoardManager in user
      */
-    private BoardManager boardManager;
+    private SlidingBoardBoardManager slidingBoardManager;
 
     /**
      * board type judgement
@@ -176,9 +169,9 @@ public class SlideGameFragment extends Fragment {
         resumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = (BoardManager) user.getHistory().get("resumeHistory");
-                if (boardManager != null) {
-                        boardManager = (BoardManager) user.getHistory().get("resumeHistory");
+                slidingBoardManager = (SlidingBoardBoardManager) user.getHistory().get("resumeHistory");
+                if (slidingBoardManager != null) {
+                        slidingBoardManager = (SlidingBoardBoardManager) user.getHistory().get("resumeHistory");
                     user.getHistory().put("resumeHistory", null);
                     switchToGame();
                 }
@@ -222,7 +215,7 @@ public class SlideGameFragment extends Fragment {
         Bundle pass = new Bundle();
         myDB.updateUser(username, this.user);
         myDB.updateAccountManager(this.users);
-        pass.putSerializable("boardManager", this.boardManager);
+        pass.putSerializable("slidingBoardManager", this.slidingBoardManager);
         tmp.putExtras(pass);
         startActivity(tmp);
     }
@@ -248,18 +241,18 @@ public class SlideGameFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: // 3x3
-                        boardManager = (BoardManager) user.getHistory().get("history3x3");
+                        slidingBoardManager = (SlidingBoardBoardManager) user.getHistory().get("history3x3");
                         break;
                     case 1: // 4x4
-                        boardManager = (BoardManager) user.getHistory().get("history4x4");
+                        slidingBoardManager = (SlidingBoardBoardManager) user.getHistory().get("history4x4");
                         break;
                     case 2: // 5x5
-                        boardManager = (BoardManager) user.getHistory().get("history5x5");
+                        slidingBoardManager = (SlidingBoardBoardManager) user.getHistory().get("history5x5");
                         break;
                 }
-                if(boardManager!=null){
+                if(slidingBoardManager !=null){
                     try {
-                        boardManager = (BoardManager) boardManager.clone();
+                        slidingBoardManager = (SlidingBoardBoardManager) slidingBoardManager.clone();
                     } catch (CloneNotSupportedException e) {
                         e.printStackTrace();
                     }

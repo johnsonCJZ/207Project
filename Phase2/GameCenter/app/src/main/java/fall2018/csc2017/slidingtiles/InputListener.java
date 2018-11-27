@@ -31,7 +31,7 @@ public class InputListener extends GestureDetector.SimpleOnGestureListener   {
     private int veryLastDirection = 1;
     private boolean hasMoved = false;
 
-    private Board2048Manager boardManager;
+    private Board2048BoardManager boardManager;
 
     public InputListener() {
         super();
@@ -73,7 +73,7 @@ public class InputListener extends GestureDetector.SimpleOnGestureListener   {
         return false;
     }
 
-    public void setBoardManager(Board2048Manager boardManager) {
+    public void setBoardManager(Board2048BoardManager boardManager) {
         this.boardManager = boardManager;
     }
 

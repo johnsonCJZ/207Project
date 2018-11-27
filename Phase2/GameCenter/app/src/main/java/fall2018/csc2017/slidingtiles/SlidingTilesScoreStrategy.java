@@ -3,7 +3,7 @@ package fall2018.csc2017.slidingtiles;
 import java.io.Serializable;
 
 /**
- * The Strategy to calculate the score of a sliding tiles game.
+ * The Strategy to calculate the score of a sliding slidingTiles game.
  */
 public class SlidingTilesScoreStrategy implements ScoreStrategy, Serializable {
     public SlidingTilesScoreStrategy() {
@@ -11,22 +11,22 @@ public class SlidingTilesScoreStrategy implements ScoreStrategy, Serializable {
 
     /**
      * Calculate the score that is related to steps used to solve a board.
-     * @param boardManager the boardManager to calculate score for
+     * @param slidingBoardManager the slidingBoardManager to calculate score for
      * @return the score related to steps
      */
-    private int calStepScore(BoardManager boardManager) {
-        int step = boardManager.getHistory().getSize()-1;
+    private int calStepScore(SlidingBoardBoardManager slidingBoardManager) {
+        int step = slidingBoardManager.getHistory().getSize()-1;
 
         return Math.round(100 - step/5);
     }
 
     /**
      * Calculate the score that is related to time taken solve a board.
-     * @param boardManager the boardManager to calculate score for
+     * @param slidingBoardManager the slidingBoardManager to calculate score for
      * @return the score related to time
      */
-    private int calTimeScore(BoardManager boardManager) {
-        double time = boardManager.getTime();
+    private int calTimeScore(SlidingBoardBoardManager slidingBoardManager) {
+        double time = slidingBoardManager.getTime();
 
         return (int) Math.round((100 - time/15));
 
@@ -39,8 +39,8 @@ public class SlidingTilesScoreStrategy implements ScoreStrategy, Serializable {
      */
     @Override
     public int calculateScore(Object boardManager) {
-        int stepScore = calStepScore((BoardManager) boardManager);
-        int timeScore = calTimeScore((BoardManager) boardManager);
+        int stepScore = calStepScore((SlidingBoardBoardManager) boardManager);
+        int timeScore = calTimeScore((SlidingBoardBoardManager) boardManager);
 
         if (stepScore < 0) {stepScore = 0;}
         if (timeScore < 0) {timeScore = 0;}

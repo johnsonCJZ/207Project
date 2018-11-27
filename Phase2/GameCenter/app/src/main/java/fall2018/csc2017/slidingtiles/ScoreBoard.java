@@ -39,11 +39,11 @@ public class ScoreBoard implements Serializable {
 
     /**
      * Return a score calculated by using slidscoreStrategy.
-     * @param boardManager the boardManager that is finished and to be calculated for score
+     * @param boardBoardManager the boardBoardManager that is finished and to be calculated for score
      * @return a score calculated by using slidscoreStrategy
      */
-    int calculateScore(Manager boardManager) {
-        return scoreStrategy.calculateScore(boardManager);
+    int calculateScore(BoardManager boardBoardManager) {
+        return scoreStrategy.calculateScore(boardBoardManager);
     }
 
     /**

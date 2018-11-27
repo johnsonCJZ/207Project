@@ -14,7 +14,6 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -31,7 +30,7 @@ public class GestureDetectGridView extends GridView implements Freezable {
     private boolean mFlingConfirmed = false;
     private float mTouchX;
     private float mTouchY;
-    private Manager boardManager;
+    private BoardManager boardBoardManager;
 
     public GestureDetectGridView(Context context) {
         super(context);
@@ -153,9 +152,9 @@ public class GestureDetectGridView extends GridView implements Freezable {
         return gDetector.onTouchEvent(ev);
     }
 
-    public void setBoardManager(Manager boardManager) {
-        this.boardManager = boardManager;
-        mController.setBoardManager(boardManager);
+    public void setBoardBoardManager(BoardManager boardBoardManager) {
+        this.boardBoardManager = boardBoardManager;
+        mController.setBoardBoardManager(boardBoardManager);
     }
 
     @Override
