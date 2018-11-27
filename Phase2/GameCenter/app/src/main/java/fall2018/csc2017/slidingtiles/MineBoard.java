@@ -40,8 +40,7 @@ public class MineBoard extends Observable implements Serializable {
 
 
     MineTile getTile(int position) {
-        List<MineTile> tile =  tiles;
-        return tile.get(position);
+        return tiles.get(position);
     }
 
     void setMines(int position) {
@@ -63,12 +62,21 @@ public class MineBoard extends Observable implements Serializable {
         }
     }
 
-    void setTiles(){
+    void setTiles() {
         for (int i = 0; i < w*h; i++) {
             MineTile tile = new MineTile();
             tiles.add(tile);
             tile.setPosition(i);
             tile.setBackground();
+        }
+    }
+
+    void setTiles(List<MineTile> tiles) {
+        for (int i = 0; i < w*h; i++) {
+            this.tiles.add(tiles.get(i));
+            if (tiles.get(i).isMine()) {
+                minePosition.add(tiles.get(i));
+            }
         }
     }
 
