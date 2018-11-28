@@ -226,7 +226,7 @@ public class SlideGameFragment extends Fragment {
     /**
      * load game
      */
-    private void load(){
+    private void load() throws ClassCastException{
         this.user = myDB.selectUser(username);
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Choose an memory");
@@ -237,10 +237,8 @@ public class SlideGameFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: // 3x3
-                        slidingBoardManager = (SlidingBoardManager) user.getSpecificHistory("history3x3");
-                        if (slidingBoardManager.getSlidingBoard() == null){
-                            System.out.println("+++++++++++++++++++++++++++++++");
-                        }
+                        BoardManager manager= user.getSpecificHistory("history3x3");
+                        slidingBoardManager =(SlidingBoardManager) manager;
                         boardSize = 3;
                         break;
                     case 1: // 4x4

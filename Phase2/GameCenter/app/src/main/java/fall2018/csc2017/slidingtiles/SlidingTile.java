@@ -45,7 +45,6 @@ public class SlidingTile extends Tile implements Serializable {
      */
     public SlidingTile(int id, int background) {
         this.id = id;
-        this.background = background;
     }
 
     /**
