@@ -183,6 +183,7 @@ public class Game2048MainActivity extends AppCompatActivity implements Observer 
 
     private void autoSave() {
         user.setGame2048History("resumeHistory2048", boardManager);
+        myDB.updateUser(username, user);
     }
 
     private void addFadeInAnimation(Button b){
