@@ -52,13 +52,15 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
         this.history.add(new HistoryNode(this.findBlankIndex(0)));
     }
 
-    public SlidingBoardManager(int dimension, double time, List<SlidingTile> slidingTiles, History history){
+    public SlidingBoardManager(int dimension, double time, List<SlidingTile> slidingTiles){
         this.time = time;
         this.slidingBoard = new SlidingBoard(dimension);
         this.dimension = dimension;
         this.slidingTiles = slidingTiles;
         slidingBoard.setSlidingTiles(slidingTiles);
-        this.history=history;
+//        this.history=history;
+        this.history=new History();
+        this.history.add(new HistoryNode(this.findBlankIndex(0)));
     }
 
     /**
@@ -68,6 +70,9 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
         return slidingBoard;
     }
 
+    public List<SlidingTile> getSlidingTiles() {
+        return slidingTiles;
+    }
 
     /**
      * Return how many inversions occur in the list of slidingTiles.
