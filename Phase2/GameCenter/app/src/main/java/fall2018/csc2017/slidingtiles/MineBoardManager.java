@@ -13,9 +13,9 @@ public class MineBoardManager extends BoardManager implements Serializable {
     private boolean lost = false;
     private List<MineTile> minePosition;
 
-    MineBoardManager(int x, int y, int m) {
+    MineBoardManager(int h, int w, int m) {
         super("Mine");
-        board = new MineBoard(x, y, m);
+        board = new MineBoard(h, w, m);
         tiles=board.getTiles();
         width = board.getW();
         height = board.getH();
@@ -36,6 +36,8 @@ public class MineBoardManager extends BoardManager implements Serializable {
     MineBoard getBoard() {
         return board;
     }
+
+    List<MineTile> getMinePosition() {return minePosition;}
 
     int getTime() { return time; }
 

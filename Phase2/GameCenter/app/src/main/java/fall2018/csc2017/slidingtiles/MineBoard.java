@@ -17,11 +17,11 @@ public class MineBoard extends Observable implements Serializable {
     private List<MineTile> tiles;
     private List<MineTile> minePosition;
 
-    MineBoard(int x, int y, int m) {
+    MineBoard(int h, int w, int m) {
         mine = m;
         mineLeft = m;
-        this.h = x;
-        this.w = y;
+        this.h = h;
+        this.w = w;
         this.tiles = new ArrayList<>();
         this.minePosition = new ArrayList<>();
     }
