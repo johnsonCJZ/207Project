@@ -197,15 +197,13 @@ public class Game2048MainActivity extends AppCompatActivity implements Observer 
 
     private void createTileButtons(Context context) {
         Game2048Board board = boardManager.getBoard();
-        ArrayList tileButtons = new ArrayList<>();
-        for (int row = 0; row != boardManager.getBoard().getDimension(); row++) {
-            for (int col = 0; col != boardManager.getBoard().getDimension(); col++) {
+        tileButtons = new ArrayList<>();
+        for (int i = 0; i < board.getDimension() * board.getDimension(); i++) {
                 Button tmp = new Button(context);
-                tmp.setBackgroundResource(board.getTile(row, col).getBackground());
+                tmp.setBackgroundResource(board.getTiles().get(i).getBackground());
                 tileButtons.add(tmp);
-            }
         }
-        this.tileButtons=tileButtons;
+
     }
 
     private void endAlert() {
