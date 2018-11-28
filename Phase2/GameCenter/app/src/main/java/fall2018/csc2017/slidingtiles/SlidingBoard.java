@@ -28,6 +28,8 @@ public class SlidingBoard extends Observable implements Serializable, Iterable<S
      */
     private SlidingTile[][] slidingTiles;
 
+    SlidingBoard(){}
+
     /**
      * A new empty board of n*n slidingTiles.
      * @param n the number of rows and columns of the board
@@ -49,7 +51,10 @@ public class SlidingBoard extends Observable implements Serializable, Iterable<S
                 this.slidingTiles[row][col] = iter.next();
             }
         }
+    }
 
+    public void setSlidingTiles(SlidingTile[][] tiles) {
+        this.slidingTiles = tiles;
     }
 
     /**

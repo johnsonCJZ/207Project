@@ -111,7 +111,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
         }
     }
 
-//    private void makeTilesUnable(){
+    //    private void makeTilesUnable(){
 //        isMutted=true;
 //        for (Button b: tileButtons){
 //            b.setEnabled(false);
@@ -238,7 +238,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
         if (gridView.isFrozen()){
             gridView.cloneAsThawed();
         }
-        gridView.setNumColumns(boardManager.getBoard().getW());
+        gridView.setNumColumns(boardManager.getBoard().getWidth());
         gridView.setBoardBoardManager(boardManager);
         boardManager.getBoard().addObserver(this);
         // Observer sets up desired dimensions as well as calls our display function
@@ -251,8 +251,8 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
                         int displayWidth = gridView.getMeasuredWidth();
                         int displayHeight = gridView.getMeasuredHeight();
 
-                        columnWidth = displayWidth / boardManager.getBoard().getW();
-                        columnHeight = displayHeight / boardManager.getBoard().getH();
+                        columnWidth = displayWidth / boardManager.getBoard().getWidth();
+                        columnHeight = displayHeight / boardManager.getBoard().getHeight();
 
                         display();
 
@@ -335,61 +335,60 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
         startActivity(tmp);
     }
 
-
     private Thread time(){
         final TextView time = findViewById(R.id.time);
         count = boardManager.getTime();
         isPaused = false;
         Thread t = new Thread(){
-        @Override
-        public void run(){
-            while(!isInterrupted()) {
-                if (!isPaused) {
-                    try {
-                        Thread.sleep(100);
-                        if (boardManager.isWon()) {
-                            this.interrupt();
-                        }
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (boardManager.isWon() && !isPaused) {
-                                    boardManager.setTime(count);
-                                    isPaused = true;
-                                    user.getHistory().put("resumeHistoryMine", null);
-                                    face.setImageResource(R.drawable.win);
-                                    gridView.freeze();
-                                    winAlert();
-                                }
-                                else if (boardManager.isLost() && !isPaused){
-                                    boardManager.setTime(count);
-                                    isPaused = true;
-                                    user.getHistory().put("resumeHistoryMine", null);
-                                    face.setImageResource(R.drawable.sad);
-                                    gridView.freeze();
-                                    loseAlert();
-                                }
-                                else {
-                                    count = boardManager.getTime();
-                                    count += 1;
-                                    boardManager.setTime(count);
-                                    if (tempCount < 2) {
-                                        tempCount += 1;
-                                    } else {
-                                        autoSave();
-                                    }
-                                    time.setText("Time: " +String.format("%03d", count/10) + " s");
-                                }
+            @Override
+            public void run(){
+                while(!isInterrupted()) {
+                    if (!isPaused) {
+                        try {
+                            Thread.sleep(100);
+                            if (boardManager.isWon()) {
+                                this.interrupt();
                             }
-                        });
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (boardManager.isWon() && !isPaused) {
+                                        boardManager.setTime(count);
+                                        isPaused = true;
+                                        user.getHistory().put("resumeHistoryMine", null);
+                                        face.setImageResource(R.drawable.win);
+                                        gridView.freeze();
+                                        winAlert();
+                                    }
+                                    else if (boardManager.isLost() && !isPaused){
+                                        boardManager.setTime(count);
+                                        isPaused = true;
+                                        user.getHistory().put("resumeHistoryMine", null);
+                                        face.setImageResource(R.drawable.sad);
+                                        gridView.freeze();
+                                        loseAlert();
+                                    }
+                                    else {
+                                        count = boardManager.getTime();
+                                        count += 1;
+                                        boardManager.setTime(count);
+                                        if (tempCount < 2) {
+                                            tempCount += 1;
+                                        } else {
+                                            autoSave();
+                                        }
+                                        time.setText("Time: " +String.format("%03d", count/10) + " s");
+                                    }
+                                }
+                            });
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
-        }
-    };
-    return t;}
+        };
+        return t;}
 
     /**
      * Receive all the info(User, Size, SlidingBoardManager, ScoreBoards)from previous activity/view.
@@ -404,8 +403,8 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
         this.users = myDB.selectAccountManager();
 
         this.boardManager = (MineBoardManager) extra.getSerializable("boardManager");
-        width = boardManager.getBoard().getW();
-        height = boardManager.getBoard().getH();
+        width = boardManager.getBoard().getWidth();
+        height = boardManager.getBoard().getHeight();
         mine = boardManager.getBoard().getMine();
         assert this.boardManager != null;
         this.personalScoreBoard = user.getScoreBoard("Mine");

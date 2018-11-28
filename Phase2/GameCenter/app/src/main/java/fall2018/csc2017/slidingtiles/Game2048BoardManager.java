@@ -11,6 +11,7 @@ public class Game2048BoardManager extends BoardManager implements Serializable {
     Game2048Board getBoard() {return board;}
 
     Game2048BoardManager() {
+//        super("Game2048");
         this.board = new Game2048Board();
         this.dimension = board.getDimension();
         board.setUpTiles();
@@ -21,7 +22,7 @@ public class Game2048BoardManager extends BoardManager implements Serializable {
     Game2048BoardManager(List<Game2048Tile> list){
         Iterator itr = this.board.iterator();
         while (itr.hasNext()){
-            itr.next
+            itr.next();
         }
     }
 

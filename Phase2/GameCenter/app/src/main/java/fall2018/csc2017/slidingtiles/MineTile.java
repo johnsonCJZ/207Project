@@ -2,7 +2,7 @@ package fall2018.csc2017.slidingtiles;
 
 import java.io.Serializable;
 
-public class MineTile implements Serializable {
+public class MineTile extends Tile implements Serializable {
     /**
      * The background id to find the tile image.
      */

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import es.dmoral.toasty.Toasty;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
@@ -36,7 +35,7 @@ public class MineDifficultyActivity extends AppCompatActivity {
                 boardManager = (MineBoardManager) user.getSpecificHistory("ResumeHistoryMine");
                 if (boardManager!=null){
                     switchToGame();}
-                    else{
+                else{
                     Toasty.info(getApplicationContext(), "No game history",Toast.LENGTH_SHORT, true).show();
                 }
             }

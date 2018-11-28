@@ -9,8 +9,8 @@ public class MineMemory extends Memory {
     private List<MineTile> tiles;
 
     public void makeCopy(MineBoardManager manager) {
-        width = manager.getBoard().getW();
-        height = manager.getBoard().getH();
+        width = manager.getBoard().getWidth();
+        height = manager.getBoard().getHeight();
         mine = manager.getMinePosition().size();
         this.tiles = manager.getBoard().getTiles();
     }
