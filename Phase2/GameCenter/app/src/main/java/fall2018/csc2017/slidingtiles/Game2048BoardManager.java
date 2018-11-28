@@ -13,7 +13,6 @@ public class Game2048BoardManager extends BoardManager implements Serializable {
     Game2048BoardManager() {
         this.time = 0.0;
         BuilderBoard builder = new BuilderBoard();
-        builder.set2048Tiles();
         this.board = builder.build2048Board();
         board.addTile();
         board.addTile();
@@ -21,6 +20,8 @@ public class Game2048BoardManager extends BoardManager implements Serializable {
 
     Game2048BoardManager(double time, List<Integer> list){
         this.time = time;
+        BuilderBoard builder = new BuilderBoard();
+        this.board = builder.build2048Board();
         this.board.setUpTiles(list);
     }
 

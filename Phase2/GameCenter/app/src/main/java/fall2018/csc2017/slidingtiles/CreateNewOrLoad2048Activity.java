@@ -27,48 +27,48 @@ public class CreateNewOrLoad2048Activity extends AppCompatActivity {
         setContentView(R.layout.activity_create_new_or_load2048);
         getUser();
         addCreateNewGameButton();
-        addResumeGameButton();
-        addLoadGameButton();
+//        addResumeGameButton();
+//        addLoadGameButton();
     }
 
-    private void addLoadGameButton(){
-        Button loadButton = findViewById(R.id.Load2048Button);
-        loadButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                boardManager = user.getSpecific2048History("history2048");
-                if (boardManager!=null){
-                    switchToGame();}
-                else{
-                    Toasty.info(getApplicationContext(), "No game history",Toast.LENGTH_SHORT, true).show();
-                }
-            }
-        });
-    }
-
-    /**
-     * add resume button
-     */
-    private void addResumeGameButton() {
-        Button resumeButton =findViewById(R.id.Resume2048Button);
-        resumeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boardManager = user.getSpecific2048History("resumeHistory2048");
-                if (boardManager != null) {
-                    user.setSlideHistory("resumeHistory2048", null);
-                    switchToGame();
-                }
-                else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder
-                            (getApplicationContext());
-                    builder.setMessage("History not found");
-                    AlertDialog d = builder.create();
-                    d.show();
-                }
-            }
-        });
-    }
+//    private void addLoadGameButton(){
+//        Button loadButton = findViewById(R.id.Load2048Button);
+//        loadButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                boardManager = user.getSpecific2048History("history2048");
+//                if (boardManager!=null){
+//                    switchToGame();}
+//                else{
+//                    Toasty.info(getApplicationContext(), "No game history",Toast.LENGTH_SHORT, true).show();
+//                }
+//            }
+//        });
+//    }
+//
+//    /**
+//     * add resume button
+//     */
+//    private void addResumeGameButton() {
+//        Button resumeButton =findViewById(R.id.Resume2048Button);
+//        resumeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                boardManager = user.getSpecific2048History("resumeHistory2048");
+//                if (boardManager != null) {
+//                    user.setSlideHistory("resumeHistory2048", null);
+//                    switchToGame();
+//                }
+//                else {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder
+//                            (getApplicationContext());
+//                    builder.setMessage("History not found");
+//                    AlertDialog d = builder.create();
+//                    d.show();
+//                }
+//            }
+//        });
+//    }
 
 
     private void addCreateNewGameButton() {
@@ -76,9 +76,14 @@ public class CreateNewOrLoad2048Activity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = new Game2048BoardManager();
-                user.setGame2048History("resumeHistory2048", null);
-                switchToGame();
+                boardManager = user.getSpecific2048History("resumeHistory2048");
+                if (boardManager != null) {
+                    switchToGame();
+                } else {
+                    boardManager = new Game2048BoardManager();
+                    user.setGame2048History("resumeHistory2048", null);
+                    switchToGame();
+                }
             }
         });
     }

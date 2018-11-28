@@ -276,40 +276,17 @@ public class Game2048MainActivity extends AppCompatActivity implements Observer 
     }
 
     @Override
-    public void onBackPressed(){
-        isPaused = true;
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Do you want to save/override this game?")
-
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        saveHistory(dialog);
-                        switchToGameCenter();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        switchToGameCenter();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                isPaused = false;
-                dialog.cancel();
-            }
-        });
-        alert.show();
+    public void onBackPressed() {
+        autoSave();
+        switchToGameCenter();
     }
 
     /**
      * Save the game history.
      * @param dialog
      */
-    private void saveHistory(DialogInterface dialog){
-        user.setGame2048History("history2048", boardManager);
-        myDB.updateUser(username,user);
-        dialog.cancel();
-    }
+//    private void saveHistory(){
+//        user.setGame2048History("history2048", boardManager);
+//        myDB.updateUser(username,user);
+//    }
 }

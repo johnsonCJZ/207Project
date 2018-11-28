@@ -71,7 +71,7 @@ public class UserAccount implements Serializable {
         historyMine.put("resumeHistoryMine", new MineMemory());
         history2048.put("resumeHistory2048", new Game2048Memory());
         historyMine.put("historyMine",new MineMemory());
-        history2048.put("history2048",new Game2048Memory());
+//        history2048.put("history2048",new Game2048Memory());
         personalScoreBoard.put("history3x3", new ScoreBoard("SlidingTiles"));
         personalScoreBoard.put("history4x4", new ScoreBoard("SlidingTiles"));
         personalScoreBoard.put("history5x5", new ScoreBoard("SlidingTiles"));
@@ -122,7 +122,7 @@ public class UserAccount implements Serializable {
      * Change the password of the UserAccount.
      * @param ps The new password to be updated.
      */
-    public void changePassword(String ps){
+    void changePassword(String ps){
         this.password=ps;
     }
 
@@ -149,58 +149,57 @@ public class UserAccount implements Serializable {
     public ArrayList<Integer> getUserScoreList(){return this.userScoreList;}
 
     public void setSlideHistory (String key, SlidingBoardManager item){
-        if(item!=null){
-        SlidingMemory memory = this.historySliding.get(key);
-        SlidingMemory slidingMemory= (SlidingMemory)memory;
-        slidingMemory.makeCopy((SlidingBoardManager) item);
-        if (historySliding.get(key) == null) {
-            historySliding.put(key, slidingMemory); }
-
-        else {
-            historySliding.replace(key, slidingMemory);
-            }}
+        if(item != null) {
+            SlidingMemory memory = this.historySliding.get(key);
+            memory.makeCopy(item);
+            if (historySliding.get(key) == null) {
+                historySliding.put(key, memory);
+            } else {
+                historySliding.replace(key, memory);
+            }
+        }
         else{historySliding.replace(key, new SlidingMemory());}
     }
-    public void setGame2048History (String key, Game2048BoardManager item){
-        if(item!=null) {
+
+    void setGame2048History(String key, Game2048BoardManager item){
+        if(item != null) {
             Game2048Memory memory = this.history2048.get(key);
-            Game2048Memory game2048Memory = memory;
-            game2048Memory.makeCopy(item);
+            memory.makeCopy(item);
             if (history2048.get(key) == null) {
-                history2048.put(key, game2048Memory);
+                history2048.put(key, memory);
             }
             else {
-                history2048.replace(key, game2048Memory);
+                history2048.replace(key, memory);
             }
         }
         else {
             history2048.replace(key, new Game2048Memory());
         }
     }
-    public void setMineHistory (String key, MineBoardManager item){
-        if(item!=null){
-        MineMemory memory = this.historyMine.get(key);
-        memory.makeCopy(item);
-        if (historyMine.get(key) == null) {
-            historyMine.put(key, memory); }
-
-        else {
-            historyMine.replace(key, memory);
-        }}
+    void setMineHistory(String key, MineBoardManager item){
+        if(item!=null) {
+            MineMemory memory = this.historyMine.get(key);
+            memory.makeCopy(item);
+            if (historyMine.get(key) == null) {
+                historyMine.put(key, memory);
+            } else {
+                historyMine.replace(key, memory);
+            }
+        }
         else{historyMine.replace(key, new MineMemory());}}
     /**
      * The getter for the History of the UserAccount.
      * @return the History
      */
-    public HashMap<String, SlidingMemory> getSlideHistory(){
+    private HashMap<String, SlidingMemory> getSlideHistory(){
         return historySliding;
     }
 
-    public HashMap<String, MineMemory> getMineHistory(){
+    private HashMap<String, MineMemory> getMineHistory(){
         return historyMine;
     }
 
-    public HashMap<String, Game2048Memory> get2048History(){
+    private HashMap<String, Game2048Memory> get2048History(){
         return history2048;
     }
 
@@ -228,20 +227,21 @@ public class UserAccount implements Serializable {
         }
         return memory.copy();}
 
-    public MineBoardManager getSpecificMineHistory(String key){
+    MineBoardManager getSpecificMineHistory(String key){
         MineMemory memory = this.getMineHistory().get(key);
         if (memory==null){
             return null;
         }
-        return memory.copy();}
+        return memory.copy();
+    }
 
-    public Game2048BoardManager getSpecific2048History(String key){
+    Game2048BoardManager getSpecific2048History(String key){
         Game2048Memory memory = this.get2048History().get(key);
         if (memory==null){
             return null;
         }
-        return memory.copy();}
-
+        return memory.copy();
+    }
 
     public ArrayList<String> getGames() {
         return games;
