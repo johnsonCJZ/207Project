@@ -13,29 +13,36 @@ public class MineBoardManager extends BoardManager implements Serializable {
     private boolean lost = false;
     private List<MineTile> minePosition;
 
-    MineBoardManager(int x, int y, int m) {
-        super("Mine");
-        board = new MineBoard(x, y, m);
+    MineBoardManager(int h, int w, int m) {
+//        super("Mine");
+//        BuilderBoard builderBoard = new BuilderBoard();
+//        builderBoard.setMine(m);
+//        builderBoard.setMineLeft(m);
+//        builderBoard.setDimension(x, y);
+//        builderBoard.setMineTiles();
+        board = new MineBoard(h, w, m);
         tiles=board.getTiles();
-        width = board.getW();
-        height = board.getH();
+        width = board.getWidth();
+        height = board.getHeight();
         minePosition = board.getMinePosition();
         setUpBoard();
     }
 
     MineBoardManager(int x, int y, int m, List<MineTile> tiles) {
-        super("Mine");
+//        super("Mine");
         board = new MineBoard(x, y, m);
         board.setTiles(tiles);
         this.tiles = board.getTiles();
-        width = board.getW();
-        height = board.getH();
+        width = board.getWidth();
+        height = board.getHeight();
         minePosition = board.getMinePosition();
     }
 
     MineBoard getBoard() {
         return board;
     }
+
+    List<MineTile> getMinePosition() {return minePosition;}
 
     int getTime() { return time; }
 
@@ -92,7 +99,6 @@ public class MineBoardManager extends BoardManager implements Serializable {
                 tiles.get(pos).setNumber(count);
             }
         }
-
     }
 
     boolean isLost() {

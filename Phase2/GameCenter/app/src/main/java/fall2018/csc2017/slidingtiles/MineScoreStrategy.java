@@ -11,7 +11,7 @@ class MineScoreStrategy implements ScoreStrategy, Serializable {
         MineBoard board =  ((MineBoardManager) boardManager).getBoard();
         int boardScore=0;
         if (((MineBoardManager)boardManager).isWon()){
-            boardScore = board.getH()*board.getW();
+            boardScore = board.getHeight()*board.getWidth();
         }
         else{
             for (MineTile t : board.getMinePosition()){
