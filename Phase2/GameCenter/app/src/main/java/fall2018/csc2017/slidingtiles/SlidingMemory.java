@@ -4,32 +4,42 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SlidingMemory extends Memory {
     private int dimension;
-    private double time;
-    private String slidingTiles;
-    private History history;
+    private double timeTmp;
+    private List<Integer> slidingTiles = new ArrayList<>();
+//    private History history;
 
     public void makeCopy(SlidingBoardManager manager) {
         Gson gson1 = new Gson();
         this.dimension = manager.getSlidingBoard().getDimension();
-        this.time = manager.getTime();
-        Type type1 = new TypeToken<List<SlidingTile>>(){}.getType();
-        this.slidingTiles  = gson1.toJson(manager.getSlidingBoard().getTiles(),type1);
-        this.history=manager.getHistory();
+        this.timeTmp = manager.getTime();
+//        Type type1 = new TypeToken<List<SlidingTile>>(){}.getType();
+//        this.slidingTiles  = gson1.toJson(manager.getSlidingTiles(),type1);
+//        System.out.println(this.slidingTiles);
+        for (SlidingTile t: manager.getSlidingTiles()){
+            this.slidingTiles.add(t.getId());
+        }
+        System.out.println(this.slidingTiles);
+//        this.history=manager.getHistory();
     }
 
     public SlidingBoardManager copy(){
         Gson gson = new Gson();
-        int dimentsion = this.dimension;
-        double tile = this.time;
-        String slidingTiles = this.slidingTiles;
-        History history = this.history;
-        Type type1 = new TypeToken<List<SlidingTile>>(){}.getType();
-        List<SlidingTile> tiles = gson.fromJson(slidingTiles, type1);
-        return new SlidingBoardManager(dimentsion,time, tiles, history);
+        int dimension = this.dimension;
+        double time = this.timeTmp;
+//        History history = this.history;
+//        Type type1 = new TypeToken<List<SlidingTile>>(){}.getType();
+//        List<SlidingTile> tiles = gson.fromJson(slidingTiles, type1);
+        System.out.println(this.slidingTiles);
+        List<SlidingTile> tt = new ArrayList<>();
+        for (int i : this.slidingTiles){
+            tt.add(new SlidingTile(i));
+        }
+        return new SlidingBoardManager(dimension,time, tt);
     }
 
 
@@ -37,16 +47,15 @@ public class SlidingMemory extends Memory {
         return dimension;
     }
 
-    @Override
-    public double getTime() {
-        return time;
+    public double getTimeTmp() {
+        return timeTmp;
     }
+//
+//    public List<SlidingTile> getSlidingTiles() {
+//        return slidingTiles;
+//    }
 
-    public String getSlidingTiles() {
-        return slidingTiles;
-    }
-
-    public History getHistory() {
-        return history;
-    }
+//    public History getHistory() {
+//        return history;
+//    }
 }
