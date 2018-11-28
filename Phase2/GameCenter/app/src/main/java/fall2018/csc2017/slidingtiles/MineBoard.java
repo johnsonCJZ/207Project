@@ -11,7 +11,7 @@ import java.util.Observable;
 import java.util.Random;
 
 public class MineBoard extends Observable implements Serializable {
-    private int width, height;
+    private int dimension;
     private int mine;
     private int mineLeft;
     private List<MineTile> tiles;
@@ -19,18 +19,23 @@ public class MineBoard extends Observable implements Serializable {
 
     MineBoard(){}
 
-    MineBoard(int h, int w, int m) {
+    MineBoard(int d, int m) {
         mine = m;
         mineLeft = m;
-        this.height = h;
-        this.width = w;
+        this.dimension = d;
         this.tiles = new ArrayList<>();
         this.minePosition = new ArrayList<>();
     }
 
-    int getWidth() {return width;}
+    MineBoard(int d, int m, int mLeft) {
+        mine = m;
+        mineLeft = mLeft;
+        this.dimension = d;
+        this.tiles = new ArrayList<>();
+        this.minePosition = new ArrayList<>();
+    }
 
-    int getHeight() {return height;}
+    int getDimension() {return dimension;}
 
     int getMine() {return mine;}
 
@@ -45,9 +50,8 @@ public class MineBoard extends Observable implements Serializable {
         return tiles.get(position);
     }
 
-    public void setDimension(int h, int w){
-        width = w;
-        height = h;
+    public void setDimension(int d){
+        dimension = d;
     }
 
     void setMines(int position) {
@@ -58,7 +62,7 @@ public class MineBoard extends Observable implements Serializable {
         List<Integer> randomNum = new ArrayList<>();
         int i = 0;
         while (i < mine) {
-            Integer num = r.nextInt(width * height);
+            Integer num = r.nextInt(dimension * dimension);
 
             if (!randomNum.contains(num) && !startNine.contains(getTile(num))) {
                 randomNum.add(num);
@@ -70,7 +74,7 @@ public class MineBoard extends Observable implements Serializable {
     }
 
     void setTiles() {
-        for (int i = 0; i < width*height; i++) {
+        for (int i = 0; i < dimension * dimension; i++) {
             MineTile tile = new MineTile();
             tiles.add(tile);
             tile.setPosition(i);
@@ -79,7 +83,7 @@ public class MineBoard extends Observable implements Serializable {
     }
 
     void setTiles(List<MineTile> tiles) {
-        for (int i = 0; i < width*height; i++) {
+        for (int i = 0; i < dimension * dimension; i++) {
             this.tiles.add(tiles.get(i));
             if (tiles.get(i).isMine()) {
                 minePosition.add(tiles.get(i));
@@ -122,32 +126,32 @@ public class MineBoard extends Observable implements Serializable {
     }
 
     List<MineTile> getSurround(int position) {
-        int row = position / width;
-        int col = position % width;
+        int row = position / dimension ;
+        int col = position % dimension ;
         List<MineTile> surround = new ArrayList<>();
 
         if (row != 0 && col != 0) {
-            surround.add(getTiles().get(position-width-1));
+            surround.add(getTiles().get(position-dimension -1));
         }
-        if (row != 0 && col != width - 1) {
-            surround.add(getTiles().get(position-width+1));
+        if (row != 0 && col != dimension  - 1) {
+            surround.add(getTiles().get(position-dimension +1));
         }
         if (row != 0) {
-            surround.add(getTiles().get(position-width));
+            surround.add(getTiles().get(position-dimension ));
         }
-        if (row != height - 1 && col != 0) {
-            surround.add(getTiles().get(position+width-1));
+        if (row != dimension  - 1 && col != 0) {
+            surround.add(getTiles().get(position+dimension -1));
         }
-        if (row != height - 1 && col != width - 1) {
-            surround.add(getTiles().get(position+width+1));
+        if (row != dimension  - 1 && col != dimension  - 1) {
+            surround.add(getTiles().get(position+dimension +1));
         }
-        if (row != height- 1) {
-            surround.add(getTiles().get(position+width));
+        if (row != dimension - 1) {
+            surround.add(getTiles().get(position+dimension ));
         }
         if (col != 0) {
             surround.add(getTiles().get(position-1));
         }
-        if (col != width - 1) {
+        if (col != dimension  - 1) {
             surround.add(getTiles().get(position+1));
         }
         return surround;

@@ -77,15 +77,15 @@ public class MineDifficultyActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: // 3x3
-                        boardManager =new MineBoardManager(9, 9, 10);
+                        boardManager =new MineBoardManager(9, 10);
                         switchToGame();
                         break;
                     case 1: // 4x4
-                        boardManager = new MineBoardManager(16, 16, 40);
+                        boardManager = new MineBoardManager(16, 40);
                         switchToGame();
                         break;
                     case 2: // 5x5
-                        boardManager = new MineBoardManager(20, 20, 80);
+                        boardManager = new MineBoardManager(20, 80);
                         switchToGame();
                         break;
                 }

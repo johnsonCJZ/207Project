@@ -6,35 +6,34 @@ import java.util.List;
 public class MineBoardManager extends BoardManager implements Serializable {
     private MineBoard board;
     private List<MineTile> tiles;
-    private int width;
-    private int height;
+    private int dimension;
     private int time;
     private boolean isFirst = true;
     private boolean lost = false;
     private List<MineTile> minePosition;
 
-    MineBoardManager(int h, int w, int m) {
+    MineBoardManager(int d, int m) {
 //        super("Mine");
 //        BuilderBoard builderBoard = new BuilderBoard();
 //        builderBoard.setMine(m);
 //        builderBoard.setMineLeft(m);
 //        builderBoard.setDimension(x, y);
 //        builderBoard.setMineTiles();
-        board = new MineBoard(h, w, m);
+        board = new MineBoard(d, m);
         tiles=board.getTiles();
-        width = board.getWidth();
-        height = board.getHeight();
+        dimension = d;
         minePosition = board.getMinePosition();
         setUpBoard();
     }
 
-    MineBoardManager(int x, int y, int m, List<MineTile> tiles) {
+    MineBoardManager(int d, int m, int mLeft, int time, List<MineTile> tiles) {
 //        super("Mine");
-        board = new MineBoard(x, y, m);
+        board = new MineBoard(d, m, mLeft);
         board.setTiles(tiles);
+        isFirst = false;
         this.tiles = board.getTiles();
-        width = board.getWidth();
-        height = board.getHeight();
+        dimension = d;
+        this.time = time;
         minePosition = board.getMinePosition();
     }
 
@@ -42,7 +41,9 @@ public class MineBoardManager extends BoardManager implements Serializable {
         return board;
     }
 
-    List<MineTile> getMinePosition() {return minePosition;}
+    List<MineTile> getMinePosition() {
+        return minePosition;
+    }
 
     int getTime() { return time; }
 
@@ -73,7 +74,7 @@ public class MineBoardManager extends BoardManager implements Serializable {
     void mark(int position) {board.flag(position);}
 
     private void setNumbers() {
-        for (int pos = 0; pos < height*width; pos++) {
+        for (int pos = 0; pos < dimension *dimension ; pos++) {
             //if the tile is a mine, set the number to -1.
             if (tiles.get(pos).isMine()) {
                 tiles.get(pos).setNumber(-1);
@@ -82,19 +83,19 @@ public class MineBoardManager extends BoardManager implements Serializable {
             //if the tile isn't a mine, set the number to be the number of mines surrounds it.
             else {
                 int count = 0;
-                int i = pos / width;
-                int j = pos % width;
+                int i = pos / dimension ;
+                int j = pos % dimension ;
 
-                if (i > 0 && j > 0 && tiles.get(pos-width-1).isMine()) count++; //upper-left tile
+                if (i > 0 && j > 0 && tiles.get(pos-dimension -1).isMine()) count++; //upper-left tile
                 if (j > 0 && tiles.get(pos-1).isMine()) count++; //left tile
-                if (i < height - 1 && j > 0 && tiles.get(pos+width-1).isMine())
+                if (i < dimension  - 1 && j > 0 && tiles.get(pos+dimension -1).isMine())
                     count++; //lower-left
-                if (i > 0 && tiles.get(pos-width).isMine()) count++; // upper tile
-                if (i < height - 1 && tiles.get(pos+width).isMine()) count++; // lower tile
-                if (i > 0 && j < width - 1 && tiles.get(pos-width+1).isMine())
+                if (i > 0 && tiles.get(pos-dimension ).isMine()) count++; // upper tile
+                if (i < dimension  - 1 && tiles.get(pos+dimension ).isMine()) count++; // lower tile
+                if (i > 0 && j < dimension  - 1 && tiles.get(pos-dimension +1).isMine())
                     count++; //upper-right
-                if (j < width - 1 && tiles.get(pos+1).isMine()) count++; //right tile
-                if (i < height - 1 && j < width - 1 && tiles.get(pos+width+1).isMine())
+                if (j < dimension  - 1 && tiles.get(pos+1).isMine()) count++; //right tile
+                if (i < dimension  - 1 && j < dimension  - 1 && tiles.get(pos+dimension +1).isMine())
                     count++; //lower-right tile
                 tiles.get(pos).setNumber(count);
             }
@@ -109,7 +110,7 @@ public class MineBoardManager extends BoardManager implements Serializable {
     }
 
     boolean isWon() {
-        for (int i = 0; i < height * width; i++){
+        for (int i = 0; i < dimension  * dimension ; i++){
             if (board.getTile(i).isObscured() && !board.getTile(i).isMine()){
                 return false;
             }

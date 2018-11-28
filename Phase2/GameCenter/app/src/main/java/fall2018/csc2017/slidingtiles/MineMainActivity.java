@@ -73,14 +73,9 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
     private UserAccount user;
 
     /**
-     * Width of the MineBoard.
+     * Dimension of the MineBoard.
      */
-    private int width;
-
-    /**
-     * Height of the MineBoard.
-     */
-    private int height;
+    private int dimension;
 
     private int mine;
 
@@ -233,7 +228,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
         if (gridView.isFrozen()){
             gridView.cloneAsThawed();
         }
-        gridView.setNumColumns(boardManager.getBoard().getWidth());
+        gridView.setNumColumns(boardManager.getBoard().getDimension ());
         gridView.setBoardBoardManager(boardManager);
         boardManager.getBoard().addObserver(this);
         // Observer sets up desired dimensions as well as calls our display function
@@ -246,8 +241,8 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
                         int displayWidth = gridView.getMeasuredWidth();
                         int displayHeight = gridView.getMeasuredHeight();
 
-                        columnWidth = displayWidth / boardManager.getBoard().getWidth();
-                        columnHeight = displayHeight / boardManager.getBoard().getHeight();
+                        columnWidth = displayWidth / boardManager.getBoard().getDimension ();
+                        columnHeight = displayHeight / boardManager.getBoard().getDimension ();
 
                         display();
 
@@ -262,7 +257,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
             public void onClick(View v) {
                 isPaused = false;
 //                face.setImageResource(R.drawable.normal);
-                boardManager = new MineBoardManager(height,width,mine);
+                boardManager = new MineBoardManager(dimension,mine);
                 boardManager.setTime(-1);
                 createTileButtons(getApplicationContext());
                 setGridView();
@@ -398,8 +393,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
         this.users = myDB.selectAccountManager();
 
         this.boardManager = (MineBoardManager) extra.getSerializable("boardManager");
-        width = boardManager.getBoard().getWidth();
-        height = boardManager.getBoard().getHeight();
+        dimension = boardManager.getBoard().getDimension ();
         mine = boardManager.getBoard().getMine();
         assert this.boardManager != null;
         this.personalScoreBoard = user.getScoreBoard("Mine");
@@ -414,7 +408,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
         isMutted = false;
         MineBoard board = boardManager.getBoard();
         tileButtons = new ArrayList<>();
-        for (int i = 0; i < width * height; i++) {
+        for (int i = 0; i < dimension * dimension; i++) {
             Button tmp = new Button(context);
             tmp.setOnClickListener(new View.OnClickListener() {
                 @Override
