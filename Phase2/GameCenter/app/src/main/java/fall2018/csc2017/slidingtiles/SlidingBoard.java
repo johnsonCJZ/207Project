@@ -31,15 +31,6 @@ public class SlidingBoard extends Observable implements Serializable, Iterable<S
     SlidingBoard(){}
 
     /**
-     * A new empty board of n*n slidingTiles.
-     * @param n the number of rows and columns of the board
-     */
-    SlidingBoard(int n) {
-        this.dimension = n;
-        slidingTiles = new SlidingTile[dimension][dimension];
-    }
-
-    /**
      * Set the slidingTiles to slidingTiles.
      * @param slidingTiles the slidingTiles for the board
      */
