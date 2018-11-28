@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * The sliding slidingTiles board.
  */
-public class SlidingBoard extends Observable implements Serializable, Iterable<SlidingTile>{
+public class SlidingBoard extends Observable implements Serializable {
 
     /**
      * The number of rows and columns.
@@ -26,7 +26,7 @@ public class SlidingBoard extends Observable implements Serializable, Iterable<S
     /**
      * The slidingTiles on the board in row-major order.
      */
-    private SlidingTile[][] slidingTiles;
+    private List<SlidingTile> slidingTiles;
 
     SlidingBoard(){}
 
@@ -35,17 +35,7 @@ public class SlidingBoard extends Observable implements Serializable, Iterable<S
      * @param slidingTiles the slidingTiles for the board
      */
     void setSlidingTiles(List<SlidingTile> slidingTiles) {
-        Iterator<SlidingTile> iter = slidingTiles.iterator();
-
-        for (int row = 0; row != this.dimension; row++) {
-            for (int col = 0; col != this.dimension; col++) {
-                this.slidingTiles[row][col] = iter.next();
-            }
-        }
-    }
-
-    public void setSlidingTiles(SlidingTile[][] tiles) {
-        this.slidingTiles = tiles;
+        this.slidingTiles = slidingTiles;
     }
 
     /**
@@ -70,7 +60,7 @@ public class SlidingBoard extends Observable implements Serializable, Iterable<S
      * @return the tile at (row, col)
      */
     SlidingTile getTile(int row, int col) {
-        return slidingTiles[row][col];
+        return slidingTiles.get(row * dimension + col);
     }
 
     /**
@@ -82,87 +72,22 @@ public class SlidingBoard extends Observable implements Serializable, Iterable<S
      * @param col2 the second tile col
      */
     void swapTiles(int row1, int col1, int row2, int col2) {
-        SlidingTile temp1 = this.slidingTiles[row1][col1];
-        SlidingTile temp2 = this.slidingTiles[row2][col2];
-        this.slidingTiles[row1][col1] = temp2;
-        this.slidingTiles[row2][col2] = temp1;
+        SlidingTile temp1 = getTile(row1, col1);
+        SlidingTile temp2 = getTile(row2, col2);
+        slidingTiles.set(row1 * dimension + col1, temp2);
+        slidingTiles.set(row2 * dimension + col2, temp1);
 
         setChanged();
         notifyObservers();
     }
 
-    @Override
-    public String toString() {
-        return "SlidingBoard{" +
-                "slidingTiles=" + Arrays.toString(slidingTiles) +
-                '}';
-    }
-
-    @NonNull
-    @Override
-    public Iterator<SlidingTile> iterator() {
-        return new TileIterator(slidingTiles);
-
-    }
-
-    /**
-     * internal nested iterator iterates through 2-D array slidingTiles
-     *
-     */
-    private class TileIterator implements Iterator<SlidingTile> {
-        int currentRow = 0;
-        int currentCol = 0;
-        int currentPosition = -1;
-        SlidingTile[][] slidingTiles;
-        // eg. (row, col) = (3, 2), then it is indeed at row 3, column 2 (start from 0 ......> 3)
-        // we have 3 complete rows, and to make complete: + 2
-        // current position = 3*NUM_COLS + 2
-
-        /**
-         * a new TileIterator takes slidingTiles and process it
-         *
-         * @param slidingTiles slidingTiles from board
-         */
-        TileIterator(SlidingTile[][] slidingTiles){
-            this.slidingTiles = slidingTiles;
-        }
-
-        /**
-         * Return true if array has next tile
-         * false otherwise
-         *
-         * @return if there is more tile
-         */
-        @Override
-        public boolean hasNext() {
-            int temp = currentPosition + 1;
-            currentRow = temp / dimension;
-            currentCol = temp % dimension;
-            return currentRow < dimension;
-        }
-
-        /**
-         * Return the next tile to be processed
-         * @return the next tile object
-         */
-        @Override
-        public SlidingTile next() {
-            if (!this.hasNext()) {
-                throw new NoSuchElementException();
-            } else {
-                currentPosition++;
-                currentRow = currentPosition / dimension;
-                currentCol = currentPosition % dimension;
-                return this.slidingTiles[currentRow][currentCol];
-            }
-        }
-    }
-
-    public SlidingTile[][] getTiles(){
-        return this.slidingTiles;
-    }
+//    @Override
+//    public String toString() {
+//        return "SlidingBoard{" +
+//                "slidingTiles=" + Arrays.toString(slidingTiles) +
+//                '}';
+//    }
 }
-
 
 
 

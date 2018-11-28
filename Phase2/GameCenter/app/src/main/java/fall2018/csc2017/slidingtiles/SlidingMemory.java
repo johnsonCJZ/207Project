@@ -21,10 +21,8 @@ public class SlidingMemory extends Memory {
 //        Type type1 = new TypeToken<List<SlidingTile>>(){}.getType();
 //        this.slidingTiles  = gson1.toJson(manager.getSlidingTiles(),type1);
 //        System.out.println(this.slidingTiles);
-        Iterator itr = manager.getSlidingBoard().iterator();
-        while(itr.hasNext()){
-            SlidingTile t = (SlidingTile) itr.next();
-            this.slidingTiles.add(t.getId());
+        for (SlidingTile tile : manager.getSlidingTiles()) {
+            this.slidingTiles.add(tile.getId());
         }
         System.out.println(this.slidingTiles);
 //        this.history=manager.getHistory();

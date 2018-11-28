@@ -59,7 +59,7 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
 
     ArrayList<Game2048Tile> findEmpty() {
         ArrayList<Game2048Tile> result = new ArrayList<>();
-        for (Game2048Tile tile : this) {
+        for (Game2048Tile tile : this.tiles) {
             if (tile.isEmpty()) {
                 result.add(tile);
             }

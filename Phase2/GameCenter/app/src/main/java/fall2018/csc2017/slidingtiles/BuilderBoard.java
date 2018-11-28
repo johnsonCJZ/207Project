@@ -48,8 +48,8 @@ public class BuilderBoard {
 
     public void set2048Tiles() {
         tiles = new ArrayList<>();
-        for (int i = 0; i < 16; i++) {
-                tiles.set(i, new Game2048Tile());
+        for (int i = 0; i < 15; i++) {
+                tiles.add(new Game2048Tile());
 
         }
     }

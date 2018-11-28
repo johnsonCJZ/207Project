@@ -159,19 +159,12 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
      * @return whether the slidingTiles are in row-major order
      */
     boolean isWon() {
-        Iterator iter = slidingBoard.iterator();
-        SlidingTile previous = (SlidingTile) iter.next();
-
-        while (iter.hasNext()){
-            SlidingTile next = (SlidingTile) iter.next();
-            if (previous.getId() < next.getId()) {
-                previous = next;
-            }
-            else {
-                return next.getId() == 0 && !iter.hasNext();
+        for (int i = 0; i < dimension * dimension - 1; i++) {
+            if (slidingTiles.get(i).getId() < slidingTiles.get(i+1).getId()) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     /**
@@ -236,7 +229,7 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
     private int[] findBlankIndex(int targetId){
         int[] result = new int[2];
         int position = 0;
-        for (SlidingTile t : this.slidingBoard){
+        for (SlidingTile t : slidingTiles){
             if (t.getId()==targetId){
                 result[0] = position / dimension;
                 result[1] = position % dimension;
