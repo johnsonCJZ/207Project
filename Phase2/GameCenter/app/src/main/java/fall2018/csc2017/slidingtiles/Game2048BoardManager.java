@@ -1,32 +1,36 @@
 package fall2018.csc2017.slidingtiles;
 
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.List;
 
 public class Game2048BoardManager extends BoardManager implements Serializable {
     private Game2048Board board;
-    private Integer dimension;
+    final private Integer DIMENSION = 4;
+    private Double time;
 
     Game2048Board getBoard() {return board;}
 
     Game2048BoardManager() {
-//        super("Game2048");
-        this.board = new Game2048Board();
-        this.dimension = board.getDimension();
-        board.setUpTiles();
+        this.time = 0.0;
+        BuilderBoard builder = new BuilderBoard();
+        builder.set2048Tiles();
+        this.board = builder.build2048Board();
         board.addTile();
         board.addTile();
     }
 
-    Game2048BoardManager(List<Game2048Tile> list){
-        Iterator itr = this.board.iterator();
-        while (itr.hasNext()){
-            itr.next();
-        }
+    Game2048BoardManager(double time, List<Integer> list){
+        this.time = time;
+        this.board.setUpTiles(list);
     }
 
-    int getScore() {return board.getScore();}
+    public Double getTime() {
+        return time;
+    }
+
+    int getScore() {
+        return board.getScore();
+    }
 
     void cheat() {
         board.getTile(0,0).setValue(2048);
@@ -57,13 +61,13 @@ public class Game2048BoardManager extends BoardManager implements Serializable {
         if (!isFull()) {
             return true;
         } else {
-            for (int i = 0; i < dimension; i++) {
-                for (int j = 0; j < dimension; j++) {
+            for (int i = 0; i < DIMENSION; i++) {
+                for (int j = 0; j < DIMENSION; j++) {
                     Game2048Tile tile = board.getTile(i, j);
-                if ((i < dimension - 1 && tile.equals(board.getTile(i + 1, j)))
-                    || (j < dimension - 1 && tile.equals(board.getTile(i, j+1)))) {
-                    return true;
-                }
+                    if ((i < DIMENSION - 1 && tile.equals(board.getTile(i + 1, j)))
+                            || (j < DIMENSION - 1 && tile.equals(board.getTile(i, j+1)))) {
+                        return true;
+                    }
                 }
             }
         }

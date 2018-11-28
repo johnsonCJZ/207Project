@@ -5,11 +5,12 @@ import android.support.annotation.NonNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Observable;
 
 public class Game2048Board extends Observable implements Serializable, Iterable<Game2048Tile> {
-    final static int dimension = 4;
+    final static int DIMENSION = 4;
     private int score = 0;
     private Game2048Tile[][] tiles;
     private boolean isChanged = false;
@@ -18,17 +19,26 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
      * A new empty board of 4*4 slidingTiles.
      */
     Game2048Board() {
-        this.tiles = new Game2048Tile[dimension][dimension];
+        this.tiles = new Game2048Tile[DIMENSION][DIMENSION];
     }
 
     void setUpTiles() {
-        for (int row = 0; row != dimension; row++) {
-            for (int col = 0; col != dimension; col++) {
+        for (int row = 0; row != DIMENSION; row++) {
+            for (int col = 0; col != DIMENSION; col++) {
                 this.setTile(row, col, new Game2048Tile());
                 Game2048Tile tile = getTile(row, col);
                 tile.setX(col);
                 tile.setY(row);
             }
+        }
+    }
+
+    // precondition: list.size() == 16
+    void setUpTiles(List<Integer> list) {
+        int i = 0;
+        for (Game2048Tile tile:this) {
+            tile.setValue(list.get(i));
+            i++;
         }
     }
 
@@ -58,8 +68,8 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
     }
 
     private Game2048Tile[] getColumn(int col) {
-        Game2048Tile[] result = new Game2048Tile[dimension];
-        for (int i = 0; i < dimension; i++){
+        Game2048Tile[] result = new Game2048Tile[DIMENSION];
+        for (int i = 0; i < DIMENSION; i++){
             result[i] = tiles[i][col];
         }
         return result;
@@ -70,20 +80,20 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
     }
 
     void mergeList(Game2048Tile[] tileArray, String direction){
-        ArrayList<Integer> temp = new ArrayList<>(dimension);
+        ArrayList<Integer> temp = new ArrayList<>(DIMENSION);
         int i;
         switch (direction) {
             case "LEFT":
                 i = 0;
-                while (i <= dimension-1) {
-                    if (i == dimension-1) {
+                while (i <= DIMENSION -1) {
+                    if (i == DIMENSION -1) {
                         temp.add(tileArray[i].getValue());
                         i++;
                     }
                     else if (tileArray[i].getValue() == 0){i++;}
                     else {
                         int j = i+1;
-                        while (j<dimension-1 && tileArray[j].getValue() == 0) {
+                        while (j< DIMENSION -1 && tileArray[j].getValue() == 0) {
                             j++;
                         }
                         Integer valueI = tileArray[i].getValue();
@@ -101,23 +111,23 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
                     }
                 }
 
-                while (temp.size() != dimension) {
+                while (temp.size() != DIMENSION) {
                     temp.add(0);
                 }
 
-                for (int m = 0; m < dimension; m++){
+                for (int m = 0; m < DIMENSION; m++){
                     if (tileArray[m].getValue() != temp.get(m)){
                         isChanged = true;
                     }
                 }
 
-                for (int k = 0; k < dimension; k++) {
+                for (int k = 0; k < DIMENSION; k++) {
                     tileArray[k].setValue(temp.get(k));
                 }
                 break;
 
             case "RIGHT" :
-                i = dimension - 1;
+                i = DIMENSION - 1;
                 while (i >= 0) {
                     if (i == 0) {
                         temp.add(tileArray[i].getValue());
@@ -143,17 +153,17 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
                     }
                 }
 
-                while (temp.size() != dimension) {
+                while (temp.size() != DIMENSION) {
                     temp.add(0);
                 }
 
-                for (int m = 0; m < dimension; m++) {
+                for (int m = 0; m < DIMENSION; m++) {
                     if (tileArray[m].getValue() != temp.get(temp.size() - 1 - m)) {
                         isChanged = true;
                     }
                 }
 
-                for (i = dimension - 1; i >= 0; i--) {
+                for (i = DIMENSION - 1; i >= 0; i--) {
                     tileArray[i].setValue(temp.get(temp.size()-1-i));
                 }
                 break;
@@ -167,22 +177,22 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
     void merge(String direction) {
         switch (direction) {
             case "LEFT":
-                for (int row = 0; row <= dimension - 1; row++) {
+                for (int row = 0; row <= DIMENSION - 1; row++) {
                     mergeList(tiles[row], "LEFT");
                 }
                 break;
             case "UP":
-                for (int col = 0; col <= dimension - 1; col++) {
+                for (int col = 0; col <= DIMENSION - 1; col++) {
                     mergeList(getColumn(col), "LEFT");
                 }
                 break;
             case "RIGHT":
-                for (int row = 0; row <= dimension - 1; row++) {
+                for (int row = 0; row <= DIMENSION - 1; row++) {
                     mergeList(tiles[row], "RIGHT");
                 }
                 break;
             case "DOWN":
-                for (int col = 0; col <= dimension - 1; col++) {
+                for (int col = 0; col <= DIMENSION - 1; col++) {
                     mergeList(getColumn(col), "RIGHT");
                 }
                 break;
@@ -197,7 +207,7 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
 
 //    private void mergeToRight(Game2048Tile[] tileArray) {
 //        moveEmpty(tileArray, "RIGHT");
-//        for (int j = dimension - 1; j > 0; j--) {
+//        for (int j = DIMENSION - 1; j > 0; j--) {
 //            Game2048Tile tile = tileArray[j];
 //            if (tile.getValue() != 0 && tile.equals(tileArray[j - 1])) {
 //                tile.setValue(tile.getValue() * 2);
@@ -209,7 +219,7 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
 
 //    private void mergeToLeft(Game2048Tile[] tileArray) {
 //        moveEmpty(tileArray, "LEFT");
-//        for (int j = 0; j < dimension - 1; j++) {
+//        for (int j = 0; j < DIMENSION - 1; j++) {
 //            Game2048Tile tile = tileArray[j];
 //            if (tile.getValue() != 0 && tile.equals(tileArray[j + 1])) {
 //                tile.setValue(tile.getValue() * 2);
@@ -224,12 +234,12 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
 //        int i = col;
 //        Integer value = tileArray[i].getValue();
 //        if (direction.equals("LEFT")) {
-//            while (!value.equals(0) && i != dimension - 1) {
+//            while (!value.equals(0) && i != DIMENSION - 1) {
 //                tileArray[i].setValue(tileArray[i + 1].getValue());
 //                i++;
 //                value = tileArray[i].getValue();
 //            }
-//            tileArray[dimension].setValue(0);
+//            tileArray[DIMENSION].setValue(0);
 //            addTile();
 //        } else {
 //            while (!value.equals(0) && i != 0) {
@@ -247,7 +257,7 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
     }
 
     int getDimension() {
-        return dimension;
+        return DIMENSION;
     }
 
     Game2048Tile[][] getTiles() {
@@ -294,9 +304,9 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
         @Override
         public boolean hasNext() {
             int temp = currentPosition + 1;
-            currentRow = temp / dimension;
-            currentCol = temp % dimension;
-            return currentRow < dimension;
+            currentRow = temp / DIMENSION;
+            currentCol = temp % DIMENSION;
+            return currentRow < DIMENSION;
         }
 
         /**
@@ -310,8 +320,8 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
                 throw new NoSuchElementException();
             } else {
                 currentPosition++;
-                currentRow = currentPosition / dimension;
-                currentCol = currentPosition % dimension;
+                currentRow = currentPosition / DIMENSION;
+                currentCol = currentPosition % DIMENSION;
                 return this.tiles[currentRow][currentCol];
             }
         }
