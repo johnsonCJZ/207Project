@@ -12,14 +12,14 @@ import java.util.Observable;
 public class Game2048Board extends Observable implements Serializable, Iterable<Game2048Tile> {
     final static int DIMENSION = 4;
     private int score = 0;
-    private Game2048Tile[][] tiles;
+    private List<Game2048Tile> tiles;
     private boolean isChanged = false;
 
     /**
      * A new empty board of 4*4 slidingTiles.
      */
     Game2048Board() {
-        this.tiles = new Game2048Tile[DIMENSION][DIMENSION];
+        this.tiles = new ArrayList<>();
     }
 
     void setUpTiles() {
@@ -67,15 +67,23 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
         return result;
     }
 
-    private Game2048Tile[] getColumn(int col) {
+    Game2048Tile[] getRow(int row) {
         Game2048Tile[] result = new Game2048Tile[DIMENSION];
-        for (int i = 0; i < DIMENSION; i++){
-            result[i] = tiles[i][col];
+        for (int i = 0; i < DIMENSION; i++) {
+            result[i] = tiles.get(row * DIMENSION + i);
         }
         return result;
     }
 
-    public void setTiles(Game2048Tile[][] tiles){
+    private Game2048Tile[] getColumn(int col) {
+        Game2048Tile[] result = new Game2048Tile[DIMENSION];
+        for (int i = 0; i < DIMENSION; i++) {
+            result[i] = tiles.get(i * DIMENSION + col);
+        }
+        return result;
+    }
+
+    void setTiles(List<Game2048Tile> tiles){
         this.tiles = tiles;
     }
 
@@ -178,7 +186,7 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
         switch (direction) {
             case "LEFT":
                 for (int row = 0; row <= DIMENSION - 1; row++) {
-                    mergeList(tiles[row], "LEFT");
+                    mergeList(getRow(row), "LEFT");
                 }
                 break;
             case "UP":
@@ -188,7 +196,7 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
                 break;
             case "RIGHT":
                 for (int row = 0; row <= DIMENSION - 1; row++) {
-                    mergeList(tiles[row], "RIGHT");
+                    mergeList(getRow(row), "RIGHT");
                 }
                 break;
             case "DOWN":
@@ -253,19 +261,19 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
 //    }
 
     Game2048Tile getTile(int x, int y) {
-        return tiles[x][y];
+        return tiles.get(x * DIMENSION + y);
     }
 
     int getDimension() {
         return DIMENSION;
     }
 
-    Game2048Tile[][] getTiles() {
+    List<Game2048Tile> getTiles() {
         return tiles;
     }
 
     void setTile(int x, int y, Game2048Tile tile){
-        this.tiles[x][y] = tile;
+        tiles.set(x * DIMENSION + y, tile);
     }
 
     @NonNull
@@ -278,10 +286,8 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
      * internal nested iterator iterates through 2-D array slidingTiles
      */
     private class Tile2048Iterator implements Iterator<Game2048Tile> {
-        int currentRow = 0;
-        int currentCol = 0;
         int currentPosition = -1;
-        Game2048Tile[][] tiles;
+        List<Game2048Tile> tiles;
         // eg. (row, col) = (3, 2), then it is indeed at row 3, column 2 (start from 0 ......> 3)
         // we have 3 complete rows, and to make complete: + 2
         // current position = 3*NUM_COLS + 2
@@ -291,7 +297,7 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
          *
          * @param tiles slidingTiles from board
          */
-        Tile2048Iterator(Game2048Tile[][] tiles) {
+        Tile2048Iterator(List<Game2048Tile> tiles) {
             this.tiles = tiles;
         }
 
@@ -303,10 +309,8 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
          */
         @Override
         public boolean hasNext() {
-            int temp = currentPosition + 1;
-            currentRow = temp / DIMENSION;
-            currentCol = temp % DIMENSION;
-            return currentRow < DIMENSION;
+
+            return currentPosition < DIMENSION * DIMENSION -1;
         }
 
         /**
@@ -320,9 +324,7 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
                 throw new NoSuchElementException();
             } else {
                 currentPosition++;
-                currentRow = currentPosition / DIMENSION;
-                currentCol = currentPosition % DIMENSION;
-                return this.tiles[currentRow][currentCol];
+                return this.tiles.get(currentPosition);
             }
         }
     }

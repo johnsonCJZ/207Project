@@ -12,7 +12,7 @@ public class BuilderBoard {
     private int mineWidth, mineHeight;
     private int mine;
     private int mineLeft;
-    private Tile[][] tiles;
+    private List<Tile> tiles;
     private List<MineTile> minePosition = new ArrayList<>();
     private int game2048Score;
     private boolean isChanged = false;
@@ -38,25 +38,24 @@ public class BuilderBoard {
         return this;
     }
 
-    public void setTiles(Tile[][] tiles) {
+    public void setTiles(List<Tile> tiles) {
         this.tiles = tiles;
     }
 
     public void setSlidingTiles() {
-        tiles = new SlidingTile[dimension][dimension];
+        tiles = new ArrayList<>();
     }
 
     public void set2048Tiles() {
-        tiles = new Game2048Tile[4][4];
-        for (int i = 0; i <= 3; i++) {
-            for (int j = 0; j <= 3; j++) {
-                tiles[i][j] = new Game2048Tile();
-            }
+        tiles = new ArrayList<>();
+        for (int i = 0; i < 16; i++) {
+                tiles.set(i, new Game2048Tile());
+
         }
     }
 
     public void setMineTiles(){
-        tiles = new MineTile[mineHeight][mineWidth];
+        tiles = new ArrayList<>();
     }
 
     public BuilderBoard setMinePosition(List<MineTile> minePosition) {
@@ -77,14 +76,14 @@ public class BuilderBoard {
     public SlidingBoard buildSlidingBoard() {
         SlidingBoard slidingBoard = new SlidingBoard();
         slidingBoard.setDimension(dimension);
-        slidingBoard.setSlidingTiles((SlidingTile[][]) tiles);
+        slidingBoard.setSlidingTiles((List<SlidingTile>) (List<?>) tiles);
         return slidingBoard;
     }
 
     public Game2048Board build2048Board() {
         Game2048Board game2048Board = new Game2048Board();
         set2048Tiles();
-        game2048Board.setTiles((Game2048Tile[][]) tiles);
+        game2048Board.setTiles((List<Game2048Tile>) (List<?>) tiles);
         return game2048Board;
     }
 
