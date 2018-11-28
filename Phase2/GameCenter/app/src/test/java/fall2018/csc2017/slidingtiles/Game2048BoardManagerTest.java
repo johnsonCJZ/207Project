@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 public class Game2048BoardManagerTest {
 
+    @Before
     private void setBoard(int largestTile, Game2048Board board){
         int n = 2;
         for (int i = 0; i < 4; i++){
@@ -47,6 +48,11 @@ public class Game2048BoardManagerTest {
     }
 
     @Test
+    public void testNotLoseFullBoard() {
+
+    }
+
+    @Test
     public void testWinContains2048CantMove() {
         Game2048BoardManager manager = new Game2048BoardManager();
         Game2048Board board = manager.getBoard();
@@ -69,5 +75,25 @@ public class Game2048BoardManagerTest {
         Game2048Board board = manager.getBoard();
         setBoard(1024, board);
         assertFalse(manager.isWon());
+    }
+
+    @Test
+    public void testMoveUp() {
+
+    }
+
+    @Test
+    public void testMoveDown() {
+
+    }
+
+    @Test
+    public void testMoveLeft() {
+
+    }
+
+    @Test
+    public void testMoveRight() {
+
     }
 }
