@@ -30,6 +30,14 @@ public class MineTile extends Tile implements Serializable {
         number = 0;
     }
 
+    MineTile(boolean isObscured, int number, boolean isMine, boolean isFlagged) {
+        this.isObscured = isObscured;
+        this.number = number;
+        this.isMine = isMine;
+        this.isFlagged = isFlagged;
+        setBackground();
+    }
+
     void setBackground() {
         if(!isObscured()) {
             switch (number) {
