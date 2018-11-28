@@ -1,11 +1,14 @@
 package fall2018.csc2017.slidingtiles;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import es.dmoral.toasty.Toasty;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 public class CreateNewOrLoad2048Activity extends AppCompatActivity {
@@ -25,19 +28,48 @@ public class CreateNewOrLoad2048Activity extends AppCompatActivity {
         getUser();
         addCreateNewGameButton();
         addResumeGameButton();
+        addLoadGameButton();
     }
 
-    private void addResumeGameButton() {
-//        Button startButton = findViewById(R.id.Resume2048Button);
-//        startButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                boardManager = new Game2048BoardManager();
-//                clearResumeHistory();
-//                switchToGame();
-//            }
-//        });
+    private void addLoadGameButton(){
+        Button loadButton = findViewById(R.id.Load2048Button);
+        loadButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                boardManager = user.getSpecific2048History("history2048");
+                if (boardManager!=null){
+                    switchToGame();}
+                else{
+                    Toasty.info(getApplicationContext(), "No game history",Toast.LENGTH_SHORT, true).show();
+                }
+            }
+        });
     }
+
+    /**
+     * add resume button
+     */
+    private void addResumeGameButton() {
+        Button resumeButton =findViewById(R.id.Resume2048Button);
+        resumeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boardManager = user.getSpecific2048History("resumeHistory2048");
+                if (boardManager != null) {
+                    user.setSlideHistory("resumeHistory2048", null);
+                    switchToGame();
+                }
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder
+                            (getApplicationContext());
+                    builder.setMessage("History not found");
+                    AlertDialog d = builder.create();
+                    d.show();
+                }
+            }
+        });
+    }
+
 
     private void addCreateNewGameButton() {
         Button startButton = findViewById(R.id.New2048Button);
@@ -45,7 +77,7 @@ public class CreateNewOrLoad2048Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boardManager = new Game2048BoardManager();
-//                clearResumeHistory();
+                user.setGame2048History("resumeHistory2048", null);
                 switchToGame();
             }
         });

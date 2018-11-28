@@ -171,9 +171,9 @@ public class SlideGameFragment extends Fragment {
         resumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                slidingBoardManager = (SlidingBoardManager) user.getSpecificSlideHistory("resumeHistory");
+                slidingBoardManager = (SlidingBoardManager) user.getSpecificSlideHistory("resumeHistorySlide");
                 if (slidingBoardManager != null) {
-                    slidingBoardManager = (SlidingBoardManager) user.getSpecificSlideHistory("resumeHistory");
+                    slidingBoardManager = (SlidingBoardManager) user.getSpecificSlideHistory("resumeHistorySlide");
                     user.setSlideHistory("resumeHistorySlide", null);
                     switchToGame();
                 }

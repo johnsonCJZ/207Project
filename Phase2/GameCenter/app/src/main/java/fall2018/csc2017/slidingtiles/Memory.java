@@ -24,7 +24,7 @@ public class Memory implements Serializable {
 //                    board.add(tile.getId());
 //                }
 //                size = ((SlidingBoardManager) manager).getSlidingBoard().getDimension();
-//                time = ((SlidingBoardManager) manager).getTime();
+//                time = ((SlidingBoardManager) manager).getTime2048();
 //                break;
 //            case "Mine":
 //                List<MineTile> tempMine = ((MineBoardManager)manager).getBoard().getMinePosition();
