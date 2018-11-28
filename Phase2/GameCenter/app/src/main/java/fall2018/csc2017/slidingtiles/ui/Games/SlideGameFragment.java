@@ -171,10 +171,10 @@ public class SlideGameFragment extends Fragment {
         resumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                slidingBoardManager = (SlidingBoardManager) user.getSpecificHistory("resumeHistory");
+                slidingBoardManager = (SlidingBoardManager) user.getSpecificSlideHistory("resumeHistory");
                 if (slidingBoardManager != null) {
-                    slidingBoardManager = (SlidingBoardManager) user.getSpecificHistory("resumeHistory");
-                    user.getHistory().put("resumeHistorySlide", null);
+                    slidingBoardManager = (SlidingBoardManager) user.getSpecificSlideHistory("resumeHistory");
+                    user.setSlideHistory("resumeHistorySlide", null);
                     switchToGame();
                 }
                 else {
@@ -237,16 +237,16 @@ public class SlideGameFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: // 3x3
-                        BoardManager manager= user.getSpecificHistory("history3x3");
+                        BoardManager manager= user.getSpecificSlideHistory("history3x3");
                         slidingBoardManager =(SlidingBoardManager) manager;
                         boardSize = 3;
                         break;
                     case 1: // 4x4
-                        slidingBoardManager = (SlidingBoardManager) user.getSpecificHistory("history4x4");
+                        slidingBoardManager = (SlidingBoardManager) user.getSpecificSlideHistory("history4x4");
                         boardSize = 4;
                         break;
                     case 2: // 5x5
-                        slidingBoardManager = (SlidingBoardManager) user.getSpecificHistory("history5x5");
+                        slidingBoardManager = (SlidingBoardManager) user.getSpecificSlideHistory("history5x5");
                         boardSize = 5;
                         break;
                 }

@@ -32,7 +32,7 @@ public class MineDifficultyActivity extends AppCompatActivity {
         resume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = (MineBoardManager) user.getSpecificHistory("ResumeHistoryMine");
+                boardManager = (MineBoardManager) user.getSpecificMineHistory("ResumeHistoryMine");
                 if (boardManager!=null){
                     switchToGame();}
                 else{
@@ -57,7 +57,7 @@ public class MineDifficultyActivity extends AppCompatActivity {
         load.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                boardManager = (MineBoardManager) user.getSpecificHistory("HistoryMine");
+                boardManager = user.getSpecificMineHistory("historyMine");
                 if (boardManager!=null){
                     switchToGame();}
                 else{

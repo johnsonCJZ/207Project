@@ -163,18 +163,18 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
     private void saveHistory(DialogInterface dialog) {
         switch (size) {
             case 3:
-                user.setHistory("history3x3", (SlidingBoardManager) slidingBoardManager, myDB);
+                user.setSlideHistory("history3x3", (SlidingBoardManager) slidingBoardManager);
                 break;
             case 4:
-                user.setHistory("history4x4",(SlidingBoardManager) slidingBoardManager, myDB);
+                user.setSlideHistory("history4x4",(SlidingBoardManager) slidingBoardManager);
                 break;
 
             case 5:
-                user.setHistory("history5x5",(SlidingBoardManager) slidingBoardManager, myDB);
+                user.setSlideHistory("history5x5",(SlidingBoardManager) slidingBoardManager);
                 break;
                 }
                 dialog.cancel();
-
+        myDB.updateUser(username,user);
     }
 
     /**
@@ -182,7 +182,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
      */
     private void autoSave() {
         slidingBoardManager.setTime(count);
-        user.setHistory("resumeHistory", (SlidingBoardManager) slidingBoardManager, myDB);
+        user.setSlideHistory("resumeHistory", (SlidingBoardManager) slidingBoardManager);
     }
 
 
@@ -217,7 +217,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                                     if (slidingBoardManager.isWon() && !isPaused) {
                                         slidingBoardManager.setTime(count);
                                         isPaused = true;
-                                        user.getHistory().put("resumeHistory", null);
+                                        user.setSlideHistory("resumeHistory", null);
                                         winAlert();
                                     }
                                     else {
@@ -285,7 +285,7 @@ public class MainSlideActivity extends AppCompatActivity implements Observer {
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         MainSlideActivity.this.finish();
-                        user.getHistory().put("resumeHistory", null);
+                        user.setSlideHistory("resumeHistory", null);
                         switchToGameCenter();
                     }
                 });

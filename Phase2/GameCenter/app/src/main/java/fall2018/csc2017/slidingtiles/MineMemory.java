@@ -7,10 +7,10 @@ public class MineMemory extends Memory {
     private int width;
     private int height;
     private int mine;
-    private List<Boolean> isObscuredOfTiles;
-    private List<Integer> numberOfTiles;
-    private List<Boolean> isMineOfTiles;
-    private List<Boolean> isFlaggedOfTiles;
+    private List<Boolean> isObscuredOfTiles= new ArrayList<>();
+    private List<Integer> numberOfTiles = new ArrayList<>();
+    private List<Boolean> isMineOfTiles = new ArrayList<>();
+    private List<Boolean> isFlaggedOfTiles = new ArrayList<>();
 
     public void makeCopy(MineBoardManager manager) {
         width = manager.getBoard().getWidth();

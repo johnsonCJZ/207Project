@@ -138,8 +138,15 @@ public class InfoPanelMainActivity extends AppCompatActivity
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
         currentUser = (String)DataHolder.getInstance().retrieve("current user");
-        this.user = myDB.selectUser(currentUser);
+        try {
+            this.user = myDB.selectUser(currentUser);
+        }
+        catch (RuntimeException e){
+            myDB = new DatabaseHelper(this);
+        }
+
         this.users = myDB.selectAccountManager();
+
         try {
             this.fragment = extra.getString("fragment");
         }

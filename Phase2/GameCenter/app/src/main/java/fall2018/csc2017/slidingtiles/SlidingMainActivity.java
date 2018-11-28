@@ -161,27 +161,28 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
     private void saveHistory(DialogInterface dialog) {
         switch (size) {
             case 3:
-                user.setHistory("history3x3",slidingBoardManager);
+                user.setSlideHistory("history3x3",slidingBoardManager);
                 break;
             case 4:
-                user.setHistory("history4x4",slidingBoardManager);
+                user.setSlideHistory("history4x4",slidingBoardManager);
                 break;
-
             case 5:
-                user.setHistory("history5x5",slidingBoardManager);
+                user.setSlideHistory("history5x5",slidingBoardManager);
                 break;
         }
         myDB.updateUser(username,user);
         dialog.cancel();
     }
 
-//    /**
-//     * Automatically save the game for resuming.
-//     */
-//    private void autoSave() {
-//        slidingBoardManager.setTime(count);
-//        user.setHistory("resumeHistorySlide", (BoardManager) slidingBoardManager);
-//    }
+    /**
+     * Automatically save the game for resuming.
+     */
+    private void autoSave() {
+        user.setSlideHistory("resumeHistorySlide", null);
+        slidingBoardManager.setTime(count);
+        user.setSlideHistory("resumeHistorySlide", slidingBoardManager);
+        myDB.updateUser(username,user);
+    }
 
 
     /**
@@ -215,7 +216,7 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
                                     if (slidingBoardManager.isWon() && !isPaused) {
                                         slidingBoardManager.setTime(count);
                                         isPaused = true;
-                                        user.getHistory().put("resumeHistorySlide", new SlidingMemory());
+                                        user.setSlideHistory("resumeHistorySlide", null);
                                         winAlert();
                                     }
                                     else {
@@ -224,7 +225,7 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
                                             tempCount += 0.01;
                                         } else {
                                             tempCount = 0;
-//                                            autoSave();
+                                            autoSave();
                                         }
                                         time.setText(String.valueOf(df2.format(count)) + " s");
                                     }
@@ -283,7 +284,7 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         SlidingMainActivity.this.finish();
-                        user.getHistory().put("resumeHistory", null);
+                        user.setSlideHistory("resumeHistory", null);
                         switchToGameCenter();
                     }
                 });

@@ -182,7 +182,7 @@ public class Game2048MainActivity extends AppCompatActivity implements Observer 
     }
 
     private void autoSave() {
-        user.setHistory("resumeHistoryM2048", boardManager,myDB);
+        user.setGame2048History("resumeHistory2048", boardManager);
     }
 
     private void addFadeInAnimation(Button b){
@@ -225,7 +225,7 @@ public class Game2048MainActivity extends AppCompatActivity implements Observer 
                 .setNegativeButton("See My Rank ", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Game2048MainActivity.this.finish();
-                        user.getHistory().put("resumeHistory", null);
+                        user.setGame2048History("resumeHistory2048", null);
                         switchToScoreBoard();
                     }
                 });

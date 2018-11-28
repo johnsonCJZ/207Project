@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class SlidingMemory extends Memory {
@@ -20,7 +21,9 @@ public class SlidingMemory extends Memory {
 //        Type type1 = new TypeToken<List<SlidingTile>>(){}.getType();
 //        this.slidingTiles  = gson1.toJson(manager.getSlidingTiles(),type1);
 //        System.out.println(this.slidingTiles);
-        for (SlidingTile t: manager.getSlidingTiles()){
+        Iterator itr = manager.getSlidingBoard().iterator();
+        while(itr.hasNext()){
+            SlidingTile t = (SlidingTile) itr.next();
             this.slidingTiles.add(t.getId());
         }
         System.out.println(this.slidingTiles);

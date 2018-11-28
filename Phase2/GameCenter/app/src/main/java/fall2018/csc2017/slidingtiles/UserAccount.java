@@ -1,13 +1,8 @@
 package fall2018.csc2017.slidingtiles;
 
-import com.google.gson.Gson;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
-import fall2018.csc2017.slidingtiles.ui.Games.SlideGameFragment;
 
 /**
  * Represent a user's user account.
@@ -37,7 +32,11 @@ public class UserAccount implements Serializable {
     /**
      * The sliding slidingTiles game history of the UserAccount.
      */
-    private HashMap<String, String> history = new HashMap<>();
+    private HashMap<String, SlidingMemory> historySliding = new HashMap<>();
+
+    private HashMap<String, MineMemory> historyMine = new HashMap<>();
+
+    private HashMap<String, Game2048Memory> history2048 = new HashMap<>();
 
     /**
      * The sliding slidingTiles score list of the UserAccount
@@ -65,14 +64,14 @@ public class UserAccount implements Serializable {
         this.age = 0;
         this.email = "";
         games = new ArrayList<>();
-        history.put("history3x3", null);
-        history.put("history4x4", null);
-        history.put("history5x5",null);
-        history.put("resumeHistorySlide", null);
-        history.put("resumeHistoryMine", null);
-        history.put("resumeHistory2048", null);
-        history.put("historyMine",null);
-        history.put("history2048",null);
+        historySliding.put("history3x3", new SlidingMemory());
+        historySliding.put("history4x4", new SlidingMemory());
+        historySliding.put("history5x5", new SlidingMemory());
+        historySliding.put("resumeHistorySlide", new SlidingMemory());
+        historyMine.put("resumeHistoryMine", new MineMemory());
+        history2048.put("resumeHistory2048", new Game2048Memory());
+        historyMine.put("historyMine",new MineMemory());
+        history2048.put("history2048",new Game2048Memory());
         personalScoreBoard.put("history3x3", new ScoreBoard("SlidingTiles"));
         personalScoreBoard.put("history4x4", new ScoreBoard("SlidingTiles"));
         personalScoreBoard.put("history5x5", new ScoreBoard("SlidingTiles"));
@@ -149,24 +148,60 @@ public class UserAccount implements Serializable {
      */
     public ArrayList<Integer> getUserScoreList(){return this.userScoreList;}
 
-    public boolean setHistory(String key, BoardManager item, DatabaseHelper myDB){
-        String userJson = myDB.convertBoardManagerToJson(item);
-        if (history.get(key) == null) {
-            history.put(key, userJson);
-            return true;
+    public void setSlideHistory (String key, SlidingBoardManager item){
+        if(item!=null){
+        SlidingMemory memory = this.historySliding.get(key);
+        SlidingMemory slidingMemory= (SlidingMemory)memory;
+        slidingMemory.makeCopy((SlidingBoardManager) item);
+        if (historySliding.get(key) == null) {
+            historySliding.put(key, slidingMemory); }
+
+        else {
+            historySliding.replace(key, slidingMemory);
+            }}
+        else{historySliding.replace(key, new SlidingMemory());}
+    }
+    public void setGame2048History (String key, Game2048BoardManager item){
+        if(item!=null) {
+            Game2048Memory memory = this.history2048.get(key);
+            Game2048Memory game2048Memory = memory;
+            game2048Memory.makeCopy(item);
+            if (history2048.get(key) == null) {
+                history2048.put(key, game2048Memory);
+            }
+            else {
+                history2048.replace(key, game2048Memory);
+            }
         }
         else {
-            history.replace(key, userJson);
-            return false;
+            history2048.replace(key, new Game2048Memory());
         }
     }
+    public void setMineHistory (String key, MineBoardManager item){
+        if(item!=null){
+        MineMemory memory = this.historyMine.get(key);
+        memory.makeCopy(item);
+        if (historyMine.get(key) == null) {
+            historyMine.put(key, memory); }
 
+        else {
+            historyMine.replace(key, memory);
+        }}
+        else{historyMine.replace(key, new MineMemory());}}
     /**
      * The getter for the History of the UserAccount.
      * @return the History
      */
-    public HashMap<String, String> getHistory(){
-        return history;
+    public HashMap<String, SlidingMemory> getSlideHistory(){
+        return historySliding;
+    }
+
+    public HashMap<String, MineMemory> getMineHistory(){
+        return historyMine;
+    }
+
+    public HashMap<String, Game2048Memory> get2048History(){
+        return history2048;
     }
 
     /**
@@ -186,20 +221,26 @@ public class UserAccount implements Serializable {
         this.games.add(game);
     }
 
-    public BoardManager getSpecificHistory(String key){
-        Gson gson = new Gson();
-        String userJson = this.getHistory().get(key);
-        String currentGame = (String) DataHolder.getInstance().retrieve("current game");
-        switch (currentGame){
-            case "Slide":
-                return gson.fromJson(userJson, SlidingBoardManager.class);
-            case "Mine":
-                return gson.fromJson(userJson, MineBoardManager.class);
-            case "2048":
-                return gson.fromJson(userJson, Game2048BoardManager.class);
+    public SlidingBoardManager getSpecificSlideHistory(String key){
+        SlidingMemory memory = this.getSlideHistory().get(key);
+        if (memory==null){
+            return null;
         }
-        return null;
-    }
+        return memory.copy();}
+
+    public MineBoardManager getSpecificMineHistory(String key){
+        MineMemory memory = this.getMineHistory().get(key);
+        if (memory==null){
+            return null;
+        }
+        return memory.copy();}
+
+    public Game2048BoardManager getSpecific2048History(String key){
+        Game2048Memory memory = this.get2048History().get(key);
+        if (memory==null){
+            return null;
+        }
+        return memory.copy();}
 
 
     public ArrayList<String> getGames() {

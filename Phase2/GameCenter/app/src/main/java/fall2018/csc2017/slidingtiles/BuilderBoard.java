@@ -47,7 +47,12 @@ public class BuilderBoard {
     }
 
     public void set2048Tiles() {
-        tiles = new Game2048Tile[dimension][dimension];
+        tiles = new Game2048Tile[4][4];
+        for (int i = 0; i <= 3; i++) {
+            for (int j = 0; j <= 3; j++) {
+                tiles[i][j] = new Game2048Tile();
+            }
+        }
     }
 
     public void setMineTiles(){
@@ -78,6 +83,7 @@ public class BuilderBoard {
 
     public Game2048Board build2048Board() {
         Game2048Board game2048Board = new Game2048Board();
+        set2048Tiles();
         game2048Board.setTiles((Game2048Tile[][]) tiles);
         return game2048Board;
     }

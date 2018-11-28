@@ -111,12 +111,6 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
         }
     }
 
-    //    private void makeTilesUnable(){
-//        isMutted=true;
-//        for (Button b: tileButtons){
-//            b.setEnabled(false);
-//        }
-//    }
     void updateMineLeft(){
         final TextView mineLeft = findViewById(R.id.mineLeft);
         mineLeft.setText("Mine: " + String.valueOf(boardManager.getBoard().getMineLeft()));
@@ -139,7 +133,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
         Intent intent = new Intent(this, InfoPanelMainActivity.class);
         Bundle pass = new Bundle();
         myDB.updateAccountManager(users);
-//        pass.putSerializable("allUsers", this.users);
+        myDB.updateUser(currentUser,user);
         pass.putString("fragment", "Mine");
         intent.putExtras(pass);
         startActivity(intent);
@@ -198,7 +192,8 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
      * @param dialog
      */
     private void saveHistory(DialogInterface dialog){
-        user.setHistory("historyMine", boardManager,myDB);
+        user.setMineHistory("historyMine", boardManager);
+        myDB.updateUser(currentUser,user);
         dialog.cancel();
     }
 
@@ -207,8 +202,8 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
      */
     private void autoSave(){
         boardManager.setTime(count);
-        user.setHistory("resumeHistoryMine", boardManager, myDB);
-
+        user.setMineHistory("resumeHistoryMine", boardManager);
+        myDB.updateUser(currentUser,user);
     }
 
 
@@ -290,7 +285,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
                 })
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        user.getHistory().put("resumeHistory", null);
+                        user.setMineHistory("resumeHistoryMine", null);
                         dialog.dismiss();
                     }
                 });
@@ -313,7 +308,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
                 })
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        user.getHistory().put("resumeHistory", null);
+                        user.setMineHistory("resumeHistoryMine", null);
                         dialog.dismiss();
                     }
                 });
@@ -355,7 +350,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
                                     if (boardManager.isWon() && !isPaused) {
                                         boardManager.setTime(count);
                                         isPaused = true;
-                                        user.getHistory().put("resumeHistoryMine", null);
+                                        user.setMineHistory("resumeHistoryMine", null);
                                         face.setImageResource(R.drawable.win);
                                         gridView.freeze();
                                         winAlert();
@@ -363,7 +358,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
                                     else if (boardManager.isLost() && !isPaused){
                                         boardManager.setTime(count);
                                         isPaused = true;
-                                        user.getHistory().put("resumeHistoryMine", null);
+                                        user.setMineHistory("resumeHistoryMine", null);
                                         face.setImageResource(R.drawable.sad);
                                         gridView.freeze();
                                         loseAlert();
