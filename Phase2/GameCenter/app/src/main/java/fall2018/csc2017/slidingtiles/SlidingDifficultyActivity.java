@@ -41,7 +41,7 @@ public class SlidingDifficultyActivity extends AppCompatActivity {
      * Clear the autosave history.
      */
     private void clearResumeHistory(){
-        user.setSlideHistory("resumeHistory", null);
+        user.setSlideHistory("resumeHistorySlide", null);
     }
 
     /**

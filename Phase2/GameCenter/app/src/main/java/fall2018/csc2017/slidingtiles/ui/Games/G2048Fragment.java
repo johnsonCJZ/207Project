@@ -47,26 +47,19 @@ public class G2048Fragment extends Fragment {
 
     private void addStartButton() {
         Image2048.setOnClickListener(new View.OnClickListener() {
-
             @Override
-            public void onClick(View view) {
-                Image2048.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        boardManager = user.getSpecific2048History("resumeHistory2048");
-                        if (boardManager != null) {
-                            switchToGame();
-                        } else {
-                            boardManager = new Game2048BoardManager();
-                            user.setGame2048History("resumeHistory2048", null);
-                            switchToGame();
-                        }
-                    }
-                });
-            }
-
+            public void onClick(View v) {
+                boardManager = user.getSpecific2048History("resumeHistory2048");
+                if (boardManager != null) {
+                    switchToGame();
+                    } else {
+                    boardManager = new Game2048BoardManager();
+                    user.setGame2048History("resumeHistory2048", null);
+                    switchToGame();
+                    } }
         });
-    }
+        }
+
 
     private void switchToGame() {
         Intent tmp = new Intent(getContext(), Game2048MainActivity.class);
