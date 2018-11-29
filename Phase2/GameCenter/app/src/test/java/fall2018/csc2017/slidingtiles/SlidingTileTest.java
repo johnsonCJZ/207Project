@@ -127,11 +127,6 @@ public class SlidingTileTest {
     }
 
     @Test
-    public void isSolvable(){
-
-    }
-
-    @Test
     public void testWonZeroAtBeginning(){
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>();
         Arrays.asList(new SlidingTile(0), new SlidingTile(1),
@@ -192,8 +187,59 @@ public class SlidingTileTest {
     }
 
     @Test
-    public void touchMove(){
-
+    public void testMoveCorner() {
+        ArrayList<SlidingTile> tilesToTest = new ArrayList<>();
+        Arrays.asList(new SlidingTile(0), new SlidingTile(1),
+                new SlidingTile(2), new SlidingTile(3),
+                new SlidingTile(4), new SlidingTile(5),
+                new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
+        );
+        SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
+        testCase.touchMove(1);
+        List<SlidingTile> tiles = testCase.getSlidingTiles();
+        int[] expected = {1, 0, 2, 3, 4, 5, 6, 7, 8};
+        int[] actual = new int[tilesToTest.size()];
+        for (int i = 0; i < tilesToTest.size(); i++) {
+            actual[i] = tiles.get(i).getId();
+        }
+        assertArrayEquals(expected, actual);
     }
 
+    @Test
+    public void testMoveSide() {
+        ArrayList<SlidingTile> tilesToTest = new ArrayList<>();
+        Arrays.asList(new SlidingTile(1), new SlidingTile(0),
+                new SlidingTile(2), new SlidingTile(3),
+                new SlidingTile(4), new SlidingTile(5),
+                new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
+        );
+        SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
+        testCase.touchMove(0);
+        List<SlidingTile> tiles = testCase.getSlidingTiles();
+        int[] expected = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+        int[] actual = new int[tilesToTest.size()];
+        for (int i = 0; i < tilesToTest.size(); i++) {
+            actual[i] = tiles.get(i).getId();
+        }
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void testMoveMiddle() {
+        ArrayList<SlidingTile> tilesToTest = new ArrayList<>();
+        Arrays.asList(new SlidingTile(1), new SlidingTile(2),
+                new SlidingTile(3), new SlidingTile(4),
+                new SlidingTile(0), new SlidingTile(5),
+                new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
+        );
+        SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
+        testCase.touchMove(1);
+        List<SlidingTile> tiles = testCase.getSlidingTiles();
+        int[] expected = {1, 0, 3, 4, 2, 5, 6, 7, 8};
+        int[] actual = new int[tilesToTest.size()];
+        for (int i = 0; i < tilesToTest.size(); i++) {
+            actual[i] = tiles.get(i).getId();
+        }
+        assertArrayEquals(expected, actual);
+    }
 }

@@ -12,8 +12,8 @@ public class MineTest {
 
     @Before
     public void setUp() {
-        board = new MineBoard(9,9,10);
-        board.setTiles();
+        board = new MineBoard();
+//        board.setTiles();
     }
 
     @Test
@@ -22,26 +22,14 @@ public class MineTest {
         assertEquals(3,board.getSurround(0).size());
         assertEquals(8,board.getSurround(15).size());
         for (MineTile tile: board.getSurround(15)) {
-            int tileRow = tile.getPosition()/board.getW();
-            int tileCol = tile.getPosition()%board.getW();
-            int row = 15/board.getW();
-            int col = 15%board.getW();
+            int tileRow = tile.getPosition()/board.getDimension();
+            int tileCol = tile.getPosition()%board.getDimension();
+            int row = 15/board.getDimension();
+            int col = 15%board.getDimension();
             assertTrue(tileRow - row <= 1 && tileRow - row >= -1 && tileCol - col <= 1 && tileCol - col >= -1);
         }
     }
 
-    @Test
-    public void testSetMines() {
-
-    }
-
-    @Test
-    public void testGetBackground() {
-        setUp();
-        assertEquals(tile.getBackground(), R.drawable.mine_mask);
-        tile.reveal();
-        assertEquals(tile.getBackground(), R.drawable.mine_base);
-    }
 
     @Test
     public void testShowMine() {
@@ -52,15 +40,6 @@ public class MineTest {
         tile.reveal();
         tile.showMine();
         assertEquals(tile.getBackground(), R.drawable.mine_b);
-    }
-
-    @Test
-    public void testSetMine() {
-        setUp();
-        tile.setMine();
-        tile.reveal();
-        assertEquals(-1, tile.getNumber());
-        assertEquals(R.drawable.mine_b, tile.getBackground());
     }
 
     @Test
@@ -77,13 +56,6 @@ public class MineTest {
         assertTrue(tile.isObscured());
         tile.reveal();
         assertFalse(tile.isObscured());
-    }
-
-    @Test
-    public void testSetNumber() {
-        setUp();
-        tile.setNumber(1);
-        assertEquals(1, tile.getNumber());
     }
 
     @Test
@@ -104,23 +76,21 @@ public class MineTest {
         assertTrue(tile.isObscured());
     }
 
+
     @Test
-    public void getNumber() {
-        setUp();
-        assertEquals(0, tile.getNumber());
+    public void touchMove() {
+
     }
 
     @Test
-    public void getPosition() {
-        setUp();
-        tile.setPosition(1);
-        assertEquals(1, tile.getPosition());
+    public void mark() {
     }
 
     @Test
-    public void setPosition() {
-        setUp();
-        tile.setPosition(0);
-        assertEquals(0, tile.getPosition());
+    public void isLost() {
+    }
+
+    @Test
+    public void isWon() {
     }
 }

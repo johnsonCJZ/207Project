@@ -3,11 +3,38 @@ package fall2018.csc2017.slidingtiles;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class Game2048Test {
 
-    @Before
+    private Game2048BoardManager manager = new Game2048BoardManager();
+    private Game2048Board board = manager.getBoard();
+
+    private void setBoardCannotMove(int largestTile){
+        board.setUpTiles();
+        int n = 2;
+        List<Game2048Tile> tiles = board.getTiles();
+        for (Game2048Tile tile: tiles){
+            tile.setValue(n);
+            if(n < largestTile){
+                n = n * 2;
+            }
+            else{
+                n = 2;
+            }
+        }
+    }
+
+    private void setBoardCanMove(){
+        board.setUpTiles();
+        List<Game2048Tile> tiles = board.getTiles();
+        for (Game2048Tile tile: tiles){
+            tile.setValue(2);
+        }
+    }
+
     private int[] tileToInt(Game2048Tile[] line) {
         int[] intLine = new int[4];
         for (int i = 0; i < 4; i++) {
@@ -16,7 +43,6 @@ public class Game2048Test {
         return intLine;
     }
 
-    @Before
     private Game2048Tile[] intToTile(int[] intLine) {
         Game2048Tile tile1 = new Game2048Tile();
         tile1.setValue(intLine[0]);
@@ -26,16 +52,58 @@ public class Game2048Test {
         tile3.setValue(intLine[2]);
         Game2048Tile tile4 = new Game2048Tile();
         tile4.setValue(intLine[3]);
-        Game2048Tile[] tileLine = {
+        return new Game2048Tile[]{
                 tile1, tile2, tile3, tile4
         };
-        return tileLine;
     }
 
-    @Before
     public void setUp(Game2048Tile[] testCase, String direction) {
-        Game2048Board board = new Game2048Board();
         board.mergeList(testCase, direction);
+    }
+
+    @Test
+    public void testLose() {
+        setBoardCannotMove(1024);
+        assertTrue(manager.isLose());
+    }
+
+    @Test
+    public void testNotLoseHas2048CanMove() {
+        board.setUpTiles();
+        manager.cheat();
+        assertFalse(manager.isLose());
+    }
+
+    @Test
+    public void testNotLoseHas2048CantMove() {
+        setBoardCannotMove(2048);
+        assertFalse(manager.isLose());
+    }
+
+    @Test
+    public void testNotLoseFullBoard() {
+        setBoardCanMove();
+        assertFalse(manager.isLose());
+    }
+
+    @Test
+    public void testWinContains2048CantMove() {
+        setBoardCannotMove(2048);
+        assertTrue(manager.isWon());
+    }
+
+    @Test
+    public void testNotWinCanMove() {
+        board.setUpTiles();
+        Game2048Tile tile= board.getTile(0, 0);
+        tile.setValue(2);
+        assertFalse(manager.isWon());
+    }
+
+    @Test
+    public void testNotWinCantMove() {
+        setBoardCannotMove(1024);
+        assertFalse(manager.isWon());
     }
 
     @Test
@@ -44,7 +112,9 @@ public class Game2048Test {
         int[] before = {2, 4, 0, 0};
         Game2048Tile[] actual = intToTile(before);
         setUp(actual, "RIGHT");
-        assertEquals(expected, tileToInt(actual));
+        for (int i = 0; i < 4; i++) {
+            assertEquals(expected[i], tileToInt(actual)[i]);
+        }
     }
 
     @Test
@@ -53,7 +123,9 @@ public class Game2048Test {
         int[] before = {0, 0, 2, 2};
         Game2048Tile[] actual = intToTile(before);
         setUp(actual, "RIGHT");
-        assertEquals(expected, tileToInt(actual));
+        for (int i = 0; i < 4; i++) {
+            assertEquals(expected[i], tileToInt(actual)[i]);
+        }
     }
 
     @Test
@@ -62,8 +134,9 @@ public class Game2048Test {
         int[] before = {4, 4, 0, 0};
         Game2048Tile[] actual = intToTile(before);
         setUp(actual, "RIGHT");
-        assertEquals(expected, tileToInt(actual));
-
+        for (int i = 0; i < 4; i++) {
+            assertEquals(expected[i], tileToInt(actual)[i]);
+        }
     }
 
     @Test
@@ -72,7 +145,9 @@ public class Game2048Test {
         int[] before = {0, 0, 8, 16};
         Game2048Tile[] actual = intToTile(before);
         setUp(actual, "RIGHT");
-        assertEquals(expected, tileToInt(actual));
+        for (int i = 0; i < 4; i++) {
+            assertEquals(expected[i], tileToInt(actual)[i]);
+        }
     }
 
     @Test
@@ -81,7 +156,9 @@ public class Game2048Test {
         int[] before = {2, 0, 2, 4};
         Game2048Tile[] actual = intToTile(before);
         setUp(actual, "RIGHT");
-        assertEquals(expected, tileToInt(actual));
+        for (int i = 0; i < 4; i++) {
+            assertEquals(expected[i], tileToInt(actual)[i]);
+        }
     }
 
     @Test
@@ -90,7 +167,9 @@ public class Game2048Test {
         int[] before = {1024, 0, 1024, 512};
         Game2048Tile[] actual = intToTile(before);
         setUp(actual, "RIGHT");
-        assertEquals(expected, tileToInt(actual));
+        for (int i = 0; i < 4; i++) {
+            assertEquals(expected[i], tileToInt(actual)[i]);
+        }
     }
 
     @Test
@@ -99,7 +178,9 @@ public class Game2048Test {
         int[] before = {256, 256, 2048, 512};
         Game2048Tile[] actual = intToTile(before);
         setUp(actual, "RIGHT");
-        assertEquals(expected, tileToInt(actual));
+        for (int i = 0; i < 4; i++) {
+            assertEquals(expected[i], tileToInt(actual)[i]);
+        }
     }
 
     @Test
@@ -108,7 +189,9 @@ public class Game2048Test {
         int[] before = {64, 64, 128, 128};
         Game2048Tile[] actual = intToTile(before);
         setUp(actual, "RIGHT");
-        assertEquals(expected, tileToInt(actual));
+        for (int i = 0; i < 4; i++) {
+            assertEquals(expected[i], tileToInt(actual)[i]);
+        }
     }
 
     @Test
@@ -117,7 +200,9 @@ public class Game2048Test {
         int[] before = {0, 0, 2, 4};
         Game2048Tile[] actual = intToTile(before);
         setUp(actual, "LEFT");
-        assertEquals(expected, tileToInt(actual));
+        for (int i = 0; i < 4; i++) {
+            assertEquals(expected[i], tileToInt(actual)[i]);
+        }
     }
 
     @Test
@@ -126,7 +211,9 @@ public class Game2048Test {
         int[] before = {2, 2, 0, 0};
         Game2048Tile[] actual = intToTile(before);
         setUp(actual, "LEFT");
-        assertEquals(expected, tileToInt(actual));
+        for (int i = 0; i < 4; i++) {
+            assertEquals(expected[i], tileToInt(actual)[i]);
+        }
     }
 
     @Test
@@ -135,7 +222,9 @@ public class Game2048Test {
         int[] before = {0, 4, 0, 4};
         Game2048Tile[] actual = intToTile(before);
         setUp(actual, "LEFT");
-        assertEquals(expected, tileToInt(actual));
+        for (int i = 0; i < 4; i++) {
+            assertEquals(expected[i], tileToInt(actual)[i]);
+        }
     }
 
     @Test
@@ -144,7 +233,9 @@ public class Game2048Test {
         int[] before = {1024, 2, 0, 0};
         Game2048Tile[] actual = intToTile(before);
         setUp(actual, "LEFT");
-        assertEquals(expected, tileToInt(actual));
+        for (int i = 0; i < 4; i++) {
+            assertEquals(expected[i], tileToInt(actual)[i]);
+        }
     }
 
     @Test
@@ -153,7 +244,9 @@ public class Game2048Test {
         int[] before = {4, 2, 2, 0};
         Game2048Tile[] actual = intToTile(before);
         setUp(actual, "LEFT");
-        assertEquals(expected, tileToInt(actual));
+        for (int i = 0; i < 4; i++) {
+            assertEquals(expected[i], tileToInt(actual)[i]);
+        }
     }
 
     @Test
@@ -162,7 +255,9 @@ public class Game2048Test {
         int[] before = {512, 1024, 0, 1024};
         Game2048Tile[] actual = intToTile(before);
         setUp(actual, "LEFT");
-        assertEquals(expected, tileToInt(actual));
+        for (int i = 0; i < 4; i++) {
+            assertEquals(expected[i], tileToInt(actual)[i]);
+        }
     }
 
     @Test
@@ -171,7 +266,9 @@ public class Game2048Test {
         int[] before = {512, 2048, 256, 256};
         Game2048Tile[] actual = intToTile(before);
         setUp(actual, "LEFT");
-        assertEquals(expected, tileToInt(actual));
+        for (int i = 0; i < 4; i++) {
+            assertEquals(expected[i], tileToInt(actual)[i]);
+        }
     }
 
     @Test
@@ -180,6 +277,8 @@ public class Game2048Test {
         int[] before = {8, 8, 16, 16};
         Game2048Tile[] actual = intToTile(before);
         setUp(actual, "LEFT");
-        assertEquals(expected, tileToInt(actual));
+        for (int i = 0; i < 4; i++) {
+            assertEquals(expected[i], tileToInt(actual)[i]);
+        }
     }
 }
