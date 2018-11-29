@@ -347,7 +347,7 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
         }
         slidingTiles.add(new SlidingTile(0));
         slidingTiles.add(new SlidingTile(numTiles-1));
-        slidingBoardManager.getSlidingBoard().setSlidingTiles(slidingTiles);
+        slidingBoardManager.setSlidingTiles(slidingTiles);
     }
 
     /**
