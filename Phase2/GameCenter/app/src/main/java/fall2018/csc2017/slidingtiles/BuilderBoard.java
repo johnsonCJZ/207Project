@@ -16,19 +16,16 @@ public class BuilderBoard {
     private int game2048Score;
     private boolean isChanged = false;
 
-    public BuilderBoard setDimension(int dimension) {
+    public void setDimension(int dimension) {
         this.dimension = dimension;
-        return this;
     }
 
-    public BuilderBoard setMine(int mine) {
+    public void setMine(int mine) {
         this.mine = mine;
-        return this;
     }
 
-    public BuilderBoard setMineLeft(int mineLeft) {
+    public void setMineLeft(int mineLeft) {
         this.mineLeft = mineLeft;
-        return this;
     }
 
     void setTiles(List<MineTile> tiles) {
@@ -92,9 +89,9 @@ public class BuilderBoard {
 
     public MineBoard buildMineBoard(){
         MineBoard mineBoard = new MineBoard();
-        mineBoard.setMines(mine);
-        mineBoard.setMineLeft(mineLeft);
         mineBoard.setDimension(dimension);
+        mineBoard.setMine(mine);
+        mineBoard.setMineLeft(mineLeft);
         mineBoard.setTiles((List<MineTile>) (List<?>)tiles);
         mineBoard.setMinePosition(minePosition);
         return mineBoard;

@@ -63,6 +63,10 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
         }
     }
 
+    public void setMine(int mine) {
+        this.mine = mine;
+    }
+
     void setTiles() {
         for (int i = 0; i < dimension * dimension; i++) {
             MineTile tile = new MineTile();

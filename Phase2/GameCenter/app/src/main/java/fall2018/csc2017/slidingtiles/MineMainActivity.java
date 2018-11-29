@@ -39,8 +39,6 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
      */
     private boolean isPaused;
 
-    private static DecimalFormat df2 = new DecimalFormat(".##");
-
     /**
      * The MineBoard manager.
      */
