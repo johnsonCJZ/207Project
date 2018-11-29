@@ -22,7 +22,7 @@ import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 /**
  * The game activity.
  */
-public class MineMainActivity extends AppCompatActivity implements Observer {
+public class MineMainActivity extends AppCompatActivity implements IObserver {
     DatabaseHelper myDB;
     /**
      * The per-user scoreboard
@@ -432,7 +432,7 @@ public class MineMainActivity extends AppCompatActivity implements Observer {
 
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(IObservable o) {
         display();
         face.setImageResource(R.drawable.normal);
     }

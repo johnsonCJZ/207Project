@@ -22,7 +22,7 @@ import java.util.Observer;
 
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
-public class Game2048MainActivity extends AppCompatActivity implements Observer {
+public class Game2048MainActivity extends AppCompatActivity implements IObserver {
     private ScoreBoard personalScoreBoard;
     private ScoreBoard globalScoreBoard;
     private Game2048BoardManager boardManager;
@@ -275,7 +275,7 @@ public class Game2048MainActivity extends AppCompatActivity implements Observer 
 
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(IObservable o) {
         display();
     }
 

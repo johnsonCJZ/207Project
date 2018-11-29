@@ -10,12 +10,14 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 
-public class MineBoard extends Observable implements Serializable {
+public class MineBoard extends Board implements Serializable, IObservable<MineBoard> {
     private int dimension;
     private int mine;
     private int mineLeft;
     private List<MineTile> tiles;
     private List<MineTile> minePosition;
+    public boolean changed = false;
+    private ArrayList<IObserver> observers = new ArrayList<>();
 
     MineBoard(){}
 
@@ -164,5 +166,41 @@ public class MineBoard extends Observable implements Serializable {
 
         setChanged();
         notifyObservers();
+    }
+
+    @Override
+    public void addObserver(IObserver o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void deleteObserver(IObserver o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        if(changed){
+            int i = observers.size();
+            while(--i >= 0){
+                observers.get(i).update(this);
+            }
+
+        }
+    }
+
+    @Override
+    public void clearChanged() {
+        changed = false;
+    }
+
+    @Override
+    public boolean hasChanged() {
+        return changed;
+    }
+
+    @Override
+    public void setChanged() {
+        changed = true;
     }
 }

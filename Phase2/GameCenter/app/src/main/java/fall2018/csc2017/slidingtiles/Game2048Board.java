@@ -9,11 +9,13 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Observable;
 
-public class Game2048Board extends Observable implements Serializable, Iterable<Game2048Tile> {
+public class Game2048Board extends Board implements Serializable, Iterable<Game2048Tile>, IObservable<Game2048Board> {
     final static int DIMENSION = 4;
     private int score = 0;
     private List<Game2048Tile> tiles;
     private boolean isChanged = false;
+    public boolean changed = false;
+    private ArrayList<IObserver> observers = new ArrayList<>();
 
     /**
      * A new empty board of 4*4 slidingTiles.
@@ -282,6 +284,7 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
         return new Tile2048Iterator(tiles);
     }
 
+
     /**
      * internal nested iterator iterates through 2-D array slidingTiles
      */
@@ -327,5 +330,41 @@ public class Game2048Board extends Observable implements Serializable, Iterable<
                 return this.tiles.get(currentPosition);
             }
         }
+    }
+
+    @Override
+    public void addObserver(IObserver o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void deleteObserver(IObserver o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        if(changed){
+            int i = observers.size();
+            while(--i >= 0){
+                observers.get(i).update(this);
+            }
+
+        }
+    }
+
+    @Override
+    public void clearChanged() {
+        changed = false;
+    }
+
+    @Override
+    public boolean hasChanged() {
+        return changed;
+    }
+
+    @Override
+    public void setChanged() {
+        changed = true;
     }
 }

@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Observable;
 import java.io.Serializable;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * The sliding slidingTiles board.
  */
-public class SlidingBoard extends Observable implements Serializable {
+public class SlidingBoard extends Board implements Serializable, IObservable<SlidingBoard> {
 
     /**
      * The number of rows and columns.
@@ -28,9 +29,9 @@ public class SlidingBoard extends Observable implements Serializable {
      */
     private List<SlidingTile> slidingTiles;
 
-//    public boolean changed;
+    public boolean changed = false;
 
-//    private ArrayList<Observer> observers;
+    private ArrayList<IObserver> observers = new ArrayList<>();
 
     SlidingBoard(){}
 
@@ -85,69 +86,41 @@ public class SlidingBoard extends Observable implements Serializable {
         notifyObservers();
     }
 
-//    @Override
-//    public String toString() {
-//        return "SlidingBoard{" +
-//                "slidingTiles=" + Arrays.toString(slidingTiles) +
-//                '}';
-//    }
+    @Override
+    public void addObserver(IObserver o) {
+        observers.add(o);
+    }
 
+    @Override
+    public void deleteObserver(IObserver o) {
+        observers.remove(o);
+    }
 
+    @Override
+    public void notifyObservers() {
+        if(changed){
+            int i = observers.size();
+            while(--i >= 0){
+                observers.get(i).update(this);
+            }
 
-//        @Override
-//    public void subscribe(Observer o) {
-//        observers.add(o);
-//    }
-//
-//    @Override
-//    public void unsubscribe(Observer o) {
-//        observers.remove(o);
-//    }
-//
-//    @Override
-//    public ArrayList<Observer> getAllObservers() {
-//        return observers;
-//    }
-//
-//    @Override
-//    public void notifyChanged(Object initiator) {
-//
-//    }
-//
-//    @Override
-//    public void notifyChanged(Collection<Object> initiators) {
-//
-//    }
-//
-//    @Override
-//    public void notifyChanged() {
-//
-//    }
-//
-//    @Override
-//    public void set(SlidingTile[][] newValue, Collection<Object> initiators) {
-//
-//    }
-//
-//    @Override
-//    public void set(SlidingTile[][] newValue) {
-//
-//    }
-//
-//    @Override
-//    public void setObject(Object newValue, Collection<Object> initiators) {
-//
-//    }
-//
-//    @Override
-//    public SlidingTile[][] get() {
-//        return new SlidingTile[0][];
-//    }
-//
-//    @Override
-//    public boolean isNull() {
-//        return false;
-//    }
+        }
+    }
+
+    @Override
+    public void clearChanged() {
+        changed = false;
+    }
+
+    @Override
+    public boolean hasChanged() {
+        return changed;
+    }
+
+    @Override
+    public void setChanged() {
+        changed = true;
+    }
 
 }
 

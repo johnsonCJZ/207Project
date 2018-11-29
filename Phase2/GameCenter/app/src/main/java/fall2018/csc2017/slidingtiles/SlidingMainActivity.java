@@ -28,7 +28,7 @@ import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 /**
  * The game activity.
  */
-public class SlidingMainActivity extends AppCompatActivity implements Observer {
+public class SlidingMainActivity extends AppCompatActivity implements IObserver {
     DatabaseHelper myDB;
     /**
      * The per-user scoreboard
@@ -450,11 +450,6 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
         super.onPause();
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        display();
-    }
-
     /**
      * Load from pre-saved .ser file.
      */
@@ -474,5 +469,10 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
         } catch (ClassNotFoundException e) {
             Log.e("login activity", "File contained unexpected data type: " + e.toString());
         }
+    }
+
+    @Override
+    public void update(IObservable o) {
+        display();
     }
 }
