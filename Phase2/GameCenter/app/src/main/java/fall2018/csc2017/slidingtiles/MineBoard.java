@@ -36,8 +36,8 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
         return tiles.get(position);
     }
 
-    public void setDimension(int d){
-        dimension = d;
+    public void setDimension(int sideLength){
+        dimension = sideLength;
     }
 
     void setMinePosition(List<MineTile> minePosition) {
