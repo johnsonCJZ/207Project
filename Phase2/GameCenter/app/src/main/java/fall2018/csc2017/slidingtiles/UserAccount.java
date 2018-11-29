@@ -158,7 +158,7 @@ public class UserAccount implements Serializable {
                 historySliding.replace(key, memory);
             }
         }
-        else{historySliding.replace(key, new SlidingMemory());}
+        else{historySliding.replace(key, null);}
     }
 
     public void setGame2048History(String key, Game2048BoardManager item){
@@ -173,7 +173,7 @@ public class UserAccount implements Serializable {
             }
         }
         else {
-            history2048.replace(key, new Game2048Memory());
+            history2048.replace(key, null);
         }
     }
     void setMineHistory(String key, MineBoardManager item){
@@ -186,7 +186,7 @@ public class UserAccount implements Serializable {
                 historyMine.replace(key, memory);
             }
         }
-        else{historyMine.replace(key, new MineMemory());}}
+        else{historyMine.replace(key, null);}}
     /**
      * The getter for the History of the UserAccount.
      * @return the History

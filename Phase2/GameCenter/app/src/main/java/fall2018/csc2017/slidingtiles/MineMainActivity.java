@@ -268,6 +268,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
      */
     private void winAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MineMainActivity.this);
+        user.setMineHistory("resumeHistoryMine", null);
         int score = getScore();
         builder.setMessage("you got " + String.valueOf(score) + " !")
 
@@ -278,7 +279,6 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
                 })
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        user.setMineHistory("resumeHistoryMine", null);
                         dialog.dismiss();
                     }
                 });
@@ -291,6 +291,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
      */
     private void loseAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MineMainActivity.this);
+        user.setMineHistory("resumeHistoryMine", null);
         int score = getScore();
         builder.setMessage("You have lost! you got " + String.valueOf(score) + " !")
 
@@ -301,7 +302,6 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
                 })
                 .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        user.setMineHistory("resumeHistoryMine", null);
                         dialog.dismiss();
                     }
                 });
