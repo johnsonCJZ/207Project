@@ -8,25 +8,10 @@ import java.io.Serializable;
  * A SlidingTile in a sliding slidingTiles puzzle.
  */
 public class SlidingTile extends Tile implements Serializable {
-
-    /**
-     * The background id to find the tile image.
-     */
-    private int background;
-
     /**
      * The unique id.
      */
     private int id;
-
-    /**
-     * Return the background id.
-     *
-     * @return the background id
-     */
-    public int getBackground() {
-        return background;
-    }
 
     /**
      * Return the tile id.
@@ -38,24 +23,19 @@ public class SlidingTile extends Tile implements Serializable {
     }
 
     /**
-     * A SlidingTile with id and background. The background may not have a corresponding image.
-     *
-     * @param id         the id
-     * @param background the background
-     */
-    public SlidingTile(int id, int background) {
-        this.id = id;
-    }
-
-    /**
      * A tile with a background id; look up and set the id.
      *
      * @param backgroundId
      */
-    public SlidingTile(int backgroundId) {
+    SlidingTile(int backgroundId) {
         id = backgroundId;
         // This looks so ugly.
-        switch (backgroundId) {
+        setBackground();
+    }
+
+    @Override
+    void setBackground() {
+        switch (id) {
             case 0:
                 background = R.drawable.tile_0;
                 break;

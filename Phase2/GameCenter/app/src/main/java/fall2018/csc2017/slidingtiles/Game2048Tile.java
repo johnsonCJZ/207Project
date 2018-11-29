@@ -3,13 +3,7 @@ package fall2018.csc2017.slidingtiles;
 import java.io.Serializable;
 
 public class Game2048Tile extends Tile implements Serializable {
-    private int x;
-
-    private int y;
-    //value can only be 0, 2 or 4.
     private int value;
-
-    int background;
 
     private boolean fadeIn;
 
@@ -27,18 +21,15 @@ public class Game2048Tile extends Tile implements Serializable {
         double prob = Math.random();
         if (prob <= 0.2) {
             this.value = 4;
-            updateBackground();
+            setBackground();
         } else {
             this.value = 2;
-            updateBackground();
+            setBackground();
         }
     }
 
-    public int getBackground() {
-        return background;
-    }
-
-    void updateBackground() {
+    @Override
+    void setBackground() {
         switch (value) {
             case 0:
                 background = R.drawable.tile_2048_0;
@@ -90,29 +81,13 @@ public class Game2048Tile extends Tile implements Serializable {
         }
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
     public int getValue() {
         return value;
     }
 
     public void setValue(int value) {
         this.value = value;
-        updateBackground();
+        setBackground();
     }
 
     @Override

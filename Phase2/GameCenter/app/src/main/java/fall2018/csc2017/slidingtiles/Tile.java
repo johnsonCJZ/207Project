@@ -1,4 +1,13 @@
 package fall2018.csc2017.slidingtiles;
 
-public class Tile {
+import java.io.Serializable;
+
+abstract public class Tile implements Serializable {
+    int background;
+
+    public int getBackground() {
+        return background;
+    }
+
+    abstract void setBackground();
 }
