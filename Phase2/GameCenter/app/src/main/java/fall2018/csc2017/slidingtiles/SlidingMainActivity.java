@@ -243,6 +243,10 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
         t.start();
 
         // Add View to activity
+        setButtons();
+    }
+
+    void setButtons() {
         gridView = findViewById(R.id.grid);
         gridView.setNumColumns(slidingBoardManager.getSlidingBoard().getDimension());
         gridView.setBoardBoardManager(slidingBoardManager);
