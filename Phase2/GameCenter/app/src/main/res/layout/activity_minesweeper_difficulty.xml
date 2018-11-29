@@ -7,32 +7,30 @@
     tools:context=".MineDifficultyActivity">
 
     <Button
+        android:id="@+id/rank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/start"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="236dp"
+        android:text="Rank" />
+
+    <Button
         android:id="@+id/start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="290dp"
-        android:layout_marginEnd="79dp"
-        android:text="start" />
-
-    <Button
-        android:id="@+id/resume"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="290dp"
-        android:layout_marginEnd="40dp"
-        android:text="Resume" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:text="START" />
 
     <Button
         android:id="@+id/load"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/start"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="35dp"
-        android:text="load" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="284dp"
+        android:text="Load" />
 
 </RelativeLayout>
