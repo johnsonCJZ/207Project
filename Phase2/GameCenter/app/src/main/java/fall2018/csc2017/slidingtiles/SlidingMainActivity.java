@@ -148,6 +148,8 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         result[1] = score;
         personalScoreBoard.addAndSort(result);
         globalScoreBoard.addAndSort(result);
+        myDB.updateUser(user.getName(), this.user);
+        myDB.updateAccountManager(users);
         return score;
 
     }
@@ -361,8 +363,6 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
      */
     private void switchToScoreBoard(){
         Intent tmp = new Intent(this, ScoreBoardTabLayoutActivity.class);
-        myDB.updateUser(user.getName(), this.user);
-        myDB.updateAccountManager(users);
         Bundle pass = new Bundle();
         pass.putSerializable("personalScoreBoard",personalScoreBoard);
         pass.putSerializable("globalScoreBoard",globalScoreBoard);

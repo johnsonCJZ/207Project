@@ -16,55 +16,54 @@ public class BuilderBoard {
     private int game2048Score;
     private boolean isChanged = false;
 
-    public void setDimension(int dimension) {
+    public BuilderBoard setDimension(int dimension) {
         this.dimension = dimension;
+        return this;
     }
 
-    public void setMine(int mine) {
+    public BuilderBoard setMine(int mine) {
         this.mine = mine;
+        return this;
     }
 
-    public void setMineLeft(int mineLeft) {
+    public BuilderBoard setMineLeft(int mineLeft) {
         this.mineLeft = mineLeft;
+        return this;
     }
 
-    void setTiles() {
-        for (int i = 0; i < dimension * dimension; i++) {
-            MineTile tile = new MineTile();
-            tiles.add(tile);
-            tile.setPosition(i);
-            tile.setBackground();
-        }
-    }
 
-    void setMineTiles(List<MineTile> tiles) {
+    public BuilderBoard setMineTiles(List<MineTile> tiles) {
         for (int i = 0; i < dimension * dimension; i++) {
             this.tiles.add(tiles.get(i));
             if (tiles.get(i).isMine()) {
                 minePosition.add(tiles.get(i));
             }
         }
+        return this;
     }
 
-    public void setSlidingTiles() {
+    public BuilderBoard setSlidingTiles() {
         tiles = new ArrayList<>();
+        return this;
     }
 
-    public void set2048Tiles() {
+    public BuilderBoard set2048Tiles() {
         tiles = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
                 tiles.add(new Game2048Tile());
 
         }
+        return this;
     }
 
-    public void setMineTiles() {
+    public BuilderBoard setMineTiles() {
         for (int i = 0; i < dimension * dimension; i++) {
             MineTile tile = new MineTile();
             tiles.add(tile);
             tile.setPosition(i);
             tile.setBackground();
         }
+        return this;
     }
 
     public BuilderBoard setMinePosition(List<MineTile> minePosition) {

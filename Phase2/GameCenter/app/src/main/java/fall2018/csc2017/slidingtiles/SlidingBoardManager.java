@@ -41,10 +41,7 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
      */
     public SlidingBoardManager(int n) {
         this.time = 0.0;
-        BuilderBoard builder = new BuilderBoard();
-        builder.setDimension(n);
-        builder.setSlidingTiles();
-        this.slidingBoard = builder.buildSlidingBoard();
+        this.slidingBoard = new BuilderBoard().setDimension(n).buildSlidingBoard();
         this.dimension = slidingBoard.getDimension();
         int numTiles = dimension * dimension;
         for (int tileNum = 0; tileNum != numTiles; tileNum++) {
@@ -57,10 +54,7 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
 
     public SlidingBoardManager(int dimension, double time, List<SlidingTile> slidingTiles){
         this.time = time;
-        BuilderBoard builder = new BuilderBoard();
-        builder.setDimension(dimension);
-        builder.setSlidingTiles();
-        this.slidingBoard = builder.buildSlidingBoard();
+        this.slidingBoard = new BuilderBoard().setDimension(dimension).buildSlidingBoard();
         this.dimension = dimension;
         this.slidingTiles = slidingTiles;
         slidingBoard.setSlidingTiles(slidingTiles);

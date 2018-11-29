@@ -23,23 +23,7 @@ public class MineDifficultyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_minesweeper_difficulty);
         getUser();
         addStartButton();
-        addResumeButton();
         addLoadButton();
-    }
-
-    private void addResumeButton(){
-        Button resume = findViewById(R.id.resume);
-        resume.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boardManager = (MineBoardManager) user.getSpecificMineHistory("ResumeHistoryMine");
-                if (boardManager!=null){
-                    switchToGame();}
-                else{
-                    Toasty.info(getApplicationContext(), "No game history",Toast.LENGTH_SHORT, true).show();
-                }
-            }
-        });
     }
 
     private void addStartButton(){
