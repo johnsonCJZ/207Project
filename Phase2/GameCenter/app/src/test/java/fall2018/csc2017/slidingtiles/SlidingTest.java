@@ -9,7 +9,7 @@ import java.util.*;
 
 import static org.junit.Assert.*;
 
-public class SlidingTileTest {
+public class SlidingTest {
 
     private SlidingBoardManager setUpBoard(int dimension, double time, List<SlidingTile> tiles) {
         SlidingBoardManager manager = new SlidingBoardManager(dimension, time, tiles);

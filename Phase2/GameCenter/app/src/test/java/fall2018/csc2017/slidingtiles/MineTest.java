@@ -3,14 +3,15 @@ package fall2018.csc2017.slidingtiles;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.List;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
 public class MineTest {
 
     private MineBoard board;
-    private List<MineTile> tiles;
-    private MineTile tile;
+    private List<MineTile> tiles = new ArrayList<>();
+    private MineTile tile = new MineTile();
 
     @Before
     public void setUp() {
