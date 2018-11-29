@@ -48,8 +48,8 @@ public class G2048Fragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         this.myDB = new DatabaseHelper(getContext());
         View view = inflater.inflate(R.layout.g2048_fragment, container, false);
-        Image2048 = (ImageButton) view.findViewById(R.id.g_2048);
-        scoreBoard = (Button) view.findViewById(R.id.score_board);
+        Image2048 = view.findViewById(R.id.g_2048);
+        scoreBoard = view.findViewById(R.id.score_board);
         Toasty.success(getContext(), "Press 2048 logo to start", Toast.LENGTH_LONG, true).show();
         addStartButton();
         addScoreBoardButton();

@@ -53,15 +53,18 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         createTileButtons(this);
         isPaused = false;
         Thread t = time();
-
         t.start();
+
         setGridView();
+
+        addCheatButton();
+        addNewGameButton();
     }
 
     public void getAllComponents(){
         setContentView(R.layout.activity_main2048);
         scorePlace = findViewById(R.id.score);
-        gridView = (GestureDetectGridView)findViewById(R.id.grid2048);
+        gridView = findViewById(R.id.grid2048);
     }
 
     @NonNull
@@ -126,8 +129,6 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
 
                     }
                 });
-        addCheatButton();
-        addNewGameButton();
     }
 
     private void cheat() {
@@ -166,8 +167,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
             public void onClick(View v) {
                 boardManager = new Game2048BoardManager();
                 isPaused = false;
-                Thread t = time();
-                t.start();
+                createTileButtons(getApplicationContext());
                 setGridView();
             }
         });
