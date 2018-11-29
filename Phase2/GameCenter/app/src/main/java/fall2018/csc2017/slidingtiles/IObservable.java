@@ -5,32 +5,16 @@ import java.util.Observer;
 
 public interface IObservable<T> {
 
-    void subscribe(Observer o);
+    void addObserver(IObserver o);
 
-    void unsubscribe(Observer o);
+    void deleteObserver(IObserver o);
 
-    // For debug purpose, internal use only
-    ArrayList<Observer> getAllObservers();
+    void notifyObservers();
 
-    void notifyChanged(Object initiator);
+    void clearChanged();
 
-    void notifyChanged(Collection<Object> initiators);
+    boolean hasChanged();
 
-    void notifyChanged();
+    void setChanged();
 
-    void set(T newValue, Collection<Object> initiators);
-
-    void set(T newValue);
-
-    /**
-     * _setObject() is a type unchecked version of set()
-     * This is intended for internal use only
-     * @param newValue
-     * @param initiators
-     */
-    void setObject(Object newValue, Collection<Object> initiators);
-
-    T get();
-
-    boolean isNull();
 }
