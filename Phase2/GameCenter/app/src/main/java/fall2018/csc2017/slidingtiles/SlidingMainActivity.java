@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -198,10 +199,19 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
         getAllInfo(); // pass in all useful data from last activity, including slidingBoardManager
         createTileButtons(this);
         setContentView(R.layout.activity_main);
+        Thread t = time();
+        t.start();
+
+        // Add View to activity
+        setGridView();
+    }
+
+    @NonNull
+    private Thread time() {
         final TextView time = findViewById(R.id.textView6);
         count= slidingBoardManager.getTime();
         isPaused = false;
-        Thread t = new Thread(){
+        return new Thread(){
             @Override
             public void run(){
                 while(!isInterrupted()) {
@@ -239,14 +249,9 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
                 }
             }
         };
-
-        t.start();
-
-        // Add View to activity
-        setButtons();
     }
 
-    void setButtons() {
+    void setGridView() {
         gridView = findViewById(R.id.grid);
         gridView.setNumColumns(slidingBoardManager.getSlidingBoard().getDimension());
         gridView.setBoardBoardManager(slidingBoardManager);

@@ -89,10 +89,10 @@ public class Game2048MainActivity extends AppCompatActivity implements Observer 
         };
 
         t.start();
-        setButtons();
+        setGridView();
     }
 
-    void setButtons() {
+    void setGridView() {
         gridView = (GestureDetectGridView)findViewById(R.id.grid2048);
         gridView.setNumColumns(boardManager.getBoard().getDimension());
         gridView.setBoardBoardManager(boardManager);
