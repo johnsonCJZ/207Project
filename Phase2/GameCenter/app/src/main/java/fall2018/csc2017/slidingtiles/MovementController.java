@@ -29,7 +29,7 @@ class MovementController {
         if (boardBoardManager instanceof SlidingBoardManager) {
             SlidingBoardManager b = (SlidingBoardManager) boardBoardManager;
             if (b.isValidTap(position)) {
-                b.touchMove(position);
+                b.move(position);
                 if (b.isWon()) {
                     Toasty.success(context, "YOU WIN!!", Toast.LENGTH_SHORT, true).show();
                 }
@@ -39,7 +39,7 @@ class MovementController {
         }
         else if (boardBoardManager instanceof MineBoardManager) {
             MineBoardManager b = (MineBoardManager) boardBoardManager;
-            b.touchMove(position);
+            b.move(position);
             if (b.isLost()) {
                 Toasty.warning(context, "YOU LOST!", Toast.LENGTH_SHORT, true).show();
             }

@@ -170,13 +170,14 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
      *
      * @param position the position
      */
-    void touchMove(int position) {
-
-        int row = position / dimension;
-        int col = position % dimension;
+    @Override
+    void move(Object position) {
+        int po = (int) position;
+        int row = po / dimension;
+        int col = po % dimension;
         int r_row;
         int r_col;
-        if (isValidTap(position)){
+        if (isValidTap(po)){
             int[] result = findBlankIndex();
             r_row = result[0];
             r_col = result[1];

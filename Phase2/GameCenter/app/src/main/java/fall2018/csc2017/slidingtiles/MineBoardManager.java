@@ -45,16 +45,17 @@ public class MineBoardManager extends BoardManager implements Serializable {
 //        board.setTiles();
     }
 
-
-    void touchMove(int position) {
+    @Override
+    void move(Object position) {
+        int po = (int) position;
         if (isFirst) {
-            board.setMines(position);
+            board.setMines(po);
             setNumbers();
             isFirst = false;
         }
-        MineTile currTile = board.getTile(position);
+        MineTile currTile = board.getTile(po);
         if (!currTile.isFlagged()) {
-            board.reveal(position);
+            board.reveal(po);
             if (currTile.isMine()) {
                 lost = true;
             }

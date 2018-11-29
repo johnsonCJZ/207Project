@@ -44,4 +44,8 @@ public abstract class BoardManager implements Serializable {
     public int getDimension() {
         return dimension;
     }
+
+    // Take in a position or a slide direction.
+    abstract void move(Object o);
+
 }
