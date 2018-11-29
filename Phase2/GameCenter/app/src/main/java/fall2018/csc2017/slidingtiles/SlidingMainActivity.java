@@ -1,5 +1,6 @@
 package fall2018.csc2017.slidingtiles;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -84,6 +85,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
      */
     private UserAccountManager users;
     private String username;
+    private TextView time;
 
     /**
      * Set up the background image for each button based on the master list
@@ -195,6 +197,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         username = (String) DataHolder.getInstance().retrieve("current user");
         super.onCreate(savedInstanceState);
         getAllInfo(); // pass in all useful data from last activity, including slidingBoardManager
+        getAllComponents();
         createTileButtons(this);
         setContentView(R.layout.activity_main);
         Thread t = time();
@@ -204,9 +207,13 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         setGridView();
     }
 
+    private void getAllComponents(){
+        gridView = findViewById(R.id.grid);
+        time = findViewById(R.id.textView6);
+    }
+
     @NonNull
     private Thread time() {
-        final TextView time = findViewById(R.id.textView6);
         count= slidingBoardManager.getTime();
         isPaused = false;
         return new Thread(){
@@ -219,27 +226,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
                             if (slidingBoardManager.isWon()) {
                                 this.interrupt();
                             }
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (slidingBoardManager.isWon() && !isPaused) {
-                                        slidingBoardManager.setTime(count);
-                                        isPaused = true;
-                                        user.setSlideHistory("resumeHistorySlide", null);
-                                        winAlert();
-                                    }
-                                    else {
-                                        count += 0.01;
-                                        if (tempCount < 2) {
-                                            tempCount += 0.01;
-                                        } else {
-                                            tempCount = 0;
-                                            autoSave();
-                                        }
-                                        time.setText(String.valueOf(df2.format(count)) + " s");
-                                    }
-                                }
-                            });
+                            runOnUiThread(new InGame(time));
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -249,8 +236,33 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         };
     }
 
+    private class InGame implements Runnable {
+        TextView time;
+        public InGame(TextView time){
+            this.time = time;
+        }
+        @Override
+        public void run() {
+            if (slidingBoardManager.isWon() && !isPaused) {
+                slidingBoardManager.setTime(count);
+                isPaused = true;
+                user.setSlideHistory("resumeHistorySlide", null);
+                winAlert();
+            }
+            else {
+                count += 0.01;
+                if (tempCount < 2) {
+                    tempCount += 0.01;
+                } else {
+                    tempCount = 0;
+                    autoSave();
+                }
+                time.setText(String.valueOf(df2.format(count)) + " s");
+            }
+    }}
+
+
     void setGridView() {
-        gridView = findViewById(R.id.grid);
         gridView.setNumColumns(slidingBoardManager.getSlidingBoard().getDimension());
         gridView.setBoardBoardManager(slidingBoardManager);
         slidingBoardManager.getSlidingBoard().addObserver(this);

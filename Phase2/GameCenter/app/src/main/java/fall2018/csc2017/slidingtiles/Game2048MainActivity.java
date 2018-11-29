@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
@@ -46,6 +48,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         myDB = new DatabaseHelper(this);
         username = (String) DataHolder.getInstance().retrieve("current user");
         getAllInfo(); // pass in all useful data from last activity, including boardManager
+        getAllComponents();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2048);
         createTileButtons(this);
@@ -56,48 +59,53 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         setGridView();
     }
 
+    public void getAllComponents(){
+        scorePlace = findViewById(R.id.score);
+        gridView = (GestureDetectGridView)findViewById(R.id.grid2048);
+    }
+
     @NonNull
     private Thread time() {
         return new Thread() {
-                @Override
-                public void run() {
-                    while (!isInterrupted()) {
-                        if (!isPaused) {
-                            try {
-                                Thread.sleep(500);
-                                if (boardManager.isWon()) {
-                                    this.interrupt();
-                                }
-                                runOnUiThread(new Runnable() {
-                                                  @Override
-                                                  public void run() {
-                                                      if ((boardManager.isWon() || boardManager.isLost())
-                                                              && !isPaused) {
-                                                          setIsWin();
-                                                          isPaused = true;
-                                                          endAlert();
-                                                      } else {
-                                                          if (tempCount < 2) {
-                                                              tempCount += 0.5;
-                                                          } else {
-                                                              tempCount = 0;
-                                                              autoSave();
-                                                          }
-                                                      }
-                                                  }
-                                              }
-                                );
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+            @Override
+            public void run() {
+                while (!isInterrupted()) {
+                    if (!isPaused) {
+                        try {
+                            Thread.sleep(500);
+                            if (boardManager.isWon()) {
+                                this.interrupt();
                             }
+                            runOnUiThread(new InGame());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
                     }
                 }
-            };
+            }
+        };
+    }
+
+    private class InGame implements Runnable{
+        @Override
+        public void run() {
+            if ((boardManager.isWon() || boardManager.isLost())
+                    && !isPaused) {
+                setIsWin();
+                isPaused = true;
+                endAlert();
+            } else {
+                if (tempCount < 2) {
+                    tempCount += 0.5;
+                } else {
+                    tempCount = 0;
+                    autoSave();
+                }
+            }
+        }
     }
 
     void setGridView() {
-        gridView = (GestureDetectGridView)findViewById(R.id.grid2048);
         gridView.setNumColumns(boardManager.getBoard().getDimension());
         gridView.setBoardBoardManager(boardManager);
         boardManager.getBoard().addObserver(this);
@@ -119,11 +127,10 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
                     }
                 });
         addCheatButton();
-        scorePlace = findViewById(R.id.score);
     }
 
     private void cheat() {
-    boardManager.cheat();
+        boardManager.cheat();
     }
 
     private void getAllInfo() {
@@ -206,9 +213,9 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         Game2048Board board = boardManager.getBoard();
         tileButtons = new ArrayList<>();
         for (int i = 0; i < board.getDimension() * board.getDimension(); i++) {
-                Button tmp = new Button(context);
-                tmp.setBackgroundResource(board.getTiles().get(i).getBackground());
-                tileButtons.add(tmp);
+            Button tmp = new Button(context);
+            tmp.setBackgroundResource(board.getTiles().get(i).getBackground());
+            tileButtons.add(tmp);
         }
 
     }
@@ -255,7 +262,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         pass.putString("fragment", "2048");
         intent.putExtras(pass);
         startActivity(intent);
-        }
+    }
 
     private int getScore() {
         int score;

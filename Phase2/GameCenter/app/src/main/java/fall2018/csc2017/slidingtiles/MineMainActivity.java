@@ -58,7 +58,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
     /**
      * Time count.
      */
-    private Double count = (double) 0;
+    private int count = 0;
 
     /**
      * Time count for autosave purpose.
@@ -80,6 +80,10 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
     private Thread t;
 
     private ImageButton face;
+
+    private TextView time;
+
+    private TextView mineLeft;
 
     /**
      * UserAccountManager associated to the UserAccount.
@@ -104,8 +108,14 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         }
     }
 
+    private void getAllComponents(){
+        time = findViewById(R.id.time);
+        mineLeft = findViewById(R.id.mineLeft);
+        face = (ImageButton) findViewById(R.id.Thomas);
+        gridView = findViewById(R.id.mine_grid);
+    }
+
     void updateMineLeft(){
-        final TextView mineLeft = findViewById(R.id.mineLeft);
         mineLeft.setText("Mine: " + String.valueOf(boardManager.getBoard().getMineLeft()));
     }
 
@@ -209,8 +219,8 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         super.onCreate(savedInstanceState);
         myDB = new DatabaseHelper(this);
         getAllInfo(); // pass in all useful data from last activity, including boardManager
+        getAllComponents();
         setContentView(R.layout.activity_minesweeper);
-        face = (ImageButton) findViewById(R.id.Thomas);
         face.setImageResource(R.drawable.normal);
         createTileButtons(this);
         t = time();
@@ -222,7 +232,6 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
     }
 
     private void setGridView(){
-        gridView = findViewById(R.id.mine_grid);
         if (gridView.isFrozen()){
             gridView.cloneAsThawed();
         }
@@ -256,7 +265,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
                 isPaused = false;
 //                face.setImageResource(R.drawable.normal);
                 boardManager = new MineBoardManager(dimension,mine);
-                boardManager.setTime((double) -1);
+                boardManager.setTime(-1);
                 createTileButtons(getApplicationContext());
                 setGridView();
             }
@@ -325,7 +334,6 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
     }
 
     private Thread time(){
-        final TextView time = findViewById(R.id.time);
         count = boardManager.getTime();
         isPaused = false;
         Thread t = new Thread(){
@@ -338,38 +346,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
                             if (boardManager.isWon()) {
                                 this.interrupt();
                             }
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (boardManager.isWon() && !isPaused) {
-                                        boardManager.setTime(count);
-                                        isPaused = true;
-                                        user.setMineHistory("resumeHistoryMine", null);
-                                        face.setImageResource(R.drawable.win);
-                                        gridView.freeze();
-                                        winAlert();
-                                    }
-                                    else if (boardManager.isLost() && !isPaused){
-                                        boardManager.setTime(count);
-                                        isPaused = true;
-                                        user.setMineHistory("resumeHistoryMine", null);
-                                        face.setImageResource(R.drawable.sad);
-                                        gridView.freeze();
-                                        loseAlert();
-                                    }
-                                    else {
-                                        count = boardManager.getTime();
-                                        count += 1;
-                                        boardManager.setTime(count);
-                                        if (tempCount < 2) {
-                                            tempCount += 1;
-                                        } else {
-                                            autoSave();
-                                        }
-                                        time.setText("Time: " +String.format("%03d", count/10) + " s");
-                                    }
-                                }
-                            });
+                            runOnUiThread(new InGame(time));
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -378,6 +355,44 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
             }
         };
         return t;}
+
+    private class InGame implements Runnable{
+        private TextView time;
+        public InGame(TextView time) {
+            this.time = time;
+        }
+        @Override
+        public void run() {
+            if (boardManager.isWon() && !isPaused) {
+                boardManager.setTime(count);
+                isPaused = true;
+                user.setMineHistory("resumeHistoryMine", null);
+                face.setImageResource(R.drawable.win);
+                gridView.freeze();
+                winAlert();
+            }
+            else if (boardManager.isLost() && !isPaused){
+                boardManager.setTime(count);
+                isPaused = true;
+                user.setMineHistory("resumeHistoryMine", null);
+                face.setImageResource(R.drawable.sad);
+                gridView.freeze();
+                loseAlert();
+            }
+            else {
+                count = boardManager.getTime();
+                count += 1;
+                boardManager.setTime(count);
+                if (tempCount < 2) {
+                    tempCount += 1;
+                } else {
+                    autoSave();
+                }
+                time.setText("Time: " +String.format("%03d", count/10) + " s");
+            }
+        }
+    }
+
 
     /**
      * Receive all the info(User, Size, SlidingBoardManager, ScoreBoards)from previous activity/view.
