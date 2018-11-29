@@ -111,6 +111,7 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
     @Override
     public void onBackPressed() {
         isPaused = true;
+        user.setSlideHistory("resumeHistorySlide", null);// clear resume memory
         slidingBoardManager.setTime(count);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Do you want to save/override this game?")

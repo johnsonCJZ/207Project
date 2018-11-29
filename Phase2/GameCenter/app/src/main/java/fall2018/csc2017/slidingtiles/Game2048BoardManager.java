@@ -10,7 +10,7 @@ public class Game2048BoardManager extends BoardManager implements Serializable {
 
     Game2048Board getBoard() {return board;}
 
-    Game2048BoardManager() {
+    public Game2048BoardManager() {
         this.time = 0.0;
         BuilderBoard builder = new BuilderBoard();
         this.board = builder.build2048Board();

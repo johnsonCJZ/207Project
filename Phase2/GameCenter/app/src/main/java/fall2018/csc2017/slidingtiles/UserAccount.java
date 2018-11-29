@@ -161,7 +161,7 @@ public class UserAccount implements Serializable {
         else{historySliding.replace(key, new SlidingMemory());}
     }
 
-    void setGame2048History(String key, Game2048BoardManager item){
+    public void setGame2048History(String key, Game2048BoardManager item){
         if(item != null) {
             Game2048Memory memory = new Game2048Memory();
             memory.makeCopy(item);
@@ -235,7 +235,7 @@ public class UserAccount implements Serializable {
         return memory.copy();
     }
 
-    Game2048BoardManager getSpecific2048History(String key){
+    public Game2048BoardManager getSpecific2048History(String key){
         Game2048Memory memory = this.get2048History().get(key);
         if (memory==null){
             return null;
