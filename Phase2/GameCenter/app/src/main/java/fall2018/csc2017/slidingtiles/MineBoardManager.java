@@ -12,19 +12,19 @@ public class MineBoardManager extends BoardManager implements Serializable {
     private boolean lost = false;
     private List<MineTile> minePosition;
 
-    MineBoardManager(int d, int m) {
-        board = new BuilderBoard().setMine(m).setMineLeft(m).setDimension(d).setMineTiles().buildMineBoard();
+    MineBoardManager(int size, int mineNum) {
+        board = new BuilderBoard().setMine(mineNum).setMineLeft(mineNum).setDimension(size).setMineTiles().buildMineBoard();
         tiles=board.getTiles();
-        dimension = d;
+        dimension = size;
         minePosition = board.getMinePosition();
         setUpBoard();
     }
 
-    MineBoardManager(int d, int m, int mLeft, int time, List<MineTile> tiles) {
-        board = new BuilderBoard().setMine(m).setMineLeft(mLeft).setDimension(d).setMineTiles(tiles).buildMineBoard();
+    MineBoardManager(int size, int mineNum, int mineLeft, int time, List<MineTile> tiles) {
+        board = new BuilderBoard().setMine(mineNum).setMineLeft(mineLeft).setDimension(size).setMineTiles(tiles).buildMineBoard();
         isFirst = false;
         this.tiles = board.getTiles();
-        dimension = d;
+        dimension = size;
         this.time = time;
         minePosition = board.getMinePosition();
     }
