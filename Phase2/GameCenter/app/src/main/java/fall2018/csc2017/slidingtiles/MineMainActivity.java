@@ -12,10 +12,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
@@ -408,7 +405,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
 
         this.boardManager = (MineBoardManager) extra.getSerializable("boardManager");
         dimension = boardManager.getBoard().getDimension ();
-        mine = boardManager.getBoard().getMine();
+        mine = boardManager.getBoard().getMineNum();
         assert this.boardManager != null;
         this.personalScoreBoard = user.getScoreBoard("Mine");
         this.globalScoreBoard = users.getGlobalScoreBoard("Mine");

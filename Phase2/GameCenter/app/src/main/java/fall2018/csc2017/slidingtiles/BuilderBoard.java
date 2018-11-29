@@ -1,11 +1,7 @@
 package fall2018.csc2017.slidingtiles;
 
-import android.support.annotation.NonNull;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class BuilderBoard {
     private int dimension;
@@ -98,7 +94,7 @@ public class BuilderBoard {
     public MineBoard buildMineBoard(){
         MineBoard mineBoard = new MineBoard();
         mineBoard.setDimension(dimension);
-        mineBoard.setMine(mine);
+        mineBoard.setMineNum(mine);
         mineBoard.setMineLeft(mineLeft);
         mineBoard.setTiles((List<MineTile>) (List<?>) tiles);
         mineBoard.setMinePosition(minePosition);

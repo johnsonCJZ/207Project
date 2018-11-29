@@ -127,6 +127,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
                     }
                 });
         addCheatButton();
+        addNewGameButton();
     }
 
     private void cheat() {
@@ -154,6 +155,20 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
             public void onClick(View v) {
                 cheat();
                 display();
+            }
+        });
+    }
+
+    void addNewGameButton() {
+        Button newGame = findViewById(R.id.newGame);
+        newGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boardManager = new Game2048BoardManager();
+                isPaused = false;
+                Thread t = time();
+                t.start();
+                setGridView();
             }
         });
     }

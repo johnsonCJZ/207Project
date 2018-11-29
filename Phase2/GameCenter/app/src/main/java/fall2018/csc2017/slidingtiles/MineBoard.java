@@ -1,13 +1,8 @@
 package fall2018.csc2017.slidingtiles;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import java.io.Serializable;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 import java.util.Random;
 
 public class MineBoard extends Board implements Serializable, IObservable<MineBoard> {
@@ -63,7 +58,7 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
         }
     }
 
-    public void setMine(int mineNum) {
+    public void setMineNum(int mineNum) {
         this.mineNum = mineNum;
     }
 
