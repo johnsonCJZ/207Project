@@ -44,7 +44,6 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
         BuilderBoard builder = new BuilderBoard();
         builder.setDimension(n);
         builder.setSlidingTiles();
-        builder.buildSlidingBoard();
         this.slidingBoard = builder.buildSlidingBoard();
         this.dimension = slidingBoard.getDimension();
         int numTiles = dimension * dimension;

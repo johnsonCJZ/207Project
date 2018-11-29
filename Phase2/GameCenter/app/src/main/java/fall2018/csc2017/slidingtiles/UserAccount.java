@@ -64,13 +64,13 @@ public class UserAccount implements Serializable {
         this.age = 0;
         this.email = "";
         games = new ArrayList<>();
-        historySliding.put("history3x3", new SlidingMemory());
-        historySliding.put("history4x4", new SlidingMemory());
-        historySliding.put("history5x5", new SlidingMemory());
-        historySliding.put("resumeHistorySlide", new SlidingMemory());
-        historyMine.put("resumeHistoryMine", new MineMemory());
-        history2048.put("resumeHistory2048", new Game2048Memory());
-        historyMine.put("historyMine",new MineMemory());
+        historySliding.put("history3x3", null);
+        historySliding.put("history4x4", null);
+        historySliding.put("history5x5", null);
+        historySliding.put("resumeHistorySlide", null);
+        historyMine.put("resumeHistoryMine", null);
+        history2048.put("resumeHistory2048", null);
+        historyMine.put("historyMine",null);
 //        history2048.put("history2048",new Game2048Memory());
         personalScoreBoard.put("history3x3", new ScoreBoard("SlidingTiles"));
         personalScoreBoard.put("history4x4", new ScoreBoard("SlidingTiles"));
@@ -150,7 +150,7 @@ public class UserAccount implements Serializable {
 
     public void setSlideHistory (String key, SlidingBoardManager item){
         if(item != null) {
-            SlidingMemory memory = this.historySliding.get(key);
+            SlidingMemory memory = new SlidingMemory();
             memory.makeCopy(item);
             if (historySliding.get(key) == null) {
                 historySliding.put(key, memory);
@@ -163,7 +163,7 @@ public class UserAccount implements Serializable {
 
     void setGame2048History(String key, Game2048BoardManager item){
         if(item != null) {
-            Game2048Memory memory = this.history2048.get(key);
+            Game2048Memory memory = new Game2048Memory();
             memory.makeCopy(item);
             if (history2048.get(key) == null) {
                 history2048.put(key, memory);
@@ -178,7 +178,7 @@ public class UserAccount implements Serializable {
     }
     void setMineHistory(String key, MineBoardManager item){
         if(item!=null) {
-            MineMemory memory = this.historyMine.get(key);
+            MineMemory memory = new MineMemory();
             memory.makeCopy(item);
             if (historyMine.get(key) == null) {
                 historyMine.put(key, memory);
