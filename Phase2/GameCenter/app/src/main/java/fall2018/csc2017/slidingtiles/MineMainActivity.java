@@ -55,7 +55,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
     /**
      * Time count.
      */
-    private int count = 0;
+    private Double count = (double) 0;
 
     /**
      * Time count for autosave purpose.
@@ -262,7 +262,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
                 isPaused = false;
 //                face.setImageResource(R.drawable.normal);
                 boardManager = new MineBoardManager(dimension,mine);
-                boardManager.setTime(-1);
+                boardManager.setTime((double) -1);
                 createTileButtons(getApplicationContext());
                 setGridView();
             }
@@ -355,7 +355,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
 
     private class InGame implements Runnable{
         private TextView time;
-        public InGame(TextView time) {
+        InGame(TextView time) {
             this.time = time;
         }
         @Override
