@@ -146,5 +146,9 @@ Lucia: partly test of Sliding and 2048
 
 # Nov.29th morning
 process: 
-Design pattern: builder, observer, factory done
+Design pattern: builder, observer done, factory not yet
 Memory system done;
+
+plan: 1. factory of boardManagers -> handle build new manager and copy from given memory
+2. separate view and controller
+3. test builder, factory, controllers

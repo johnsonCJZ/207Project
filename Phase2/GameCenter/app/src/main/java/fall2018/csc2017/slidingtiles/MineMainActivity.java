@@ -147,7 +147,6 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        MineMainActivity.this.finish();
                         switchToGameCenter();
                     }
                 });
@@ -176,6 +175,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         personalScoreBoard.addAndSort(result);
         globalScoreBoard.addAndSort(result);
         myDB.updateAccountManager(users);
+        myDB.updateUser(currentUser,user);
         return score;
 
     }
@@ -319,6 +319,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         myDB.updateAccountManager(users);
         pass.putSerializable("personalScoreBoard",personalScoreBoard);
         pass.putSerializable("globalScoreBoard",globalScoreBoard);
+
         tmp.putExtras(pass);
         startActivity(tmp);
     }

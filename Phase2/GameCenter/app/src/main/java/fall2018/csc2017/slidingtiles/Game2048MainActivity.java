@@ -241,8 +241,6 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
     }
 
     private void switchToScoreBoard(){
-        myDB.updateUser(user.getName(), this.user);
-        myDB.updateAccountManager(users);
         Intent tmp = new Intent(this, ScoreBoardTabLayoutActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
@@ -269,6 +267,8 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         result[1] = score;
         personalScoreBoard.addAndSort(result);
         globalScoreBoard.addAndSort(result);
+        myDB.updateUser(user.getName(), this.user);
+        myDB.updateAccountManager(users);
         return score;
 
     }
