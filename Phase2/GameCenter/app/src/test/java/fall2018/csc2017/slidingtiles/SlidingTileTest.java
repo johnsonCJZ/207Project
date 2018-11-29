@@ -195,7 +195,7 @@ public class SlidingTileTest {
                 new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
         );
         SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
-        testCase.touchMove(1);
+        testCase.move(1);
         List<SlidingTile> tiles = testCase.getSlidingTiles();
         int[] expected = {1, 0, 2, 3, 4, 5, 6, 7, 8};
         int[] actual = new int[tilesToTest.size()];
@@ -214,7 +214,7 @@ public class SlidingTileTest {
                 new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
         );
         SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
-        testCase.touchMove(0);
+        testCase.move(0);
         List<SlidingTile> tiles = testCase.getSlidingTiles();
         int[] expected = {0, 1, 2, 3, 4, 5, 6, 7, 8};
         int[] actual = new int[tilesToTest.size()];
@@ -233,7 +233,7 @@ public class SlidingTileTest {
                 new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
         );
         SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
-        testCase.touchMove(1);
+        testCase.move(1);
         List<SlidingTile> tiles = testCase.getSlidingTiles();
         int[] expected = {1, 0, 3, 4, 2, 5, 6, 7, 8};
         int[] actual = new int[tilesToTest.size()];

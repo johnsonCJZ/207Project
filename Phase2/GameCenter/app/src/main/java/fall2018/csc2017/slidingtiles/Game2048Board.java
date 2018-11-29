@@ -45,6 +45,8 @@ public class Game2048Board extends Board implements Serializable, Iterable<Game2
 
     int getScore() {return score;}
 
+    void setScore(int score) {this.score = score;}
+
     Game2048Tile addTile() {
         ArrayList<Game2048Tile> empty = findEmpty();
         //if (!empty.isEmpty()){ // add if not empty

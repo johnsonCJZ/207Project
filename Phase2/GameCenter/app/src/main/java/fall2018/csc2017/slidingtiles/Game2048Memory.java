@@ -6,10 +6,12 @@ import java.util.List;
 
 public class Game2048Memory extends Memory implements Serializable {
     private double time2048;
+    private int score;
     private List<Integer> tileValueList = new ArrayList<>();
 
     public void makeCopy(Game2048BoardManager manager) {
         this.time2048 = manager.getTime();
+        score = manager.getScore();
         for (Game2048Tile t: manager.getBoard()){
             this.tileValueList.add(t.getValue());
         }
@@ -17,10 +19,7 @@ public class Game2048Memory extends Memory implements Serializable {
     }
 
     public Game2048BoardManager copy(){
-        return new Game2048BoardManager(time2048, tileValueList);
+        return new Game2048BoardManager(time2048, score, tileValueList);
     }
 
-    public double getTime2048() {
-        return time2048;
-    }
 }

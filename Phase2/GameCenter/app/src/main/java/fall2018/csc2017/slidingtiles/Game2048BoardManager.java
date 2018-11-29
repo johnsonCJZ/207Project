@@ -6,25 +6,23 @@ import java.util.List;
 public class Game2048BoardManager extends BoardManager implements Serializable {
     private Game2048Board board;
     final private Integer DIMENSION = 4;
-    private Double time;
+//    private Double time;
 
     Game2048Board getBoard() {return board;}
 
     public Game2048BoardManager() {
-        this.time = 0.0;
+        super(4);
         this.board = new BuilderBoard().build2048Board();
         board.addTile();
         board.addTile();
     }
 
-    Game2048BoardManager(double time, List<Integer> list){
+    Game2048BoardManager(double time, int score, List<Integer> list){
+        super(4);
         this.time = time;
         this.board = new BuilderBoard().build2048Board();
+        this.board.setScore(score);
         this.board.setUpTiles(list);
-    }
-
-    public Double getTime() {
-        return time;
     }
 
     int getScore() {
@@ -39,10 +37,12 @@ public class Game2048BoardManager extends BoardManager implements Serializable {
         return board.findEmpty().size() == 0;
     }
 
-    boolean isLose() {
+    @Override
+    boolean isLost() {
         return !isWon() && !canMove();
     }
 
+    @Override
     boolean isWon(){
         for (Game2048Tile tile : board) {
             if (tile.getValue() == 2048) {
@@ -52,8 +52,9 @@ public class Game2048BoardManager extends BoardManager implements Serializable {
         return false;
     }
 
-    void move(String direction) {
-        board.merge(direction);
+    @Override
+    void move(Object direction) {
+        board.merge((String) direction);
     }
 
     private boolean canMove() {
@@ -73,8 +74,4 @@ public class Game2048BoardManager extends BoardManager implements Serializable {
         return false;
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
 }

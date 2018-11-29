@@ -6,7 +6,7 @@ import java.util.List;
 public class MineMemory extends Memory {
     private int dimension;
     private int mine;
-    private int timeMine;
+    private Double timeMine;
     private int mineLeft;
     private List<Boolean> isObscuredOfTiles= new ArrayList<>();
     private List<Integer> numberOfTiles = new ArrayList<>();
