@@ -33,4 +33,13 @@
         android:textSize="24dp"
         android:layout_marginEnd="84dp"
         android:text="Score: 0" />
+
+    <Button
+        android:id="@+id/newGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/grid2048"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="67dp"
+        android:text="New Game" />
 </RelativeLayout>
