@@ -12,10 +12,10 @@ public class MineBoardManager extends BoardManager implements Serializable {
     private boolean lost = false;
     private List<MineTile> minePosition;
 
-    MineBoardManager(int size, int mineNum) {
-        board = new BuilderBoard().setMine(mineNum).setMineLeft(mineNum).setDimension(size).setMineTiles().buildMineBoard();
+    MineBoardManager(int sideLength, int numOfMine) {
+        board = new BuilderBoard().setMine(numOfMine).setMineLeft(numOfMine).setDimension(sideLength).setMineTiles().buildMineBoard();
         tiles=board.getTiles();
-        dimension = size;
+        dimension = sideLength;
         minePosition = board.getMinePosition();
         setUpBoard();
     }

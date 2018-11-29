@@ -12,18 +12,18 @@ import java.util.Random;
 
 public class MineBoard extends Board implements Serializable, IObservable<MineBoard> {
     private int dimension;
-    private int mine;
+    private int mineNum;
     private int mineLeft;
     private List<MineTile> tiles = new ArrayList<>();
     private List<MineTile> minePosition = new ArrayList<>();
-    public boolean changed = false;
+    boolean changed = false;
     private ArrayList<IObserver> observers = new ArrayList<>();
 
     MineBoard(){}
 
     int getDimension() {return dimension;}
 
-    int getMine() {return mine;}
+    int getMine() {return mineNum;}
 
     int getMineLeft() {return mineLeft;}
 
@@ -40,7 +40,7 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
         dimension = d;
     }
 
-    public void setMinePosition(List<MineTile> minePosition) {
+    void setMinePosition(List<MineTile> minePosition) {
         this.minePosition = minePosition;
     }
 
@@ -64,7 +64,7 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
     }
 
     public void setMine(int mine) {
-        this.mine = mine;
+        this.mineNum = mine;
     }
 
     void setTiles(List<MineTile> tiles) {
