@@ -2,18 +2,22 @@ package fall2018.csc2017.slidingtiles;
 
 import org.junit.Before;
 import org.junit.Test;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class MineTest {
 
     private MineBoard board;
+    private List<MineTile> tiles;
     private MineTile tile;
 
     @Before
     public void setUp() {
         board = new MineBoard();
-//        board.setTiles();
+        board.setMineNum(4);
+        board.setDimension(9);
+        board.setTiles(tiles);
     }
 
     @Test
@@ -79,7 +83,6 @@ public class MineTest {
 
     @Test
     public void touchMove() {
-
     }
 
     @Test
