@@ -85,3 +85,66 @@ Frank: implementing strategy design pattern, javadoc
 Summer: UI beautifying, score board UI redesign
 Max: code smell, debugging, markdown summary, javadoc
 Lucia: absent
+
+# Nov.13th
+![Nov.13th](nov-13.png)
+Decide the rest of the two games:
+Minesweeper, 2048
+Distribution:
+Max: UI connection, UI structure, debugging games
+Summer, Frank: Minesweeper
+Lucia, Johnson: 2048
+
+# Nov.14th
+![Nov.14th](nov-14.png)
+Discuss about UI design, using navigation bar, fragments
+Minesweeper structure
+2048 structure
+
+# Nov.18th
+![Nov.18th](nov-18.png)
+Distribution:
+Max: 1. UI design, done, with fragments and viewpages
+2. helping debugging 2048 and minesweeper
+3. Writing movement gesture controller
+Frank: 1. Minesweeper back-end, logic,
+2. Debugging for Summer's code
+Johnson: 1. 2048 back-end, logic, not done
+Summer: 1. Minesweeper front-back end connection, not done
+Lucia: None
+
+Progress:
+UI: Structure done, with several fragment incomplete
+Minesweeper: done (by Nov 20)
+2048: logic in progress, connection, UI, movements done
+
+# Nov.20th
+Progress:
+| Game | Game UI + logic + connection (playable) | ScoreBoard, score system | Save and memory | In charge |
+| ----- | -------------------------------------- | ------------------------ | --------------- | --------- |
+| Minesweeper | Done | Not yet | Not yet | Frank |
+| 2048 | Not yet, Game logic | Not yet | Not yet | Johnson |
+| Slide | Done | Done | Done | Everyone |
+
+plan:
+Summer, Lucia: make fragments : profile, settings, contact, help
+Max, Frank, Johnson: Save and memory system, design patterns (Factory and Builder for games), 2048 done, Score systems
+
+# Nov.24-27th
+Progress:
+| Game | Game UI + logic + connection (playable) | ScoreBoard, score system | Save and memory | In charge |
+| ----- | -------------------------------------- | ------------------------ | --------------- | --------- |
+| Minesweeper | Done | Done | Done | Frank |
+| 2048 | Done | Done | Done | Johnson |
+| Slide | Done | Done | Done | Everyone |
+
+Summer: Implement builder design pattern, observer design pattern
+Frank: Minesweeper debugging, sliding tile debugging, test Sliding and 2048
+Johnson: 2048 debugging, memory system
+Max: debugging memory system with Memory, UI implementation
+Lucia: partly test of Sliding and 2048
+
+# Nov.29th morning
+process: 
+Design pattern: builder, observer, factory done
+Memory system done;
