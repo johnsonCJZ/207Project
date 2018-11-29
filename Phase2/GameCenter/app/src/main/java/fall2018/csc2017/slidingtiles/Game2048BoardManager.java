@@ -6,11 +6,12 @@ import java.util.List;
 public class Game2048BoardManager extends BoardManager implements Serializable {
     private Game2048Board board;
     final private Integer DIMENSION = 4;
-    private Double time;
+//    private Double time;
 
     Game2048Board getBoard() {return board;}
 
     public Game2048BoardManager() {
+        super(4);
         this.time = 0.0;
         this.board = new BuilderBoard().build2048Board();
         board.addTile();
@@ -18,13 +19,10 @@ public class Game2048BoardManager extends BoardManager implements Serializable {
     }
 
     Game2048BoardManager(double time, List<Integer> list){
+        super(4);
         this.time = time;
         this.board = new BuilderBoard().build2048Board();
         this.board.setUpTiles(list);
-    }
-
-    public Double getTime() {
-        return time;
     }
 
     int getScore() {
@@ -39,10 +37,12 @@ public class Game2048BoardManager extends BoardManager implements Serializable {
         return board.findEmpty().size() == 0;
     }
 
-    boolean isLose() {
+    @Override
+    boolean isLost() {
         return !isWon() && !canMove();
     }
 
+    @Override
     boolean isWon(){
         for (Game2048Tile tile : board) {
             if (tile.getValue() == 2048) {
@@ -73,8 +73,4 @@ public class Game2048BoardManager extends BoardManager implements Serializable {
         return false;
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
 }

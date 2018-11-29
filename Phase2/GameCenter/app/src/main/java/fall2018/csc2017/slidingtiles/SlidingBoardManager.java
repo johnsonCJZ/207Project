@@ -3,25 +3,16 @@ package fall2018.csc2017.slidingtiles;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 /**
  * Manage a slidingBoard, including swapping slidingTiles, checking for a win, and managing taps.
  */
 public class SlidingBoardManager extends BoardManager implements Serializable {
-
-    /**
-     * The time for how long the slidingBoard has been played.
-     */
-    private Double time;
-
     /**
      * The slidingBoard being managed.
      */
     private SlidingBoard slidingBoard;
-    
-    private int dimension;
 
     private List<SlidingTile> slidingTiles = new ArrayList<>();
 
@@ -40,41 +31,43 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
      * @param n the number of rows and columns
      */
     public SlidingBoardManager(int n) {
-        this.time = 0.0;
-        this.slidingBoard = new BuilderBoard().setDimension(n).buildSlidingBoard();
-        this.dimension = slidingBoard.getDimension();
+        super(n);
+        this.slidingBoard = new BuilderBoard()
+                .setDimension(n)
+                .buildSlidingBoard();
         int numTiles = dimension * dimension;
         for (int tileNum = 0; tileNum != numTiles; tileNum++) {
             slidingTiles.add(new SlidingTile(tileNum));
         }
         shuffle();
         slidingBoard.setSlidingTiles(slidingTiles);
-        this.history.add(new HistoryNode(this.findBlankIndex(0)));
+        this.history.add(new HistoryNode(this.findBlankIndex()));
     }
 
     public SlidingBoardManager(int dimension, double time, List<SlidingTile> slidingTiles){
+        super(dimension);
         this.time = time;
-        this.slidingBoard = new BuilderBoard().setDimension(dimension).buildSlidingBoard();
-        this.dimension = dimension;
+        this.slidingBoard = new BuilderBoard()
+                .setDimension(dimension)
+                .buildSlidingBoard();
         this.slidingTiles = slidingTiles;
         slidingBoard.setSlidingTiles(slidingTiles);
-//        this.history=history;
         this.history=new History();
-        this.history.add(new HistoryNode(this.findBlankIndex(0)));
+        this.history.add(new HistoryNode(this.findBlankIndex()));
     }
 
     /**
      * Return the current slidingBoard.
      */
-    public SlidingBoard getSlidingBoard() {
+    SlidingBoard getSlidingBoard() {
         return slidingBoard;
     }
 
-    public List<SlidingTile> getSlidingTiles() {
+    List<SlidingTile> getSlidingTiles() {
         return slidingTiles;
     }
 
-    public void setSlidingTiles(List<SlidingTile> slidingTiles) {
+    void setSlidingTiles(List<SlidingTile> slidingTiles) {
         slidingBoard.setSlidingTiles(slidingTiles);
         this.slidingTiles = slidingTiles;
     }
@@ -101,7 +94,7 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
     /**
      * Shuffle the list of slidingTiles until the state is solvable.
      */
-    void shuffle() {
+    private void shuffle() {
         Collections.shuffle(slidingTiles);
         while (!isSolvable()) {
             Collections.shuffle(slidingTiles);
@@ -112,7 +105,7 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
      * Return if the shuffled state can be solved.
      * @return if the state is solvable.
      */
-    boolean isSolvable() {
+    private boolean isSolvable() {
         int inversion = findInversion();
         if (dimension % 2 == 1) {
             return inversion % 2 == 0;
@@ -128,22 +121,6 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
     }
 
     /**
-     * Return the time recorded.
-     * @return the time recorded
-     */
-    public double getTime() {
-        return time;
-    }
-
-    /**
-     * Set the time to time.
-     * @param time the time to be set
-     */
-    public void setTime(double time) {
-        this.time = time;
-    }
-
-    /**
      * Return the History.
      * @return the History
      */
@@ -156,6 +133,7 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
      *
      * @return whether the slidingTiles are in row-major order
      */
+    @Override
     boolean isWon() {
         for (int i = 0; i < dimension * dimension - 2; i++) {
             if (slidingTiles.get(i).getId() > slidingTiles.get(i+1).getId()) {
@@ -199,7 +177,7 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
         int r_row;
         int r_col;
         if (isValidTap(position)){
-            int[] result = findBlankIndex(0);
+            int[] result = findBlankIndex();
             r_row = result[0];
             r_col = result[1];
             slidingBoard.swapTiles(row,col,r_row,r_col);
@@ -220,14 +198,13 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
      * once we know that there is a blank space surrounding tile, which id is targetId
      * we use iterator to find that blank tile
      *
-     * @param targetId id of the tile that have blank tile around
      * @return an array of coordination of blank tile
      */
-    private int[] findBlankIndex(int targetId){
+    private int[] findBlankIndex(){
         int[] result = new int[2];
         int position = 0;
         for (SlidingTile t : slidingTiles){
-            if (t.getId()==targetId){
+            if (t.getId()== 0){
                 result[0] = position / dimension;
                 result[1] = position % dimension;
                 break;
@@ -239,10 +216,19 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
     }
 
     /**
+     *
+     * @return always return false since this game will not end unless the player solve the puzzle.
+     */
+    @Override
+    boolean isLost() {
+        return false;
+    }
+
+    /**
      * Perform undo operation if i is -1 and perform redo operation if i is 1
      * @param i is -1 or 1 to indicate performing undo or redo
      */
-    public void readHistory(int i) {
+    void readHistory(int i) {
         int[] currPosition = new int[2];
         int[] postPosition = new int[2];
         //redo

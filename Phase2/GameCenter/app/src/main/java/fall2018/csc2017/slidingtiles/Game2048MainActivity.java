@@ -17,8 +17,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
@@ -73,7 +71,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
                                 runOnUiThread(new Runnable() {
                                                   @Override
                                                   public void run() {
-                                                      if ((boardManager.isWon() || boardManager.isLose())
+                                                      if ((boardManager.isWon() || boardManager.isLost())
                                                               && !isPaused) {
                                                           setIsWin();
                                                           isPaused = true;

@@ -1,6 +1,5 @@
 package fall2018.csc2017.slidingtiles;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -64,26 +63,26 @@ public class Game2048Test {
     @Test
     public void testLose() {
         setBoardCannotMove(1024);
-        assertTrue(manager.isLose());
+        assertTrue(manager.isLost());
     }
 
     @Test
     public void testNotLoseHas2048CanMove() {
         board.setUpTiles();
         manager.cheat();
-        assertFalse(manager.isLose());
+        assertFalse(manager.isLost());
     }
 
     @Test
     public void testNotLoseHas2048CantMove() {
         setBoardCannotMove(2048);
-        assertFalse(manager.isLose());
+        assertFalse(manager.isLost());
     }
 
     @Test
     public void testNotLoseFullBoard() {
         setBoardCanMove();
-        assertFalse(manager.isLose());
+        assertFalse(manager.isLost());
     }
 
     @Test
