@@ -101,6 +101,7 @@ public class BuilderBoard {
         mineBoard.setMine(mine);
         mineBoard.setMineLeft(mineLeft);
         mineBoard.setTiles((List<MineTile>) (List<?>) tiles);
+        mineBoard.setMinePosition(minePosition);
         return mineBoard;
     }
 }
