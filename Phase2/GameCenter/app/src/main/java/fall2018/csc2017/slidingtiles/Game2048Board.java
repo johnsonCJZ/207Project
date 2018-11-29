@@ -28,9 +28,6 @@ public class Game2048Board extends Board implements Serializable, Iterable<Game2
         for (int row = 0; row != DIMENSION; row++) {
             for (int col = 0; col != DIMENSION; col++) {
                 this.setTile(row, col, new Game2048Tile());
-                Game2048Tile tile = getTile(row, col);
-                tile.setX(col);
-                tile.setY(row);
             }
         }
     }
