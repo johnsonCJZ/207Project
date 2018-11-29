@@ -450,21 +450,6 @@ public class SlidingMainActivity extends AppCompatActivity implements Observer {
         super.onPause();
     }
 
-//    /**
-//     * Save the board manager to fileName.
-//     * @param fileName the name of the file
-//     */
-//    public void saveToFile(String fileName) {
-//        try {
-//            ObjectOutputStream outputStream = new ObjectOutputStream(
-//                    this.openFileOutput(fileName, MODE_PRIVATE));
-//            outputStream.writeObject(users);
-//            outputStream.close();
-//        } catch (IOException e) {
-//            Log.e("Exception", "File write failed: " + e.toString());
-//        }
-//    }
-
     @Override
     public void update(Observable o, Object arg) {
         display();

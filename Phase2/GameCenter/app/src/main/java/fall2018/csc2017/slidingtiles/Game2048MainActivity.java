@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -51,45 +52,50 @@ public class Game2048MainActivity extends AppCompatActivity implements Observer 
         setContentView(R.layout.activity_main2048);
         createTileButtons(this);
         isPaused = false;
-        Thread t = new Thread() {
-            @Override
-            public void run() {
-                while (!isInterrupted()) {
-                    if (!isPaused) {
-                        try {
-                            Thread.sleep(500);
-                            if (boardManager.isWon()) {
-                                this.interrupt();
-                            }
-                            runOnUiThread(new Runnable() {
-                                              @Override
-                                              public void run() {
-                                                  if ((boardManager.isWon() || boardManager.isLose())
-                                                          && !isPaused) {
-                                                      setIsWin();
-                                                      isPaused = true;
-                                                      endAlert();
-                                                  } else {
-                                                      if (tempCount < 2) {
-                                                          tempCount += 0.5;
-                                                      } else {
-                                                          tempCount = 0;
-                                                          autoSave();
-                                                      }
-                                                  }
-                                              }
-                                          }
-                            );
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        };
+        Thread t = time();
 
         t.start();
         setGridView();
+    }
+
+    @NonNull
+    private Thread time() {
+        return new Thread() {
+                @Override
+                public void run() {
+                    while (!isInterrupted()) {
+                        if (!isPaused) {
+                            try {
+                                Thread.sleep(500);
+                                if (boardManager.isWon()) {
+                                    this.interrupt();
+                                }
+                                runOnUiThread(new Runnable() {
+                                                  @Override
+                                                  public void run() {
+                                                      if ((boardManager.isWon() || boardManager.isLose())
+                                                              && !isPaused) {
+                                                          setIsWin();
+                                                          isPaused = true;
+                                                          endAlert();
+                                                      } else {
+                                                          if (tempCount < 2) {
+                                                              tempCount += 0.5;
+                                                          } else {
+                                                              tempCount = 0;
+                                                              autoSave();
+                                                          }
+                                                      }
+                                                  }
+                                              }
+                                );
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            };
     }
 
     void setGridView() {
@@ -284,12 +290,4 @@ public class Game2048MainActivity extends AppCompatActivity implements Observer 
         switchToGameCenter();
     }
 
-    /**
-     * Save the game history.
-     * @param dialog
-     */
-//    private void saveHistory(){
-//        user.setGame2048History("history2048", boardManager);
-//        myDB.updateUser(username,user);
-//    }
 }
