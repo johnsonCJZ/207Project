@@ -50,7 +50,6 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         getAllInfo(); // pass in all useful data from last activity, including boardManager
         getAllComponents();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2048);
         createTileButtons(this);
         isPaused = false;
         Thread t = time();
@@ -60,6 +59,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
     }
 
     public void getAllComponents(){
+        setContentView(R.layout.activity_main2048);
         scorePlace = findViewById(R.id.score);
         gridView = (GestureDetectGridView)findViewById(R.id.grid2048);
     }

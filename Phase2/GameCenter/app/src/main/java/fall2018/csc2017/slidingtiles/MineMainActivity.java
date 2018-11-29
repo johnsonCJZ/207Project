@@ -106,6 +106,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
     }
 
     private void getAllComponents(){
+        setContentView(R.layout.activity_minesweeper);
         time = findViewById(R.id.time);
         mineLeft = findViewById(R.id.mineLeft);
         face = (ImageButton) findViewById(R.id.Thomas);
@@ -217,7 +218,6 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         myDB = new DatabaseHelper(this);
         getAllInfo(); // pass in all useful data from last activity, including boardManager
         getAllComponents();
-        setContentView(R.layout.activity_minesweeper);
         face.setImageResource(R.drawable.normal);
         createTileButtons(this);
         t = time();

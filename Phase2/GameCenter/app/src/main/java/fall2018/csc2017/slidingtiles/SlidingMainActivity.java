@@ -199,7 +199,6 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         getAllInfo(); // pass in all useful data from last activity, including slidingBoardManager
         getAllComponents();
         createTileButtons(this);
-        setContentView(R.layout.activity_main);
         Thread t = time();
         t.start();
 
@@ -208,6 +207,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
     }
 
     private void getAllComponents(){
+        setContentView(R.layout.activity_main);
         gridView = findViewById(R.id.grid);
         time = findViewById(R.id.textView6);
     }
