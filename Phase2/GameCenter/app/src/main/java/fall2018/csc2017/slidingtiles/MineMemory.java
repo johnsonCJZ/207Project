@@ -6,7 +6,7 @@ import java.util.List;
 public class MineMemory extends Memory {
     private int dimension;
     private int mine;
-    private int time;
+    private int timeMine;
     private int mineLeft;
     private List<Boolean> isObscuredOfTiles= new ArrayList<>();
     private List<Integer> numberOfTiles = new ArrayList<>();
@@ -17,7 +17,7 @@ public class MineMemory extends Memory {
         dimension = manager.getBoard().getDimension();
         mine = manager.getMinePosition().size();
         mineLeft = manager.getBoard().getMineLeft();
-        time = manager.getTime();
+        timeMine = manager.getTime();
         for (MineTile tile : manager.getBoard().getTiles()) {
             isObscuredOfTiles.add(tile.isObscured());
             numberOfTiles.add(tile.getNumber());
@@ -31,6 +31,6 @@ public class MineMemory extends Memory {
         for (int i = 0; i < dimension * dimension; i++) {
             tiles.add(new MineTile(isObscuredOfTiles.get(i), numberOfTiles.get(i), isMineOfTiles.get(i), isFlaggedOfTiles.get(i)));
         }
-        return new MineBoardManager(dimension, mine, mineLeft, time, tiles);
+        return new MineBoardManager(dimension, mine, mineLeft, timeMine, tiles);
     }
 }
