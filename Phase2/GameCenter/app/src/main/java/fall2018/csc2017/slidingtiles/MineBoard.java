@@ -23,7 +23,7 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
 
     int getDimension() {return dimension;}
 
-    int getMine() {return mineNum;}
+    int getMineNum() {return mineNum;}
 
     int getMineLeft() {return mineLeft;}
 
@@ -45,17 +45,17 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
     }
 
     void setMines(int position) {
-        int mine = getMine();
+        int mineNum = getMineNum();
         List<MineTile> startNine = getSurround(position);
         startNine.add(getTile(position));
         Random r = new Random();
-        List<Integer> randomNum = new ArrayList<>();
+        List<Integer> randomNums = new ArrayList<>();
         int i = 0;
-        while (i < mine) {
+        while (i < mineNum) {
             Integer num = r.nextInt(dimension * dimension);
 
-            if (!randomNum.contains(num) && !startNine.contains(getTile(num))) {
-                randomNum.add(num);
+            if (!randomNums.contains(num) && !startNine.contains(getTile(num))) {
+                randomNums.add(num);
                 getTile(num).setMine();
                 minePosition.add(getTile(num));
                 i++;
@@ -63,8 +63,8 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
         }
     }
 
-    public void setMine(int mine) {
-        this.mineNum = mine;
+    public void setMine(int mineNum) {
+        this.mineNum = mineNum;
     }
 
     void setTiles(List<MineTile> tiles) {
