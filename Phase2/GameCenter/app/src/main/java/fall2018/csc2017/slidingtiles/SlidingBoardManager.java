@@ -80,6 +80,11 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
         return slidingTiles;
     }
 
+    public void setSlidingTiles(List<SlidingTile> slidingTiles) {
+        slidingBoard.setSlidingTiles(slidingTiles);
+        this.slidingTiles = slidingTiles;
+    }
+
     /**
      * Return how many inversions occur in the list of slidingTiles.
      * An inversion is when a tile precedes another tile with a lower number on it.
@@ -158,8 +163,8 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
      * @return whether the slidingTiles are in row-major order
      */
     boolean isWon() {
-        for (int i = 0; i < dimension * dimension - 1; i++) {
-            if (slidingTiles.get(i).getId() < slidingTiles.get(i+1).getId()) {
+        for (int i = 0; i < dimension * dimension - 2; i++) {
+            if (slidingTiles.get(i).getId() > slidingTiles.get(i+1).getId()) {
                 return false;
             }
         }
@@ -197,11 +202,10 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
 
         int row = position / dimension;
         int col = position % dimension;
-        int blankId = 0;
         int r_row;
         int r_col;
         if (isValidTap(position)){
-            int[] result = findBlankIndex(blankId);
+            int[] result = findBlankIndex(0);
             r_row = result[0];
             r_col = result[1];
             slidingBoard.swapTiles(row,col,r_row,r_col);
@@ -260,9 +264,5 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
             currIndex--;
         }
         slidingBoard.swapTiles(postPosition[0], postPosition[1], currPosition[0], currPosition[1]);
-    }
-
-    public void setSlidingTiles(List<SlidingTile> slidingTiles) {
-        this.slidingTiles = slidingTiles;
     }
 }
