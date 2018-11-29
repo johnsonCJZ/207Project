@@ -14,28 +14,12 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
     private int dimension;
     private int mine;
     private int mineLeft;
-    private List<MineTile> tiles;
-    private List<MineTile> minePosition;
+    private List<MineTile> tiles = new ArrayList<>();
+    private List<MineTile> minePosition = new ArrayList<>();
     public boolean changed = false;
     private ArrayList<IObserver> observers = new ArrayList<>();
 
     MineBoard(){}
-
-    MineBoard(int d, int m) {
-        mine = m;
-        mineLeft = m;
-        this.dimension = d;
-        this.tiles = new ArrayList<>();
-        this.minePosition = new ArrayList<>();
-    }
-
-    MineBoard(int d, int m, int mLeft) {
-        mine = m;
-        mineLeft = mLeft;
-        this.dimension = d;
-        this.tiles = new ArrayList<>();
-        this.minePosition = new ArrayList<>();
-    }
 
     int getDimension() {return dimension;}
 
@@ -54,6 +38,10 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
 
     public void setDimension(int d){
         dimension = d;
+    }
+
+    public void setMinePosition(List<MineTile> minePosition) {
+        this.minePosition = minePosition;
     }
 
     void setMines(int position) {

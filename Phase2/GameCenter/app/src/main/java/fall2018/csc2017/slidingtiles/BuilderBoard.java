@@ -9,22 +9,15 @@ import java.util.NoSuchElementException;
 
 public class BuilderBoard {
     private int dimension;
-    private int mineWidth, mineHeight;
     private int mine;
     private int mineLeft;
-    private List<Tile> tiles;
+    private List<Tile> tiles = new ArrayList<>();
     private List<MineTile> minePosition = new ArrayList<>();
     private int game2048Score;
     private boolean isChanged = false;
 
     public BuilderBoard setDimension(int dimension) {
         this.dimension = dimension;
-        return this;
-    }
-
-    public BuilderBoard setDimension(int w, int h) {
-        this.mineWidth = w;
-        this.mineHeight = h;
         return this;
     }
 
@@ -38,8 +31,13 @@ public class BuilderBoard {
         return this;
     }
 
-    public void setTiles(List<Tile> tiles) {
-        this.tiles = tiles;
+    void setTiles(List<MineTile> tiles) {
+        for (int i = 0; i < dimension * dimension; i++) {
+            this.tiles.add(tiles.get(i));
+            if (tiles.get(i).isMine()) {
+                minePosition.add(tiles.get(i));
+            }
+        }
     }
 
     public void setSlidingTiles() {
@@ -54,8 +52,13 @@ public class BuilderBoard {
         }
     }
 
-    public void setMineTiles(){
-        tiles = new ArrayList<>();
+    public void setMineTiles() {
+        for (int i = 0; i < dimension * dimension; i++) {
+            MineTile tile = new MineTile();
+            tiles.add(tile);
+            tile.setPosition(i);
+            tile.setBackground();
+        }
     }
 
     public BuilderBoard setMinePosition(List<MineTile> minePosition) {
@@ -87,12 +90,13 @@ public class BuilderBoard {
         return game2048Board;
     }
 
-//    public MineBoard buildMineBoard(){
-//        MineBoard mineBoard = new MineBoard();
-//        mineBoard.setMines(mine);
-//        mineBoard.setMineLeft(mineLeft);
-//        mineBoard.setDimension(mineHeight,mineWidth);
-//        mineBoard.setTiles((MineTile[][]) tiles);
-//        return mineBoard;
-//    }
+    public MineBoard buildMineBoard(){
+        MineBoard mineBoard = new MineBoard();
+        mineBoard.setMines(mine);
+        mineBoard.setMineLeft(mineLeft);
+        mineBoard.setDimension(dimension);
+        mineBoard.setTiles((List<MineTile>) (List<?>)tiles);
+        mineBoard.setMinePosition(minePosition);
+        return mineBoard;
+    }
 }
