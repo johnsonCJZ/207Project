@@ -18,10 +18,11 @@ public class Game2048BoardManager extends BoardManager implements Serializable {
         board.addTile();
     }
 
-    Game2048BoardManager(double time, List<Integer> list){
+    Game2048BoardManager(double time, int score, List<Integer> list){
         super(4);
         this.time = time;
         this.board = new BuilderBoard().build2048Board();
+        this.board.setScore(score);
         this.board.setUpTiles(list);
     }
 
