@@ -30,9 +30,8 @@ public class MineBoardManager extends BoardManager implements Serializable {
         builderBoard.setMine(m);
         builderBoard.setMineLeft(mLeft);
         builderBoard.setDimension(d);
-        builderBoard.setMineTiles();
+        builderBoard.setMineTiles(tiles);
         board = builderBoard.buildMineBoard();
-        board.setTiles(tiles);
         isFirst = false;
         this.tiles = board.getTiles();
         dimension = d;
@@ -55,7 +54,7 @@ public class MineBoardManager extends BoardManager implements Serializable {
     private void setUpBoard() {
         lost = false;
         isFirst = true;
-        board.setTiles();
+//        board.setTiles();
     }
 
 

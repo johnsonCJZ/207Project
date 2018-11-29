@@ -28,7 +28,16 @@ public class BuilderBoard {
         this.mineLeft = mineLeft;
     }
 
-    void setTiles(List<MineTile> tiles) {
+    void setTiles() {
+        for (int i = 0; i < dimension * dimension; i++) {
+            MineTile tile = new MineTile();
+            tiles.add(tile);
+            tile.setPosition(i);
+            tile.setBackground();
+        }
+    }
+
+    void setMineTiles(List<MineTile> tiles) {
         for (int i = 0; i < dimension * dimension; i++) {
             this.tiles.add(tiles.get(i));
             if (tiles.get(i).isMine()) {
@@ -92,8 +101,7 @@ public class BuilderBoard {
         mineBoard.setDimension(dimension);
         mineBoard.setMine(mine);
         mineBoard.setMineLeft(mineLeft);
-        mineBoard.setTiles((List<MineTile>) (List<?>)tiles);
-        mineBoard.setMinePosition(minePosition);
+        mineBoard.setTiles((List<MineTile>) (List<?>) tiles);
         return mineBoard;
     }
 }

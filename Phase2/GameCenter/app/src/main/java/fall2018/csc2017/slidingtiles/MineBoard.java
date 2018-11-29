@@ -67,22 +67,8 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
         this.mine = mine;
     }
 
-    void setTiles() {
-        for (int i = 0; i < dimension * dimension; i++) {
-            MineTile tile = new MineTile();
-            tiles.add(tile);
-            tile.setPosition(i);
-            tile.setBackground();
-        }
-    }
-
     void setTiles(List<MineTile> tiles) {
-        for (int i = 0; i < dimension * dimension; i++) {
-            this.tiles.add(tiles.get(i));
-            if (tiles.get(i).isMine()) {
-                minePosition.add(tiles.get(i));
-            }
-        }
+        this.tiles = tiles;
     }
 
     public void setMineLeft(int mineLeft) {
