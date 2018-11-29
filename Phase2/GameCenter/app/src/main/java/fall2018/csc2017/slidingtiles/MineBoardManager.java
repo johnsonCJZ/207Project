@@ -6,8 +6,6 @@ import java.util.List;
 public class MineBoardManager extends BoardManager implements Serializable {
     private MineBoard board;
     private List<MineTile> tiles;
-//    private int dimension;
-//    private int time;
     private boolean isFirst = true;
     private boolean lost = false;
     private List<MineTile> minePosition;
@@ -45,24 +43,9 @@ public class MineBoardManager extends BoardManager implements Serializable {
 //        board.setTiles();
     }
 
-    @Override
-    void move(Object position) {
-        int po = (int) position;
-        if (isFirst) {
-            board.setMines(po);
-            setNumbers();
-            isFirst = false;
-        }
-        MineTile currTile = board.getTile(po);
-        if (!currTile.isFlagged()) {
-            board.reveal(po);
-            if (currTile.isMine()) {
-                lost = true;
-            }
-        }
+    void mark(int position) {
+        board.flag(position);
     }
-
-    void mark(int position) {board.flag(position);}
 
     private void setNumbers() {
         for (int pos = 0; pos < dimension *dimension ; pos++) {
@@ -89,6 +72,23 @@ public class MineBoardManager extends BoardManager implements Serializable {
                 if (i < dimension  - 1 && j < dimension  - 1 && tiles.get(pos+dimension +1).isMine())
                     count++; //lower-right tile
                 tiles.get(pos).setNumber(count);
+            }
+        }
+    }
+
+    @Override
+    void move(Object position) {
+        int po = (int) position;
+        if (isFirst) {
+            board.setMines(po);
+            setNumbers();
+            isFirst = false;
+        }
+        MineTile currTile = board.getTile(po);
+        if (!currTile.isFlagged()) {
+            board.reveal(po);
+            if (currTile.isMine()) {
+                lost = true;
             }
         }
     }

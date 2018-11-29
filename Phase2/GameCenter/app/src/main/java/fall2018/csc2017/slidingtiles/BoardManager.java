@@ -3,15 +3,6 @@ package fall2018.csc2017.slidingtiles;
 import java.io.Serializable;
 
 public abstract class BoardManager implements Serializable {
-    //    String type;
-//
-//    public BoardManager(String type) {
-//        this.type = type;
-//    }
-//
-//    public String getType() {
-//        return type;
-//    }
     Double time = (double) 0;
 
     int dimension;
@@ -28,12 +19,6 @@ public abstract class BoardManager implements Serializable {
     }
 
     /**
-     * @return Return whether the player wins according to the game rule.
-     */
-    abstract boolean isWon();
-
-    abstract boolean isLost();
-    /**
      * Set the time.
      * @param time the time to be set.
      */
@@ -45,6 +30,12 @@ public abstract class BoardManager implements Serializable {
         return dimension;
     }
 
+
+    /**
+     * @return Return whether the player wins according to the game rule.
+     */
+    abstract boolean isWon();
+    abstract boolean isLost();
     // Take in a position or a slide direction.
     abstract void move(Object o);
 
