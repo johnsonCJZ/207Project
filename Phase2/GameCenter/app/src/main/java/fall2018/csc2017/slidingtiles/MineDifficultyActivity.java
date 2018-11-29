@@ -16,6 +16,14 @@ public class MineDifficultyActivity extends AppCompatActivity {
     MineBoardManager boardManager;
     DatabaseHelper myDB;
     String username;
+    private UserAccountManager users;
+
+    /**
+     * scoreboard of user
+     */
+    private ScoreBoard personalScoreBoard;
+
+    private ScoreBoard globalScoreBoard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +32,7 @@ public class MineDifficultyActivity extends AppCompatActivity {
         getUser();
         addStartButton();
         addLoadButton();
+        addRankButton();
     }
 
     private void addStartButton(){
@@ -50,6 +59,33 @@ public class MineDifficultyActivity extends AppCompatActivity {
             }
         });
     }
+
+    void addRankButton() {
+        Button rank = findViewById(R.id.rank);
+        rank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                personalScoreBoard = user.getScoreBoard("Mine");
+                globalScoreBoard = users.getGlobalScoreBoard("Mine");
+                if(personalScoreBoard != null && globalScoreBoard!=null){
+                    switchToScoreBoard();
+                }
+            }
+        });
+    }
+
+    private void switchToScoreBoard() {
+        Intent tmp = new Intent(this, ScoreBoardTabLayoutActivity.class);
+        Bundle pass = new Bundle();
+        myDB.updateUser(username, this.user);
+        myDB.updateAccountManager(this.users);
+        pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
+        pass.putSerializable("globalScoreBoard", this.globalScoreBoard);
+        tmp.putExtras(pass);
+        startActivity(tmp);
+    }
+
+
 
     private void selectDifficulty(){
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -90,6 +126,7 @@ public class MineDifficultyActivity extends AppCompatActivity {
         myDB = new DatabaseHelper(this);
         username=(String) DataHolder.getInstance().retrieve("current user");
         this.user=myDB.selectUser(username);
+        this.users= myDB.selectAccountManager();
 
     }
 
