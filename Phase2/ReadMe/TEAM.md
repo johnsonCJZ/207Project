@@ -152,3 +152,14 @@ Memory system done;
 plan: 1. factory of boardManagers -> handle build new manager and copy from given memory
 2. separate view and controller
 3. test builder, factory, controllers
+
+# Nov.29th night - Nov.30th morning
+process:
+Factory design pattern done, test done, javadoc done, bugs done.
+Distribution:
+Lucia: tests, javadoc
+Johnson: design pattern implementation, javadoc, debug
+Summer: design pattern (factory, builder) construction, javadoc, some UI
+Frank: tests, javadoc, debug
+Max: UI, javadoc, debug
+
