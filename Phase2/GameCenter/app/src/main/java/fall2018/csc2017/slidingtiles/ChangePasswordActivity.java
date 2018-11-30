@@ -18,15 +18,49 @@ import es.dmoral.toasty.Toasty;
  */
 public class ChangePasswordActivity extends AppCompatActivity {
 
-
+    /**
+     * For user to input username.
+     */
     TextView username;
+
+    /**
+     * For user to enter their old password or email.
+     */
     TextView passwordOrEmail;
+
+    /**
+     * For user to enter new password.
+     */
     TextView newPw;
+
+    /**
+     * For user to re-enter new password.
+     */
     TextView confirmPw;
+
+    /**
+     * A button that update all the information when click.
+     */
     Button update;
+
+    /**
+     * For user to enter new password.
+     */
     TextView message;
+
+    /**
+     * The user involved in the activity.
+     */
     UserAccount user;
+
+    /**
+     * All users.
+     */
     UserAccountManager users;
+
+    /**
+     * Databae helper.
+     */
     private DatabaseHelper myDB;
 
 
@@ -38,6 +72,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
         addUpdateButton();
     }
 
+    /**
+     * Add button that allows user to update information.
+     */
     private void addUpdateButton() {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
