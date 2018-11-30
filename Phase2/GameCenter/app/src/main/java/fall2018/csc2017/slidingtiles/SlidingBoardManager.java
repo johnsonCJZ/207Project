@@ -42,7 +42,7 @@ public class SlidingBoardManager extends BoardManager{
             slidingTiles.add(new SlidingTile(tileNum));
         }
         shuffle();
-        slidingBoard.setSlidingTiles(slidingTiles);
+        slidingBoard.setTiles(slidingTiles);
         this.history.add(new HistoryNode(this.findBlankIndex()));
     }
 
@@ -53,7 +53,7 @@ public class SlidingBoardManager extends BoardManager{
                 .setDimension(dimension)
                 .buildSlidingBoard();
         this.slidingTiles = slidingTiles;
-        slidingBoard.setSlidingTiles(slidingTiles);
+        slidingBoard.setTiles(slidingTiles);
         this.history=new History();
         this.history.add(new HistoryNode(this.findBlankIndex()));
     }
@@ -74,7 +74,7 @@ public class SlidingBoardManager extends BoardManager{
     }
 
     void setSlidingTiles(List<SlidingTile> slidingTiles) {
-        slidingBoard.setSlidingTiles(slidingTiles);
+        slidingBoard.setTiles(slidingTiles);
         this.slidingTiles = slidingTiles;
     }
 

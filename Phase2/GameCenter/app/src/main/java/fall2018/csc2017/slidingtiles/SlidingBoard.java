@@ -47,13 +47,6 @@ public class SlidingBoard extends Board<SlidingTile> {
         notifyObservers();
     }
 
-    /**
-     * Set the slidingTiles to slidingTiles.
-     * @param slidingTiles the slidingTiles for the board
-     */
-    void setSlidingTiles(List<SlidingTile> slidingTiles) {
-        this.tiles = slidingTiles;
-    }
 }
 
 

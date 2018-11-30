@@ -36,7 +36,6 @@ public abstract class BoardManager implements Serializable {
         return dimension;
     }
 
-
     /**
      * @return Return whether the player wins according to the game rule.
      */

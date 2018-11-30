@@ -18,7 +18,7 @@ public class ManagerFactory {
         }
         if(b instanceof Game2048Board){
             Game2048BoardManager m = new Game2048BoardManager();
-            m.setDimension(((Game2048Board) b).getDimension());
+            m.setDimension(4);
             m.setBoard((Game2048Board) b);
             ((Game2048Board)b).addTile();
             ((Game2048Board)b).addTile();
@@ -35,7 +35,7 @@ public class ManagerFactory {
                 slidingTiles.add(new SlidingTile(tileNum));
             }
             m.shuffle();
-            ((SlidingBoard)b).setSlidingTiles(slidingTiles);
+            b.setTiles(slidingTiles);
             m.getHistory().add(new HistoryNode(m.findBlankIndex()));
             return m;
         }

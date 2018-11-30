@@ -80,7 +80,7 @@ public class BuilderBoard {
     public SlidingBoard buildSlidingBoard() {
         SlidingBoard slidingBoard = new SlidingBoard();
         slidingBoard.setDimension(dimension);
-        slidingBoard.setSlidingTiles((List<SlidingTile>) (List<?>) tiles);
+        slidingBoard.setTiles((List<SlidingTile>) (List<?>) tiles);
         return slidingBoard;
     }
 
