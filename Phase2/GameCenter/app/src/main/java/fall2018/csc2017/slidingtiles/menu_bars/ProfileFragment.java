@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,30 +94,46 @@ public class ProfileFragment extends Fragment {
             setEnabled(true);
         } else {
             isEnablbed = false;
-            setEnabled(false);
-            String newAge = age.getText().toString();
-            String usernameS = username.getText().toString();
+            email = view.findViewById(R.id.email);
             String emailS = email.getText().toString();
+            username = view.findViewById(R.id.username);
+            String usernameS = username.getText().toString();
+            age = view.findViewById(R.id.age);
+            String newAge = age.getText().toString();
             if (!validateInfo(newAge, "^[1-9][0-9]?$") && !validateInfo(newAge, "^$")) {
                 Toasty.error(getContext(), "Illegal input of age.", Toast.LENGTH_SHORT, true).show();
                 return;
+            }
+            else{
+                user.setAge(Integer.getInteger(newAge));
             }
             if(!validateInfo(emailS, "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")
                     &&!validateInfo(email.toString(),"^$")){
                 Toasty.error(getContext(), "Illegal input of  email address.", Toast.LENGTH_SHORT, true).show();
                 return;}
-            if (users.getUserList().contains(username.getText().toString())){
+            else{
+                user.setEmail(emailS);}
+            if (users.getUserList().contains(usernameS)&&!usernameS.equals(user.getName())){
                 Toasty.error(getContext(), "Username already exists", Toast.LENGTH_SHORT, true).show();
                 return;
             }
-            user.setEmail(emailS);
-            user.setAge(Integer.getInteger(newAge));
+            if(!validateInfo(usernameS, "^[a-z]{3,7}$")){
+                Toasty.error(getContext(), "Illegal input of username.", Toast.LENGTH_SHORT, true).show();
+                return;
+            }
+
+            String oldName = user.getName();
             users.getUserList().remove(user.getName());
             user.setName(usernameS);
             users.addUser(usernameS);
-            myDB.updateUser(usernameS,user);
+            myDB.deleteAndInsertUser(oldName,usernameS,user);
             myDB.updateAccountManager(users);
             DataHolder.getInstance().save("current user", usernameS);
+            setEnabled(false);
+            NavigationView navigationView =getActivity().findViewById(R.id.nav_view);
+            View headerView =navigationView.getHeaderView(0);
+            TextView t= headerView.findViewById(R.id.primary_username);
+            t.setText(usernameS);
         }
     }
 
