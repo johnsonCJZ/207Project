@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Observable;
 
-public class Game2048Board extends Board implements Serializable, Iterable<Game2048Tile>, IObservable<Game2048Board> {
+public class Game2048Board extends Board<Game2048Tile> implements Serializable, Iterable<Game2048Tile>, IObservable<Game2048Board> {
     final static int DIMENSION = 4;
     private int score = 0;
     private boolean isChanged = false;
@@ -59,10 +59,9 @@ public class Game2048Board extends Board implements Serializable, Iterable<Game2
 
     ArrayList<Game2048Tile> findEmpty() {
         ArrayList<Game2048Tile> result = new ArrayList<>();
-        for (Tile tile : this.tiles) {
-            Game2048Tile t = (Game2048Tile) tile;
-            if (t.isEmpty()) {
-                result.add(t);
+        for (Game2048Tile tile : this.tiles) {
+            if (tile.isEmpty()) {
+                result.add(tile);
             }
         }
         return result;
@@ -71,7 +70,7 @@ public class Game2048Board extends Board implements Serializable, Iterable<Game2
     Game2048Tile[] getRow(int row) {
         Game2048Tile[] result = new Game2048Tile[DIMENSION];
         for (int i = 0; i < DIMENSION; i++) {
-            result[i] = (Game2048Tile) tiles.get(row * DIMENSION + i);
+            result[i] = tiles.get(row * DIMENSION + i);
         }
         return result;
     }
@@ -80,7 +79,7 @@ public class Game2048Board extends Board implements Serializable, Iterable<Game2
         Game2048Tile[] result = new Game2048Tile[DIMENSION];
 
         for (int i = 0; i < DIMENSION; i++) {
-            result[i] = (Game2048Tile) tiles.get(i * DIMENSION + col);
+            result[i] = tiles.get(i * DIMENSION + col);
         }
         return result;
     }
@@ -259,7 +258,7 @@ public class Game2048Board extends Board implements Serializable, Iterable<Game2
 //    }
 
     Game2048Tile getTile(int x, int y) {
-        return (Game2048Tile) tiles.get(x * DIMENSION + y);
+        return tiles.get(x * DIMENSION + y);
     }
 
     int getDimension() {
@@ -273,7 +272,7 @@ public class Game2048Board extends Board implements Serializable, Iterable<Game2
     @NonNull
     @Override
     public Iterator<Game2048Tile> iterator() {
-        return new Tile2048Iterator((List<Game2048Tile>)(List<?>)tiles);
+        return new Tile2048Iterator(tiles);
     }
 
 
