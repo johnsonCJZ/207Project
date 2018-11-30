@@ -9,13 +9,24 @@ public class Game2048Memory extends Memory implements Serializable {
     private int score;
     private List<Integer> tileValueList = new ArrayList<>();
 
+    public double getTime2048() {
+        return time2048;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public List<Integer> getTileValueList() {
+        return tileValueList;
+    }
+
     public void makeCopy(Game2048BoardManager manager) {
         this.time2048 = manager.getTime();
         score = manager.getScore();
-        for (Game2048Tile t: manager.getBoard()){
+        for (Game2048Tile t: manager.getBoard()) {
             this.tileValueList.add(t.getValue());
         }
-        System.out.println(this.tileValueList);
     }
 
     public Game2048BoardManager copy(){

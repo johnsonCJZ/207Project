@@ -24,6 +24,7 @@ public class Factory {
             m.setBoard((Game2048Board) b);
             ((Game2048Board)b).addTile();
             ((Game2048Board)b).addTile();
+            m.setTiles(b.getTiles());
             return m;
         }
         if(b instanceof SlidingBoard){
