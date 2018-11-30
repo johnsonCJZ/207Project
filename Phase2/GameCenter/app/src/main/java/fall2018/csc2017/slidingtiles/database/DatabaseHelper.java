@@ -7,8 +7,10 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import fall2018.csc2017.slidingtiles.Factory;
 import fall2018.csc2017.slidingtiles.InterfaceAdapter;
 import fall2018.csc2017.slidingtiles.ScoreStrategy;
@@ -27,6 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Construct a new DatabaseHelper.
+     *
      * @param context activity context.
      */
     public DatabaseHelper(@Nullable Context context) {
@@ -35,6 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Create a table in the database.
+     *
      * @param db database
      */
     @Override
@@ -53,6 +57,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Check if a UserAccountManager exists.
+     *
      * @return whether there exists a UserAccountManager.
      */
     public boolean ifAccountManagerExists() {
@@ -65,6 +70,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Create a UserAccountManager.
+     *
      * @return whether a UserAccountManager has been successfully created.
      */
     public boolean createUserAccountManager() {
@@ -81,6 +87,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Convert the Object argument to Json.
+     *
      * @param o the Objected to be converted to Json.
      * @return whether the operation is done successfully
      */
@@ -92,7 +99,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Insert a new username and userAccount into the database.
-     * @param username the username to be inserted as the key
+     *
+     * @param username    the username to be inserted as the key
      * @param userAccount the userAccount to be inserted as the content.
      * @return whether the username and userAccount has been successfully inserted into the database.
      * @throws SQLException
@@ -116,6 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Extract the UserAccountManager.
+     *
      * @return the UserAccountManager
      */
     public UserAccountManager selectAccountManager() {
@@ -129,6 +138,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Extract the UserAccount with the username.
+     *
      * @param username the username of the UserAccount wanted.
      * @return the UserAccount wanted.
      */
@@ -142,7 +152,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Update the username and UserAccount information in the database.
-     * @param username the username of the UserAccount to be updated.
+     *
+     * @param username    the username of the UserAccount to be updated.
      * @param userAccount the UserAccount to be updated.
      */
     public void updateUser(String username, UserAccount userAccount) {
@@ -156,6 +167,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Delete a UserAccount with the old username and insert a UserAccount and the new username as the key.
+     *
      * @param oldUserName the username of the UserAccount to be deleted.
      * @param newUserName the username of the New UserAccount to be inserted.
      * @param userAccount the UserAccount to be inserted.
@@ -181,6 +193,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Update the database with the UserAccountManager given.
+     *
      * @param userAccountManager the UserAccountManager to be inserted.
      */
     public void updateAccountManager(UserAccountManager userAccountManager) {
@@ -194,6 +207,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Convert the jsonString to the corresponding UserAccount.
+     *
      * @param jsonString the jsonString of the UserAccount wanted.
      * @return the UserAccount wanted.
      */
@@ -205,6 +219,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Convert the jsonString to the corresponding UserAccountManager.
+     *
      * @param jsonString the jsonString of the UserAccountManager wanted.
      * @return the UserAccountManager wanted.
      */
@@ -216,6 +231,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Check whether the database has the UserAccount with the username.
+     *
      * @param username the username of the UserAccount being searched for.
      * @return the UserAccount wanted.
      */
