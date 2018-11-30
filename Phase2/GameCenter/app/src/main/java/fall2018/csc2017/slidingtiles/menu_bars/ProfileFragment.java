@@ -24,6 +24,9 @@ import fall2018.csc2017.slidingtiles.UserAccount;
 import fall2018.csc2017.slidingtiles.UserAccountManager;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
+/**
+ * the Fragment of the Profile page.
+ */
 public class ProfileFragment extends Fragment {
     DatabaseHelper myDB;
     private View view;
@@ -67,6 +70,9 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Link all the fields with the corresponding element in the view.
+     */
     private void getAllComponents() {
         username = view.findViewById(R.id.username);
         age = view.findViewById(R.id.age);
@@ -75,6 +81,9 @@ public class ProfileFragment extends Fragment {
         changePs = view.findViewById(R.id.changePs);
     }
 
+    /**
+     * Get the user list and the current user information from the database.
+     */
     private void getAllUsers() {
         currentUser = (String) DataHolder.getInstance().retrieve("current user");
         assert user != null;
@@ -82,6 +91,9 @@ public class ProfileFragment extends Fragment {
         users = myDB.selectAccountManager();
     }
 
+    /**
+     * set the name, email and age TextView by the user's corresponding information.
+     */
     private void setContents() {
         username.setText(user.getName());
         if (user.getAge() != null) {
@@ -91,12 +103,19 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    /**
+     * set whether the TextViews can be edited.
+     * @param isEnabled whether the TextViews can be edited.
+     */
     private void setEnabled(boolean isEnabled) {
         username.setEnabled(isEnabled);
         age.setEnabled(isEnabled);
         email.setEnabled(isEnabled);
     }
 
+    /**
+     * update the database and UserAccount with the new information updated.
+     */
     private void editProfileButtonPushed() {
         if (!isEnablbed) {
             isEnablbed = true;
@@ -146,6 +165,12 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    /**
+     * Check if the String argument fulfills the regex argument
+     * @param info the information to be checked
+     * @param regex the regex to be fulfilled.
+     * @return whether the regex is fulfilled by the info.
+     */
     private boolean validateInfo(String info, String regex) {
         Pattern regexP = Pattern.compile(regex);
         Matcher matcher = regexP.matcher(info);
