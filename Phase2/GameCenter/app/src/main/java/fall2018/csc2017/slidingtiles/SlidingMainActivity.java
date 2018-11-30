@@ -132,29 +132,34 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         isPaused = true;
         user.setSlideHistory("resumeHistorySlide", null);// clear resume memory
         slidingBoardManager.setTime(count);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Do you want to save/override this game?")
+        if(!slidingBoardManager.isWon()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Do you want to save/override this game?")
 
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        saveHistory(dialog);
-                        switchToGameCenter();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        switchToGameCenter();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                isPaused = false;
-                dialog.cancel();
-            }
-        });
-        alert.show();
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            saveHistory(dialog);
+                            switchToGameCenter();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            switchToGameCenter();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    isPaused = false;
+                    dialog.cancel();
+                }
+            });
+            alert.show();
+        }
+        else{
+            switchToGameCenter();
+        }
 
     }
 
@@ -236,34 +241,6 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
 
 
         };
-    }
-
-    private class GameThread extends Thread{
-        private boolean isPaused;
-        @Override
-        public void run(){
-            while(!isInterrupted()) {
-                if (!isPaused) {
-                    try {
-                        Thread.sleep(10);
-                        if (slidingBoardManager.isWon()) {
-                            this.interrupt();
-                        }
-                        runOnUiThread(new InGame(time));
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-        public void pause(){
-            isPaused = true;
-        }
-
-        public void unPause(){
-            isPaused = false;
-        }
     }
 
 
@@ -489,26 +466,6 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         super.onPause();
     }
 
-    /**
-     * Load from pre-saved .ser file.
-     */
-    private void loadFromFile() {
-
-        try {
-            InputStream inputStream = this.openFileInput(UserAccountManager.USERS);
-            if (inputStream != null) {
-                ObjectInputStream input = new ObjectInputStream(inputStream);
-                users = (UserAccountManager) input.readObject();
-                inputStream.close();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        } catch (ClassNotFoundException e) {
-            Log.e("login activity", "File contained unexpected data type: " + e.toString());
-        }
-    }
 
     @Override
     public void update(IObservable o) {
