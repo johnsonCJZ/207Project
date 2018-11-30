@@ -1,4 +1,4 @@
-package fall2018.csc2017.slidingtiles.database;
+package fall2018.csc2017.slidingtiles;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -60,7 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      *
      * @return whether there exists a UserAccountManager.
      */
-    public boolean ifAccountManagerExists() {
+    boolean ifAccountManagerExists() {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "select count(*) from " + TABLE_NAME + " where " + KEY_NAME + " = '" + USER_ACCOUNT_MANAGER + "'";
         Cursor res = db.rawQuery(query, null);
@@ -73,7 +73,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      *
      * @return whether a UserAccountManager has been successfully created.
      */
-    public boolean createUserAccountManager() {
+    boolean createUserAccountManager() {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         Factory f = new Factory();
@@ -105,7 +105,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @return whether the username and userAccount has been successfully inserted into the database.
      * @throws SQLException
      */
-    public boolean createAndInsertNew(String username, UserAccount userAccount) throws SQLException {
+    boolean createAndInsertNew(String username, UserAccount userAccount) throws SQLException {
         boolean found;
         long result;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -235,7 +235,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param username the username of the UserAccount being searched for.
      * @return the UserAccount wanted.
      */
-    public boolean hasUser(String username) {
+    boolean hasUser(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "select count(*) from " + TABLE_NAME + " where " + KEY_NAME + " = '" + username + "'";
         Cursor res = db.rawQuery(query, null);

@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
-import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 import fall2018.csc2017.slidingtiles.drop_down_menu.ContactsFragment;
 import fall2018.csc2017.slidingtiles.drop_down_menu.HelpsFragment;
 import fall2018.csc2017.slidingtiles.menu_bars.GameStoreFragment;

@@ -7,8 +7,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
-
 public class ScoreBoardTabLayoutActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;

@@ -13,8 +13,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
-
 public class Game2048MainActivity extends AppCompatActivity implements IObserver {
     static boolean isPaused;
     double tempCount;

@@ -16,8 +16,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
-
 /**
  * Represent the fragment of a ScoreBoard page.
  */
@@ -25,7 +23,6 @@ public class ScoreBoardFragmentActivity extends Fragment {
     private View view;
     private ScoreBoard board;
     private TableLayout table;
-    private String currentUser;
     private DatabaseHelper myDB;
     private UserAccount user;
 

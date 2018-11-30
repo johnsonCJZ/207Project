@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
-import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 public class MineDifficultyActivity extends AppCompatActivity {
     UserAccount user;

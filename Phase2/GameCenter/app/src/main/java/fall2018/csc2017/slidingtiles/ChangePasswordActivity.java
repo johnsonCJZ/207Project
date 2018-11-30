@@ -12,7 +12,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import es.dmoral.toasty.Toasty;
-import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 /**
  * Activity for changing password extending AppCompatActivity.

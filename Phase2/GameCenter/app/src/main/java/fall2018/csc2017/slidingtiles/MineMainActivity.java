@@ -16,8 +16,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
-
 /**
  * The game activity.
  */

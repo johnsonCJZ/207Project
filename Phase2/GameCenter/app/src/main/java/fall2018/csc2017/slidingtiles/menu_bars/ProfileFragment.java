@@ -22,7 +22,7 @@ import fall2018.csc2017.slidingtiles.DataHolder;
 import fall2018.csc2017.slidingtiles.R;
 import fall2018.csc2017.slidingtiles.UserAccount;
 import fall2018.csc2017.slidingtiles.UserAccountManager;
-import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
+import fall2018.csc2017.slidingtiles.DatabaseHelper;
 
 /**
  * the Fragment of the Profile page.

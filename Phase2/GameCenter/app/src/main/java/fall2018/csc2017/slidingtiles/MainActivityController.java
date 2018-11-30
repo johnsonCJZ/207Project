@@ -5,8 +5,6 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
-import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
-
 public class MainActivityController {
 
     private static int columnWidth, columnHeight;

@@ -24,7 +24,7 @@ import fall2018.csc2017.slidingtiles.ScoreBoard;
 import fall2018.csc2017.slidingtiles.ScoreBoardTabLayoutActivity;
 import fall2018.csc2017.slidingtiles.UserAccount;
 import fall2018.csc2017.slidingtiles.UserAccountManager;
-import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
+import fall2018.csc2017.slidingtiles.DatabaseHelper;
 
 /**
  * Fragment for game 2048
