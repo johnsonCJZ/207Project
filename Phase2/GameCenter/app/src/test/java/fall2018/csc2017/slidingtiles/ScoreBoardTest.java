@@ -13,44 +13,24 @@ import static org.junit.Assert.*;
 
 public class ScoreBoardTest {
     private ScoreBoard scoreBoard = new ScoreBoard("tester");
-    private List<Object[]> scoreList = scoreBoard.getScoreList();
-    private Object[] originalScore = {"Lucia", 100};
 
-//    private Object[] createScore(int score){
-//        Object[] arr = new Object[2];
-//        arr[0] = "1";
-//        arr[1] = score;
-//        return arr;
-//    }
-//
-//    public ArrayList getScore(List<Object[]> list) {
-//        ArrayList result = new ArrayList<>();
-//        for (int i = 0; i < list.size(); i++){
-//            result.add(list.get(i)[1]);
-//        }
-//        return result;
-//    }
-
-//    @Before
-//    public void setup(){
-//        scoreBoard2048 = new ScoreBoard("2048");
-//        scoreBoardMine = new ScoreBoard("Mine");
-//        scoreBoardSlide = new ScoreBoard("Slide");
-//    }
-
-    @Before
-    public void setup() {
-        scoreList.add(originalScore);
-    }
-
-    private void test(List<Object[]> expected, Object[] newScore) {
+    @Test
+    public void testAddAndSortRankedFirst() {
+        Object[] originalScore = {"Lucia", 100};
+        Object[] newScore =  {"Lucia", 102};
+        List<Object[]> expected = new ArrayList<>(
+                Arrays.asList(newScore, originalScore)
+        );
+        List<Object[]> actual = new ArrayList<>();
+        actual.add(originalScore);
+        scoreBoard.setScoreList(actual);
         scoreBoard.addAndSort(newScore);
         for (int i = 0; i < expected.size(); i++) {
             int expectedScore = (int) expected.get(i)[1];
-            int actualScore = (int) scoreList.get(i)[1];
+            int actualScore = (int) scoreBoard.getScoreList().get(i)[1];
             assertEquals(expectedScore, actualScore);
             String expectedName = (String) expected.get(i)[0];
-            String actualName = (String) scoreList.get(i)[0];
+            String actualName = (String) scoreBoard.getScoreList().get(i)[0];
             for (int j = 0; j < Math.min(expectedName.length(), actualName.length()); i++){
                 assertEquals(expectedName.charAt(j), actualName.charAt(j));
             }
@@ -58,56 +38,81 @@ public class ScoreBoardTest {
     }
 
     @Test
-    public void testAddAndSortRankedFirst() {
-        List<Object[]> expected = new ArrayList<>();
-        Object[] newScore =  {"Lucia", 102};
-        expected.add(newScore);
-        expected.add(originalScore);
-        test(expected, newScore);
-    }
-
-    @Test
     public void testAddAndSortRankedLast() {
-        List<Object[]> expected = new ArrayList<>();
+        Object[] originalScore = {"Lucia", 100};
         Object[] score =  {"Lucia", 102};
         Object[] newScore = {"Xinyi", 99};
-        expected.add(score);
-        expected.add(originalScore);
-        expected.add(newScore);
-        test(expected, newScore);
+        List<Object[]> actual = new ArrayList<>(
+                Arrays.asList(score, originalScore)
+        );
+        List<Object[]> expected = new ArrayList<>(
+                Arrays.asList(score, originalScore, newScore)
+        );
+        scoreBoard.setScoreList(actual);
+        scoreBoard.addAndSort(newScore);
+        for (int i = 0; i < expected.size(); i++) {
+            int expectedScore = (int) expected.get(i)[1];
+            int actualScore = (int) scoreBoard.getScoreList().get(i)[1];
+            assertEquals(expectedScore, actualScore);
+            String expectedName = (String) expected.get(i)[0];
+            String actualName = (String) scoreBoard.getScoreList().get(i)[0];
+            for (int j = 0; j < Math.min(expectedName.length(), actualName.length()); i++){
+                assertEquals(expectedName.charAt(j), actualName.charAt(j));
+            }
+        }
     }
 
     @Test
     public void testAddAndSortRankedMiddle() {
-        List<Object[]> expected = new ArrayList<>();
+        Object[] originalScore = {"Lucia", 100};
         Object[] score1 =  {"Lucia", 102};
         Object[] score2 = {"Xinyi", 99};
         Object[] newScore = {"May", 101};
-        expected.add(score1);
-        expected.add(newScore);
-        expected.add(originalScore);
-        expected.add(score2);
-        test(expected, newScore);
+        List<Object[]> actual = new ArrayList<>(
+                Arrays.asList(score1, originalScore, score2)
+        );
+        List<Object[]> expected = new ArrayList<>(
+                Arrays.asList(score1, newScore, originalScore, score2)
+        );
+        scoreBoard.setScoreList(actual);
+        scoreBoard.addAndSort(newScore);
+        for (int i = 0; i < expected.size(); i++) {
+            int expectedScore = (int) expected.get(i)[1];
+            int actualScore = (int) scoreBoard.getScoreList().get(i)[1];
+            assertEquals(expectedScore, actualScore);
+            String expectedName = (String) expected.get(i)[0];
+            String actualName = (String) scoreBoard.getScoreList().get(i)[0];
+            for (int j = 0; j < Math.min(expectedName.length(), actualName.length()); i++){
+                assertEquals(expectedName.charAt(j), actualName.charAt(j));
+            }
+        }
     }
 
     @Test
     public void testAddAndSortNoRank() {
-        List<Object[]> expected = new ArrayList<>();
+        Object[] originalScore = {"Lucia", 100};
         Object[] score1 =  {"Lucia", 102};
         Object[] score2 = {"Xinyi", 99};
-        Object[] Score3 = {"May", 101};
-        expected.add(score1);
-        expected.add(Score3);
-        expected.add(originalScore);
-        expected.add(score2);
+        Object[] score3 = {"May", 101};
         Object[] newScore = {"Xinyi Zhang", 70};
+        List<Object[]> actual = new ArrayList<>(
+                Arrays.asList(score1, score3, originalScore, score2)
+        );
+        List<Object[]> expected = new ArrayList<>(
+                Arrays.asList(score1, score3, originalScore, score2)
+        );
+        scoreBoard.setScoreList(actual);
         scoreBoard.setScoreBoardSize(4);
-        test(expected, newScore);
+        scoreBoard.addAndSort(newScore);
+        for (int i = 0; i < expected.size(); i++) {
+            int expectedScore = (int) expected.get(i)[1];
+            int actualScore = (int) scoreBoard.getScoreList().get(i)[1];
+            assertEquals(expectedScore, actualScore);
+            String expectedName = (String) expected.get(i)[0];
+            String actualName = (String) scoreBoard.getScoreList().get(i)[0];
+            for (int j = 0; j < Math.min(expectedName.length(), actualName.length()); i++){
+                assertEquals(expectedName.charAt(j), actualName.charAt(j));
+            }
+        }
     }
-
-
-//    @Override
-//    public boolean equals(Object obj) {
-//        return super.equals(obj);
-//    }
 }

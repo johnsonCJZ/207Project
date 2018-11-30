@@ -329,6 +329,7 @@ public class Game2048Test {
 
     @Test
     public void testMergeWholeBoardRight(){
+        setBoardCanMove();
         manager.move("RIGHT");
         int[][] expectedRows = {{0, 0, 4, 4}, {0, 0, 4, 4}, {0, 0, 4, 4}, {0, 0, 4, 4}};
         for (int i = 0; i < board.getDimension(); i++){
