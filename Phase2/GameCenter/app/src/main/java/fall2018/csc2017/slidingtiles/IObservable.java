@@ -4,11 +4,7 @@ public interface IObservable<T> {
 
     void addObserver(IObserver o);
 
-    void deleteObserver(IObserver o);
-
     void notifyObservers();
-
-    void clearChanged();
 
     boolean hasChanged();
 
