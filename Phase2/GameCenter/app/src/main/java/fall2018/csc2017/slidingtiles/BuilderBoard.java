@@ -3,35 +3,80 @@ package fall2018.csc2017.slidingtiles;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Builder for the Board class.
+ */
 public class BuilderBoard {
+    /**
+     * The dimension of the Builder
+     */
     private int dimension;
-    private int mine;
-    private int mineLeft;
-    private List<Tile> tiles = new ArrayList<>();
-    private List<MineTile> minePosition = new ArrayList<>();
-    private int game2048Score;
-    private boolean isChanged = false;
 
+    /**
+     * The number of mines of the Builder
+     */
+    private int mine;
+
+    /**
+     * The number of mines left of the Builder
+     */
+    private int mineLeft;
+
+    /**
+     * The List of Tiles of the Builder.
+     */
+    private List<Tile> tiles = new ArrayList<>();
+
+    /**
+     * The List of Mine's position of the Builder.
+     */
+    private List<MineTile> minePosition = new ArrayList<>();
+
+    /**
+     * Sets the dimension of the Builder.
+     * @param dimension the dimension to be set.
+     * @return the builder.
+     */
     public BuilderBoard setDimension(int dimension) {
         this.dimension = dimension;
         return this;
     }
 
+    /**
+     * Sets the number of Mines of the Builder.
+     * @param mine the number of Mines to be set.
+     * @return the builder.
+     */
     public BuilderBoard setMine(int mine) {
         this.mine = mine;
         return this;
     }
 
+    /**
+     * Sets the number of Mines left of the Builder.
+     * @param mineLeft the number of Mines left to be set.
+     * @return the builder.
+     */
     public BuilderBoard setMineLeft(int mineLeft) {
         this.mineLeft = mineLeft;
         return this;
     }
 
+    /**
+     * set the List of Tiles to tiles.
+     * @param tiles the tiles to be set
+     * @return the Builder.
+     */
     public BuilderBoard setTiles(List<Tile> tiles) {
         this.tiles = tiles;
         return this;
     }
 
+    /**
+     * set the List of MineTiles to tiles.
+     * @param tiles the list of MileTiles to be set
+     * @return the Builder.
+     */
     BuilderBoard setMineTiles(List<MineTile> tiles) {
         for (int i = 0; i < dimension * dimension; i++) {
             this.tiles.add(tiles.get(i));
@@ -42,6 +87,10 @@ public class BuilderBoard {
         return this;
     }
 
+    /**
+     * set the List of 2048Tiles to tiles.
+     * @return the Builder.
+     */
     private BuilderBoard set2048Tiles() {
         tiles = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
@@ -51,6 +100,10 @@ public class BuilderBoard {
         return this;
     }
 
+    /**
+     * Set the list of MineTiles.
+     * @return
+     */
     BuilderBoard setMineTiles() {
         for (int i = 0; i < dimension * dimension; i++) {
             MineTile tile = new MineTile();
@@ -61,6 +114,10 @@ public class BuilderBoard {
         return this;
     }
 
+    /**
+     * Builder a new Sliding Board.
+     * @return the new Sliding Board built.
+     */
     public SlidingBoard buildSlidingBoard() {
         SlidingBoard slidingBoard = new SlidingBoard();
         slidingBoard.setDimension(dimension);
@@ -68,6 +125,10 @@ public class BuilderBoard {
         return slidingBoard;
     }
 
+    /**
+     * Builder a new 2048 Board.
+     * @return the new 2048 Board built.
+     */
     public Game2048Board build2048Board() {
         Game2048Board game2048Board = new Game2048Board();
         set2048Tiles();
