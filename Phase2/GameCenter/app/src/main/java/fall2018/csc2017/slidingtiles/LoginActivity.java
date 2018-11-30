@@ -35,6 +35,11 @@ public class LoginActivity extends AppCompatActivity {
     TextView registerLink;
 
     /**
+     * TextView for reset password
+     */
+    TextView resetPassword;
+
+    /**
      * UserAccountManager
      */
     UserAccountManager userAccountManager;
@@ -72,7 +77,14 @@ public class LoginActivity extends AppCompatActivity {
                 LoginActivity.this.startActivity(registerIntent);
             }
         });
-
+        resetPassword = findViewById(R.id.forgotPassword);
+        resetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent resetPasswordIntent = new Intent(LoginActivity.this, ChangePasswordActivity.class);
+                LoginActivity.this.startActivity(resetPasswordIntent);
+            }
+        });
 
         loginButtonPushed();
     }

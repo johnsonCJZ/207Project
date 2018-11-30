@@ -1,5 +1,6 @@
 package fall2018.csc2017.slidingtiles;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,7 +24,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
     UserAccount user;
     UserAccountManager users;
     private DatabaseHelper myDB;
-    private String usernameS;
 
 
     @Override
@@ -38,7 +38,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateButtonPushed();
+                if(updateButtonPushed()){
+                    Intent intent = new Intent(ChangePasswordActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -55,32 +58,34 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     private void getAllUser(){
         myDB = new DatabaseHelper(this);
-        usernameS=(String) DataHolder.getInstance().retrieve("current user");
-        this.user=myDB.selectUser(usernameS);
         this.users= myDB.selectAccountManager();
     }
 
     boolean updateButtonPushed() {
+        String usernameS = username.getText().toString();
+        if(!users.getUserList().contains(usernameS)){
+            Toasty.error(getApplicationContext(), "User does not exist.", Toast.LENGTH_SHORT, true).show();
+            return false;
+        }
+        user = myDB.selectUser(usernameS);
         String passwordOrEmailS = this.passwordOrEmail.getText().toString();
         String newPwS = this.newPw.getText().toString();
         String confirmS = confirmPw.getText().toString();
-        String email = user.getEmail();
-        String ps = user.getPassword();
-        if (!(email.equals(passwordOrEmailS) || ps.equals(passwordOrEmailS))) {
-            message.setText("The current password or email is not correct.");
+        if (!(user.getEmail().equals(passwordOrEmailS) || user.getPassword().equals(passwordOrEmailS))) {
+            Toasty.error(getApplicationContext(), "The current password or email is not correct.", Toast.LENGTH_SHORT, true).show();
             return false;
         }
         if (!(newPwS.equals(confirmS))) {
-            message.setText("The new password are not the same with the confirmed password.");
+            Toasty.error(getApplicationContext(), "The new password are not the same with the confirmed password.", Toast.LENGTH_SHORT, true).show();
             return false;
         }
         if (!(validateInfo(newPw.getText().toString(), "^[a-z0-9]{1,9}$"))) {
-            message.setText("The format of new password is not correct.");
+            Toasty.error(getApplicationContext(), "The format of new password is not correct.", Toast.LENGTH_SHORT, true).show();
             return false;
         }
             user.setPassword(newPwS);
             myDB.updateUser(username.getText().toString(), user);
-            message.setText("Your password is successfully updated.");
+            Toasty.success(getApplicationContext(), "Your password is successfully updated.", Toast.LENGTH_SHORT, true).show();
             return true;
 
     }

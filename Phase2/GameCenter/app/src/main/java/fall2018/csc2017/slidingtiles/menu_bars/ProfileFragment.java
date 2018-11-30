@@ -1,7 +1,7 @@
 package fall2018.csc2017.slidingtiles.menu_bars;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -12,11 +12,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import es.dmoral.toasty.Toasty;
+import fall2018.csc2017.slidingtiles.ChangePasswordActivity;
 import fall2018.csc2017.slidingtiles.DataHolder;
 import fall2018.csc2017.slidingtiles.R;
 import fall2018.csc2017.slidingtiles.UserAccount;
@@ -52,6 +51,14 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 getAllComponents();
                 editProfileButtonPushed();
+            }
+        });
+        changePs = view.findViewById(R.id.changePs);
+        changePs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent tmp = new Intent(getActivity(), ChangePasswordActivity.class);
+                startActivity(tmp);
             }
         });
 
