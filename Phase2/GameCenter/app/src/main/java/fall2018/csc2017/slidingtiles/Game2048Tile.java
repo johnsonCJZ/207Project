@@ -7,16 +7,27 @@ public class Game2048Tile extends Tile implements Serializable {
 
     private boolean fadeIn;
 
-    public Game2048Tile() {
+    /**
+     * Construct a new Tile with value 0.
+     */
+    Game2048Tile() {
         this.background = R.drawable.tile_2048_0;
         this.value = 0;
         fadeIn = false;
     }
 
+    /**
+     * @return Whether the tile is empty.
+     */
     boolean isEmpty() {
         return value == 0;
     }
 
+    /**
+     * Set value 2 or 4 to a tile.
+     * 80% probability set value 2 to the tile.
+     * 20% probability set value 4 to the tile.
+     */
     void random() {
         double prob = Math.random();
         if (prob <= 0.2) {
@@ -101,16 +112,16 @@ public class Game2048Tile extends Tile implements Serializable {
         }
     }
 
-    public void setAnimation() {
+    void setAnimation() {
         fadeIn = true;
     }
 
-    public boolean getFadeIn() {
+    boolean getFadeIn() {
         return fadeIn;
     }
 
 
-    public void removeFadeIn() {
+    void removeFadeIn() {
         fadeIn = false;
     }
 }

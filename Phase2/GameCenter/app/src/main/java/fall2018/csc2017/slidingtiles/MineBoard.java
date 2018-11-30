@@ -6,16 +6,34 @@ import java.util.List;
 import java.util.Random;
 
 public class MineBoard extends Board<MineTile> {
+    /**
+     * Numer of mines.
+     */
     private int mineNum;
+
+    /**
+     * Number of mines left.
+     */
     private int mineLeft;
+
     private List<MineTile> minePosition = new ArrayList<>();
 
+    /**
+     * @return number of mines.
+     */
     int getMineNum() {return mineNum;}
 
+    /**
+     * @return number of mines left.
+     */
     int getMineLeft() {return mineLeft;}
 
     List<MineTile> getMinePosition() {return minePosition;}
 
+    /**
+     * @param position position at list of tiles
+     * @return tile that at the position
+     */
     MineTile getTile(int position) {
         int row = position / getDimension();
         int col = position % getDimension();
@@ -53,6 +71,10 @@ public class MineBoard extends Board<MineTile> {
         this.mineLeft = mineLeft;
     }
 
+    /**
+     * Show the tile with the position.
+     * @param position tile position.
+     */
     void reveal(int position) {
         MineTile currTile = getTile(position);
         if (currTile.getNumber() == 0) {
@@ -75,6 +97,10 @@ public class MineBoard extends Board<MineTile> {
         notifyObservers();
     }
 
+    /**
+     * Flag the tile with the position.
+     * @param position tile position
+     */
     void flag(int position) {
         getTile(position).flag();
         if (getTile(position).isFlagged()){mineLeft--;}
@@ -84,6 +110,11 @@ public class MineBoard extends Board<MineTile> {
         notifyObservers();
     }
 
+    /**
+     * Get the 8 surrounding tiles of the tile with the position.
+     * @param position tile position
+     * @return List of surrounding tiles.
+     */
     List<MineTile> getSurround(int position) {
         int dimension = getDimension();
         int row = position / dimension ;
@@ -117,6 +148,9 @@ public class MineBoard extends Board<MineTile> {
         return surround;
     }
 
+    /**
+     * Show all tiles.
+     */
     void showMines(){
         for (MineTile tile : minePosition){
             tile.showMine();

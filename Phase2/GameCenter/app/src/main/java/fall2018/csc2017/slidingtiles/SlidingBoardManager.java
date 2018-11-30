@@ -17,6 +17,9 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
      */
     private int currIndex = 0;
 
+    /**
+     * Add ordered tiles to the board.
+     */
     void addTile() {
             int numTiles = getDimension() * getDimension();
             for (int tileNum = 0; tileNum != numTiles; tileNum++) {

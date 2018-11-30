@@ -4,8 +4,11 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Game2048BoardManager extends BoardManager<Game2048Board, Game2048Tile> implements Serializable{
+    /**
+     * Dimension of game 2048 can only be 4.
+     */
     final private Integer DIMENSION = 4;
-//    private Double time;
+
 
     int getScore() {
         return getBoard().getScore();
@@ -15,6 +18,9 @@ public class Game2048BoardManager extends BoardManager<Game2048Board, Game2048Ti
         getBoard().getTile(0,0).setValue(2048);
     }
 
+    /**
+     * @return whether the board is full.
+     */
     private boolean isFull() {
         return getBoard().findEmpty().size() == 0;
     }

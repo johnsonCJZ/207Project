@@ -5,26 +5,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Board<T> implements Serializable, IObservable<Game2048Board> {
+    /**
+     * Number of row/col.
+     */
     private int dimension;
 
+    /**
+     * Tiles that in the board.
+     */
     private List<T> tiles = new ArrayList<>();
 
+    /**
+     * Whether the board have been changed.
+     */
     private boolean changed = false;
 
+    /**
+     * List of observers.
+     */
     private ArrayList<IObserver> observers = new ArrayList<>();
 
+    /**
+     * Set tiles in the board.
+     * @param tiles tiles in the board
+     */
     void setTiles(List<T> tiles) {
         this.tiles = tiles;
     }
 
+    /**
+     * @return tiles in the board.
+     */
     List<T> getTiles(){
         return tiles;
     }
 
+    /**
+     * @return dimension of the board.
+     */
     int getDimension() {
         return dimension;
     }
 
+    /**
+     * Set dimension of the board.
+     * @param dimension new dimension of the board.
+     */
     void setDimension(int dimension) {
         this.dimension = dimension;
     }

@@ -1,9 +1,11 @@
 package fall2018.csc2017.slidingtiles;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class MineBoardManager extends BoardManager<MineBoard, MineTile>{
+    /**
+     * If is first touch, construct the board.
+     */
     private boolean isFirst = true;
     private boolean lost = false;
     private List<MineTile> minePosition;
@@ -21,23 +23,38 @@ public class MineBoardManager extends BoardManager<MineBoard, MineTile>{
      * Return if the MineBoard is played.
      * @return if the MineBoard is played
      */
-    public boolean isFirst() {
+    boolean isFirst() {
         return isFirst;
     }
 
-    public void switchIsFirst() {
+    /**
+     * Change state of isFirst to the opposite.
+     */
+    void switchIsFirst() {
         isFirst = !isFirst;
     }
 
 
+    /**
+     * Flag the tile at the position.
+     * @param position tile position.
+     */
     void mark(int position) {
         getBoard().flag(position);
     }
 
+    /**
+     * Set tiles with mine to the board.
+     * @param minePosition list of tile with mine.
+     */
     void setMinePosition(List<MineTile> minePosition) {
         this.minePosition = minePosition;
     }
 
+    /**
+     * If the tile has mine, set the number -1
+     * If not, set the number equals number of surrounding mines.
+     */
     private void setNumbers() {
         for (int pos = 0; pos < getDimension() *getDimension() ; pos++) {
             //if the tile is a mine, set the number to -1.

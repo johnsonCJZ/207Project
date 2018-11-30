@@ -9,9 +9,15 @@ import java.util.Observable;
 
 public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2048Tile> {
     private int score = 0;
+
+    /**
+     * Whether the board have been changed.
+     */
     private boolean isChanged = false;
 
-
+    /**
+     * Set an empty board which every tile with value 0.
+     */
     void setUpTiles() {
         for (int row = 0; row != getDimension(); row++) {
             for (int col = 0; col != getDimension(); col++) {
@@ -31,10 +37,21 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
 
     boolean isChanged() {return isChanged;}
 
+    /**
+     * @return score
+     */
     int getScore() {return score;}
 
+    /**
+     * Set score
+     * @param score score.
+     */
     void setScore(int score) {this.score = score;}
 
+    /**
+     * Randomly pick an empty tile with 0 and change its value to 2 or 4.
+     * @return the random tile with changed value.
+     */
     Game2048Tile addTile() {
         ArrayList<Game2048Tile> empty = findEmpty();
         Game2048Tile randomTile = empty.get((int) (Math.random() * empty.size()));
@@ -44,6 +61,10 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
         //return null;
     }
 
+    /**
+     * Find all empty tiles.
+     * @return Array List of empty tiles.
+     */
     ArrayList<Game2048Tile> findEmpty() {
         ArrayList<Game2048Tile> result = new ArrayList<>();
         for (Game2048Tile tile : getTiles()) {
@@ -54,6 +75,10 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
         return result;
     }
 
+    /**
+     * @param row row number
+     * @return Array of tiles in that row.
+     */
     Game2048Tile[] getRow(int row) {
         Game2048Tile[] result = new Game2048Tile[getDimension()];
         for (int i = 0; i < getDimension(); i++) {
@@ -62,6 +87,10 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
         return result;
     }
 
+    /**
+     * @param col col number
+     * @return Array of tiles in that column.
+     */
     Game2048Tile[] getColumn(int col) {
         Game2048Tile[] result = new Game2048Tile[getDimension()];
 
@@ -71,6 +100,12 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
         return result;
     }
 
+    /**
+     * Merge an array of tiles if exist two adjacent tiles with a same value.
+     * For example, [2 , 2 , 4 , 4] merge to left -> [4, 8, 0, 0]
+     * @param tileArray array of tiles before merge.
+     * @param direction direction of merge can only be LEFT or RIGHT.
+     */
     void mergeList(Game2048Tile[] tileArray, String direction){
         int dimension = getDimension();
         ArrayList<Integer> temp = new ArrayList<>(dimension);
@@ -160,6 +195,10 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
         }
     }
 
+    /**
+     * Merge the whole 2048 game board.
+     * @param direction direction of merge can only be LEFT or RIGHT or UP or DOWN.
+     */
     void merge(String direction) {
         int dimension = getDimension();
         switch (direction) {
@@ -200,7 +239,7 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
 
 
     /**
-     * internal nested iterator iterates through 2-D array slidingTiles
+     * Internal nested iterator iterates through 2-D array Game2048Tiles
      */
     private class Tile2048Iterator implements Iterator<Game2048Tile> {
         int currentPosition = -1;
@@ -210,9 +249,9 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
         // current position = 3*NUM_COLS + 2
 
         /**
-         * a new TileIterator takes slidingTiles nd process it
+         * a new Tile2048Iterator takes game 2048 tiles and process it
          *
-         * @param tiles slidingTiles from board
+         * @param tiles Game2048Tile from board
          */
         Tile2048Iterator(List<Game2048Tile> tiles) {
             this.tiles = tiles;
