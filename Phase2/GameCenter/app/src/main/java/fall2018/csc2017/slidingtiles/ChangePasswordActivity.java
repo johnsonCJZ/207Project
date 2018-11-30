@@ -14,7 +14,14 @@ import java.util.regex.Pattern;
 import es.dmoral.toasty.Toasty;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
+/**
+ * Activity for changing password extending AppCompatActivity.
+ */
 public class ChangePasswordActivity extends AppCompatActivity {
+
+    /**
+     *
+     */
     TextView username;
     TextView passwordOrEmail;
     TextView newPw;
@@ -39,7 +46,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (updateButtonPushed()) {
-                    Intent intent = new Intent(ChangePasswordActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(ChangePasswordActivity.this,
+                            LoginActivity.class);
                     startActivity(intent);
                 }
             }

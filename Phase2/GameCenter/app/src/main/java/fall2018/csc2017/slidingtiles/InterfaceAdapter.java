@@ -1,3 +1,10 @@
+/***************************************************************************************
+ *    Title: Interface Adapter
+ *    Author: Mauricio Silva Manrique
+ *    Date: 11/30/2018
+ *    Availability: http://technology.finra.org/code/serialize-deserialize-interfaces-in-java.html
+ *
+ ***************************************************************************************/
 package fall2018.csc2017.slidingtiles;
 
 import com.google.gson.JsonDeserializationContext;
