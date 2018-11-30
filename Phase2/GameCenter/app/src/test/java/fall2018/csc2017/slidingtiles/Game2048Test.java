@@ -107,7 +107,7 @@ public class Game2048Test {
     @Test
     public void testNotLoseHas2048CanMove() {
         board.setUpTiles();
-        manager.cheat();
+        board.cheat();
         assertTrue(manager.canMove());
         assertFalse(manager.isLost());
     }

@@ -34,10 +34,9 @@ public class ProfileFragment extends Fragment {
     private TextView age;
     private TextView email;
     private UserAccount user;
-    private boolean isEnablbed = false;
+    private boolean isEnabled = false;
     private Button editProfile;
     private Button changePs;
-    private String currentUser;
     private UserAccountManager users;
 
 
@@ -48,7 +47,7 @@ public class ProfileFragment extends Fragment {
         myDB = new DatabaseHelper(this.getContext());
         view = inflater.inflate(R.layout.profile_fragment, container, false);
         getAllComponents();
-        setEnabled(isEnablbed);
+        setEnabled(isEnabled);
         getAllUsers();
         setContents();
         editProfile.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +84,7 @@ public class ProfileFragment extends Fragment {
      * Get the user list and the current user information from the database.
      */
     private void getAllUsers() {
-        currentUser = (String) DataHolder.getInstance().retrieve("current user");
+        String currentUser = (String) DataHolder.getInstance().retrieve("current user");
         assert user != null;
         user = myDB.selectUser(currentUser);
         users = myDB.selectAccountManager();
@@ -117,11 +116,11 @@ public class ProfileFragment extends Fragment {
      * update the database and UserAccount with the new information updated.
      */
     private void editProfileButtonPushed() {
-        if (!isEnablbed) {
-            isEnablbed = true;
+        if (!isEnabled) {
+            isEnabled = true;
             setEnabled(true);
         } else {
-            isEnablbed = false;
+            isEnabled = false;
             email = view.findViewById(R.id.email);
             String emailS = email.getText().toString();
             username = view.findViewById(R.id.username);
