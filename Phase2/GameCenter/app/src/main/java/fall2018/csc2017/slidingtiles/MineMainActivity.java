@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
@@ -88,10 +89,6 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
     private UserAccountManager users;
     private String currentUser;
 
-    /**
-     * Mute the slidingTiles in grid view
-     */
-    private boolean isMutted;
 
     /**
      * Update the backgrounds on the buttons to match the slidingTiles.
@@ -190,7 +187,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
 
     /**
      * Save the game history.
-     * @param dialog
+     * @param dialog dialog for choosing memory, to be cancelled
      */
     private void saveHistory(DialogInterface dialog){
         user.setMineHistory("historyMine", boardManager);
@@ -215,7 +212,6 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        myDB = new DatabaseHelper(this);
         getAllInfo(); // pass in all useful data from last activity, including boardManager
         getAllComponents();
         face.setImageResource(R.drawable.normal);
@@ -260,7 +256,6 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
             @Override
             public void onClick(View v) {
                 isPaused = false;
-//                face.setImageResource(R.drawable.normal);
                 boardManager = new MineBoardManager(dimension,mine);
                 boardManager.setTime((double) -1);
                 createTileButtons(getApplicationContext());
@@ -333,7 +328,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
     private Thread time(){
         count = boardManager.getTime();
         isPaused = false;
-        Thread t = new Thread(){
+        t=new Thread(){
             @Override
             public void run(){
                 while(!isInterrupted()) {
@@ -360,8 +355,8 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         }
         @Override
         public void run() {
+            boardManager.setTime(count);
             if (boardManager.isWon() && !isPaused) {
-                boardManager.setTime(count);
                 isPaused = true;
                 user.setMineHistory("resumeHistoryMine", null);
                 face.setImageResource(R.drawable.win);
@@ -369,7 +364,6 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
                 winAlert();
             }
             else if (boardManager.isLost() && !isPaused){
-                boardManager.setTime(count);
                 isPaused = true;
                 user.setMineHistory("resumeHistoryMine", null);
                 face.setImageResource(R.drawable.sad);
@@ -379,7 +373,6 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
             else {
                 count = boardManager.getTime();
                 count += 1;
-                boardManager.setTime(count);
                 if (tempCount < 2) {
                     tempCount += 1;
                 } else {
@@ -393,18 +386,17 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
 
     /**
      * Receive all the info(User, Size, SlidingBoardManager, ScoreBoards)from previous activity/view.
-     * @throws CloneNotSupportedException
      */
     private void getAllInfo() {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
-
+        myDB = new DatabaseHelper(this);
         currentUser = (String)DataHolder.getInstance().retrieve("current user");
         this.user = myDB.selectUser(currentUser);
         this.users = myDB.selectAccountManager();
 
-        this.boardManager = (MineBoardManager) extra.getSerializable("boardManager");
-        dimension = boardManager.getBoard().getDimension ();
+        this.boardManager = (MineBoardManager) Objects.requireNonNull(extra).getSerializable("boardManager");
+        dimension = Objects.requireNonNull(boardManager).getBoard().getDimension ();
         mine = boardManager.getBoard().getMineNum();
         assert this.boardManager != null;
         this.personalScoreBoard = user.getScoreBoard("Mine");
@@ -416,7 +408,6 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
      * @param context the context
      */
     private void createTileButtons(final Context context) {
-        isMutted = false;
         MineBoard board = boardManager.getBoard();
         tileButtons = new ArrayList<>();
         for (int i = 0; i < dimension * dimension; i++) {

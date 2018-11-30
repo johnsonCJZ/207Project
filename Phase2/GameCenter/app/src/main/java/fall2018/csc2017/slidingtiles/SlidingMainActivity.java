@@ -180,7 +180,6 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
      * Automatically save the game for resuming.
      */
     private void autoSave() {
-        user.setSlideHistory("resumeHistorySlide", null);
         slidingBoardManager.setTime(count);
         user.setSlideHistory("resumeHistorySlide", slidingBoardManager);
         myDB.updateUser(username,user);
