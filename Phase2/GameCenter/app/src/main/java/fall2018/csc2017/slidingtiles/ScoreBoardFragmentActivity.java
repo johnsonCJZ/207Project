@@ -18,6 +18,9 @@ import java.util.ArrayList;
 
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
+/**
+ * Represent the fragment of a ScoreBoard page.
+ */
 public class ScoreBoardFragmentActivity extends Fragment {
     private View view;
     private ScoreBoard board;
@@ -26,6 +29,9 @@ public class ScoreBoardFragmentActivity extends Fragment {
     private DatabaseHelper myDB;
     private UserAccount user;
 
+    /**
+     * Constructs a ScoreBoardFragmentActivity
+     */
     public ScoreBoardFragmentActivity() {
     }
 
@@ -39,12 +45,18 @@ public class ScoreBoardFragmentActivity extends Fragment {
         return view;
     }
 
+    /**
+     * get the scorelist of the board
+     */
     private void getBoard() {
         board = (ScoreBoard) getArguments().getSerializable("board");
         setBoard((ArrayList<Object[]>) board.getScoreList());
     }
 
 
+    /**
+     * get the userAccount of the current user.
+     */
     private void getUsers() {
         String currentUser = (String) DataHolder.getInstance().retrieve("current user");
         this.user = myDB.selectUser(currentUser);
@@ -53,6 +65,10 @@ public class ScoreBoardFragmentActivity extends Fragment {
         // use this to set user name on global
     }
 
+    /**
+     * set the score list
+     * @param scoreList the score list to be set.
+     */
     private void setBoard(ArrayList<Object[]> scoreList) {
         String Name;
         String Score;
@@ -70,6 +86,9 @@ public class ScoreBoardFragmentActivity extends Fragment {
 
     }
 
+    /**
+     * set the context of the TextViews.
+     */
     private TableRow setLine(String a1, String a2, String a3) {
         TableRow.LayoutParams params1 = new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f);
         TableRow.LayoutParams params2 = new TableRow.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
