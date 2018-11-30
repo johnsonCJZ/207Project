@@ -61,7 +61,7 @@ public class Game2048BoardManager extends BoardManager implements Serializable{
         board.merge((String) direction);
     }
 
-    private boolean canMove() {
+    boolean canMove() {
         if (!isFull()) {
             return true;
         } else {

@@ -56,6 +56,7 @@ public class Game2048Test {
         };
     }
 
+
     @Test
     public void testLose() {
         setBoardCannotMove(1024);
@@ -66,6 +67,7 @@ public class Game2048Test {
     public void testNotLoseHas2048CanMove() {
         board.setUpTiles();
         manager.cheat();
+        assertTrue(manager.canMove());
         assertFalse(manager.isLost());
     }
 
@@ -88,10 +90,19 @@ public class Game2048Test {
     }
 
     @Test
+    public void testNotWinNewBoard(){
+        board.setUpTiles();
+        board.addTile();
+        assertTrue(manager.canMove());
+        assertFalse(manager.isWon());
+    }
+
+    @Test
     public void testNotWinCanMove() {
         board.setUpTiles();
         Game2048Tile tile= board.getTile(0, 0);
         tile.setValue(2);
+        assertTrue(manager.canMove());
         assertFalse(manager.isWon());
     }
 
