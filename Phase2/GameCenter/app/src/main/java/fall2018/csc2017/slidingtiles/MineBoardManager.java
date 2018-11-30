@@ -28,10 +28,6 @@ public class MineBoardManager extends BoardManager<MineBoard, MineTile>{
         minePosition = getBoard().getMinePosition();
     }
 
-    public void setBoard(MineBoard board) {
-        setBoard(board);
-    }
-
     List<MineTile> getMinePosition() {
         return minePosition;
     }

@@ -36,7 +36,7 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
         this.history.add(new HistoryNode(this.findBlankIndex()));
     }
 
-    private void addTile() {
+    void addTile() {
             int numTiles = getDimension() * getDimension();
             for (int tileNum = 0; tileNum != numTiles; tileNum++) {
                 getTiles().add(new SlidingTile(tileNum));
@@ -58,7 +58,7 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
     @Override
     public void setTiles(List<SlidingTile> slidingTiles) {
         getBoard().setTiles(slidingTiles);
-        setTiles(slidingTiles);
+        super.setTiles(slidingTiles);
     }
 
     /**

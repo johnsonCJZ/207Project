@@ -34,10 +34,6 @@ public class Game2048BoardManager extends BoardManager<Game2048Board, Game2048Ti
         return getBoard().findEmpty().size() == 0;
     }
 
-    public void setBoard(Game2048Board board) {
-        setBoard(board);
-    }
-
     @Override
     boolean isLost() {
         return !isWon() && !canMove();
