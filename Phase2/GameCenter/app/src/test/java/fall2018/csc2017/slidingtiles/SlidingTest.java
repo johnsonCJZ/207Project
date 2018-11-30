@@ -128,7 +128,7 @@ public class SlidingTest {
     }
 
     @Test
-    public void testWonZeroAtBeginning(){
+    public void testNotWonZeroAtBeginning(){
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
         Arrays.asList(new SlidingTile(0), new SlidingTile(1),
                 new SlidingTile(2), new SlidingTile(3),
@@ -136,11 +136,11 @@ public class SlidingTest {
                 new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
         ));
         SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
-        assertTrue(testCase.isWon());
+        assertFalse(testCase.isWon());
     }
 
     @Test
-    public void testWonZeroInMiddle(){
+    public void testNotWonZeroInMiddle(){
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
         Arrays.asList(new SlidingTile(1), new SlidingTile(0),
                 new SlidingTile(2), new SlidingTile(3),
@@ -148,7 +148,7 @@ public class SlidingTest {
                 new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
         ));
         SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
-        assertTrue(testCase.isWon());
+        assertFalse(testCase.isWon());
     }
 
     @Test
