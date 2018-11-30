@@ -8,6 +8,9 @@ import static org.junit.Assert.*;
 
 public class SlidingTest {
 
+    /**
+     * Use builder factory to set up sliding board and sliding manager to test.
+     */
     private SlidingBoardManager setUpBoard(int dimension, List<SlidingTile> tiles) {
         Factory factory = new Factory();
         SlidingBoard board = new BuilderBoard().setDimension(dimension).buildSlidingBoard();
@@ -17,6 +20,9 @@ public class SlidingTest {
         return manager;
     }
 
+    /**
+     * Test the node of history of sliding.
+     */
     @Test
     public void testSlidingHistoryNode() {
         int[] result = new int[2];
@@ -27,6 +33,9 @@ public class SlidingTest {
         assertNull(node.next);
     }
 
+    /**
+     * Test the linked list of history function of sliding.
+     */
     @Test
     public void testSlidingHistory() {
         int[] result1 = new int[2];
@@ -47,6 +56,9 @@ public class SlidingTest {
         assertEquals(history.getSize(), 0);
     }
 
+    /**
+     * Test whether findInversion returns the number of inversion when there's no inversion.
+     */
     @Test
     public void testDimensionThreeNoInversion() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
@@ -60,6 +72,9 @@ public class SlidingTest {
         assertEquals(3, testCase.getBoard().getDimension());
     }
 
+    /**
+     * Test whether findInversion returns the number of inversion when there's only one inversion.
+     */
     @Test
     public void testOneInversion() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
@@ -72,6 +87,10 @@ public class SlidingTest {
         assertEquals(1, testCase.findInversion());
     }
 
+    /**
+     * Test whether findInversion returns the number of inversion when there's no inversion and the
+     * last tile is number zero (empty) tile.
+     */
     @Test
     public void testNoInversionEndWithZero() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
@@ -84,6 +103,10 @@ public class SlidingTest {
         assertEquals(0, testCase.findInversion());
     }
 
+    /**
+     * Test whether findInversion returns the number of inversion when there's no inversion and the
+     * empty tile (number 0) is in the middle.
+     */
     @Test
     public void testOneInversionZeroInMiddle() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
@@ -96,6 +119,9 @@ public class SlidingTest {
         assertEquals(1, testCase.findInversion());
     }
 
+    /**
+     * Test whether findInversion returns the number of inversion when there's more than one inversions.
+     */
     @Test
     public void testMultipleInversions() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
@@ -108,6 +134,10 @@ public class SlidingTest {
         assertEquals(26, testCase.findInversion());
     }
 
+    /**
+     * Test whether findInversion returns the number of inversion when there's no inversion and the
+     * size of the board is 4*4. Test whether the manager returns the right dimension.
+     */
     @Test
     public void testDimensionFourInversions() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
@@ -125,6 +155,10 @@ public class SlidingTest {
         assertEquals(4, testCase.getBoard().getDimension());
     }
 
+    /**
+     * Test whether findInversion returns the number of inversion when there's no inversion and the
+     * size of the board is 5*5. Test whether the manager returns the right dimension.
+     */
     @Test
     public void testDimensionFiveInversions() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
@@ -147,6 +181,10 @@ public class SlidingTest {
         assertEquals(5, testCase.getBoard().getDimension());
     }
 
+    /**
+     * Test whether isWon returns false when all tiles are in row majored order but the empty tile
+     * is at the beginning.
+     */
     @Test
     public void testNotWonZeroAtBeginning(){
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
@@ -159,6 +197,10 @@ public class SlidingTest {
         assertFalse(testCase.isWon());
     }
 
+    /**
+     * Test whether isWon returns false when all tiles are in row majored order but the empty tile
+     * is in the middle.
+     */
     @Test
     public void testNotWonZeroInMiddle(){
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
@@ -171,6 +213,10 @@ public class SlidingTest {
         assertFalse(testCase.isWon());
     }
 
+    /**
+     * Test whether isWon returns true when all tiles are in row majored order but the empty tile
+     * is at the end
+     */
     @Test
     public void testWonZeroAtEnd(){
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
@@ -183,6 +229,9 @@ public class SlidingTest {
         assertTrue(testCase.isWon());
     }
 
+    /**
+     * Test whether isWon returns false when there is one inversion.
+     */
     @Test
     public void testNotWonOneInversion(){
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
@@ -195,6 +244,9 @@ public class SlidingTest {
         assertFalse(testCase.isWon());
     }
 
+    /**
+     * Test whether isWon returns false when there is more than one inversion.
+     */
     @Test
     public void testNotWonMoreInversions(){
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
@@ -207,6 +259,10 @@ public class SlidingTest {
         assertFalse(testCase.isWon());
     }
 
+    /**
+     * Test calling touchMove to swap the empty tile with the tile on its right, when the empty tile
+     * is on the corner of the board.
+     */
     @Test
     public void testMoveCorner() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
@@ -227,6 +283,10 @@ public class SlidingTest {
         assertTrue(testCase.getBoard().hasChanged());
     }
 
+    /**
+     * Test calling touchMove to swap the empty tile with the tile on its left, when the empty tile
+     * is on the edge of the board.
+     */
     @Test
     public void testMoveSide() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
@@ -247,6 +307,10 @@ public class SlidingTest {
         assertTrue(testCase.getBoard().hasChanged());
     }
 
+    /**
+     * Test calling touchMove to swap the empty tile with the tile above it, when the empty tile
+     * is in the middle of the board.
+     */
     @Test
     public void testMoveMiddle() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(

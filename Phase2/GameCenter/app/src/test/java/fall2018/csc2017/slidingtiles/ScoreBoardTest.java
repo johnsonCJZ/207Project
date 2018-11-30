@@ -7,13 +7,27 @@ import java.util.List;
 import java.lang.Math;
 import static org.junit.Assert.*;
 
+/**
+ * Unit test for java class scoreBoard.
+ */
 public class ScoreBoardTest {
+
+    /**
+     * This scoreboard to test.
+     */
     private ScoreBoard scoreBoard;
 
+    /**
+     * Set up the test.
+     */
     private void setUpScoreBoard(String game) {
         scoreBoard = new ScoreBoard(game);
     }
 
+    /**
+     * Test the add and sort function when new score is higher than all other scores in the
+     * rank.
+     */
     @Test
     public void testAddAndSortRankedFirst() {
         setUpScoreBoard("test"); //Create a ScoreBoard without ScoreStrategy
@@ -36,6 +50,9 @@ public class ScoreBoardTest {
         }
     }
 
+    /**
+     * Test the add and sort function when new score is the lowest in the rank.
+     */
     @Test
     public void testAddAndSortRankedLast() {
         setUpScoreBoard("test");
@@ -62,6 +79,9 @@ public class ScoreBoardTest {
         }
     }
 
+    /**
+     * Test the add and sort function in the case that new score is in the middle of the rank.
+     */
     @Test
     public void testAddAndSortRankedMiddle() {
         setUpScoreBoard("test");
@@ -89,6 +109,10 @@ public class ScoreBoardTest {
         }
     }
 
+    /**
+     * Test the add and sort function when new score is lower than all other scores on the scoreboard
+     * and the scoreboard has reached its size.
+     */
     @Test
     public void testAddAndSortNoRank() {
         setUpScoreBoard("test");

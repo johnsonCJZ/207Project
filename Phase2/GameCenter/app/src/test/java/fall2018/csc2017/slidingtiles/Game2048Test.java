@@ -8,10 +8,25 @@ import static org.junit.Assert.*;
 
 public class Game2048Test {
 
+    /**
+     * New factory to build the board.
+     */
     private Factory factory = new Factory();
+
+    /**
+     * Use builder to build a new board to test.
+     */
     private Game2048Board board = new BuilderBoard().build2048Board();
+
+    /**
+     * Build a board manager that controls our board.
+     */
     private Game2048BoardManager manager = (Game2048BoardManager) factory.createNewManager(board);
 
+    /**
+     * A helper function that makes the board full and not movable. Each tile has no adjacent tiles
+     * with same value.
+     */
     private void setBoardCannotMove(int largestTile){
         board.setUpTiles();
         int n = 2;
@@ -27,6 +42,9 @@ public class Game2048Test {
         }
     }
 
+    /**
+     * A helper function that makes the board full and mergeble. All tiles have value of 2.
+     */
     private void setBoardCanMove(){
         board.setUpTiles();
         List<Game2048Tile> tiles = board.getTiles();
@@ -36,6 +54,10 @@ public class Game2048Test {
         board.setScore(0);
     }
 
+    /**
+     * A helper function that converts a size 4 array of Game2048Tile(a row or a column of the board)
+     * into an size 4 array of int (represents tile values).
+     */
     private int[] tileToInt(Game2048Tile[] line) {
         int[] intLine = new int[4];
         for (int i = 0; i < 4; i++) {
@@ -44,6 +66,10 @@ public class Game2048Test {
         return intLine;
     }
 
+    /**
+     * A helper function to convert an size 4 array of int (represents tile values)
+     * into a size 4 array of Game2048Tile(a row or a column of the board).
+     */
     private Game2048Tile[] intToTile(int[] intLine) {
         Game2048Tile tile1 = new Game2048Tile();
         tile1.setValue(intLine[0]);
@@ -58,18 +84,26 @@ public class Game2048Test {
         };
     }
 
+    /**
+     * A helper function to reset game score and call mergeList.
+     */
     private void setUpMergeList(Game2048Tile[] testCase, String direction){
         board.setScore(0);
         board.mergeList(testCase, direction);
     }
 
-
+    /**
+     * Test whether isLost returns true when the board neither can move nor contains tile2048.
+     */
     @Test
     public void testLose() {
         setBoardCannotMove(1024);
         assertTrue(manager.isLost());
     }
 
+    /**
+     * Test whether isLost returns false when the board is movable and contains tile2048.
+     */
     @Test
     public void testNotLoseHas2048CanMove() {
         board.setUpTiles();
@@ -78,24 +112,36 @@ public class Game2048Test {
         assertFalse(manager.isLost());
     }
 
+    /**
+     * Test whether isLost returns false when the board is not movable but it contains tile2048.
+     */
     @Test
     public void testNotLoseHas2048CantMove() {
         setBoardCannotMove(2048);
         assertFalse(manager.isLost());
     }
 
+    /**
+     * Test whether isLost returns false when the board is full but movable.
+     */
     @Test
     public void testNotLoseFullBoard() {
         setBoardCanMove();
         assertFalse(manager.isLost());
     }
 
+    /**
+     * Test whether isWon returns true when the board is not movable but contains tile2048.
+     */
     @Test
     public void testWinContains2048CantMove() {
         setBoardCannotMove(2048);
         assertTrue(manager.isWon());
     }
 
+    /**
+     * Test whether isWon returns false when for a new board in the game.
+     */
     @Test
     public void testNotWinNewBoard(){
         board.setUpTiles();
@@ -104,6 +150,9 @@ public class Game2048Test {
         assertFalse(manager.isWon());
     }
 
+    /**
+     * Test whether isWon returns full when the board is movable but not containing tile 2048.
+     */
     @Test
     public void testNotWinCanMove() {
         board.setUpTiles();
@@ -113,12 +162,9 @@ public class Game2048Test {
         assertFalse(manager.isWon());
     }
 
-    @Test
-    public void testNotWinCantMove() {
-        setBoardCannotMove(1024);
-        assertFalse(manager.isWon());
-    }
-
+    /**
+     * Test moving a line with no merging involved.
+     */
     @Test
     public void simpleSlideRight() {
         int[] expected = {0, 0, 2, 4};
@@ -129,6 +175,9 @@ public class Game2048Test {
         assertEquals(0, board.getScore());
     }
 
+    /**
+     * Test merging a line with no moving involved.
+     */
     @Test
     public void simpleMergeRight() {
         int[] expected = {0, 0, 0, 4};
@@ -139,6 +188,9 @@ public class Game2048Test {
         assertEquals(4, board.getScore());
     }
 
+    /**
+     * Test moving and merging a line.
+     */
     @Test
     public void slideAndMergeRight() {
         int[] expected = {0, 0, 0, 8};
@@ -149,6 +201,9 @@ public class Game2048Test {
         assertEquals(8, board.getScore());
     }
 
+    /**
+     * Test calling mergeList while there is nothing change.
+     */
     @Test
     public void doNothingRight() {
         int[] expected = {0, 0, 8, 16};
@@ -159,6 +214,9 @@ public class Game2048Test {
         assertEquals(0, board.getScore());
     }
 
+    /**
+     * Test moving and one merging happens when there are more tiles involved.
+     */
     @Test
     public void moreTilesRight() {
         int[] expected = {0, 0, 4, 4};
@@ -169,6 +227,9 @@ public class Game2048Test {
         assertEquals(4, board.getScore());
     }
 
+    /**
+     * Test activities in tiles with other value.
+     */
     @Test
     public void largerNumbersRight() {
         int[] expected = {0, 0, 2048, 512};
@@ -179,6 +240,9 @@ public class Game2048Test {
         assertEquals(2048, board.getScore());
     }
 
+    /**
+     * Test activities with no zero(empty) tiles in the original line.
+     */
     @Test
     public void noZeroesRight() {
         int[] expected = {0, 512, 2048, 512};
@@ -189,6 +253,9 @@ public class Game2048Test {
         assertEquals(512, board.getScore());
     }
 
+    /**
+     * Test activities in tiles with other values while there are two merges happening.
+     */
     @Test
     public void moreNumbersTwoMergesRight() {
         int[] expected = {0, 0, 128, 256};
@@ -199,56 +266,9 @@ public class Game2048Test {
         assertEquals(384, board.getScore());
     }
 
-    @Test
-    public void simpleSlideLeft() {
-        int[] expected = {2, 4, 0, 0};
-        int[] before = {0, 0, 2, 4};
-        Game2048Tile[] actual = intToTile(before);
-        setUpMergeList(actual, "LEFT");
-        assertArrayEquals(expected, tileToInt(actual));
-        assertEquals(0, board.getScore());
-    }
-
-    @Test
-    public void simpleMergeLeft() {
-        int[] expected = {4, 0, 0, 0};
-        int[] before = {2, 2, 0, 0};
-        Game2048Tile[] actual = intToTile(before);
-        setUpMergeList(actual, "LEFT");
-        assertArrayEquals(expected, tileToInt(actual));
-        assertEquals(4, board.getScore());
-    }
-
-    @Test
-    public void slideAndMergeLeft() {
-        int[] expected = {8, 0, 0, 0};
-        int[] before = {0, 4, 0, 4};
-        Game2048Tile[] actual = intToTile(before);
-        setUpMergeList(actual, "LEFT");
-        assertArrayEquals(expected, tileToInt(actual));
-        assertEquals(8, board.getScore());
-    }
-
-    @Test
-    public void doNothingLeft() {
-        int[] expected = {1024, 2, 0, 0};
-        int[] before = {1024, 2, 0, 0};
-        Game2048Tile[] actual = intToTile(before);
-        setUpMergeList(actual, "LEFT");
-        assertArrayEquals(expected, tileToInt(actual));
-        assertEquals(0, board.getScore());
-    }
-
-    @Test
-    public void moreTilesLeft() {
-        int[] expected = {4, 4, 0, 0};
-        int[] before = {4, 2, 2, 0};
-        Game2048Tile[] actual = intToTile(before);
-        setUpMergeList(actual, "LEFT");
-        assertArrayEquals(expected, tileToInt(actual));
-        assertEquals(4, board.getScore());
-    }
-
+    /**
+     * Test activities in tiles with other values and the opposite direction.
+     */
     @Test
     public void largerNumbersLeft() {
         int[] expected = {512, 2048, 0, 0};
@@ -259,16 +279,10 @@ public class Game2048Test {
         assertEquals(2048, board.getScore());
     }
 
-    @Test
-    public void noZeroesLeft() {
-        int[] expected = {512, 2048, 512, 0};
-        int[] before = {512, 2048, 256, 256};
-        Game2048Tile[] actual = intToTile(before);
-        setUpMergeList(actual, "LEFT");
-        assertArrayEquals(expected, tileToInt(actual));
-        assertEquals(512, board.getScore());
-    }
-
+    /**
+     * Test activities in tiles with other values and the opposite direction
+     * while there are two merges happening.
+     */
     @Test
     public void moreNumbersTwoMergesLeft() {
         int[] expected = {16, 32, 0, 0};
@@ -279,6 +293,9 @@ public class Game2048Test {
         assertEquals(48, board.getScore());
     }
 
+    /**
+     * Test merging the whole board up.
+     */
     @Test
     public void testMergeWholeBoardUp(){
         setBoardCanMove();
@@ -295,6 +312,9 @@ public class Game2048Test {
         assertEquals(32, manager.getScore());
     }
 
+    /**
+     * Test merging the whole board down.
+     */
     @Test
     public void testMergeWholeBoardDown(){
         setBoardCanMove();
@@ -311,6 +331,9 @@ public class Game2048Test {
         assertEquals(32, manager.getScore());
     }
 
+    /**
+     * Test merging the whole board left.
+     */
     @Test
     public void testMergeWholeBoardLeft(){
         setBoardCanMove();
@@ -327,6 +350,9 @@ public class Game2048Test {
         assertEquals(32, manager.getScore());
     }
 
+    /**
+     * Test merging the whole board right.
+     */
     @Test
     public void testMergeWholeBoardRight(){
         setBoardCanMove();
