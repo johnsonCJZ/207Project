@@ -16,12 +16,12 @@ public class SlidingMemory extends Memory {
 
     public void makeCopy(SlidingBoardManager manager) {
         Gson gson1 = new Gson();
-        this.dimension = manager.getSlidingBoard().getDimension();
+        this.dimension = manager.getBoard().getDimension();
         this.timeTmp = manager.getTime();
 //        Type type1 = new TypeToken<List<SlidingTile>>(){}.getType();
 //        this.slidingTiles  = gson1.toJson(manager.getSlidingTiles(),type1);
 //        System.out.println(this.slidingTiles);
-        for (SlidingTile tile : manager.getSlidingTiles()) {
+        for (SlidingTile tile : manager.getTiles()) {
             this.slidingTiles.add(tile.getId());
         }
         System.out.println(this.slidingTiles);
