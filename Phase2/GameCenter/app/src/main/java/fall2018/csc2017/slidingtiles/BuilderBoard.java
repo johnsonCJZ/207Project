@@ -87,7 +87,7 @@ public class BuilderBoard {
     public Game2048Board build2048Board() {
         Game2048Board game2048Board = new Game2048Board();
         set2048Tiles();
-        game2048Board.setTiles((List<Game2048Tile>) (List<?>) tiles);
+        game2048Board.setTiles(tiles);
         return game2048Board;
     }
 
@@ -96,7 +96,7 @@ public class BuilderBoard {
         mineBoard.setDimension(dimension);
         mineBoard.setMineNum(mine);
         mineBoard.setMineLeft(mineLeft);
-        mineBoard.setTiles((List<MineTile>) (List<?>) tiles);
+        mineBoard.setTiles(tiles);
         mineBoard.setMinePosition(minePosition);
         return mineBoard;
     }

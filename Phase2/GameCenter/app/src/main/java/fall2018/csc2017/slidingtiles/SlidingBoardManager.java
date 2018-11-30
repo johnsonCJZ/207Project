@@ -26,6 +26,8 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
      */
     private int currIndex = 0;
 
+    SlidingBoardManager(){}
+
     /**
      * Create a new SlidingBoardManager to manage a new shuffled n*n slidingBoard.
      * @param n the number of rows and columns
@@ -54,6 +56,10 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
         slidingBoard.setSlidingTiles(slidingTiles);
         this.history=new History();
         this.history.add(new HistoryNode(this.findBlankIndex()));
+    }
+
+    public void setSlidingBoard(SlidingBoard slidingBoard) {
+        this.slidingBoard = slidingBoard;
     }
 
     /**
@@ -94,7 +100,7 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
     /**
      * Shuffle the list of slidingTiles until the state is solvable.
      */
-    private void shuffle() {
+    void shuffle() {
         Collections.shuffle(slidingTiles);
         while (!isSolvable()) {
             Collections.shuffle(slidingTiles);
@@ -201,7 +207,7 @@ public class SlidingBoardManager extends BoardManager implements Serializable {
      *
      * @return an array of coordination of blank tile
      */
-    private int[] findBlankIndex(){
+    int[] findBlankIndex(){
         int[] result = new int[2];
         int position = 0;
         for (SlidingTile t : slidingTiles){

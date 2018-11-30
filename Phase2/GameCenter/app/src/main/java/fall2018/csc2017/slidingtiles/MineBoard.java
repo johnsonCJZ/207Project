@@ -9,7 +9,6 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
     private int dimension;
     private int mineNum;
     private int mineLeft;
-    private List<MineTile> tiles = new ArrayList<>();
     private List<MineTile> minePosition = new ArrayList<>();
     boolean changed = false;
     private ArrayList<IObserver> observers = new ArrayList<>();
@@ -24,11 +23,8 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
 
     List<MineTile> getMinePosition() {return minePosition;}
 
-    List<MineTile> getTiles() {return tiles;}
-
-
     MineTile getTile(int position) {
-        return tiles.get(position);
+        return (MineTile)tiles.get(position);
     }
 
     public void setDimension(int sideLength){
@@ -41,7 +37,7 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
 
     void setMines(int position) {
         int mineNum = getMineNum();
-        List<MineTile> startNine = getSurround(position);
+        List<MineTile> startNine = (List<MineTile>)(List<?>)getSurround(position);
         startNine.add(getTile(position));
         Random r = new Random();
         List<Integer> randomNums = new ArrayList<>();
@@ -62,10 +58,6 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
         this.mineNum = mineNum;
     }
 
-    void setTiles(List<MineTile> tiles) {
-        this.tiles = tiles;
-    }
-
     public void setMineLeft(int mineLeft) {
         this.mineLeft = mineLeft;
     }
@@ -74,7 +66,8 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
         MineTile currTile = getTile(position);
         if (currTile.getNumber() == 0) {
             currTile.reveal();
-            for (MineTile tile : getSurround(position)) {
+            for (Tile tileT : getSurround(position)) {
+                MineTile tile = (MineTile) tileT;
                 if(tile.isObscured() && !tile.isFlagged()) {
                     tile.reveal();
                     if (tile.getNumber() == 0) {
@@ -100,10 +93,10 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
         notifyObservers();
     }
 
-    List<MineTile> getSurround(int position) {
+    List<Tile> getSurround(int position) {
         int row = position / dimension ;
         int col = position % dimension ;
-        List<MineTile> surround = new ArrayList<>();
+        List<Tile> surround = new ArrayList<>();
 
         if (row != 0 && col != 0) {
             surround.add(getTiles().get(position-dimension -1));

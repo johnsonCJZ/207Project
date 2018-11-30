@@ -8,7 +8,7 @@ public class Game2048BoardManager extends BoardManager implements Serializable {
     final private Integer DIMENSION = 4;
 //    private Double time;
 
-    Game2048Board getBoard() {return board;}
+    public Game2048Board getBoard() {return board;}
 
     public Game2048BoardManager() {
         super(4);
@@ -35,6 +35,10 @@ public class Game2048BoardManager extends BoardManager implements Serializable {
 
     private boolean isFull() {
         return board.findEmpty().size() == 0;
+    }
+
+    public void setBoard(Game2048Board board) {
+        this.board = board;
     }
 
     @Override

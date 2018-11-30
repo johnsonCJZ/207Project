@@ -18,11 +18,12 @@ public class MineMemory extends Memory {
         mine = manager.getMinePosition().size();
         mineLeft = manager.getBoard().getMineLeft();
         timeMine = manager.getTime();
-        for (MineTile tile : manager.getBoard().getTiles()) {
-            isObscuredOfTiles.add(tile.isObscured());
-            numberOfTiles.add(tile.getNumber());
-            isMineOfTiles.add(tile.isMine());
-            isFlaggedOfTiles.add(tile.isFlagged());
+        for (Tile tile : manager.getBoard().getTiles()) {
+            MineTile t = (MineTile) tile;
+            isObscuredOfTiles.add(t.isObscured());
+            numberOfTiles.add(t.getNumber());
+            isMineOfTiles.add(t.isMine());
+            isFlaggedOfTiles.add(t.isFlagged());
         }
     }
 

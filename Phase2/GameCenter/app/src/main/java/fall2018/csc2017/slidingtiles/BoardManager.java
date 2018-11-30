@@ -7,6 +7,8 @@ public abstract class BoardManager implements Serializable {
 
     int dimension;
 
+    BoardManager(){}
+
     public BoardManager(int n) {
         this.dimension = n;
     }
@@ -24,6 +26,10 @@ public abstract class BoardManager implements Serializable {
      */
     public void setTime(Double time) {
         this.time = time;
+    }
+
+    public void setDimension(int dimension) {
+        this.dimension = dimension;
     }
 
     public int getDimension() {
