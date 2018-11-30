@@ -9,8 +9,17 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
-public class Game2048MainController {
-    public ArrayList<Button> updateTileButtons(Game2048BoardManager boardManager, ArrayList<Button> tileButtons) {
+/**
+ * Controller for 2048 game
+ */
+class Game2048MainController {
+    /**
+     * update tileButtons in game
+     * @param boardManager boardManager
+     * @param tileButtons arrayList Buttons corresponds to each tile status
+     * @return updated tileButtons
+     */
+     ArrayList<Button> updateTileButtons(Game2048BoardManager boardManager, ArrayList<Button> tileButtons) {
         Game2048Board board = boardManager.getBoard();
         //If the board has been changed.
         if (board.isChanged()) {
@@ -35,18 +44,28 @@ public class Game2048MainController {
         return tileButtons;
     }
 
-    private void addFadeInAnimation(Button b) {
+    /**
+     * add fade in animation for new added tile
+     * @param button button selected to set animation
+     */
+    private void addFadeInAnimation(Button button) {
         Animation fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
         fadeIn.setDuration(1000);
         AnimationSet animation = new AnimationSet(true); //change to false
         animation.addAnimation(fadeIn);
-        b.setAnimation(animation);
+        button.setAnimation(animation);
     }
 
-    public ArrayList<Button> createTileButtons(Context context, Game2048BoardManager boardManager, ArrayList<Button> tileButtons) {
+    /**
+     * create an arrayList of buttons
+     * @param context context of activity
+     * @param boardManager boardManager
+     * @return created arrayList of buttons
+     */
+     ArrayList<Button> createTileButtons(Context context, Game2048BoardManager boardManager) {
         Game2048Board board = boardManager.getBoard();
-        tileButtons = new ArrayList<>();
+         ArrayList<Button> tileButtons = new ArrayList<>();
         for (int i = 0; i < board.getDimension() * board.getDimension(); i++) {
             Button tmp = new Button(context);
             tmp.setBackgroundResource(board.getTiles().get(i).getBackground());

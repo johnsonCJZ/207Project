@@ -66,22 +66,44 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
      */
     private int dimension;
 
+    /**
+     * Number of mines in game
+     */
     private int mine;
 
+    /**
+     * time thread in game
+     */
     private Thread t;
 
+    /**
+     * Image button of THO-MAX
+     */
     private ImageButton face;
 
+    /**
+     * UI view for time
+     */
     private TextView time;
 
+    /**
+     * UI view for left number of mines
+     */
     private TextView mineLeft;
 
     /**
      * UserAccountManager associated to the UserAccount.
      */
     private UserAccountManager users;
+
+    /**
+     * current name of user in system
+     */
     private String currentUser;
 
+    /**
+     * controller of this activity
+     */
     private MineMainController mineMainController;
 
     /**
@@ -104,6 +126,9 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         addStartOver();
     }
 
+    /**
+     * get all UI components from UI
+     */
     private void getAllComponents() {
         mineMainController = new MineMainController();
         setContentView(R.layout.activity_minesweeper);
@@ -210,6 +235,9 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
     }
 
 
+    /**
+     * set up gridView in UI
+     */
     private void setGridView() {
         if (gridView.isFrozen()) {
             gridView.cloneAsThawed();
@@ -236,7 +264,9 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
                 });
     }
 
-
+    /**
+     * set up start over button
+     */
     private void addStartOver() {
         face.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -318,6 +348,10 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         startActivity(tmp);
     }
 
+    /**
+     * game time thread
+     * @return time thread
+     */
     private Thread time() {
         count = boardManager.getTime();
         isPaused = false;
@@ -396,6 +430,9 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         face.setImageResource(R.drawable.normal);
     }
 
+    /**
+     * Runnable for Minesweeper game to run in game UI thread and logic
+     */
     private class InGame implements Runnable {
         private TextView time;
 

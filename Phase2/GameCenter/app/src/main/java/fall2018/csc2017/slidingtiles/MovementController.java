@@ -50,6 +50,11 @@ class MovementController {
 
     }
 
+    /**
+     * process a long pressed movement
+     * @param context context of current activity
+     * @param position position of touch
+     */
     void processLongPressMovement(Context context, int position) {
         if (boardBoardManager instanceof MineBoardManager) {
             MineBoardManager b = (MineBoardManager) boardBoardManager;
@@ -59,27 +64,39 @@ class MovementController {
         }
     }
 
+    /**
+     * process left swipe
+     */
     void processLeftSwipe() {
         if (boardBoardManager instanceof Game2048BoardManager) {
-            ((Game2048BoardManager) boardBoardManager).move("LEFT");
+            boardBoardManager.move("LEFT");
         }
     }
 
+    /**
+     * process right swipe
+     */
     void processRightSwipe() {
         if (boardBoardManager instanceof Game2048BoardManager) {
-            ((Game2048BoardManager) boardBoardManager).move("RIGHT");
+            boardBoardManager.move("RIGHT");
         }
     }
 
+    /**
+     * process down swipe
+     */
     void processDownSwipe() {
         if (boardBoardManager instanceof Game2048BoardManager) {
-            ((Game2048BoardManager) boardBoardManager).move("DOWN");
+            boardBoardManager.move("DOWN");
         }
     }
 
+    /**
+     * process up swipe
+     */
     void processUpSwipe() {
         if (boardBoardManager instanceof Game2048BoardManager) {
-            ((Game2048BoardManager) boardBoardManager).move("UP");
+            boardBoardManager.move("UP");
         }
     }
 }

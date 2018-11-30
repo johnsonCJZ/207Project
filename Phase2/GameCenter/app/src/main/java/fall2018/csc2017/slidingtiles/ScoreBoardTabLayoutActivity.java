@@ -18,11 +18,7 @@ public class ScoreBoardTabLayoutActivity extends AppCompatActivity {
     private ScoreBoard globalScoreBoard;
 
 
-    /**
-     * Initialize activity with corresponding user and data
-     *
-     * @param savedInstanceState
-     */
+
 
     private DatabaseHelper myDB;
 
@@ -30,8 +26,12 @@ public class ScoreBoardTabLayoutActivity extends AppCompatActivity {
 
     private String fragment;
 
-    private UserAccount user;
 
+    /**
+     * Initialize activity with corresponding user and data
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         myDB = new DatabaseHelper(this);
@@ -69,7 +69,6 @@ public class ScoreBoardTabLayoutActivity extends AppCompatActivity {
      * get user info and data from last activity
      */
     private void getUsers() {
-        this.user = myDB.selectUser(username);
         this.fragment = (String) DataHolder.getInstance().retrieve("current game");
     }
 
