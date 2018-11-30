@@ -85,9 +85,9 @@ public class SlidingBoardManager extends BoardManager{
      */
     int findInversion() {
         int count = 0;
-        for (int i = 0; i < dimension -1; i++) {
+        for (int i = 0; i < dimension * dimension -1; i++) {
             if (slidingTiles.get(i).getId() != 0){
-                for (int j = i+1; j < dimension; j++){
+                for (int j = i+1; j < dimension * dimension; j++){
                     if (slidingTiles.get(j).getId() < slidingTiles.get(i).getId() && slidingTiles.get(j).getId() != 0){
                         count++;
                     }
@@ -141,12 +141,12 @@ public class SlidingBoardManager extends BoardManager{
      */
     @Override
     boolean isWon() {
-        for (int i = 0; i < dimension * dimension - 2; i++) {
+        for (int i = 0; i < dimension * dimension - 3; i++) {
             if (slidingTiles.get(i).getId() > slidingTiles.get(i+1).getId()) {
                 return false;
             }
         }
-        return true;
+        return slidingTiles.get(dimension * dimension -1).getId() == 0;
     }
 
     /**

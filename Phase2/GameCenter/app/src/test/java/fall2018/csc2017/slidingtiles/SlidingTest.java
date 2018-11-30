@@ -11,10 +11,11 @@ import static org.junit.Assert.*;
 
 public class SlidingTest {
 
-    private SlidingBoardManager setUpBoard(int dimension, double time, List<SlidingTile> tiles) {
-        SlidingBoardManager manager = new SlidingBoardManager(dimension, time, tiles);
+    private SlidingBoardManager setUpBoard(int dimension, List<SlidingTile> tiles) {
+        SlidingBoardManager manager = new SlidingBoardManager(dimension);
+        manager.setSlidingTiles(tiles);
         SlidingBoard board = manager.getSlidingBoard();
-        board.setSlidingTiles(tiles);
+        board.setTiles(tiles);
         board.setDimension(dimension);
         return manager;
     }
@@ -27,7 +28,7 @@ public class SlidingTest {
                 new SlidingTile(4), new SlidingTile(5),
                 new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
         ));
-        SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
+        SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertEquals(0, testCase.findInversion());
         assertEquals(3, testCase.getSlidingBoard().getDimension());
     }
@@ -40,7 +41,7 @@ public class SlidingTest {
                 new SlidingTile(4), new SlidingTile(5),
                 new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
         ));
-        SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
+        SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertEquals(1, testCase.findInversion());
     }
 
@@ -52,7 +53,7 @@ public class SlidingTest {
                 new SlidingTile(5), new SlidingTile(6),
                 new SlidingTile(7), new SlidingTile(8), new SlidingTile(0)
         ));
-        SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
+        SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertEquals(0, testCase.findInversion());
     }
 
@@ -64,7 +65,7 @@ public class SlidingTest {
                 new SlidingTile(5), new SlidingTile(6),
                 new SlidingTile(0), new SlidingTile(8), new SlidingTile(7)
         ));
-        SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
+        SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertEquals(1, testCase.findInversion());
     }
 
@@ -76,8 +77,8 @@ public class SlidingTest {
                 new SlidingTile(5), new SlidingTile(4),
                 new SlidingTile(2), new SlidingTile(3), new SlidingTile(1)
         ));
-        SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
-        assertEquals(5, testCase.findInversion());
+        SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
+        assertEquals(26, testCase.findInversion());
     }
 
     @Test
@@ -92,7 +93,7 @@ public class SlidingTest {
                 new SlidingTile(12), new SlidingTile(13),
                 new SlidingTile(14), new SlidingTile(15)
         ));
-        SlidingBoardManager testCase = setUpBoard(4, 2.0, tilesToTest);
+        SlidingBoardManager testCase = setUpBoard(4, tilesToTest);
         assertEquals(0, testCase.findInversion());
         assertEquals(4, testCase.getSlidingBoard().getDimension());
     }
@@ -114,21 +115,9 @@ public class SlidingTest {
                 new SlidingTile(22), new SlidingTile(23),
                 new SlidingTile(24)
         ));
-        SlidingBoardManager testCase = setUpBoard(5, 2.0, tilesToTest);
+        SlidingBoardManager testCase = setUpBoard(5, tilesToTest);
         assertEquals(0, testCase.findInversion());
         assertEquals(5, testCase.getSlidingBoard().getDimension());
-    }
-
-    @Test
-    public void testMoreTimeInversions() {
-        ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
-        Arrays.asList(new SlidingTile(8), new SlidingTile(0),
-                new SlidingTile(6), new SlidingTile(7),
-                new SlidingTile(5), new SlidingTile(4),
-                new SlidingTile(2), new SlidingTile(3), new SlidingTile(1)
-        ));
-        SlidingBoardManager testCase = setUpBoard(3, 4.0, tilesToTest);
-        assertEquals(5, testCase.findInversion());
     }
 
     @Test
@@ -139,7 +128,7 @@ public class SlidingTest {
                 new SlidingTile(4), new SlidingTile(5),
                 new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
         ));
-        SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
+        SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertFalse(testCase.isWon());
     }
 
@@ -151,7 +140,7 @@ public class SlidingTest {
                 new SlidingTile(4), new SlidingTile(5),
                 new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
         ));
-        SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
+        SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertFalse(testCase.isWon());
     }
 
@@ -163,7 +152,7 @@ public class SlidingTest {
                 new SlidingTile(5), new SlidingTile(6),
                 new SlidingTile(7), new SlidingTile(8), new SlidingTile(0)
         ));
-        SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
+        SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertTrue(testCase.isWon());
     }
 
@@ -175,7 +164,7 @@ public class SlidingTest {
                 new SlidingTile(5), new SlidingTile(6),
                 new SlidingTile(0), new SlidingTile(8), new SlidingTile(7)
         ));
-        SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
+        SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertFalse(testCase.isWon());
     }
 
@@ -187,7 +176,7 @@ public class SlidingTest {
                 new SlidingTile(5), new SlidingTile(4),
                 new SlidingTile(2), new SlidingTile(3), new SlidingTile(1)
         ));
-        SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
+        SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertFalse(testCase.isWon());
     }
 
@@ -199,7 +188,7 @@ public class SlidingTest {
                 new SlidingTile(4), new SlidingTile(5),
                 new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
         ));
-        SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
+        SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         testCase.move(1);
         List<SlidingTile> tiles = testCase.getSlidingTiles();
         int[] expected = {1, 0, 2, 3, 4, 5, 6, 7, 8};
@@ -219,7 +208,7 @@ public class SlidingTest {
                 new SlidingTile(4), new SlidingTile(5),
                 new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
         ));
-        SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
+        SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         testCase.move(0);
         List<SlidingTile> tiles = testCase.getSlidingTiles();
         int[] expected = {0, 1, 2, 3, 4, 5, 6, 7, 8};
@@ -239,7 +228,7 @@ public class SlidingTest {
                 new SlidingTile(0), new SlidingTile(5),
                 new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
         ));
-        SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
+        SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         testCase.move(1);
         List<SlidingTile> tiles = testCase.getSlidingTiles();
         int[] expected = {1, 0, 3, 4, 2, 5, 6, 7, 8};
