@@ -19,6 +19,7 @@ public class Game2048Board extends Board implements Serializable, Iterable<Game2
      */
     Game2048Board() {
         this.tiles = new ArrayList<>();
+
     }
 
     void setUpTiles() {
