@@ -267,6 +267,7 @@ public class Game2048Test {
             assertArrayEquals(expectedRows[i], tileToInt(board.getRow(i)));
         }
         int[][] expectedColumns = {{4, 4, 0, 0}, {4, 4, 0, 0}, {4, 4, 0, 0}, {4, 4, 0, 0}};
+        assertTrue(board.isChanged());
         for (int i = 0; i < board.getDimension(); i++){
             assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
         }
@@ -281,6 +282,7 @@ public class Game2048Test {
             assertArrayEquals(expectedRows[i], tileToInt(board.getRow(i)));
         }
         int[][] expectedColumns = {{0, 0, 4, 4}, {0, 0, 4, 4}, {0, 0, 4, 4}, {0, 0, 4, 4}};
+        assertTrue(board.isChanged());
         for (int i = 0; i < board.getDimension(); i++){
             assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
         }
@@ -295,6 +297,7 @@ public class Game2048Test {
             assertArrayEquals(expectedRows[i], tileToInt(board.getRow(i)));
         }
         int[][] expectedColumns = {{4, 4, 4, 4}, {4, 4, 4, 4}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+        assertTrue(board.isChanged());
         for (int i = 0; i < board.getDimension(); i++){
             assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
         }
@@ -309,6 +312,7 @@ public class Game2048Test {
             assertArrayEquals(expectedRows[i], tileToInt(board.getRow(i)));
         }
         int[][] expectedColumns = {{0, 0, 0, 0}, {0, 0, 0, 0}, {4, 4, 4, 4}, {4, 4, 4, 4}};
+        assertTrue(board.isChanged());
         for (int i = 0; i < board.getDimension(); i++){
             assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
         }
