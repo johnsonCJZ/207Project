@@ -28,21 +28,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String KEY_USER = "USERACCOUNT";
     private final String USER_ACCOUNT_MANAGER = "UserAccountManager";
 
-//    public static final String KEY_PASSWORD = "PASSWORD";
-//    public static final String KEY_AGE = "AGE";
-//    public static final String KEY_EMAIL = "EMAIL";
-//    public static final String KEY_ST3X3 = "ST3X3";
-//    public static final String KEY_ST4X4 = "ST4X4";
-//    public static final String KEY_ST5X5 = "ST5X5";
-//    public static final String KEY_2048 = "T2048";
-//    public static final String KEY_MS = "MS";
-
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
-    //
-    //
     //
     //NOTE: haven't updated this method in change password and profile fragment
     @Override
@@ -77,13 +66,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
 
     }
+
     public String convertToJson(Object o) {
         Gson gson = new GsonBuilder().registerTypeAdapter(ScoreStrategy.class, new InterfaceAdapter<ScoreStrategy>())
                 .create();
-//        Gson gson = new Gson();
         return gson.toJson(o);
     }
-
     public boolean createAndInsertNew(String username, UserAccount userAccount) throws SQLException {
         boolean found;
         long result;
@@ -100,14 +88,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return found;
     }
 
-//    public void addUserToAccountManager(String username) throws Exception {
-//        UserAccountManager accountManager = selectAccountManager();
-//        accountManager.addUser(username);
-//        boolean result = updateAccountManager(accountManager);
-//        if (!result) {
-//            throw new Exception("add user to account manager failed");
-//        }
-//    }
     public UserAccountManager selectAccountManager(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "select " + KEY_USER + " from " + TABLE_NAME  + " where " + KEY_NAME
@@ -118,6 +98,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // return null if there is no result
+
     // query may has problem
     public UserAccount selectUser(String username){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -126,7 +107,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         res.moveToFirst();
         return convertToUserAccount(res.getString(0));
     }
-
     public void updateUser(String username, UserAccount userAccount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -134,6 +114,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(KEY_USER, convertToJson(userAccount));
         db.update(TABLE_NAME, contentValues, "USERNAME = ?",new String[] { username });
 
+    }
+
+    public boolean deleteAndInsertUser(String oldUserName, String newUserName, UserAccount userAccount){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result;
+        boolean found;
+        db.delete(TABLE_NAME,"USERNAME = ?", new String[] { oldUserName });
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_NAME, newUserName);
+        contentValues.put(KEY_USER, convertToJson(userAccount));
+        try{result = db.insertOrThrow(TABLE_NAME, null, contentValues);}
+        catch(Exception e){
+            e.printStackTrace();
+            result = -1;
+        }
+        found = result != -1;
+        return found;
     }
 
     public void updateAccountManager(UserAccountManager userAccountManager) {
