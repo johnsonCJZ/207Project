@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Manage a slidingBoard, including swapping slidingTiles, checking for a win, and managing taps.
  */
-public class SlidingBoardManager extends BoardManager implements Serializable {
+public class SlidingBoardManager extends BoardManager{
     /**
      * The slidingBoard being managed.
      */

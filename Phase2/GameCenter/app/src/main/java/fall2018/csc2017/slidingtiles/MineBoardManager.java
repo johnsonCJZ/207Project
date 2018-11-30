@@ -3,7 +3,7 @@ package fall2018.csc2017.slidingtiles;
 import java.io.Serializable;
 import java.util.List;
 
-public class MineBoardManager extends BoardManager implements Serializable {
+public class MineBoardManager extends BoardManager{
     private MineBoard board;
     private List<MineTile> tiles;
     private boolean isFirst = true;
