@@ -17,12 +17,7 @@ import java.util.List;
 /**
  * The sliding slidingTiles board.
  */
-public class SlidingBoard extends Board<SlidingTile> implements IObservable<SlidingBoard> {
-
-    private boolean changed = false;
-
-    private ArrayList<IObserver> observers = new ArrayList<>();
-
+public class SlidingBoard extends Board<SlidingTile> {
     /**
      * Return the tile at (row, col)
      *
@@ -59,43 +54,6 @@ public class SlidingBoard extends Board<SlidingTile> implements IObservable<Slid
     void setSlidingTiles(List<SlidingTile> slidingTiles) {
         this.tiles = slidingTiles;
     }
-
-    @Override
-    public void addObserver(IObserver o) {
-        observers.add(o);
-    }
-
-    @Override
-    public void deleteObserver(IObserver o) {
-        observers.remove(o);
-    }
-
-    @Override
-    public void notifyObservers() {
-        if(changed){
-            int i = observers.size();
-            while(--i >= 0){
-                observers.get(i).update(this);
-            }
-
-        }
-    }
-
-    @Override
-    public void clearChanged() {
-        changed = false;
-    }
-
-    @Override
-    public boolean hasChanged() {
-        return changed;
-    }
-
-    @Override
-    public void setChanged() {
-        changed = true;
-    }
-
 }
 
 

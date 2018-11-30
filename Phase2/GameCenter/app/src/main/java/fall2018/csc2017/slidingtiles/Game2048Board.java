@@ -7,11 +7,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Observable;
 
-public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2048Tile>, IObservable<Game2048Board> {
+public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2048Tile> {
     private int score = 0;
     private boolean isChanged = false;
-    private boolean changed = false;
-    private ArrayList<IObserver> observers = new ArrayList<>();
 
     /**
      * A new empty board of 4*4 slidingTiles.
@@ -268,41 +266,5 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
                 return this.tiles.get(currentPosition);
             }
         }
-    }
-
-    @Override
-    public void addObserver(IObserver o) {
-        observers.add(o);
-    }
-
-    @Override
-    public void deleteObserver(IObserver o) {
-        observers.remove(o);
-    }
-
-    @Override
-    public void notifyObservers() {
-        if(changed){
-            int i = observers.size();
-            while(--i >= 0){
-                observers.get(i).update(this);
-            }
-
-        }
-    }
-
-    @Override
-    public void clearChanged() {
-        changed = false;
-    }
-
-    @Override
-    public boolean hasChanged() {
-        return changed;
-    }
-
-    @Override
-    public void setChanged() {
-        changed = true;
     }
 }

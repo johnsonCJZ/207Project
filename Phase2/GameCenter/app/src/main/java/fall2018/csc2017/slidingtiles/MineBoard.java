@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MineBoard extends Board<MineTile> implements IObservable<MineBoard> {
+public class MineBoard extends Board<MineTile> {
     private int mineNum;
     private int mineLeft;
     private List<MineTile> minePosition = new ArrayList<>();
-    private boolean changed = false;
-    private ArrayList<IObserver> observers = new ArrayList<>();
 
     MineBoard(){}
 
@@ -125,41 +123,5 @@ public class MineBoard extends Board<MineTile> implements IObservable<MineBoard>
 
         setChanged();
         notifyObservers();
-    }
-
-    @Override
-    public void addObserver(IObserver o) {
-        observers.add(o);
-    }
-
-    @Override
-    public void deleteObserver(IObserver o) {
-        observers.remove(o);
-    }
-
-    @Override
-    public void notifyObservers() {
-        if(changed){
-            int i = observers.size();
-            while(--i >= 0){
-                observers.get(i).update(this);
-            }
-
-        }
-    }
-
-    @Override
-    public void clearChanged() {
-        changed = false;
-    }
-
-    @Override
-    public boolean hasChanged() {
-        return changed;
-    }
-
-    @Override
-    public void setChanged() {
-        changed = true;
     }
 }
