@@ -7,13 +7,14 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.lang.Math;
 
 import static org.junit.Assert.*;
 
 public class ScoreBoardTest {
-    ScoreBoard scoreBoard2048;
-    ScoreBoard scoreBoardMine;
-    ScoreBoard scoreBoardSlide;
+    private ScoreBoard scoreBoard = new ScoreBoard("tester");
+    private List<Object[]> scoreList = scoreBoard.getScoreList();
+    private Object[] originalScore = {"Lucia", 100};
 
 //    private Object[] createScore(int score){
 //        Object[] arr = new Object[2];
@@ -37,35 +38,71 @@ public class ScoreBoardTest {
 //        scoreBoardSlide = new ScoreBoard("Slide");
 //    }
 
-    @Test
-    public void testCalculate2048Score() {
+    @Before
+    public void setup() {
+        scoreList.add(originalScore);
+    }
 
+    private void test(List<Object[]> expected, Object[] newScore) {
+        scoreBoard.addAndSort(newScore);
+        for (int i = 0; i < expected.size(); i++) {
+            int expectedScore = (int) expected.get(i)[1];
+            int actualScore = (int) scoreList.get(i)[1];
+            assertEquals(expectedScore, actualScore);
+            String expectedName = (String) expected.get(i)[0];
+            String actualName = (String) scoreList.get(i)[0];
+            for (int j = 0; j < Math.min(expectedName.length(), actualName.length()); i++){
+                assertEquals(expectedName.charAt(j), actualName.charAt(j));
+            }
+        }
     }
 
     @Test
-    public void testCalculateSlidingScore() {
-
+    public void testAddAndSortRankedFirst() {
+        List<Object[]> expected = new ArrayList<>();
+        Object[] newScore =  {"Lucia", 102};
+        expected.add(newScore);
+        expected.add(originalScore);
+        test(expected, newScore);
     }
 
     @Test
-    public void testCalculateMineScore() {
-
-    }
-
-
-    @Test
-    public void test2048AddAndSort() {
-
-    }
-
-    @Test
-    public void testSlidingAddAndSort() {
-
+    public void testAddAndSortRankedLast() {
+        List<Object[]> expected = new ArrayList<>();
+        Object[] score =  {"Lucia", 102};
+        Object[] newScore = {"Xinyi", 99};
+        expected.add(score);
+        expected.add(originalScore);
+        expected.add(newScore);
+        test(expected, newScore);
     }
 
     @Test
-    public void testMineAddAndSort() {
+    public void testAddAndSortRankedMiddle() {
+        List<Object[]> expected = new ArrayList<>();
+        Object[] score1 =  {"Lucia", 102};
+        Object[] score2 = {"Xinyi", 99};
+        Object[] newScore = {"May", 101};
+        expected.add(score1);
+        expected.add(newScore);
+        expected.add(originalScore);
+        expected.add(score2);
+        test(expected, newScore);
+    }
 
+    @Test
+    public void testAddAndSortNoRank() {
+        List<Object[]> expected = new ArrayList<>();
+        Object[] score1 =  {"Lucia", 102};
+        Object[] score2 = {"Xinyi", 99};
+        Object[] Score3 = {"May", 101};
+        expected.add(score1);
+        expected.add(Score3);
+        expected.add(originalScore);
+        expected.add(score2);
+        Object[] newScore = {"Xinyi Zhang", 70};
+        scoreBoard.setScoreBoardSize(4);
+        test(expected, newScore);
     }
 
 
