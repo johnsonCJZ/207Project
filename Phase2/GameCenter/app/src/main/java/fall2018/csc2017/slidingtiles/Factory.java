@@ -57,11 +57,12 @@ public class Factory {
         Factory f = new Factory();
         MineBoard b = new BuilderBoard()
                 .setMine(mineNum)
-                .setMineLeft(mineNum)
+                .setMineLeft(mineLeft)
                 .setDimension(d)
                 .setMineTiles(tiles)
                 .buildMineBoard();
         MineBoardManager m = (MineBoardManager) f.createNewManager(b);
+        m.switchIsFirst();
         m.setDimension(d);
         m.setBoard(b);
         m.setTime(time);
