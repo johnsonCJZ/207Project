@@ -27,6 +27,9 @@ public class MemoryTest {
 
     @Test
     public void testSlidingMemoryMakeCopy() {
+        setUpSlidingMemory();
+        slidingMemory.makeCopy((SlidingBoardManager) manager);
+        assertEquals(slidingMemory.getDimension(), manager.getDimension());
     }
 
     @Test

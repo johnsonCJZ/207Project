@@ -10,26 +10,26 @@ public class MineBoardManager extends BoardManager<MineBoard, MineTile>{
 
     MineBoardManager(){}
 
-    MineBoardManager(int dimension, int numOfMine) {
-        super(dimension);
-        board = new BuilderBoard().setMine(numOfMine).setMineLeft(numOfMine).setDimension(dimension).setMineTiles().buildMineBoard();
-        tiles = board.getTiles();
-        this.dimension = dimension;
-        minePosition = board.getMinePosition();
+    MineBoardManager(int d, int numOfMine) {
+        super(d);
+        setBoard(new BuilderBoard().setMine(numOfMine).setMineLeft(numOfMine).setDimension(getDimension()).setMineTiles().buildMineBoard());
+        setTiles(getBoard().getTiles());
+        setDimension(getDimension());
+        minePosition = getBoard().getMinePosition();
         setUpBoard();
     }
 
-    MineBoardManager(int dimension, int mineNum, int mineLeft, double time, List<MineTile> tiles) {
-        super(dimension);
-        board = new BuilderBoard().setMine(mineNum).setMineLeft(mineLeft).setDimension(dimension).setMineTiles(tiles).buildMineBoard();
+    MineBoardManager(int d, int mineNum, int mineLeft, double time, List<MineTile> tiles) {
+        super(d);
+        setBoard(new BuilderBoard().setMine(mineNum).setMineLeft(mineLeft).setDimension(getDimension()).setMineTiles(tiles).buildMineBoard());
         isFirst = false;
-        this.dimension = dimension;
-        this.time = time;
-        minePosition = board.getMinePosition();
+        setDimension(getDimension());
+        setTime(time);
+        minePosition = getBoard().getMinePosition();
     }
 
     public void setBoard(MineBoard board) {
-        this.board = board;
+        setBoard(board);
     }
 
     List<MineTile> getMinePosition() {
@@ -42,7 +42,7 @@ public class MineBoardManager extends BoardManager<MineBoard, MineTile>{
     }
 
     void mark(int position) {
-        board.flag(position);
+        getBoard().flag(position);
     }
 
     void setMinePosition(List<MineTile> minePosition) {
@@ -50,30 +50,30 @@ public class MineBoardManager extends BoardManager<MineBoard, MineTile>{
     }
 
     private void setNumbers() {
-        for (int pos = 0; pos < dimension *dimension ; pos++) {
+        for (int pos = 0; pos < getDimension() *getDimension() ; pos++) {
             //if the tile is a mine, set the number to -1.
-            if (tiles.get(pos).isMine()) {
-                tiles.get(pos).setNumber(-1);
+            if (getTiles().get(pos).isMine()) {
+                getTiles().get(pos).setNumber(-1);
             }
 
             //if the tile isn't a mine, set the number to be the number of mines surrounds it.
             else {
                 int count = 0;
-                int i = pos / dimension ;
-                int j = pos % dimension ;
+                int i = pos / getDimension() ;
+                int j = pos % getDimension() ;
 
-                if (i > 0 && j > 0 && tiles.get(pos-dimension -1).isMine()) count++; //upper-left tile
-                if (j > 0 && tiles.get(pos-1).isMine()) count++; //left tile
-                if (i < dimension  - 1 && j > 0 && tiles.get(pos+dimension -1).isMine())
+                if (i > 0 && j > 0 && getTiles().get(pos-getDimension() -1).isMine()) count++; //upper-left tile
+                if (j > 0 && getTiles().get(pos-1).isMine()) count++; //left tile
+                if (i < getDimension()  - 1 && j > 0 && getTiles().get(pos+getDimension() -1).isMine())
                     count++; //lower-left
-                if (i > 0 && tiles.get(pos-dimension ).isMine()) count++; // upper tile
-                if (i < dimension  - 1 && tiles.get(pos+dimension ).isMine()) count++; // lower tile
-                if (i > 0 && j < dimension  - 1 && tiles.get(pos-dimension +1).isMine())
+                if (i > 0 && getTiles().get(pos-getDimension() ).isMine()) count++; // upper tile
+                if (i < getDimension()  - 1 && getTiles().get(pos+getDimension() ).isMine()) count++; // lower tile
+                if (i > 0 && j < getDimension()  - 1 && getTiles().get(pos-getDimension() +1).isMine())
                     count++; //upper-right
-                if (j < dimension  - 1 && tiles.get(pos+1).isMine()) count++; //right tile
-                if (i < dimension  - 1 && j < dimension  - 1 && tiles.get(pos+dimension +1).isMine())
+                if (j < getDimension()  - 1 && getTiles().get(pos+1).isMine()) count++; //right tile
+                if (i < getDimension()  - 1 && j < getDimension()  - 1 && getTiles().get(pos+getDimension() +1).isMine())
                     count++; //lower-right tile
-                tiles.get(pos).setNumber(count);
+                getTiles().get(pos).setNumber(count);
             }
         }
     }
@@ -82,13 +82,13 @@ public class MineBoardManager extends BoardManager<MineBoard, MineTile>{
     void move(Object position) {
         int po = (int) position;
         if (isFirst) {
-            board.setMines(po);
+            getBoard().setMines(po);
             setNumbers();
             isFirst = false;
         }
-        MineTile currTile = board.getTile(po);
+        MineTile currTile = getBoard().getTile(po);
         if (!currTile.isFlagged()) {
-            board.reveal(po);
+            getBoard().reveal(po);
             if (currTile.isMine()) {
                 lost = true;
             }
@@ -98,15 +98,15 @@ public class MineBoardManager extends BoardManager<MineBoard, MineTile>{
     @Override
     boolean isLost() {
         if (lost){
-            board.showMines();
+            getBoard().showMines();
         }
         return lost;
     }
 
     @Override
     boolean isWon() {
-        for (int i = 0; i < dimension  * dimension ; i++){
-            if (board.getTile(i).isObscured() && !board.getTile(i).isMine()){
+        for (int i = 0; i < getDimension()  * getDimension() ; i++){
+            if (getBoard().getTile(i).isObscured() && !getBoard().getTile(i).isMine()){
                 return false;
             }
         }
