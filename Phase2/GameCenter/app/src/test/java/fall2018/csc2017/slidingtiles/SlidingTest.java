@@ -1,12 +1,9 @@
 package fall2018.csc2017.slidingtiles;
 
-import org.junit.Before;
 import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.*;
-
 import static org.junit.Assert.*;
 
 public class SlidingTest {
@@ -18,6 +15,36 @@ public class SlidingTest {
         manager.setTiles(tiles);
         board.setDimension(dimension);
         return manager;
+    }
+
+    @Test
+    public void testSlidingHistoryNode() {
+        int[] result = new int[2];
+        result[0] = 0;
+        result[1] = 1;
+        SlidingHistoryNode node = new SlidingHistoryNode(result);
+        assertEquals(node.getData(), result);
+        assertNull(node.next);
+    }
+
+    @Test
+    public void testSlidingHistory() {
+        int[] result1 = new int[2];
+        result1[0] = 0;
+        result1[1] = 1;
+        int[] result2 = new int[2];
+        result2[0] = 0;
+        result2[1] = 2;
+        SlidingHistoryNode node1 = new SlidingHistoryNode(result1);
+        SlidingHistoryNode node2 = new SlidingHistoryNode(result2);
+        SlidingHistory history = new SlidingHistory();
+        assertEquals(history.getSize(), 0);
+        history.add(node1);
+        history.add(node2);
+        assertEquals(history.getSize(), 2);
+        assertEquals(history.get(0), node1);
+        history.remove(0);
+        assertEquals(history.getSize(), 0);
     }
 
     @Test
