@@ -10,8 +10,6 @@ public class MineBoard extends Board<MineTile> {
     private int mineLeft;
     private List<MineTile> minePosition = new ArrayList<>();
 
-    MineBoard(){}
-
     int getMineNum() {return mineNum;}
 
     int getMineLeft() {return mineLeft;}
@@ -19,7 +17,9 @@ public class MineBoard extends Board<MineTile> {
     List<MineTile> getMinePosition() {return minePosition;}
 
     MineTile getTile(int position) {
-        return getTiles().get(position);
+        int row = position / getDimension();
+        int col = position % getDimension();
+        return super.getTile(row, col);
     }
 
     void setMinePosition(List<MineTile> minePosition) {

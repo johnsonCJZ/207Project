@@ -191,14 +191,6 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
         notifyObservers();
     }
 
-    Game2048Tile getTile(int x, int y) {
-        return getTiles().get(x * getDimension() + y);
-    }
-
-    private void setTile(int x, int y, Game2048Tile tile){
-        getTiles().set(x * getDimension() + y, tile);
-    }
-
     @NonNull
     @Override
     public Iterator<Game2048Tile> iterator() {
