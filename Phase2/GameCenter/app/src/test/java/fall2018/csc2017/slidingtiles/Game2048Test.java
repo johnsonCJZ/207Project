@@ -8,8 +8,8 @@ import static org.junit.Assert.*;
 
 public class Game2048Test {
 
-    private ManagerFactory factory = new ManagerFactory();
-    private Game2048Board board = new BuilderBoard.build2048Board();
+    private Factory factory = new Factory();
+    private Game2048Board board = new BuilderBoard().build2048Board();
     private Game2048BoardManager manager = (Game2048BoardManager) factory.createNewManager(board);
 
     private void setBoardCannotMove(int largestTile){

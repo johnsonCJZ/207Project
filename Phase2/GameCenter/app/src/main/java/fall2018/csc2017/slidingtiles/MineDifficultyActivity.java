@@ -104,7 +104,7 @@ public class MineDifficultyActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: // 3x3
-                        ManagerFactory f = new ManagerFactory();
+                        Factory f = new Factory();
                         MineBoard b = new BuilderBoard()
                                 .setMine(10)
                                 .setMineLeft(10)
@@ -115,7 +115,7 @@ public class MineDifficultyActivity extends AppCompatActivity {
                         switchToGame();
                         break;
                     case 1: // 4x4
-                        ManagerFactory f2 = new ManagerFactory();
+                        Factory f2 = new Factory();
                         MineBoard b2 = new BuilderBoard()
                                 .setMine(40)
                                 .setMineLeft(40)
@@ -126,7 +126,7 @@ public class MineDifficultyActivity extends AppCompatActivity {
                         switchToGame();
                         break;
                     case 2: // 5x5
-                        ManagerFactory f3 = new ManagerFactory();
+                        Factory f3 = new Factory();
                         MineBoard b3 = new BuilderBoard()
                                 .setMine(80)
                                 .setMineLeft(80)

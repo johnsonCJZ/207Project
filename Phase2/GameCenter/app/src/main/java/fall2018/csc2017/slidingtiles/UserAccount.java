@@ -51,33 +51,29 @@ public class UserAccount implements Serializable {
     /**
      * The games the UserAccount has purchased.
      */
-    private ArrayList<String> games;
+    private ArrayList<String> games = new ArrayList<>();
     /**
      * The UserAccount class constructor.
      * @param name the name of the UserAccount
      * @param password
      */
 
-    public UserAccount(String name, String password){
-        this.name=name;
-        this.password=password;
-        this.age = 0;
-        this.email = "";
-        games = new ArrayList<>();
-        historySliding.put("history3x3", null);
-        historySliding.put("history4x4", null);
-        historySliding.put("history5x5", null);
-        historySliding.put("resumeHistorySlide", null);
-        historyMine.put("resumeHistoryMine", null);
-        history2048.put("resumeHistory2048", null);
-        historyMine.put("historyMine",null);
-//        history2048.put("history2048",new Game2048Memory());
-        personalScoreBoard.put("history3x3", new ScoreBoard("SlidingTiles"));
-        personalScoreBoard.put("history4x4", new ScoreBoard("SlidingTiles"));
-        personalScoreBoard.put("history5x5", new ScoreBoard("SlidingTiles"));
-        personalScoreBoard.put("2048", new ScoreBoard("2048"));
-        personalScoreBoard.put("Mine", new ScoreBoard("MineSweeper"));
+    public UserAccount(){}
 
+    public HashMap<String, SlidingMemory> getHistorySliding() {
+        return historySliding;
+    }
+
+    public HashMap<String, Game2048Memory> getHistory2048() {
+        return history2048;
+    }
+
+    public HashMap<String, MineMemory> getHistoryMine() {
+        return historyMine;
+    }
+
+    public HashMap<String, ScoreBoard> getPersonalScoreBoard() {
+        return personalScoreBoard;
     }
 
     /**
@@ -111,18 +107,10 @@ public class UserAccount implements Serializable {
     }
 
     /**
-     * Change the username of the UserAccount.
-     * @param name the new name to be updated.
-     */
-    public void changeName(String name){
-        this.name=name;
-    }
-
-    /**
      * Change the password of the UserAccount.
      * @param ps The new password to be updated.
      */
-    void changePassword(String ps){
+    void setPassword(String ps){
         this.password=ps;
     }
 

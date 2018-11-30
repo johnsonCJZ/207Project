@@ -11,7 +11,7 @@ public class MemoryTest {
     private BoardManager manager;
 
     public void setUpSlidingMemory() {
-        ManagerFactory f = new ManagerFactory();
+        Factory f = new Factory();
         SlidingBoard b =new BuilderBoard()
                 .setDimension(4)
                 .buildSlidingBoard();
@@ -20,7 +20,7 @@ public class MemoryTest {
     }
 
     public void setUpGame2048Memory() {
-        ManagerFactory f = new ManagerFactory();
+        Factory f = new Factory();
         Game2048Board board = new BuilderBoard().build2048Board();
         manager = f.createNewManager(board);
         game2048Memory = new Game2048Memory();
@@ -28,7 +28,7 @@ public class MemoryTest {
 
     public void setUpMineMemory() {
 
-        ManagerFactory f = new ManagerFactory();
+        Factory f = new Factory();
         MineBoard b = new BuilderBoard()
                 .setMine(10)
                 .setMineLeft(10)

@@ -3,11 +3,8 @@ package fall2018.csc2017.slidingtiles;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class SlidingMemory extends Memory {
     private int dimension;
@@ -31,7 +28,7 @@ public class SlidingMemory extends Memory {
         for (int i : this.slidingTiles){
             tt.add(new SlidingTile(i));
         }
-        ManagerFactory f = new ManagerFactory();
+        Factory f = new Factory();
         return (SlidingBoardManager) f.loadSlidingManager(dimension,time, tt);
     }
 

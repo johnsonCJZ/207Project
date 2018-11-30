@@ -64,7 +64,7 @@ public class SlidingDifficultyActivity extends AppCompatActivity {
                 public void onClick(View v) {
 
 
-                    ManagerFactory f = new ManagerFactory();
+                    Factory f = new Factory();
                     SlidingBoard b =new BuilderBoard()
                             .setDimension(4)
                             .buildSlidingBoard();
@@ -84,7 +84,7 @@ public class SlidingDifficultyActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    ManagerFactory f = new ManagerFactory();
+                    Factory f = new Factory();
                     SlidingBoard b =new BuilderBoard()
                             .setDimension(3)
                             .buildSlidingBoard();
@@ -104,7 +104,7 @@ public class SlidingDifficultyActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    ManagerFactory f = new ManagerFactory();
+                    Factory f = new Factory();
                     SlidingBoard b =new BuilderBoard()
                             .setDimension(5)
                             .buildSlidingBoard();

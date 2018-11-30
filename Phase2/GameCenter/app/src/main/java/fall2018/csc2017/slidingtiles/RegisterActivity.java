@@ -83,7 +83,8 @@ public class RegisterActivity extends AppCompatActivity {
     //TODO: age and email imput can be every thing, write a regex, logic is wrong SUMMER!
 
     private boolean registerButtonPushed() {
-        newUser = new UserAccount(usernameS, passwordS);
+        Factory f = new Factory();
+        newUser = f.createUserAccount(usernameS, passwordS);
         if(!validateInfo(usernameS, "^[a-z]{3,7}$")){
             Toasty.error(getApplicationContext(), "Illegal input of username.", Toast.LENGTH_SHORT, true).show();
             return false;

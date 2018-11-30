@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class SlidingTest {
 
     private SlidingBoardManager setUpBoard(int dimension, List<SlidingTile> tiles) {
-        ManagerFactory factory = new ManagerFactory();
+        Factory factory = new Factory();
         SlidingBoard board = new BuilderBoard().setDimension(dimension).buildSlidingBoard();
         SlidingBoardManager manager = (SlidingBoardManager)factory.createNewManager(board);
         manager.setTiles(tiles);

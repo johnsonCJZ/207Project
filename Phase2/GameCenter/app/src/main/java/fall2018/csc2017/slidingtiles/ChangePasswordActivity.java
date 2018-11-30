@@ -67,7 +67,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             message.setText("The new password are not the same with the confirmed password.");
             return;
         }
-        user.changePassword(newPwS);
+        user.setPassword(newPwS);
         message.setText("Your password is successfully updated.");
     }
 

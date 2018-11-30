@@ -256,7 +256,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
             @Override
             public void onClick(View v) {
                 isPaused = false;
-                ManagerFactory f = new ManagerFactory();
+                Factory f = new Factory();
                 MineBoard b = new BuilderBoard()
                         .setMine(mine)
                         .setMineLeft(mine)

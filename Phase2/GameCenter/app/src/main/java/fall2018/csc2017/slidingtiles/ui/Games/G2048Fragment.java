@@ -13,13 +13,12 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import es.dmoral.toasty.Toasty;
-import fall2018.csc2017.slidingtiles.Board;
 import fall2018.csc2017.slidingtiles.BuilderBoard;
 import fall2018.csc2017.slidingtiles.DataHolder;
 import fall2018.csc2017.slidingtiles.Game2048Board;
 import fall2018.csc2017.slidingtiles.Game2048BoardManager;
 import fall2018.csc2017.slidingtiles.Game2048MainActivity;
-import fall2018.csc2017.slidingtiles.ManagerFactory;
+import fall2018.csc2017.slidingtiles.Factory;
 import fall2018.csc2017.slidingtiles.R;
 import fall2018.csc2017.slidingtiles.ScoreBoard;
 import fall2018.csc2017.slidingtiles.ScoreBoardTabLayoutActivity;
@@ -70,7 +69,7 @@ public class G2048Fragment extends Fragment {
                 if (boardManager != null) {
                     switchToGame();
                     } else {
-                    ManagerFactory f = new ManagerFactory();
+                    Factory f = new Factory();
                     Game2048Board board = new BuilderBoard().build2048Board();
                     boardManager = (Game2048BoardManager) f.createNewManager(board);
                     user.setGame2048History("resumeHistory2048", null);

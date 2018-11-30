@@ -17,8 +17,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
@@ -165,7 +163,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
                 Intent tmp = new Intent(getApplicationContext(), Game2048MainActivity.class);
                 Bundle bundle = new Bundle();
 
-                ManagerFactory f = new ManagerFactory();
+                Factory f = new Factory();
                 Game2048Board board = new BuilderBoard().build2048Board();
                 bundle.putSerializable("boardManager", f.createNewManager(board));
                 tmp.putExtras(bundle);
