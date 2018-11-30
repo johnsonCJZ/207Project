@@ -82,6 +82,10 @@ public class ScoreBoard implements Serializable {
         return scoreList;
     }
 
+    void setScoreList(List<Object[]> nameAndScoreList) {
+        scoreList = nameAndScoreList;
+    }
+
 }
 
 
