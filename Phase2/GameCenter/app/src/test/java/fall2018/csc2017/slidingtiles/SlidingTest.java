@@ -239,9 +239,4 @@ public class SlidingTest {
         assertArrayEquals(expected, actual);
         assertTrue(testCase.getBoard().hasChanged());
     }
-
-    @Test
-    public void testCalculateSlidingScore() {
-
-    }
 }
