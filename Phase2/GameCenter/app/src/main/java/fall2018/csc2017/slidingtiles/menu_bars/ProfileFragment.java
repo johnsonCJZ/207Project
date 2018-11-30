@@ -104,6 +104,7 @@ public class ProfileFragment extends Fragment {
 
     /**
      * set whether the TextViews can be edited.
+     *
      * @param isEnabled whether the TextViews can be edited.
      */
     private void setEnabled(boolean isEnabled) {
@@ -166,7 +167,8 @@ public class ProfileFragment extends Fragment {
 
     /**
      * Check if the String argument fulfills the regex argument
-     * @param info the information to be checked
+     *
+     * @param info  the information to be checked
      * @param regex the regex to be fulfilled.
      * @return whether the regex is fulfilled by the info.
      */

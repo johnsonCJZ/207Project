@@ -1,7 +1,5 @@
 package fall2018.csc2017.slidingtiles;
 
-import android.support.annotation.NonNull;
-
 import java.io.Serializable;
 
 /**
@@ -14,15 +12,6 @@ public class SlidingTile extends Tile implements Serializable {
     private int id;
 
     /**
-     * Return the tile id.
-     *
-     * @return the tile id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
      * A tile with a background id; look up and set the id.
      *
      * @param backgroundId
@@ -31,6 +20,15 @@ public class SlidingTile extends Tile implements Serializable {
         id = backgroundId;
         // This looks so ugly.
         setBackground();
+    }
+
+    /**
+     * Return the tile id.
+     *
+     * @return the tile id
+     */
+    public int getId() {
+        return id;
     }
 
     @Override

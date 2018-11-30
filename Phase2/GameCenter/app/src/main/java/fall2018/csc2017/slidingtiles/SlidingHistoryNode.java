@@ -19,15 +19,17 @@ class SlidingHistoryNode implements Serializable {
 
     /**
      * A new SlidingHistoryNode with data being dat.
+     *
      * @param dat the data that the node stores
      */
     SlidingHistoryNode(int[] dat) {
         this.data = dat;
-        this.next=null;
+        this.next = null;
     }
 
     /**
      * Return the data.
+     *
      * @return the data
      */
     int[] getData() {

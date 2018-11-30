@@ -6,10 +6,11 @@ import java.util.List;
 
 public class Factory {
 
-    public Factory(){}
+    public Factory() {
+    }
 
-    public BoardManager createNewManager(Board b){
-        if(b instanceof MineBoard){
+    public BoardManager createNewManager(Board b) {
+        if (b instanceof MineBoard) {
             MineBoardManager m = new MineBoardManager();
             m.setTiles(b.getTiles());
             m.setDimension(b.getDimension());
@@ -18,16 +19,16 @@ public class Factory {
             m.setUpBoard();
             return m;
         }
-        if(b instanceof Game2048Board){
+        if (b instanceof Game2048Board) {
             Game2048BoardManager m = new Game2048BoardManager();
             m.setDimension(4);
             m.setBoard((Game2048Board) b);
-            ((Game2048Board)b).addTile();
-            ((Game2048Board)b).addTile();
+            ((Game2048Board) b).addTile();
+            ((Game2048Board) b).addTile();
             m.setTiles(b.getTiles());
             return m;
         }
-        if(b instanceof SlidingBoard){
+        if (b instanceof SlidingBoard) {
             SlidingBoardManager m = new SlidingBoardManager();
             int dimension = (b.getDimension());
             m.setDimension(dimension);
@@ -41,7 +42,7 @@ public class Factory {
         return null;
     }
 
-    public BoardManager Load2048Manager(double time, int score, List<Integer> list){
+    public BoardManager Load2048Manager(double time, int score, List<Integer> list) {
         Factory f = new Factory();
         Game2048Board board = new BuilderBoard().build2048Board();
         Game2048BoardManager manager = (Game2048BoardManager) f.createNewManager(board);
@@ -53,7 +54,7 @@ public class Factory {
         return manager;
     }
 
-    public BoardManager loadMineManager(int d, int mineNum, int mineLeft, double time, List<MineTile> tiles){
+    public BoardManager loadMineManager(int d, int mineNum, int mineLeft, double time, List<MineTile> tiles) {
         Factory f = new Factory();
         MineBoard b = new BuilderBoard()
                 .setMine(mineNum)
@@ -70,13 +71,13 @@ public class Factory {
         return m;
     }
 
-    public BoardManager loadSlidingManager(int dimension, double time, List<SlidingTile> slidingTiles){
+    public BoardManager loadSlidingManager(int dimension, double time, List<SlidingTile> slidingTiles) {
         Factory f = new Factory();
-        SlidingBoard b =new BuilderBoard()
+        SlidingBoard b = new BuilderBoard()
                 .setDimension(dimension)
-                .setTiles((List<Tile>)(List<?>)slidingTiles)
+                .setTiles((List<Tile>) (List<?>) slidingTiles)
                 .buildSlidingBoard();
-        SlidingBoardManager m = (SlidingBoardManager)f.createNewManager(b);
+        SlidingBoardManager m = (SlidingBoardManager) f.createNewManager(b);
 
         m.setDimension(dimension);
         m.setTime(time);
@@ -89,7 +90,7 @@ public class Factory {
         return m;
     }
 
-    public UserAccount createUserAccount(String name, String password){
+    public UserAccount createUserAccount(String name, String password) {
         UserAccount u = new UserAccount();
         u.setName(name);
         u.setPassword(password);
@@ -101,10 +102,10 @@ public class Factory {
         historySliding.put("resumeHistorySlide", null);
         HashMap<String, MineMemory> historyMine = new HashMap<>();
         historyMine.put("resumeHistoryMine", null);
-        historyMine.put("historyMine",null);
+        historyMine.put("historyMine", null);
         HashMap<String, Game2048Memory> history2048 = new HashMap<>();
         history2048.put("resumeHistory2048", null);
-        HashMap<String,ScoreBoard> personalScoreBoard = new HashMap<>();
+        HashMap<String, ScoreBoard> personalScoreBoard = new HashMap<>();
         personalScoreBoard.put("history3x3", new ScoreBoard("SlidingTiles"));
         personalScoreBoard.put("history4x4", new ScoreBoard("SlidingTiles"));
         personalScoreBoard.put("history5x5", new ScoreBoard("SlidingTiles"));

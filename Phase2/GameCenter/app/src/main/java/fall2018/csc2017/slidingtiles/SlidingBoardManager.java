@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Manage a slidingBoard, including swapping slidingTiles, checking for a win, and managing taps.
  */
-public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>{
+public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile> {
     /**
      * The linked list of slidingHistory moves of the slidingBoard.
      */
@@ -21,14 +21,10 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
      * Add ordered tiles to the board.
      */
     void addTile() {
-            int numTiles = getDimension() * getDimension();
-            for (int tileNum = 0; tileNum != numTiles; tileNum++) {
-                getTiles().add(new SlidingTile(tileNum));
-            }
-    }
-
-    void setSlidingHistory(SlidingHistory slidingHistory) {
-        this.slidingHistory = slidingHistory;
+        int numTiles = getDimension() * getDimension();
+        for (int tileNum = 0; tileNum != numTiles; tileNum++) {
+            getTiles().add(new SlidingTile(tileNum));
+        }
     }
 
     @Override
@@ -40,14 +36,15 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
     /**
      * Return how many inversions occur in the list of slidingTiles.
      * An inversion is when a tile precedes another tile with a lower number on it.
+     *
      * @return the number of inversion
      */
     int findInversion() {
         int count = 0;
-        for (int i = 0; i < getDimension() * getDimension() -1; i++) {
-            if (getTiles().get(i).getId() != 0){
-                for (int j = i+1; j < getDimension() * getDimension(); j++){
-                    if (getTiles().get(j).getId() < getTiles().get(i).getId() && getTiles().get(j).getId() != 0){
+        for (int i = 0; i < getDimension() * getDimension() - 1; i++) {
+            if (getTiles().get(i).getId() != 0) {
+                for (int j = i + 1; j < getDimension() * getDimension(); j++) {
+                    if (getTiles().get(j).getId() < getTiles().get(i).getId() && getTiles().get(j).getId() != 0) {
                         count++;
                     }
                 }
@@ -68,29 +65,34 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
 
     /**
      * Return if the shuffled state can be solved.
+     *
      * @return if the state is solvable.
      */
     private boolean isSolvable() {
         int inversion = findInversion();
         if (getDimension() % 2 == 1) {
             return inversion % 2 == 0;
-        }
-        else {
+        } else {
             int i = 0;
-            while(getTiles().get(i).getId() != 0){
+            while (getTiles().get(i).getId() != 0) {
                 i++;
             }
-            int blankAtRowFromBottom = getDimension()- (i/getDimension());
+            int blankAtRowFromBottom = getDimension() - (i / getDimension());
             return inversion % 2 != blankAtRowFromBottom % 2;
         }
     }
 
     /**
      * Return the SlidingHistory.
+     *
      * @return the SlidingHistory
      */
     SlidingHistory getSlidingHistory() {
         return slidingHistory;
+    }
+
+    void setSlidingHistory(SlidingHistory slidingHistory) {
+        this.slidingHistory = slidingHistory;
     }
 
     /**
@@ -101,11 +103,11 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
     @Override
     boolean isWon() {
         for (int i = 0; i < getDimension() * getDimension() - 3; i++) {
-            if (getTiles().get(i).getId() > getTiles().get(i+1).getId()) {
+            if (getTiles().get(i).getId() > getTiles().get(i + 1).getId()) {
                 return false;
             }
         }
-        return getTiles().get(getDimension() * getDimension() -1).getId() == 0;
+        return getTiles().get(getDimension() * getDimension() - 1).getId() == 0;
     }
 
     /**
@@ -142,17 +144,18 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
         int col = po % getDimension();
         int r_row;
         int r_col;
-        if (isValidTap(po)){
+        if (isValidTap(po)) {
             int[] result = findBlankIndex();
             r_row = result[0];
             r_col = result[1];
-            getBoard().swapTiles(row,col,r_row,r_col);
+            getBoard().swapTiles(row, col, r_row, r_col);
             result[0] = row;
             result[1] = col;
-            if (currIndex == slidingHistory.getSize()-1) {
-                slidingHistory.add(new SlidingHistoryNode(result)); currIndex++;}
-            else {
-                slidingHistory.remove(currIndex+1);
+            if (currIndex == slidingHistory.getSize() - 1) {
+                slidingHistory.add(new SlidingHistoryNode(result));
+                currIndex++;
+            } else {
+                slidingHistory.remove(currIndex + 1);
                 slidingHistory.add(new SlidingHistoryNode((result)));
                 currIndex++;
             }
@@ -167,23 +170,22 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
      *
      * @return an array of coordination of blank tile
      */
-    int[] findBlankIndex(){
+    int[] findBlankIndex() {
         int[] result = new int[2];
         int position = 0;
-        for (SlidingTile t : getTiles()){
-            if (t.getId()== 0){
+        for (SlidingTile t : getTiles()) {
+            if (t.getId() == 0) {
                 result[0] = position / getDimension();
                 result[1] = position % getDimension();
                 break;
             }
-            position ++;
+            position++;
         }
         return result;
 
     }
 
     /**
-     *
      * @return always return false since this game will not end unless the player solve the puzzle.
      */
     @Override
@@ -193,6 +195,7 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
 
     /**
      * Perform undo operation if i is -1 and perform redo operation if i is 1
+     *
      * @param i is -1 or 1 to indicate performing undo or redo
      */
     void readHistory(int i) {
@@ -201,13 +204,13 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
         //redo
         if (i == 1 && slidingHistory.get(currIndex).next != null) {
             currPosition = slidingHistory.get(currIndex).getData();
-            postPosition = slidingHistory.get(currIndex+1).getData();
+            postPosition = slidingHistory.get(currIndex + 1).getData();
             currIndex++;
         }
         // undo
-        else if (i == -1 && slidingHistory.getSize() > 1){
+        else if (i == -1 && slidingHistory.getSize() > 1) {
             currPosition = slidingHistory.get(currIndex).getData();
-            postPosition = slidingHistory.get(currIndex-1).getData();
+            postPosition = slidingHistory.get(currIndex - 1).getData();
             currIndex--;
         }
         getBoard().swapTiles(postPosition[0], postPosition[1], currPosition[0], currPosition[1]);

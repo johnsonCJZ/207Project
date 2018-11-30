@@ -4,8 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
@@ -22,38 +22,32 @@ import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
  * The game activity.
  */
 public class MineMainActivity extends AppCompatActivity implements IObserver {
+    private static int columnWidth, columnHeight;
     DatabaseHelper myDB;
     /**
      * The per-user scoreboard
      */
     private ScoreBoard personalScoreBoard;
-
     /**
      * The per-game scoreboard
      */
     private ScoreBoard globalScoreBoard;
-
     /**
      * If a game is paused.
      */
     private boolean isPaused;
-
     /**
      * The MineBoard manager.
      */
     private MineBoardManager boardManager;
-
     /**
      * The buttons to display.
      */
     private ArrayList<Button> tileButtons;
-
     /**
      * Grid View and calculated column height and width based on device size.
      */
     private GestureDetectGridView gridView;
-    private static int columnWidth, columnHeight;
-
     /**
      * Time count.
      */
@@ -94,6 +88,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
 
     /**
      * Initialize all buttons
+     *
      * @param savedInstanceState
      */
     @Override
@@ -111,7 +106,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         addStartOver();
     }
 
-    private void getAllComponents(){
+    private void getAllComponents() {
         mineMainController = new MineMainController();
         setContentView(R.layout.activity_minesweeper);
         time = findViewById(R.id.time);
@@ -120,7 +115,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         gridView = findViewById(R.id.mine_grid);
     }
 
-    void updateMineLeft(){
+    void updateMineLeft() {
         mineLeft.setText("Mine: " + String.valueOf(boardManager.getBoard().getMineLeft()));
     }
 
@@ -129,7 +124,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
      * of positions, and then call the adapter to set the view.
      */
     public void display() {
-        tileButtons=mineMainController.updateTileButtons(boardManager,tileButtons);
+        tileButtons = mineMainController.updateTileButtons(boardManager, tileButtons);
         updateMineLeft();
         gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
     }
@@ -141,7 +136,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         Intent intent = new Intent(this, InfoPanelMainActivity.class);
         Bundle pass = new Bundle();
         myDB.updateAccountManager(users);
-        myDB.updateUser(currentUser,user);
+        myDB.updateUser(currentUser, user);
         pass.putString("fragment", "Mine");
         intent.putExtras(pass);
         startActivity(intent);
@@ -179,9 +174,10 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
 
     /**
      * Return the score of the finished game.
+     *
      * @return the score of the finished game.
      */
-    private int getScore(){
+    private int getScore() {
         int score;
         score = personalScoreBoard.calculateScore(boardManager);
         Object[] result = new Object[2];
@@ -190,36 +186,37 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         personalScoreBoard.addAndSort(result);
         globalScoreBoard.addAndSort(result);
         myDB.updateAccountManager(users);
-        myDB.updateUser(currentUser,user);
+        myDB.updateUser(currentUser, user);
         return score;
 
     }
 
     /**
      * Save the game history.
+     *
      * @param dialog dialog for choosing memory, to be cancelled
      */
-    private void saveHistory(DialogInterface dialog){
+    private void saveHistory(DialogInterface dialog) {
         user.setMineHistory("historyMine", boardManager);
-        myDB.updateUser(currentUser,user);
+        myDB.updateUser(currentUser, user);
         dialog.cancel();
     }
 
     /**
      * Automatically save the game for resuming.
      */
-    private void autoSave(){
+    private void autoSave() {
         boardManager.setTime(count);
         user.setMineHistory("resumeHistoryMine", boardManager);
-        myDB.updateUser(currentUser,user);
+        myDB.updateUser(currentUser, user);
     }
 
 
-    private void setGridView(){
-        if (gridView.isFrozen()){
+    private void setGridView() {
+        if (gridView.isFrozen()) {
             gridView.cloneAsThawed();
         }
-        gridView.setNumColumns(boardManager.getBoard().getDimension ());
+        gridView.setNumColumns(boardManager.getBoard().getDimension());
         gridView.setBoardBoardManager(boardManager);
         boardManager.getBoard().addObserver(this);
         // Observer sets up desired dimensions as well as calls our display function
@@ -232,8 +229,8 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
                         int displayWidth = gridView.getMeasuredWidth();
                         int displayHeight = gridView.getMeasuredHeight();
 
-                        columnWidth = displayWidth / boardManager.getBoard().getDimension ();
-                        columnHeight = displayHeight / boardManager.getBoard().getDimension ();
+                        columnWidth = displayWidth / boardManager.getBoard().getDimension();
+                        columnHeight = displayHeight / boardManager.getBoard().getDimension();
 
                         display();
 
@@ -242,7 +239,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
     }
 
 
-    private void addStartOver(){
+    private void addStartOver() {
         face.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -256,7 +253,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
                         .buildMineBoard();
                 boardManager = (MineBoardManager) f.createNewManager(b);
                 boardManager.setTime((double) -1);
-                tileButtons = mineMainController.createTileButtons(getApplicationContext(),boardManager,tileButtons,face);
+                tileButtons = mineMainController.createTileButtons(getApplicationContext(), boardManager, tileButtons, face);
                 setGridView();
             }
         });
@@ -311,25 +308,25 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
     /**
      * Switch to ScoreBoard activity/view.
      */
-    private void switchToScoreBoard(){
+    private void switchToScoreBoard() {
         Intent tmp = new Intent(this, ScoreBoardTabLayoutActivity.class);
         Bundle pass = new Bundle();
         myDB.updateUser(currentUser, user);
         myDB.updateAccountManager(users);
-        pass.putSerializable("personalScoreBoard",personalScoreBoard);
-        pass.putSerializable("globalScoreBoard",globalScoreBoard);
+        pass.putSerializable("personalScoreBoard", personalScoreBoard);
+        pass.putSerializable("globalScoreBoard", globalScoreBoard);
 
         tmp.putExtras(pass);
         startActivity(tmp);
     }
 
-    private Thread time(){
+    private Thread time() {
         count = boardManager.getTime();
         isPaused = false;
-        t=new Thread(){
+        t = new Thread() {
             @Override
-            public void run(){
-                while(!isInterrupted()) {
+            public void run() {
+                while (!isInterrupted()) {
                     if (!isPaused) {
                         try {
                             Thread.sleep(100);
@@ -344,43 +341,8 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
                 }
             }
         };
-        return t;}
-
-    private class InGame implements Runnable{
-        private TextView time;
-        InGame(TextView time) {
-            this.time = time;
-        }
-        @Override
-        public void run() {
-            boardManager.setTime(count);
-            if (boardManager.isWon() && !isPaused) {
-                isPaused = true;
-                user.setMineHistory("resumeHistoryMine", null);
-                face.setImageResource(R.drawable.win);
-                gridView.freeze();
-                winAlert();
-            }
-            else if (boardManager.isLost() && !isPaused){
-                isPaused = true;
-                user.setMineHistory("resumeHistoryMine", null);
-                face.setImageResource(R.drawable.sad);
-                gridView.freeze();
-                loseAlert();
-            }
-            else {
-                count = boardManager.getTime();
-                count += 1;
-                if (tempCount < 2) {
-                    tempCount += 1;
-                } else {
-                    autoSave();
-                }
-                String decimal = new DecimalFormat(".##").format( count/10);
-                time.setText("Time: " +String.valueOf(decimal) + " s");            }
-        }
+        return t;
     }
-
 
     /**
      * Receive all the info(User, Size, SlidingBoardManager, ScoreBoards)from previous activity/view.
@@ -389,12 +351,12 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
         myDB = new DatabaseHelper(this);
-        currentUser = (String)DataHolder.getInstance().retrieve("current user");
+        currentUser = (String) DataHolder.getInstance().retrieve("current user");
         this.user = myDB.selectUser(currentUser);
         this.users = myDB.selectAccountManager();
 
         this.boardManager = (MineBoardManager) Objects.requireNonNull(extra).getSerializable("boardManager");
-        dimension = Objects.requireNonNull(boardManager).getBoard().getDimension ();
+        dimension = Objects.requireNonNull(boardManager).getBoard().getDimension();
         mine = boardManager.getBoard().getMineNum();
         assert this.boardManager != null;
         this.personalScoreBoard = user.getScoreBoard("Mine");
@@ -403,6 +365,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
 
     /**
      * Create the buttons for displaying the slidingTiles.
+     *
      * @param context the context
      */
     private void createTileButtons(final Context context) {
@@ -421,7 +384,6 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         }
     }
 
-
     /**
      * Dispatch onPause() to fragments.
      */
@@ -430,11 +392,46 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         super.onPause();
     }
 
-
     @Override
     public void update(IObservable o) {
         display();
         face.setImageResource(R.drawable.normal);
+    }
+
+    private class InGame implements Runnable {
+        private TextView time;
+
+        InGame(TextView time) {
+            this.time = time;
+        }
+
+        @Override
+        public void run() {
+            boardManager.setTime(count);
+            if (boardManager.isWon() && !isPaused) {
+                isPaused = true;
+                user.setMineHistory("resumeHistoryMine", null);
+                face.setImageResource(R.drawable.win);
+                gridView.freeze();
+                winAlert();
+            } else if (boardManager.isLost() && !isPaused) {
+                isPaused = true;
+                user.setMineHistory("resumeHistoryMine", null);
+                face.setImageResource(R.drawable.sad);
+                gridView.freeze();
+                loseAlert();
+            } else {
+                count = boardManager.getTime();
+                count += 1;
+                if (tempCount < 2) {
+                    tempCount += 1;
+                } else {
+                    autoSave();
+                }
+                String decimal = new DecimalFormat(".##").format(count / 10);
+                time.setText("Time: " + String.valueOf(decimal) + " s");
+            }
+        }
     }
 
 

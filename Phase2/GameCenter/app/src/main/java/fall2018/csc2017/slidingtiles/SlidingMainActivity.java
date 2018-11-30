@@ -1,69 +1,57 @@
 package fall2018.csc2017.slidingtiles;
 
-import android.app.ActivityManager;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 /**
  * The game activity.
  */
 public class SlidingMainActivity extends AppCompatActivity implements IObserver {
+    private static DecimalFormat df2 = new DecimalFormat(".##");
+    private static int columnWidth, columnHeight;
     DatabaseHelper myDB;
     /**
      * The per-user scoreboard
      */
     private ScoreBoard personalScoreBoard;
-
     /**
      * The per-game scoreboard
      */
     private ScoreBoard globalScoreBoard;
-
     /**
      * If a game is paused.
      */
     private boolean isPaused;
-
-    private static DecimalFormat df2 = new DecimalFormat(".##");
-
     /**
      * The board manager.
      */
     private SlidingBoardManager slidingBoardManager;
-
     /**
      * The buttons to display.
      */
     private ArrayList<Button> tileButtons;
-
     /**
      * Grid View and calculated column height and width based on device size.
      */
     private GestureDetectGridView gridView;
-    private static int columnWidth, columnHeight;
-
     /**
      * Time count.
      */
-    private double count=0;
+    private double count = 0;
 
     /**
      * Time count for autosave purpose.
@@ -91,6 +79,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
 
     /**
      * Initialize all buttons
+     *
      * @param savedInstanceState
      */
     @Override
@@ -100,7 +89,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         super.onCreate(savedInstanceState);
         getAllInfo(); // pass in all useful data from last activity, including slidingBoardManager
         getAllComponents();
-        tileButtons = slidingMainController.createTileButtons(getApplicationContext(),slidingBoardManager,tileButtons);
+        tileButtons = slidingMainController.createTileButtons(getApplicationContext(), slidingBoardManager, tileButtons);
         Thread t = time();
         t.start();
 
@@ -113,7 +102,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
      * of positions, and then call the adapter to set the view.
      */
     public void display() {
-        tileButtons=slidingMainController.updateTileButtons(slidingBoardManager,tileButtons);
+        tileButtons = slidingMainController.updateTileButtons(slidingBoardManager, tileButtons);
         gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
     }
 
@@ -133,7 +122,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         isPaused = true;
         user.setSlideHistory("resumeHistorySlide", null);// clear resume memory
         slidingBoardManager.setTime(count);
-        if(!slidingBoardManager.isWon()) {
+        if (!slidingBoardManager.isWon()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Do you want to save/override this game?")
 
@@ -157,8 +146,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
                 }
             });
             alert.show();
-        }
-        else{
+        } else {
             switchToGameCenter();
         }
 
@@ -166,9 +154,10 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
 
     /**
      * Return the score of the finished game.
+     *
      * @return the score of the finished game.
      */
-    private int getScore(){
+    private int getScore() {
         int score;
         score = personalScoreBoard.calculateScore(slidingBoardManager);
         Object[] result = new Object[2];
@@ -184,21 +173,22 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
 
     /**
      * Save the game history.
+     *
      * @param dialog
      */
     private void saveHistory(DialogInterface dialog) {
         switch (size) {
             case 3:
-                user.setSlideHistory("history3x3",slidingBoardManager);
+                user.setSlideHistory("history3x3", slidingBoardManager);
                 break;
             case 4:
-                user.setSlideHistory("history4x4",slidingBoardManager);
+                user.setSlideHistory("history4x4", slidingBoardManager);
                 break;
             case 5:
-                user.setSlideHistory("history5x5",slidingBoardManager);
+                user.setSlideHistory("history5x5", slidingBoardManager);
                 break;
         }
-        myDB.updateUser(username,user);
+        myDB.updateUser(username, user);
         dialog.cancel();
     }
 
@@ -208,11 +198,11 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
     private void autoSave() {
         slidingBoardManager.setTime(count);
         user.setSlideHistory("resumeHistorySlide", slidingBoardManager);
-        myDB.updateUser(username,user);
+        myDB.updateUser(username, user);
     }
 
 
-    private void getAllComponents(){
+    private void getAllComponents() {
         setContentView(R.layout.activity_main);
         gridView = findViewById(R.id.grid);
         time = findViewById(R.id.textView6);
@@ -221,12 +211,12 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
 
     @NonNull
     private Thread time() {
-        count= slidingBoardManager.getTime();
+        count = slidingBoardManager.getTime();
         isPaused = false;
-        return new Thread(){
+        return new Thread() {
             @Override
-            public void run(){
-                while(!isInterrupted()) {
+            public void run() {
+                while (!isInterrupted()) {
                     if (!isPaused) {
                         try {
                             Thread.sleep(10);
@@ -244,34 +234,6 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
 
         };
     }
-
-
-    private class InGame implements Runnable {
-        TextView time;
-        public InGame(TextView time){
-            this.time = time;
-        }
-        @Override
-        public void run() {
-            if (slidingBoardManager.isWon() && !isPaused) {
-                slidingBoardManager.setTime(count);
-                gridView.freeze();
-                isPaused = true;
-                user.setSlideHistory("resumeHistorySlide", null);
-                winAlert();
-            }
-            else {
-                count += 0.01;
-                if (tempCount < 2) {
-                    tempCount += 0.01;
-                } else {
-                    tempCount = 0;
-                    autoSave();
-                }
-                time.setText(String.valueOf(df2.format(count)) + " s");
-            }
-    }}
-
 
     void setGridView() {
         gridView.setNumColumns(slidingBoardManager.getBoard().getDimension());
@@ -329,7 +291,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
     private void addCheatButton() {
         Button cheat = findViewById(R.id.Cheating);
         cheat.setOnClickListener(new View.OnClickListener() {
-                @Override
+            @Override
             public void onClick(View v) {
                 cheat();
                 display();
@@ -372,23 +334,23 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
      */
     private void cheat() {
         List<SlidingTile> slidingTiles = new ArrayList<>();
-        int numTiles = size*size;
-        for (int tileNum = 1; tileNum != numTiles-1; tileNum++) {
+        int numTiles = size * size;
+        for (int tileNum = 1; tileNum != numTiles - 1; tileNum++) {
             slidingTiles.add(new SlidingTile(tileNum));
         }
         slidingTiles.add(new SlidingTile(0));
-        slidingTiles.add(new SlidingTile(numTiles-1));
+        slidingTiles.add(new SlidingTile(numTiles - 1));
         slidingBoardManager.setTiles(slidingTiles);
     }
 
     /**
      * Switch to ScoreBoard activity/view.
      */
-    private void switchToScoreBoard(){
+    private void switchToScoreBoard() {
         Intent tmp = new Intent(this, ScoreBoardTabLayoutActivity.class);
         Bundle pass = new Bundle();
-        pass.putSerializable("personalScoreBoard",personalScoreBoard);
-        pass.putSerializable("globalScoreBoard",globalScoreBoard);
+        pass.putSerializable("personalScoreBoard", personalScoreBoard);
+        pass.putSerializable("globalScoreBoard", globalScoreBoard);
         tmp.putExtras(pass);
         startActivity(tmp);
     }
@@ -396,7 +358,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
     /**
      * Receive all the info(User, Size, SlidingBoardManager, ScoreBoards)from previous activity/view.
      */
-    private void getAllInfo(){
+    private void getAllInfo() {
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
 
@@ -406,7 +368,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
 
         this.slidingBoardManager = (SlidingBoardManager) extra.getSerializable("slidingBoardManager");
         this.size = extra.getInt("size");
-        if (slidingBoardManager.getBoard()!=null){
+        if (slidingBoardManager.getBoard() != null) {
             this.size = slidingBoardManager.getBoard().getDimension();
         }
         switch (size) {
@@ -431,8 +393,6 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         }
     }
 
-
-
     /**
      * Dispatch onPause() to fragments.
      */
@@ -441,9 +401,36 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         super.onPause();
     }
 
-
     @Override
     public void update(IObservable o) {
         display();
+    }
+
+    private class InGame implements Runnable {
+        TextView time;
+
+        public InGame(TextView time) {
+            this.time = time;
+        }
+
+        @Override
+        public void run() {
+            if (slidingBoardManager.isWon() && !isPaused) {
+                slidingBoardManager.setTime(count);
+                gridView.freeze();
+                isPaused = true;
+                user.setSlideHistory("resumeHistorySlide", null);
+                winAlert();
+            } else {
+                count += 0.01;
+                if (tempCount < 2) {
+                    tempCount += 0.01;
+                } else {
+                    tempCount = 0;
+                    autoSave();
+                }
+                time.setText(String.valueOf(df2.format(count)) + " s");
+            }
+        }
     }
 }

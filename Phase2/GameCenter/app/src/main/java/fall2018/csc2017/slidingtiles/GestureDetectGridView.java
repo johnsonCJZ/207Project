@@ -54,17 +54,17 @@ public class GestureDetectGridView extends GridView implements Freezable {
         init(context);
     }
 
-    private void init(final Context context) throws NullPointerException{
+    private void init(final Context context) throws NullPointerException {
         mController = new MovementController();
         gDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onSingleTapConfirmed(MotionEvent event) {
-                try{
-                int position = GestureDetectGridView.this.pointToPosition
-                        (Math.round(event.getX()), Math.round(event.getY()));
+                try {
+                    int position = GestureDetectGridView.this.pointToPosition
+                            (Math.round(event.getX()), Math.round(event.getY()));
 
-                mController.processTapMovement(context, position);}
-                catch(NullPointerException ex){
+                    mController.processTapMovement(context, position);
+                } catch (NullPointerException ex) {
                     ex.printStackTrace();
                     Toasty.info(context, "Frozen", Toast.LENGTH_SHORT, true).show();
                 }
@@ -99,8 +99,7 @@ public class GestureDetectGridView extends GridView implements Freezable {
                             }
                             result = true;
                         }
-                    }
-                    else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                    } else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                         if (diffY > 0) {
                             Toasty.success(context, "Down", Toast.LENGTH_SHORT, true).show();
                             mController.processDownSwipe();
@@ -117,7 +116,6 @@ public class GestureDetectGridView extends GridView implements Freezable {
             }
         });
     }
-
 
 
     @Override
@@ -148,7 +146,7 @@ public class GestureDetectGridView extends GridView implements Freezable {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev)  {
+    public boolean onTouchEvent(MotionEvent ev) {
         return gDetector.onTouchEvent(ev);
     }
 
@@ -159,21 +157,21 @@ public class GestureDetectGridView extends GridView implements Freezable {
 
     @Override
     public boolean isFrozen() {
-        if(mController==null){
-            return  true;
+        if (mController == null) {
+            return true;
         }
         return false;
     }
 
     @Override
     public Object freeze() {
-        mController=null;
+        mController = null;
         return null;
     }
 
     @Override
     public Object cloneAsThawed() {
-        mController=new MovementController();
+        mController = new MovementController();
         return null;
     }
 

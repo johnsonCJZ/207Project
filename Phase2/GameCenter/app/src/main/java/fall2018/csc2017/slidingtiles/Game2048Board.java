@@ -1,11 +1,11 @@
 package fall2018.csc2017.slidingtiles;
+
 import android.support.annotation.NonNull;
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Observable;
 
 public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2048Tile> {
     private int score = 0;
@@ -29,27 +29,35 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
     // precondition: list.size() == 16
     void setUpTiles(List<Integer> list) {
         int i = 0;
-        for (Game2048Tile tile:this) {
+        for (Game2048Tile tile : this) {
             tile.setValue(list.get(i));
             i++;
         }
     }
 
-    boolean isChanged() {return isChanged;}
+    boolean isChanged() {
+        return isChanged;
+    }
 
     /**
      * @return score
      */
-    int getScore() {return score;}
+    int getScore() {
+        return score;
+    }
 
     /**
      * Set score
+     *
      * @param score score.
      */
-    void setScore(int score) {this.score = score;}
+    void setScore(int score) {
+        this.score = score;
+    }
 
     /**
      * Randomly pick an empty tile with 0 and change its value to 2 or 4.
+     *
      * @return the random tile with changed value.
      */
     Game2048Tile addTile() {
@@ -74,6 +82,7 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
 
     /**
      * Find all empty tiles.
+     *
      * @return Array List of empty tiles.
      */
     ArrayList<Game2048Tile> findEmpty() {
@@ -114,35 +123,35 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
     /**
      * Merge an array of tiles if exist two adjacent tiles with a same value.
      * For example, [2 , 2 , 4 , 4] merge to left -> [4, 8, 0, 0]
+     *
      * @param tileArray array of tiles before merge.
      * @param direction direction of merge can only be LEFT or RIGHT.
      */
-    void mergeList(Game2048Tile[] tileArray, String direction){
+    void mergeList(Game2048Tile[] tileArray, String direction) {
         int dimension = getDimension();
         ArrayList<Integer> temp = new ArrayList<>(dimension);
         int i;
         switch (direction) {
             case "LEFT":
                 i = 0;
-                while (i <= dimension -1) {
-                    if (i == dimension -1) {
+                while (i <= dimension - 1) {
+                    if (i == dimension - 1) {
                         temp.add(tileArray[i].getValue());
                         i++;
-                    }
-                    else if (tileArray[i].getValue() == 0){i++;}
-                    else {
-                        int j = i+1;
-                        while (j< dimension -1 && tileArray[j].getValue() == 0) {
+                    } else if (tileArray[i].getValue() == 0) {
+                        i++;
+                    } else {
+                        int j = i + 1;
+                        while (j < dimension - 1 && tileArray[j].getValue() == 0) {
                             j++;
                         }
                         Integer valueI = tileArray[i].getValue();
                         Integer valueJ = tileArray[j].getValue();
-                        if (valueI.equals(valueJ)){
-                            temp.add(valueI*2);
+                        if (valueI.equals(valueJ)) {
+                            temp.add(valueI * 2);
                             score = score + valueI * 2;
-                            i=j+1;
-                        }
-                        else{
+                            i = j + 1;
+                        } else {
                             temp.add(valueI);
                             i = j;
                         }
@@ -153,35 +162,34 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
                     temp.add(0);
                 }
 
-                for (i = 0; i < dimension; i++){
-                    if (tileArray[i].getValue() != temp.get(i)){
+                for (i = 0; i < dimension; i++) {
+                    if (tileArray[i].getValue() != temp.get(i)) {
                         isChanged = true;
                         tileArray[i].setValue(temp.get(i));
                     }
                 }
                 break;
 
-            case "RIGHT" :
+            case "RIGHT":
                 i = dimension - 1;
                 while (i >= 0) {
                     if (i == 0) {
                         temp.add(tileArray[i].getValue());
                         i--;
-                    }
-                    else if (tileArray[i].getValue() == 0){i--;}
-                    else {
-                        int j = i-1;
-                        while (j>0 && tileArray[j].getValue() == 0) {
+                    } else if (tileArray[i].getValue() == 0) {
+                        i--;
+                    } else {
+                        int j = i - 1;
+                        while (j > 0 && tileArray[j].getValue() == 0) {
                             j--;
                         }
                         Integer valueI = tileArray[i].getValue();
                         Integer valueJ = tileArray[j].getValue();
-                        if (valueI.equals(valueJ)){
-                            temp.add(valueI*2);
+                        if (valueI.equals(valueJ)) {
+                            temp.add(valueI * 2);
                             score = score + valueI * 2;
-                            i=j-1;
-                        }
-                        else{
+                            i = j - 1;
+                        } else {
                             temp.add(valueI);
                             i = j;
                         }
@@ -208,6 +216,7 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
 
     /**
      * Merge the whole 2048 game board.
+     *
      * @param direction direction of merge can only be LEFT or RIGHT or UP or DOWN.
      */
     void merge(String direction) {
@@ -277,7 +286,7 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
         @Override
         public boolean hasNext() {
 
-            return currentPosition < getDimension() * getDimension() -1;
+            return currentPosition < getDimension() * getDimension() - 1;
         }
 
         /**

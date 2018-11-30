@@ -1,9 +1,8 @@
 package fall2018.csc2017.slidingtiles;
 
 import java.io.Serializable;
-import java.util.List;
 
-public class Game2048BoardManager extends BoardManager<Game2048Board, Game2048Tile> implements Serializable{
+public class Game2048BoardManager extends BoardManager<Game2048Board, Game2048Tile> implements Serializable {
     /**
      * Dimension of game 2048 can only be 4.
      */
@@ -27,7 +26,7 @@ public class Game2048BoardManager extends BoardManager<Game2048Board, Game2048Ti
     }
 
     @Override
-    boolean isWon(){
+    boolean isWon() {
         for (Game2048Tile tile : getBoard()) {
             if (tile.getValue() == 2048) {
                 return true;
@@ -49,7 +48,7 @@ public class Game2048BoardManager extends BoardManager<Game2048Board, Game2048Ti
                 for (int j = 0; j < DIMENSION; j++) {
                     Game2048Tile tile = getBoard().getTile(i, j);
                     if ((i < DIMENSION - 1 && tile.equals(getBoard().getTile(i + 1, j)))
-                            || (j < DIMENSION - 1 && tile.equals(getBoard().getTile(i, j+1)))) {
+                            || (j < DIMENSION - 1 && tile.equals(getBoard().getTile(i, j + 1)))) {
                         return true;
                     }
                 }

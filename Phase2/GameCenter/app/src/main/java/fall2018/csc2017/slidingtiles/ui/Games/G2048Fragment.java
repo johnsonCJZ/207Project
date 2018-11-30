@@ -1,10 +1,10 @@
 package fall2018.csc2017.slidingtiles.ui.Games;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +15,10 @@ import android.widget.Toast;
 import es.dmoral.toasty.Toasty;
 import fall2018.csc2017.slidingtiles.BuilderBoard;
 import fall2018.csc2017.slidingtiles.DataHolder;
+import fall2018.csc2017.slidingtiles.Factory;
 import fall2018.csc2017.slidingtiles.Game2048Board;
 import fall2018.csc2017.slidingtiles.Game2048BoardManager;
 import fall2018.csc2017.slidingtiles.Game2048MainActivity;
-import fall2018.csc2017.slidingtiles.Factory;
 import fall2018.csc2017.slidingtiles.R;
 import fall2018.csc2017.slidingtiles.ScoreBoard;
 import fall2018.csc2017.slidingtiles.ScoreBoardTabLayoutActivity;
@@ -32,15 +32,13 @@ import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 public class G2048Fragment extends Fragment {
     /**
-     * Button get in game center
-     */
-    private ImageButton Image2048;
-
-    /**
      * database
      */
     DatabaseHelper myDB;
-
+    /**
+     * Button get in game center
+     */
+    private ImageButton Image2048;
     /**
      * boardManager for 2048
      */
@@ -102,15 +100,16 @@ public class G2048Fragment extends Fragment {
                 boardManager = user.getSpecific2048History("resumeHistory2048");
                 if (boardManager != null) {
                     switchToGame();
-                    } else {
+                } else {
                     Factory f = new Factory();
                     Game2048Board board = new BuilderBoard().build2048Board();
                     boardManager = (Game2048BoardManager) f.createNewManager(board);
                     user.setGame2048History("resumeHistory2048", null);
                     switchToGame();
-                    } }
+                }
+            }
         });
-        }
+    }
 
     /**
      * start scoreboard activity
@@ -129,13 +128,14 @@ public class G2048Fragment extends Fragment {
     /**
      * set scoreBoard button
      */
-    public void addScoreBoardButton(){
+    public void addScoreBoardButton() {
         scoreBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switchToScoreBoard();
             }
-    });}
+        });
+    }
 
     /**
      * start game activity

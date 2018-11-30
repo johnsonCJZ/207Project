@@ -33,34 +33,43 @@ class SlidingMemory extends Memory<SlidingBoardManager> {
     }
 
     @Override
-    SlidingBoardManager copy(){
+    SlidingBoardManager copy() {
 
         int dimension = this.dimension;
         double time = this.timeSliding;
         List<SlidingTile> tt = new ArrayList<>();
-        for (int i : this.slidingTiles){
+        for (int i : this.slidingTiles) {
             tt.add(new SlidingTile(i));
         }
         Factory f = new Factory();
-        return (SlidingBoardManager) f.loadSlidingManager(dimension,time, tt);
+        return (SlidingBoardManager) f.loadSlidingManager(dimension, time, tt);
     }
 
     /**
      * Return the dimension.
+     *
      * @return the dimension
      */
-    int getDimension() {return dimension;}
+    int getDimension() {
+        return dimension;
+    }
 
     /**
      * Return the timeSliding.
+     *
      * @return the timeSliding.
      */
-    double getTimeSliding() {return timeSliding;}
+    double getTimeSliding() {
+        return timeSliding;
+    }
 
     /**
      * Return the slidingTiles.
+     *
      * @return the slidingTiles
      */
-    List<Integer> getSlidingTiles() {return slidingTiles;}
+    List<Integer> getSlidingTiles() {
+        return slidingTiles;
+    }
 
 }

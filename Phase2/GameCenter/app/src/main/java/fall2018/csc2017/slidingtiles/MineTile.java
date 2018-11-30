@@ -35,10 +35,11 @@ public class MineTile extends Tile implements Serializable {
 
     /**
      * Set Parameter values to a new Mine Tile.
+     *
      * @param isObscured whether the tile is obscured
-     * @param number if the tile has mine number is -1, otherwise number equals surrounding mine numbers.
-     * @param isMine whether the tile has mine
-     * @param isFlagged whether the tile is flagged
+     * @param number     if the tile has mine number is -1, otherwise number equals surrounding mine numbers.
+     * @param isMine     whether the tile has mine
+     * @param isFlagged  whether the tile is flagged
      */
     MineTile(boolean isObscured, int number, boolean isMine, boolean isFlagged) {
         this.isObscured = isObscured;
@@ -49,7 +50,7 @@ public class MineTile extends Tile implements Serializable {
     }
 
     void setBackground() {
-        if(!isObscured()) {
+        if (!isObscured()) {
             switch (number) {
                 case -1:
                     background = R.drawable.mine_b;
@@ -82,18 +83,17 @@ public class MineTile extends Tile implements Serializable {
                     background = R.drawable.mine_8;
                     break;
             }
-        }
-        else if (isFlagged()) {
+        } else if (isFlagged()) {
             background = R.drawable.mine_d;
+        } else {
+            background = R.drawable.mine_mask;
         }
-        else {background = R.drawable.mine_mask;}
     }
 
     void showMine() {
         if (isObscured()) {
             background = R.drawable.mine_b2;
-        }
-        else {
+        } else {
             background = R.drawable.mine_b;
         }
     }
@@ -127,33 +127,46 @@ public class MineTile extends Tile implements Serializable {
         setBackground();
     }
 
+    /**
+     * @return whether the tile has mine
+     */
+    boolean isMine() {
+        return isMine;
+    }
+
+    /**
+     * @return whether the tile is flagged
+     */
+    boolean isFlagged() {
+        return isFlagged;
+    }
+
+    /**
+     * @return whether the tile is obscured
+     */
+    boolean isObscured() {
+        return isObscured;
+    }
+
+    int getNumber() {
+        return number;
+    }
+
     public void setNumber(int i) {
         number = i;
         setBackground();
     }
 
-    /**
-     * @return whether the tile has mine
-     */
-    boolean isMine() {return isMine;}
-
-    /**
-     * @return whether the tile is flagged
-     */
-    boolean isFlagged() {return isFlagged; }
-
-    /**
-     * @return whether the tile is obscured
-     */
-    boolean isObscured() {return isObscured;}
-
-    int getNumber() {return number;}
-
-    int getPosition() {return position;}
+    int getPosition() {
+        return position;
+    }
 
     /**
      * Set the tile position.
+     *
      * @param position tile position.
      */
-    void setPosition(int position) {this.position = position;}
+    void setPosition(int position) {
+        this.position = position;
+    }
 }

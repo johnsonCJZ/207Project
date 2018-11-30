@@ -25,10 +25,12 @@ public abstract class BoardManager<T, K> implements Serializable {
      */
     private T board;
 
-    public BoardManager(){}
+    public BoardManager() {
+    }
 
     /**
      * Construct a new board manager with dimension n.
+     *
      * @param n dimension of the game board.
      */
     public BoardManager(int n) {
@@ -44,6 +46,7 @@ public abstract class BoardManager<T, K> implements Serializable {
 
     /**
      * Set tiles.
+     *
      * @param tiles tiles of the board.
      */
     public void setTiles(List<K> tiles) {
@@ -59,6 +62,7 @@ public abstract class BoardManager<T, K> implements Serializable {
 
     /**
      * Set the time.
+     *
      * @param time the time to be set.
      */
     public void setTime(Double time) {
@@ -66,18 +70,19 @@ public abstract class BoardManager<T, K> implements Serializable {
     }
 
     /**
-     * Set dimension.
-     * @param dimension new dimension of the board.
-     */
-    public void setDimension(int dimension) {
-        this.dimension = dimension;
-    }
-
-    /**
      * @return dimension of the board.
      */
     public int getDimension() {
         return dimension;
+    }
+
+    /**
+     * Set dimension.
+     *
+     * @param dimension new dimension of the board.
+     */
+    public void setDimension(int dimension) {
+        this.dimension = dimension;
     }
 
     /**
@@ -89,6 +94,7 @@ public abstract class BoardManager<T, K> implements Serializable {
 
     /**
      * Set the game board.
+     *
      * @param board game board.
      */
     public void setBoard(T board) {
@@ -107,6 +113,7 @@ public abstract class BoardManager<T, K> implements Serializable {
 
     /**
      * Move the game board.
+     *
      * @param o A slide direction or touch position.
      */
     abstract void move(Object o);

@@ -24,6 +24,7 @@ public class SlidingHistory implements Serializable {
 
     /**
      * Return the size of the SlidingHistory.
+     *
      * @return the size of the SlidingHistory
      */
     public int getSize() {
@@ -32,6 +33,7 @@ public class SlidingHistory implements Serializable {
 
     /**
      * Return the SlidingHistoryNode at the index of the SlidingHistory.
+     *
      * @param index the index of the SlidingHistoryNode returned
      * @return the SlidingHistoryNode at the index
      */
@@ -47,6 +49,7 @@ public class SlidingHistory implements Serializable {
 
     /**
      * Add a new SlidingHistoryNode node to the end of the SlidingHistory.
+     *
      * @param node the new SlidingHistoryNode to be added
      */
     public void add(SlidingHistoryNode node) {
@@ -54,8 +57,7 @@ public class SlidingHistory implements Serializable {
             this.front = node;
             this.back = node;
             this.size++;
-        }
-        else {
+        } else {
             this.back.next = node;
             this.back = node;
             this.size++;
@@ -75,19 +77,18 @@ public class SlidingHistory implements Serializable {
 
     /**
      * Remove the SlidingHistoryNode at the index of the SlidingHistory.
+     *
      * @param index the index of the SlidingHistory where the SlidingHistoryNode to be removed
      */
     void remove(int index) {
         if (index == 0) {
             clear();
-        }
-        else if (index == this.size-1) {
-            this.back = this.get(this.size-2);
+        } else if (index == this.size - 1) {
+            this.back = this.get(this.size - 2);
             this.back.next = null;
             this.size--;
-        }
-        else {
-            this.back = this.get(index-1);
+        } else {
+            this.back = this.get(index - 1);
             this.back.next = null;
             this.size = index;
         }

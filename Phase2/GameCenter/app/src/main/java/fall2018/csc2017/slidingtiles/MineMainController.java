@@ -23,12 +23,13 @@ public class MineMainController {
 
     /**
      * Create the buttons for displaying the slidingTiles.
+     *
      * @param context the context
      */
     public ArrayList<Button> createTileButtons(final Context context, MineBoardManager boardManager, ArrayList<Button> tileButtons, final ImageButton face) {
         MineBoard board = boardManager.getBoard();
         tileButtons = new ArrayList<>();
-        for (int i = 0; i <  boardManager.getDimension() * boardManager.getDimension(); i++) {
+        for (int i = 0; i < boardManager.getDimension() * boardManager.getDimension(); i++) {
             Button tmp = new Button(context);
             tmp.setOnClickListener(new View.OnClickListener() {
                 @Override

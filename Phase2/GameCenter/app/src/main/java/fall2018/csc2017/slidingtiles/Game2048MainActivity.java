@@ -1,18 +1,13 @@
 package fall2018.csc2017.slidingtiles;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -21,6 +16,8 @@ import java.util.ArrayList;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 public class Game2048MainActivity extends AppCompatActivity implements IObserver {
+    static boolean isPaused;
+    double tempCount;
     private ScoreBoard personalScoreBoard;
     private ScoreBoard globalScoreBoard;
     private Game2048BoardManager boardManager;
@@ -28,10 +25,8 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
     private ArrayList<Button> tileButtons;
     private UserAccount user;
     private UserAccountManager users;
-    static boolean isPaused;
     private int columnHeight;
     private int columnWidth;
-    double tempCount;
     private boolean isWin;
     private DatabaseHelper myDB;
     private String username;
@@ -44,7 +39,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         getAllInfo(); // pass in all useful data from last activity, including boardManager
         getAllComponents();
         super.onCreate(savedInstanceState);
-        tileButtons=game2048MainController.createTileButtons(this,boardManager,tileButtons);
+        tileButtons = game2048MainController.createTileButtons(this, boardManager, tileButtons);
         isPaused = false;
         Thread t = time();
         t.start();
@@ -53,7 +48,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         addNewGameButton();
     }
 
-    public void getAllComponents(){
+    public void getAllComponents() {
         setContentView(R.layout.activity_main2048);
         scorePlace = findViewById(R.id.score);
         gridView = findViewById(R.id.grid2048);
@@ -80,27 +75,6 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
                 }
             }
         };
-    }
-
-    private class InGame implements Runnable{
-        @Override
-        public void run() {
-            if ((boardManager.isWon() || boardManager.isLost())
-                    && !isPaused) {
-                gridView.freeze();
-                user.setGame2048History("resumeHistory2048",null);
-                setIsWin();
-                isPaused = true;
-                endAlert();
-            } else {
-                if (tempCount < 2) {
-                    tempCount += 0.5;
-                } else {
-                    tempCount = 0;
-                    autoSave();
-                }
-            }
-        }
     }
 
     void setGridView() {
@@ -145,7 +119,6 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         this.boardManager = (Game2048BoardManager) extra.getSerializable("boardManager");
     }
 
-
     private void addCheatButton() {
         Button cheat = findViewById(R.id.Cheat2048);
         cheat.setOnClickListener(new View.OnClickListener() {
@@ -176,9 +149,9 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
     }
 
     private void display() {
-        tileButtons =game2048MainController.updateTileButtons(boardManager,tileButtons);
+        tileButtons = game2048MainController.updateTileButtons(boardManager, tileButtons);
         // add a tile if the board has been modified and it has empty spot
-        scorePlace.setText("Score: "+String.valueOf(personalScoreBoard.calculateScore(boardManager)));
+        scorePlace.setText("Score: " + String.valueOf(personalScoreBoard.calculateScore(boardManager)));
         gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
     }
 
@@ -187,7 +160,6 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
             isWin = true;
         }
     }
-
 
     private void autoSave() {
         user.setGame2048History("resumeHistory2048", boardManager);
@@ -202,20 +174,18 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         result[1] = score;
         personalScoreBoard.addAndSort(result);
         globalScoreBoard.addAndSort(result);
-        myDB.updateUser(username,user);
+        myDB.updateUser(username, user);
         myDB.updateAccountManager(users);
         return score;
     }
-
 
     private void endAlert() {
         int score = getScore(boardManager);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if (isWin) {
             builder.setMessage("You Win!");
-        }
-        else {
-            builder.setMessage("You Lose, get better next time. Your scored "+String.valueOf(score));
+        } else {
+            builder.setMessage("You Lose, get better next time. Your scored " + String.valueOf(score));
         }
         builder.setPositiveButton("Back To Game Center", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -233,7 +203,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         alert.show();
     }
 
-    private void switchToScoreBoard(){
+    private void switchToScoreBoard() {
         Intent tmp = new Intent(this, ScoreBoardTabLayoutActivity.class);
         Bundle pass = new Bundle();
         pass.putSerializable("personalScoreBoard", this.personalScoreBoard);
@@ -266,6 +236,27 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
     public void onBackPressed() {
         autoSave();
         switchToGameCenter();
+    }
+
+    private class InGame implements Runnable {
+        @Override
+        public void run() {
+            if ((boardManager.isWon() || boardManager.isLost())
+                    && !isPaused) {
+                gridView.freeze();
+                user.setGame2048History("resumeHistory2048", null);
+                setIsWin();
+                isPaused = true;
+                endAlert();
+            } else {
+                if (tempCount < 2) {
+                    tempCount += 0.5;
+                } else {
+                    tempCount = 0;
+                    autoSave();
+                }
+            }
+        }
     }
 
 }

@@ -47,7 +47,7 @@ public class UserAccount implements Serializable {
     /**
      * The archive of the game sliding slidingTiles.
      */
-    private HashMap<String,ScoreBoard> personalScoreBoard;
+    private HashMap<String, ScoreBoard> personalScoreBoard;
 
     /**
      * The games the UserAccount has purchased.
@@ -57,7 +57,17 @@ public class UserAccount implements Serializable {
     /**
      * The UserAccount class constructor.
      */
-    public UserAccount(){}
+    public UserAccount() {
+    }
+
+    /**
+     * The getter of the field email
+     *
+     * @return the email of the UserAccount
+     */
+    public String getEmail() {
+        return email;
+    }
 
     /**
      * The setter of the field email.
@@ -67,11 +77,12 @@ public class UserAccount implements Serializable {
     }
 
     /**
-     * The getter of the field email
-     * @return the email of the UserAccount
+     * The getter of the field age.
+     *
+     * @return the age of the UserAccount.
      */
-    public String getEmail() {
-        return email;
+    public Integer getAge() {
+        return age;
     }
 
     /**
@@ -82,45 +93,51 @@ public class UserAccount implements Serializable {
     }
 
     /**
-     * The getter of the field age.
-     * @return the age of the UserAccount.
-     */
-    public Integer getAge() {
-        return age;
-    }
-
-    /**
-     * Change the password of the UserAccount.
-     * @param ps The new password to be updated.
-     */
-    void setPassword(String ps){
-        this.password=ps;
-    }
-
-    /**
      * The getter for the username of the UserAccount.
+     *
      * @return the username
      */
-    public String getName(){
+    public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
      * The getter for the password of the UserAccount.
+     *
      * @return the password
      */
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
     /**
+     * Change the password of the UserAccount.
+     *
+     * @param ps The new password to be updated.
+     */
+    void setPassword(String ps) {
+        this.password = ps;
+    }
+
+    /**
      * The getter for the UserScoreList of the UserAccount.
+     *
      * @return the UserScoreList.
      */
-    public ArrayList<Integer> getUserScoreList(){return this.userScoreList;}
+    public ArrayList<Integer> getUserScoreList() {
+        return this.userScoreList;
+    }
 
-    public void setSlideHistory (String key, SlidingBoardManager item){
-        if(item != null) {
+    public void setUserScoreList(ArrayList<Integer> userScoreList) {
+        this.userScoreList = userScoreList;
+    }
+
+    public void setSlideHistory(String key, SlidingBoardManager item) {
+        if (item != null) {
             SlidingMemory memory = new SlidingMemory();
             memory.makeCopy(item);
             if (historySliding.get(key) == null) {
@@ -128,27 +145,27 @@ public class UserAccount implements Serializable {
             } else {
                 historySliding.replace(key, memory);
             }
+        } else {
+            historySliding.replace(key, null);
         }
-        else{historySliding.replace(key, null);}
     }
 
-    public void setGame2048History(String key, Game2048BoardManager item){
-        if(item != null) {
+    public void setGame2048History(String key, Game2048BoardManager item) {
+        if (item != null) {
             Game2048Memory memory = new Game2048Memory();
             memory.makeCopy(item);
             if (history2048.get(key) == null) {
                 history2048.put(key, memory);
-            }
-            else {
+            } else {
                 history2048.replace(key, memory);
             }
-        }
-        else {
+        } else {
             history2048.replace(key, null);
         }
     }
-    void setMineHistory(String key, MineBoardManager item){
-        if(item!=null) {
+
+    void setMineHistory(String key, MineBoardManager item) {
+        if (item != null) {
             MineMemory memory = new MineMemory();
             memory.makeCopy(item);
             if (historyMine.get(key) == null) {
@@ -156,26 +173,31 @@ public class UserAccount implements Serializable {
             } else {
                 historyMine.replace(key, memory);
             }
+        } else {
+            historyMine.replace(key, null);
         }
-        else{historyMine.replace(key, null);}}
+    }
+
     /**
      * The getter for the SlidingHistory of the UserAccount.
+     *
      * @return the SlidingHistory
      */
-    private HashMap<String, SlidingMemory> getSlideHistory(){
+    private HashMap<String, SlidingMemory> getSlideHistory() {
         return historySliding;
     }
 
-    private HashMap<String, MineMemory> getMineHistory(){
+    private HashMap<String, MineMemory> getMineHistory() {
         return historyMine;
     }
 
-    private HashMap<String, Game2048Memory> get2048History(){
+    private HashMap<String, Game2048Memory> get2048History() {
         return history2048;
     }
 
     /**
      * Get the right size of ScoreBoard wanted.
+     *
      * @param tag the size of the ScoreBoard.
      * @return the ScoreBoard wanted
      */
@@ -185,30 +207,32 @@ public class UserAccount implements Serializable {
 
     /**
      * Add a new game to the UserAccount.
+     *
      * @param game The name of the new game being added.
      */
-    public void addGames(String game){
+    public void addGames(String game) {
         this.games.add(game);
     }
 
-    public SlidingBoardManager getSpecificSlideHistory(String key){
+    public SlidingBoardManager getSpecificSlideHistory(String key) {
         SlidingMemory memory = this.getSlideHistory().get(key);
-        if (memory==null){
-            return null;
-        }
-        return memory.copy();}
-
-    MineBoardManager getSpecificMineHistory(String key){
-        MineMemory memory = this.getMineHistory().get(key);
-        if (memory==null){
+        if (memory == null) {
             return null;
         }
         return memory.copy();
     }
 
-    public Game2048BoardManager getSpecific2048History(String key){
+    MineBoardManager getSpecificMineHistory(String key) {
+        MineMemory memory = this.getMineHistory().get(key);
+        if (memory == null) {
+            return null;
+        }
+        return memory.copy();
+    }
+
+    public Game2048BoardManager getSpecific2048History(String key) {
         Game2048Memory memory = this.get2048History().get(key);
-        if (memory==null){
+        if (memory == null) {
             return null;
         }
         return memory.copy();
@@ -218,8 +242,8 @@ public class UserAccount implements Serializable {
         return games;
     }
 
-    public void setName(String name){
-        this.name = name;
+    public void setGames(ArrayList<String> games) {
+        this.games = games;
     }
 
     public void setHistorySliding(HashMap<String, SlidingMemory> historySliding) {
@@ -234,15 +258,7 @@ public class UserAccount implements Serializable {
         this.history2048 = history2048;
     }
 
-    public void setUserScoreList(ArrayList<Integer> userScoreList) {
-        this.userScoreList = userScoreList;
-    }
-
     public void setPersonalScoreBoard(HashMap<String, ScoreBoard> personalScoreBoard) {
         this.personalScoreBoard = personalScoreBoard;
-    }
-
-    public void setGames(ArrayList<String> games) {
-        this.games = games;
     }
 }

@@ -1,11 +1,7 @@
 package fall2018.csc2017.slidingtiles;
 
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
@@ -13,38 +9,32 @@ import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 public class MainActivityController {
 
+    private static int columnWidth, columnHeight;
     DatabaseHelper myDB;
     /**
      * The per-user scoreboard
      */
     private ScoreBoard personalScoreBoard;
-
     /**
      * The per-game scoreboard
      */
     private ScoreBoard globalScoreBoard;
-
     /**
      * If a game is paused.
      */
     private boolean isPaused;
-
     /**
      * The MineBoard manager.
      */
     private BoardManager boardManager;
-
     /**
      * The buttons to display.
      */
     private ArrayList<Button> tileButtons;
-
     /**
      * Grid View and calculated column height and width based on device size.
      */
     private GestureDetectGridView gridView;
-    private static int columnWidth, columnHeight;
-
     /**
      * Time count.
      */
@@ -71,7 +61,6 @@ public class MainActivityController {
      * UserAccountManager associated to the UserAccount.
      */
     private UserAccountManager users;
-
 
 
 }

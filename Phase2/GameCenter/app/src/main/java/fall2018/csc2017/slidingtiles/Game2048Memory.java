@@ -27,19 +27,20 @@ class Game2048Memory extends Memory<Game2048BoardManager> {
     public void makeCopy(Game2048BoardManager manager) {
         this.time2048 = manager.getTime();
         score = manager.getScore();
-        for (Game2048Tile t: manager.getBoard()) {
+        for (Game2048Tile t : manager.getBoard()) {
             this.tileValueList.add(t.getValue());
         }
     }
 
     @Override
-    public Game2048BoardManager copy(){
+    public Game2048BoardManager copy() {
         Factory f = new Factory();
         return (Game2048BoardManager) f.Load2048Manager(time2048, score, tileValueList);
     }
 
     /**
      * Return time2048.
+     *
      * @return time2048
      */
     double getTime2048() {
@@ -48,6 +49,7 @@ class Game2048Memory extends Memory<Game2048BoardManager> {
 
     /**
      * Return score.
+     *
      * @return score
      */
     int getScore() {
@@ -56,6 +58,7 @@ class Game2048Memory extends Memory<Game2048BoardManager> {
 
     /**
      * Return tileValueList.
+     *
      * @return tileValueList
      */
     List<Integer> getTileValueList() {

@@ -14,6 +14,7 @@ class MovementController {
 
     /**
      * Set the boardBoardManager to boardBoardManager.
+     *
      * @param boardBoardManager the BoardManger to set
      */
     void setBoardBoardManager(BoardManager boardBoardManager) {
@@ -22,6 +23,7 @@ class MovementController {
 
     /**
      * Process a tap movement
+     *
      * @param context
      * @param position the position where a tap occurred
      */
@@ -36,26 +38,24 @@ class MovementController {
             } else {
                 Toasty.warning(context, "Invalid Tap!", Toast.LENGTH_SHORT, true).show();
             }
-        }
-        else if (boardBoardManager instanceof MineBoardManager) {
+        } else if (boardBoardManager instanceof MineBoardManager) {
             MineBoardManager b = (MineBoardManager) boardBoardManager;
             b.move(position);
             if (b.isLost()) {
                 Toasty.warning(context, "YOU LOST!", Toast.LENGTH_SHORT, true).show();
-            }
-            else if (b.isWon()) {
-                Toasty.success(context, "YOU WIN!", Toast.LENGTH_SHORT,true).show();
+            } else if (b.isWon()) {
+                Toasty.success(context, "YOU WIN!", Toast.LENGTH_SHORT, true).show();
             }
         }
 
     }
 
-    void processLongPressMovement(Context context, int position){
+    void processLongPressMovement(Context context, int position) {
         if (boardBoardManager instanceof MineBoardManager) {
             MineBoardManager b = (MineBoardManager) boardBoardManager;
             if (b.getBoard().getTile(position).isObscured()) {
                 b.mark(position);
-                }
+            }
         }
     }
 

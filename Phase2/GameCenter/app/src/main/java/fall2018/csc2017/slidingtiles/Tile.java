@@ -13,6 +13,7 @@ abstract public class Tile implements Serializable {
 
     /**
      * Return background.
+     *
      * @return background
      */
     int getBackground() {

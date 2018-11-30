@@ -1,6 +1,5 @@
 package fall2018.csc2017.slidingtiles;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -21,14 +20,32 @@ public class MineBoard extends Board<MineTile> {
     /**
      * @return number of mines.
      */
-    int getMineNum() {return mineNum;}
+    int getMineNum() {
+        return mineNum;
+    }
+
+    void setMineNum(int mineNum) {
+        this.mineNum = mineNum;
+    }
 
     /**
      * @return number of mines left.
      */
-    int getMineLeft() {return mineLeft;}
+    int getMineLeft() {
+        return mineLeft;
+    }
 
-    List<MineTile> getMinePosition() {return minePosition;}
+    public void setMineLeft(int mineLeft) {
+        this.mineLeft = mineLeft;
+    }
+
+    List<MineTile> getMinePosition() {
+        return minePosition;
+    }
+
+    void setMinePosition(List<MineTile> minePosition) {
+        this.minePosition = minePosition;
+    }
 
     /**
      * @param position position at list of tiles
@@ -38,10 +55,6 @@ public class MineBoard extends Board<MineTile> {
         int row = position / getDimension();
         int col = position % getDimension();
         return super.getTile(row, col);
-    }
-
-    void setMinePosition(List<MineTile> minePosition) {
-        this.minePosition = minePosition;
     }
 
     void setMines(int position) {
@@ -63,16 +76,9 @@ public class MineBoard extends Board<MineTile> {
         }
     }
 
-    void setMineNum(int mineNum) {
-        this.mineNum = mineNum;
-    }
-
-    public void setMineLeft(int mineLeft) {
-        this.mineLeft = mineLeft;
-    }
-
     /**
      * Show the tile with the position.
+     *
      * @param position tile position.
      */
     void reveal(int position) {
@@ -81,15 +87,14 @@ public class MineBoard extends Board<MineTile> {
             currTile.reveal();
             for (Tile tileT : getSurround(position)) {
                 MineTile tile = (MineTile) tileT;
-                if(tile.isObscured() && !tile.isFlagged()) {
+                if (tile.isObscured() && !tile.isFlagged()) {
                     tile.reveal();
                     if (tile.getNumber() == 0) {
                         reveal(tile.getPosition());
                     }
                 }
             }
-        }
-        else {
+        } else {
             currTile.reveal();
         }
 
@@ -99,12 +104,16 @@ public class MineBoard extends Board<MineTile> {
 
     /**
      * Flag the tile with the position.
+     *
      * @param position tile position
      */
     void flag(int position) {
         getTile(position).flag();
-        if (getTile(position).isFlagged()){mineLeft--;}
-        else {mineLeft++;}
+        if (getTile(position).isFlagged()) {
+            mineLeft--;
+        } else {
+            mineLeft++;
+        }
 
         setChanged();
         notifyObservers();
@@ -112,38 +121,39 @@ public class MineBoard extends Board<MineTile> {
 
     /**
      * Get the 8 surrounding tiles of the tile with the position.
+     *
      * @param position tile position
      * @return List of surrounding tiles.
      */
     List<MineTile> getSurround(int position) {
         int dimension = getDimension();
-        int row = position / dimension ;
-        int col = position % dimension ;
+        int row = position / dimension;
+        int col = position % dimension;
         List<MineTile> surround = new ArrayList<>();
 
         if (row != 0 && col != 0) {
-            surround.add(getTiles().get(position-dimension -1));
+            surround.add(getTiles().get(position - dimension - 1));
         }
-        if (row != 0 && col != dimension  - 1) {
-            surround.add(getTiles().get(position-dimension +1));
+        if (row != 0 && col != dimension - 1) {
+            surround.add(getTiles().get(position - dimension + 1));
         }
         if (row != 0) {
-            surround.add(getTiles().get(position-dimension ));
+            surround.add(getTiles().get(position - dimension));
         }
-        if (row != dimension  - 1 && col != 0) {
-            surround.add(getTiles().get(position+dimension -1));
+        if (row != dimension - 1 && col != 0) {
+            surround.add(getTiles().get(position + dimension - 1));
         }
-        if (row != dimension  - 1 && col != dimension  - 1) {
-            surround.add(getTiles().get(position+dimension +1));
+        if (row != dimension - 1 && col != dimension - 1) {
+            surround.add(getTiles().get(position + dimension + 1));
         }
         if (row != dimension - 1) {
-            surround.add(getTiles().get(position+dimension ));
+            surround.add(getTiles().get(position + dimension));
         }
         if (col != 0) {
-            surround.add(getTiles().get(position-1));
+            surround.add(getTiles().get(position - 1));
         }
-        if (col != dimension  - 1) {
-            surround.add(getTiles().get(position+1));
+        if (col != dimension - 1) {
+            surround.add(getTiles().get(position + 1));
         }
         return surround;
     }
@@ -151,8 +161,8 @@ public class MineBoard extends Board<MineTile> {
     /**
      * Show all tiles.
      */
-    void showMines(){
-        for (MineTile tile : minePosition){
+    void showMines() {
+        for (MineTile tile : minePosition) {
             tile.showMine();
         }
 

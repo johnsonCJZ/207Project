@@ -11,12 +11,11 @@ import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
 
-import fall2018.csc2017.slidingtiles.ScoreBoard;
-
 public class InterfaceAdapter<T> implements JsonSerializer<T>, JsonDeserializer<T> {
 
     private static final String CLASSNAME = "CLASSNAME";
     private static final String DATA = "DATA";
+
     @Override
     public T deserialize(JsonElement jsonElement, Type type,
                          JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
@@ -35,6 +34,7 @@ public class InterfaceAdapter<T> implements JsonSerializer<T>, JsonDeserializer<
         jsonObject.add(DATA, jsonSerializationContext.serialize(jsonElement));
         return jsonObject;
     }
+
     /****** Helper method to get the className of the object to be deserialized *****/
     public Class getObjectClass(String className) {
         try {

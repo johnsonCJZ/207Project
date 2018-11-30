@@ -18,19 +18,21 @@ import fall2018.csc2017.slidingtiles.R;
  */
 public class ToolFragment extends Fragment {
     Button logOut;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tool_fragment, container, false);
-        logOut=rootView.findViewById(R.id.logOut1);
+        logOut = rootView.findViewById(R.id.logOut1);
         addLogOut();
-        return rootView; }
+        return rootView;
+    }
 
     /**
      * Sign the current user out and turn to the login page.
      */
-    private void addLogOut(){
+    private void addLogOut() {
         logOut.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View v) {
@@ -38,5 +40,6 @@ public class ToolFragment extends Fragment {
                                           startActivity(intent);
                                       }
                                   }
-        );}
+        );
+    }
 }

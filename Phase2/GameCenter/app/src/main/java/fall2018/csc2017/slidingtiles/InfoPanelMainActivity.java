@@ -54,7 +54,7 @@ public class InfoPanelMainActivity extends AppCompatActivity
 
     }
 
-    private void getAllComponents(){
+    private void getAllComponents() {
         setContentView(R.layout.app_bar_main_info_panel);
         setContentView(R.layout.nav_header_main_info_panel);
         setContentView(R.layout.activity_main_info_panel);
@@ -72,60 +72,59 @@ public class InfoPanelMainActivity extends AppCompatActivity
         t.setText(currentUser);
     }
 
-    private void gamePanel(String fragment){
-        if (fragment==null){
+    private void gamePanel(String fragment) {
+        if (fragment == null) {
             ProfileFragment pp = new ProfileFragment();
             passInfo();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     pp).commit();
             navigationView.setCheckedItem(R.id.profile);
-        }
-        else {
+        } else {
             switch (fragment) {
                 case "Slide":
-                    SlideGameFragment s =new SlideGameFragment();
+                    SlideGameFragment s = new SlideGameFragment();
                     passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             s).commit();
                     navigationView.setCheckedItem(R.id.slide);
                     break;
                 case "Mine":
-                    MinesweeperFragment m =new MinesweeperFragment();
+                    MinesweeperFragment m = new MinesweeperFragment();
                     passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             m).commit();
                     navigationView.setCheckedItem(R.id.mine_sweeper);
                     break;
                 case "2048":
-                    G2048Fragment g =new G2048Fragment();
+                    G2048Fragment g = new G2048Fragment();
                     passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             g).commit();
                     navigationView.setCheckedItem(R.id.g2048);
                     break;
                 case "profile":
-                    ProfileFragment p =new ProfileFragment();
+                    ProfileFragment p = new ProfileFragment();
                     passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             p).commit();
                     navigationView.setCheckedItem(R.id.profile);
                     break;
                 case "store":
-                    GameStoreFragment gs =new GameStoreFragment();
+                    GameStoreFragment gs = new GameStoreFragment();
                     passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             gs).commit();
                     navigationView.setCheckedItem(R.id.game_store);
                     break;
                 case "tool":
-                    ToolFragment t =new ToolFragment();
+                    ToolFragment t = new ToolFragment();
                     passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             t).commit();
                     navigationView.setCheckedItem(R.id.toolbar);
                     break;
                 default:
-                    ProfileFragment de =new ProfileFragment();
+                    ProfileFragment de = new ProfileFragment();
                     passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             de).commit();
@@ -134,15 +133,14 @@ public class InfoPanelMainActivity extends AppCompatActivity
         }
     }
 
-    private void getUsers(){
+    private void getUsers() {
         this.myDB = new DatabaseHelper(this);
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
-        currentUser = (String)DataHolder.getInstance().retrieve("current user");
+        currentUser = (String) DataHolder.getInstance().retrieve("current user");
         try {
             this.user = myDB.selectUser(currentUser);
-        }
-        catch (RuntimeException e){
+        } catch (RuntimeException e) {
             myDB = new DatabaseHelper(this);
         }
 
@@ -150,8 +148,7 @@ public class InfoPanelMainActivity extends AppCompatActivity
 
         try {
             this.fragment = extra.getString("fragment");
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
             this.fragment = null;
         }
 
@@ -185,7 +182,7 @@ public class InfoPanelMainActivity extends AppCompatActivity
         getUsers();
 
         //noinspection SimplifiableIfStatement
-        switch (id){
+        switch (id) {
             case R.id.action_helps:
                 HelpsFragment h = new HelpsFragment();
                 passInfo();
@@ -203,7 +200,7 @@ public class InfoPanelMainActivity extends AppCompatActivity
         return true;
     }
 
-    private void passInfo(){
+    private void passInfo() {
         user = myDB.selectUser(currentUser); //get updated after user bought games in game store
         myDB.updateAccountManager(users);
         myDB.updateUser(currentUser, user);
@@ -216,9 +213,9 @@ public class InfoPanelMainActivity extends AppCompatActivity
         // update info
         getUsers();
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.profile:
-                ProfileFragment p =new ProfileFragment();
+                ProfileFragment p = new ProfileFragment();
                 passInfo();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         p).commit();
@@ -238,11 +235,10 @@ public class InfoPanelMainActivity extends AppCompatActivity
                 break;
 
             case R.id.slide:
-                if (!user.getGames().contains("Slide")){
+                if (!user.getGames().contains("Slide")) {
                     Toasty.error(getApplicationContext(), "You haven't bought this game!", Toast.LENGTH_SHORT, true).show();
-                }
-                else{
-                    SlideGameFragment s =new SlideGameFragment();
+                } else {
+                    SlideGameFragment s = new SlideGameFragment();
                     passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             s).commit();
@@ -250,25 +246,25 @@ public class InfoPanelMainActivity extends AppCompatActivity
                 break;
 
             case R.id.mine_sweeper:
-                if (!user.getGames().contains("Minesweeper")){
+                if (!user.getGames().contains("Minesweeper")) {
                     Toasty.error(getApplicationContext(), "You haven't bought this game!", Toast.LENGTH_SHORT, true).show();
-                }
-                else{
-                    MinesweeperFragment m =new MinesweeperFragment();
+                } else {
+                    MinesweeperFragment m = new MinesweeperFragment();
                     passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            m).commit();}
+                            m).commit();
+                }
                 break;
 
             case R.id.g2048:
-                if (!user.getGames().contains("G2048")){
+                if (!user.getGames().contains("G2048")) {
                     Toasty.error(getApplicationContext(), "You haven't bought this game!", Toast.LENGTH_SHORT, true).show();
-                }
-                else{
-                    G2048Fragment g =new G2048Fragment();
+                } else {
+                    G2048Fragment g = new G2048Fragment();
                     passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            g).commit();}
+                            g).commit();
+                }
                 break;
         }
 

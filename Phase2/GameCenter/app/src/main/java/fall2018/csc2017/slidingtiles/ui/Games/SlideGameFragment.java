@@ -12,8 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import fall2018.csc2017.slidingtiles.BoardManager;
+import fall2018.csc2017.slidingtiles.DataHolder;
 import fall2018.csc2017.slidingtiles.R;
-import fall2018.csc2017.slidingtiles.*;
+import fall2018.csc2017.slidingtiles.ScoreBoard;
+import fall2018.csc2017.slidingtiles.ScoreBoardTabLayoutActivity;
+import fall2018.csc2017.slidingtiles.SlidingBoardManager;
+import fall2018.csc2017.slidingtiles.SlidingDifficultyActivity;
+import fall2018.csc2017.slidingtiles.SlidingMainActivity;
+import fall2018.csc2017.slidingtiles.UserAccount;
+import fall2018.csc2017.slidingtiles.UserAccountManager;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 /**
@@ -97,23 +105,24 @@ public class SlideGameFragment extends Fragment {
 
     /**
      * get all components from view
+     *
      * @param rootView current view
      */
-    private void getAllComponents(View rootView){
-        Rank=rootView.findViewById(R.id.Rank);
-        startButton=rootView.findViewById(R.id.NewGameButton1);
-        resumeButton=rootView.findViewById(R.id.ResumeButton1);
-        loadButton=rootView.findViewById(R.id.LoadButton1);
+    private void getAllComponents(View rootView) {
+        Rank = rootView.findViewById(R.id.Rank);
+        startButton = rootView.findViewById(R.id.NewGameButton1);
+        resumeButton = rootView.findViewById(R.id.ResumeButton1);
+        loadButton = rootView.findViewById(R.id.LoadButton1);
     }
 
     /**
      * get all user information and variables passed between activities
      */
-    private void getUser(){
+    private void getUser() {
         myDB = new DatabaseHelper(this.getContext());
         username = (String) DataHolder.getInstance().retrieve("current user");
-        user= myDB.selectUser(username);
-        users= myDB.selectAccountManager();
+        user = myDB.selectUser(username);
+        users = myDB.selectAccountManager();
         DataHolder.getInstance().save("current game", "Slide");
     }
 
@@ -130,7 +139,6 @@ public class SlideGameFragment extends Fragment {
     }
 
 
-
     /**
      * choose game difficulty to view scoreboard
      */
@@ -138,7 +146,7 @@ public class SlideGameFragment extends Fragment {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Choose an level");
         // add a list
-        String[] memoryList = {"3x3", "4x4","5x5"};
+        String[] memoryList = {"3x3", "4x4", "5x5"};
         builder.setItems(memoryList, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -156,10 +164,9 @@ public class SlideGameFragment extends Fragment {
                         globalScoreBoard = users.getGlobalScoreBoard("history5x5");
                         break;
                 }
-                if(personalScoreBoard != null && globalScoreBoard!=null){
+                if (personalScoreBoard != null && globalScoreBoard != null) {
                     switchToScoreBoard();
-                }
-                else{
+                } else {
                     builder.setMessage("No record :)");
                     AlertDialog d = builder.create();
                     d.show();
@@ -210,8 +217,7 @@ public class SlideGameFragment extends Fragment {
                     slidingBoardManager = (SlidingBoardManager) user.getSpecificSlideHistory("resumeHistorySlide");
                     user.setSlideHistory("resumeHistorySlide", null);
                     switchToGame();
-                }
-                else {
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder
                             (getActivity());
                     builder.setMessage("SlidingHistory not found");
@@ -237,11 +243,12 @@ public class SlideGameFragment extends Fragment {
     /**
      * start SlideDifficultActivity and pass useful info and data to next activity
      */
-    private void switchToDifficulty(){
+    private void switchToDifficulty() {
         Intent tmp = new Intent(getActivity(), SlidingDifficultyActivity.class);
         myDB.updateUser(username, this.user);
         myDB.updateAccountManager(this.users);
-        startActivity(tmp);}
+        startActivity(tmp);
+    }
 
     /**
      * start playing game with SlidingMainActivity
@@ -251,7 +258,7 @@ public class SlideGameFragment extends Fragment {
         Bundle pass = new Bundle();
         myDB.updateUser(username, this.user);
         pass.putSerializable("slidingBoardManager", this.slidingBoardManager);
-        pass.putInt("size",boardSize);
+        pass.putInt("size", boardSize);
         tmp.putExtras(pass);
         startActivity(tmp);
     }
@@ -259,19 +266,19 @@ public class SlideGameFragment extends Fragment {
     /**
      * load game
      */
-    private void load() throws ClassCastException{
+    private void load() throws ClassCastException {
         this.user = myDB.selectUser(username);
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Choose an memory");
         // add a list
-        String[] memoryList = {"3x3", "4x4","5x5"};
+        String[] memoryList = {"3x3", "4x4", "5x5"};
         builder.setItems(memoryList, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: // 3x3
-                        BoardManager manager= user.getSpecificSlideHistory("history3x3");
-                        slidingBoardManager =(SlidingBoardManager) manager;
+                        BoardManager manager = user.getSpecificSlideHistory("history3x3");
+                        slidingBoardManager = (SlidingBoardManager) manager;
                         boardSize = 3;
                         break;
                     case 1: // 4x4
@@ -283,10 +290,9 @@ public class SlideGameFragment extends Fragment {
                         boardSize = 5;
                         break;
                 }
-                if(slidingBoardManager !=null){
+                if (slidingBoardManager != null) {
                     switchToGame();
-                }
-                else{
+                } else {
                     builder.setMessage("SlidingHistory not found");
                     AlertDialog d = builder.create();
                     d.show();

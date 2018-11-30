@@ -45,7 +45,7 @@ public class BuilderBoard {
     private BuilderBoard set2048Tiles() {
         tiles = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
-                tiles.add(new Game2048Tile());
+            tiles.add(new Game2048Tile());
 
         }
         return this;
@@ -72,16 +72,16 @@ public class BuilderBoard {
         Game2048Board game2048Board = new Game2048Board();
         set2048Tiles();
         game2048Board.setDimension(4);
-        game2048Board.setTiles((List<Game2048Tile>)(List<?>)tiles);
+        game2048Board.setTiles((List<Game2048Tile>) (List<?>) tiles);
         return game2048Board;
     }
 
-    public MineBoard buildMineBoard(){
+    public MineBoard buildMineBoard() {
         MineBoard mineBoard = new MineBoard();
         mineBoard.setDimension(dimension);
         mineBoard.setMineNum(mine);
         mineBoard.setMineLeft(mineLeft);
-        mineBoard.setTiles((List<MineTile>)(List<?>)tiles);
+        mineBoard.setTiles((List<MineTile>) (List<?>) tiles);
         mineBoard.setMinePosition(minePosition);
         return mineBoard;
     }

@@ -1,8 +1,8 @@
 package fall2018.csc2017.slidingtiles;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -34,19 +34,19 @@ public class ChangePasswordActivity extends AppCompatActivity {
         addUpdateButton();
     }
 
-    private void addUpdateButton(){
+    private void addUpdateButton() {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(updateButtonPushed()){
-                    Intent intent = new Intent(ChangePasswordActivity.this,LoginActivity.class);
+                if (updateButtonPushed()) {
+                    Intent intent = new Intent(ChangePasswordActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
             }
         });
     }
 
-    private void getAllComponents(){
+    private void getAllComponents() {
         setContentView(R.layout.activity_change_password);
         username = findViewById(R.id.username);
         passwordOrEmail = findViewById(R.id.psOrEmail);
@@ -56,14 +56,14 @@ public class ChangePasswordActivity extends AppCompatActivity {
         message = findViewById(R.id.message);
     }
 
-    private void getAllUser(){
+    private void getAllUser() {
         myDB = new DatabaseHelper(this);
-        this.users= myDB.selectAccountManager();
+        this.users = myDB.selectAccountManager();
     }
 
     boolean updateButtonPushed() {
         String usernameS = username.getText().toString();
-        if(!users.getUserList().contains(usernameS)){
+        if (!users.getUserList().contains(usernameS)) {
             Toasty.error(getApplicationContext(), "User does not exist.", Toast.LENGTH_SHORT, true).show();
             return false;
         }
@@ -83,14 +83,14 @@ public class ChangePasswordActivity extends AppCompatActivity {
             Toasty.error(getApplicationContext(), "The format of new password is not correct.", Toast.LENGTH_SHORT, true).show();
             return false;
         }
-            user.setPassword(newPwS);
-            myDB.updateUser(username.getText().toString(), user);
-            Toasty.success(getApplicationContext(), "Your password is successfully updated.", Toast.LENGTH_SHORT, true).show();
-            return true;
+        user.setPassword(newPwS);
+        myDB.updateUser(username.getText().toString(), user);
+        Toasty.success(getApplicationContext(), "Your password is successfully updated.", Toast.LENGTH_SHORT, true).show();
+        return true;
 
     }
 
-    private boolean validateInfo(String info, String regex){
+    private boolean validateInfo(String info, String regex) {
         String infoRegex = regex;
         Pattern regexP = Pattern.compile(infoRegex);
         Matcher matcher = regexP.matcher(info);

@@ -1,10 +1,10 @@
 package fall2018.csc2017.slidingtiles.ui.Games;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +34,8 @@ public class MinesweeperFragment extends Fragment {
     private DatabaseHelper myDB;
     private String username;
 
-    public MinesweeperFragment(){}
+    public MinesweeperFragment() {
+    }
 
 
     @Nullable
@@ -51,7 +52,7 @@ public class MinesweeperFragment extends Fragment {
     /**
      * set start button
      */
-    private void addStartButton(){
+    private void addStartButton() {
         thomas.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -66,11 +67,11 @@ public class MinesweeperFragment extends Fragment {
     /**
      * get all user information and variables passed between activities
      */
-    private void getUser(){
+    private void getUser() {
         myDB = new DatabaseHelper(this.getContext());
         username = (String) DataHolder.getInstance().retrieve("current user");
-        user= myDB.selectUser(username);
-        users= myDB.selectAccountManager();
+        user = myDB.selectUser(username);
+        users = myDB.selectAccountManager();
         // set current game
         DataHolder.getInstance().save("current game", "Mine");
     }
@@ -78,9 +79,9 @@ public class MinesweeperFragment extends Fragment {
     /**
      * set animation to ImageView
      */
-    private void addImageAnim(){
+    private void addImageAnim() {
         thomas = (ImageView) view.findViewById(R.id.Thomas);
-        Animation rotate = AnimationUtils.loadAnimation(getContext(),R.anim.anims);
+        Animation rotate = AnimationUtils.loadAnimation(getContext(), R.anim.anims);
         thomas.setAnimation(rotate);
 
         rotate.setAnimationListener(new Animation.AnimationListener() {

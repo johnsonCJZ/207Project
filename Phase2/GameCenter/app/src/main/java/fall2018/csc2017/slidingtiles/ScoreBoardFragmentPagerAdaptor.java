@@ -10,6 +10,7 @@ import java.util.List;
 public class ScoreBoardFragmentPagerAdaptor extends FragmentPagerAdapter {
     private final List<Fragment> fragments = new ArrayList<>();
     private final List<String> fragmentsTitles = new ArrayList<>();
+
     public ScoreBoardFragmentPagerAdaptor(FragmentManager fm) {
         super(fm);
     }
@@ -25,11 +26,11 @@ public class ScoreBoardFragmentPagerAdaptor extends FragmentPagerAdapter {
     }
 
     @Override
-    public CharSequence getPageTitle(int position){
+    public CharSequence getPageTitle(int position) {
         return fragmentsTitles.get(position);
     }
 
-    public void addFragment(Fragment f, String title){
+    public void addFragment(Fragment f, String title) {
         fragments.add(f);
         fragmentsTitles.add(title);
     }

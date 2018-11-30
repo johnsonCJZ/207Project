@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class SlidingMainController {
     /**
      * Create the buttons for displaying the slidingTiles.
+     *
      * @param context the context
      */
     public ArrayList<Button> createTileButtons(Context context, SlidingBoardManager slidingBoardManager, ArrayList<Button> tileButtons) {
@@ -26,7 +27,7 @@ public class SlidingMainController {
     /**
      * Update the backgrounds on the buttons to match the slidingTiles.
      */
-    public ArrayList<Button> updateTileButtons(SlidingBoardManager slidingBoardManager,ArrayList<Button> tileButtons) {
+    public ArrayList<Button> updateTileButtons(SlidingBoardManager slidingBoardManager, ArrayList<Button> tileButtons) {
         SlidingBoard slidingBoard = slidingBoardManager.getBoard();
         int nextPos = 0;
         for (Button b : tileButtons) {

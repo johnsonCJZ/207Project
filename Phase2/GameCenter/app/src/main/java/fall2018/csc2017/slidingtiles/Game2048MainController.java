@@ -9,10 +9,8 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
-import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
-
 public class Game2048MainController {
-    public ArrayList<Button> updateTileButtons(Game2048BoardManager boardManager,ArrayList<Button> tileButtons) {
+    public ArrayList<Button> updateTileButtons(Game2048BoardManager boardManager, ArrayList<Button> tileButtons) {
         Game2048Board board = boardManager.getBoard();
         //If the board has been changed.
         if (board.isChanged()) {
@@ -36,13 +34,15 @@ public class Game2048MainController {
         }
         return tileButtons;
     }
-    private void addFadeInAnimation(Button b){
+
+    private void addFadeInAnimation(Button b) {
         Animation fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
         fadeIn.setDuration(1000);
         AnimationSet animation = new AnimationSet(true); //change to false
         animation.addAnimation(fadeIn);
-        b.setAnimation(animation); }
+        b.setAnimation(animation);
+    }
 
     public ArrayList<Button> createTileButtons(Context context, Game2048BoardManager boardManager, ArrayList<Button> tileButtons) {
         Game2048Board board = boardManager.getBoard();

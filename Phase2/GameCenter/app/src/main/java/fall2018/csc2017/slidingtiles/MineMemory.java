@@ -36,7 +36,7 @@ class MineMemory extends Memory<MineBoardManager> {
     /**
      * The isObscured, number, isMine, isFlagged of each tile in the MineBoardManager cloned.
      */
-    private List<Boolean> isObscuredOfTiles= new ArrayList<>();
+    private List<Boolean> isObscuredOfTiles = new ArrayList<>();
     private List<Integer> numberOfTiles = new ArrayList<>();
     private List<Boolean> isMineOfTiles = new ArrayList<>();
     private List<Boolean> isFlaggedOfTiles = new ArrayList<>();
@@ -70,6 +70,7 @@ class MineMemory extends Memory<MineBoardManager> {
 
     /**
      * Return isFirst.
+     *
      * @return isFirst
      */
     boolean isFirst() {
@@ -78,6 +79,7 @@ class MineMemory extends Memory<MineBoardManager> {
 
     /**
      * Return dimension.
+     *
      * @return dimension
      */
     int getDimension() {
@@ -86,6 +88,7 @@ class MineMemory extends Memory<MineBoardManager> {
 
     /**
      * Return mine.
+     *
      * @return mine
      */
     int getMine() {
@@ -94,6 +97,7 @@ class MineMemory extends Memory<MineBoardManager> {
 
     /**
      * Return timeMine.
+     *
      * @return timeMine
      */
     double getTimeMine() {
@@ -102,6 +106,7 @@ class MineMemory extends Memory<MineBoardManager> {
 
     /**
      * Return mineLeft.
+     *
      * @return mineLeft
      */
     int getMineLeft() {
@@ -110,6 +115,7 @@ class MineMemory extends Memory<MineBoardManager> {
 
     /**
      * Return isObscuredOfTiles.
+     *
      * @return isObscuredOfTiles
      */
     List<Boolean> getIsObscuredOfTiles() {
@@ -118,6 +124,7 @@ class MineMemory extends Memory<MineBoardManager> {
 
     /**
      * Return numberOfTiles.
+     *
      * @return numberOfTiles
      */
     List<Integer> getNumberOfTiles() {
@@ -126,6 +133,7 @@ class MineMemory extends Memory<MineBoardManager> {
 
     /**
      * Return isMineOfTiles.
+     *
      * @return isMineOfTiles
      */
     List<Boolean> getIsMineOfTiles() {
@@ -134,6 +142,7 @@ class MineMemory extends Memory<MineBoardManager> {
 
     /**
      * Return isFlaggedOfTiles.
+     *
      * @return isFlaggedOfTiles
      */
     List<Boolean> getIsFlaggedOfTiles() {
