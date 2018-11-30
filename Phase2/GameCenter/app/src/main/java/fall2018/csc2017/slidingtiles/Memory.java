@@ -56,7 +56,7 @@ public class Memory implements Serializable {
 //                for (int i : this.getBoard()){
 //                    temp1.add(new SlidingTile(i));
 //                }
-//                slidingBoardManager.setSlidingTiles(temp1);
+//                slidingBoardManager.setTiles(temp1);
 //                slidingBoardManager.setTime(this.getTimeTmp());
 //                return slidingBoardManager;
 //            case "2048":

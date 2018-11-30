@@ -8,12 +8,7 @@ import java.util.List;
 /**
  * Manage a slidingBoard, including swapping slidingTiles, checking for a win, and managing taps.
  */
-public class SlidingBoardManager extends BoardManager{
-    /**
-     * The slidingBoard being managed.
-     */
-    private SlidingBoard slidingBoard;
-
+public class SlidingBoardManager extends BoardManager<SlidingBoard>{
     private List<SlidingTile> slidingTiles = new ArrayList<>();
 
     /**
@@ -26,47 +21,49 @@ public class SlidingBoardManager extends BoardManager{
      */
     private int currIndex = 0;
 
-    SlidingBoardManager(){}
-
     /**
      * Create a new SlidingBoardManager to manage a new shuffled n*n slidingBoard.
      * @param n the number of rows and columns
      */
     public SlidingBoardManager(int n) {
         super(n);
-        this.slidingBoard = new BuilderBoard()
+        this.board = new BuilderBoard()
                 .setDimension(n)
                 .buildSlidingBoard();
-        int numTiles = dimension * dimension;
-        for (int tileNum = 0; tileNum != numTiles; tileNum++) {
-            slidingTiles.add(new SlidingTile(tileNum));
-        }
+        addTile();
         shuffle();
-        slidingBoard.setTiles(slidingTiles);
+        board.setTiles(slidingTiles);
         this.history.add(new HistoryNode(this.findBlankIndex()));
+    }
+
+    private void addTile() {
+            int numTiles = dimension * dimension;
+            for (int tileNum = 0; tileNum != numTiles; tileNum++) {
+                slidingTiles.add(new SlidingTile(tileNum));
+            }
     }
 
     public SlidingBoardManager(int dimension, double time, List<SlidingTile> slidingTiles){
         super(dimension);
         this.time = time;
-        this.slidingBoard = new BuilderBoard()
+        this.board = new BuilderBoard()
                 .setDimension(dimension)
                 .buildSlidingBoard();
         this.slidingTiles = slidingTiles;
-        slidingBoard.setTiles(slidingTiles);
+        board.setTiles(slidingTiles);
         this.history=new History();
         this.history.add(new HistoryNode(this.findBlankIndex()));
     }
 
-    public void setSlidingBoard(SlidingBoard slidingBoard) {
-        this.slidingBoard = slidingBoard;
+    void setSlidingBoard(SlidingBoard slidingBoard) {
+        this.board = slidingBoard;
     }
 
     /**
      * Return the current slidingBoard.
      */
     SlidingBoard getSlidingBoard() {
-        return slidingBoard;
+        return board;
     }
 
     List<SlidingTile> getSlidingTiles() {
@@ -74,7 +71,7 @@ public class SlidingBoardManager extends BoardManager{
     }
 
     void setSlidingTiles(List<SlidingTile> slidingTiles) {
-        slidingBoard.setTiles(slidingTiles);
+        board.setTiles(slidingTiles);
         this.slidingTiles = slidingTiles;
     }
 
@@ -161,10 +158,10 @@ public class SlidingBoardManager extends BoardManager{
         int col = position % dimension;
         int blankId = 0;
         // Are any of the 4 the blank tile?
-        SlidingTile above = row == 0 ? null : slidingBoard.getTile(row - 1, col);
-        SlidingTile below = row == dimension - 1 ? null : slidingBoard.getTile(row + 1, col);
-        SlidingTile left = col == 0 ? null : slidingBoard.getTile(row, col - 1);
-        SlidingTile right = col == dimension - 1 ? null : slidingBoard.getTile(row, col + 1);
+        SlidingTile above = row == 0 ? null : board.getTile(row - 1, col);
+        SlidingTile below = row == dimension - 1 ? null : board.getTile(row + 1, col);
+        SlidingTile left = col == 0 ? null : board.getTile(row, col - 1);
+        SlidingTile right = col == dimension - 1 ? null : board.getTile(row, col + 1);
         return (below != null && below.getId() == blankId)
                 || (above != null && above.getId() == blankId)
                 || (left != null && left.getId() == blankId)
@@ -187,7 +184,7 @@ public class SlidingBoardManager extends BoardManager{
             int[] result = findBlankIndex();
             r_row = result[0];
             r_col = result[1];
-            slidingBoard.swapTiles(row,col,r_row,r_col);
+            board.swapTiles(row,col,r_row,r_col);
             result[0] = row;
             result[1] = col;
             if (currIndex == history.getSize()-1) {history.add(new HistoryNode(result)); currIndex++;}
@@ -250,6 +247,6 @@ public class SlidingBoardManager extends BoardManager{
             postPosition = history.get(currIndex-1).getData();
             currIndex--;
         }
-        slidingBoard.swapTiles(postPosition[0], postPosition[1], currPosition[0], currPosition[1]);
+        board.swapTiles(postPosition[0], postPosition[1], currPosition[0], currPosition[1]);
     }
 }

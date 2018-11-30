@@ -2,10 +2,12 @@ package fall2018.csc2017.slidingtiles;
 
 import java.io.Serializable;
 
-public abstract class BoardManager implements Serializable {
+public abstract class BoardManager<T> implements Serializable {
     Double time = (double) 0;
 
     int dimension;
+
+    T board;
 
     BoardManager(){}
 
@@ -34,6 +36,14 @@ public abstract class BoardManager implements Serializable {
 
     public int getDimension() {
         return dimension;
+    }
+
+    public T getBoard() {
+        return board;
+    }
+
+    public void setBoard(T board) {
+        this.board = board;
     }
 
     /**

@@ -3,8 +3,7 @@ package fall2018.csc2017.slidingtiles;
 import java.io.Serializable;
 import java.util.List;
 
-public class MineBoardManager extends BoardManager{
-    private MineBoard board;
+public class MineBoardManager extends BoardManager<MineBoard>{
     private List<MineTile> tiles;
     private boolean isFirst = true;
     private boolean lost = false;
@@ -15,7 +14,7 @@ public class MineBoardManager extends BoardManager{
     MineBoardManager(int dimension, int numOfMine) {
         super(dimension);
         board = new BuilderBoard().setMine(numOfMine).setMineLeft(numOfMine).setDimension(dimension).setMineTiles().buildMineBoard();
-        tiles = (List<MineTile>) (List<?>) board.getTiles();
+        tiles = board.getTiles();
         this.dimension = dimension;
         minePosition = board.getMinePosition();
         setUpBoard();
@@ -25,14 +24,9 @@ public class MineBoardManager extends BoardManager{
         super(dimension);
         board = new BuilderBoard().setMine(mineNum).setMineLeft(mineLeft).setDimension(dimension).setMineTiles(tiles).buildMineBoard();
         isFirst = false;
-        tiles=(List<MineTile>)(List<?>)board.getTiles();
         this.dimension = dimension;
         this.time = time;
         minePosition = board.getMinePosition();
-    }
-
-    MineBoard getBoard() {
-        return board;
     }
 
     List<MineTile> getMinePosition() {
@@ -42,7 +36,6 @@ public class MineBoardManager extends BoardManager{
      void setUpBoard() {
         lost = false;
         isFirst = true;
-//        board.setTiles();
     }
 
     void mark(int position) {
@@ -57,7 +50,7 @@ public class MineBoardManager extends BoardManager{
         dimension = n;
     }
 
-    public void setMinePosition(List<MineTile> minePosition) {
+    void setMinePosition(List<MineTile> minePosition) {
         this.minePosition = minePosition;
     }
 

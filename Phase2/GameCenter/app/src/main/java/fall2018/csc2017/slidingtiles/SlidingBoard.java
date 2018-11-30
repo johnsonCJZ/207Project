@@ -1,23 +1,9 @@
 package fall2018.csc2017.slidingtiles;
 
-import android.support.annotation.NonNull;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Observable;
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * The sliding slidingTiles board.
  */
-public class SlidingBoard extends Board<SlidingTile> {
+class SlidingBoard extends Board<SlidingTile> {
     /**
      * Return the tile at (row, col)
      *

@@ -28,7 +28,7 @@ public class BuilderBoard {
     }
 
 
-    public BuilderBoard setMineTiles(List<MineTile> tiles) {
+    BuilderBoard setMineTiles(List<MineTile> tiles) {
         for (int i = 0; i < dimension * dimension; i++) {
             this.tiles.add(tiles.get(i));
             if (tiles.get(i).isMine()) {
@@ -38,12 +38,7 @@ public class BuilderBoard {
         return this;
     }
 
-    public BuilderBoard setSlidingTiles() {
-        tiles = new ArrayList<>();
-        return this;
-    }
-
-    public BuilderBoard set2048Tiles() {
+    private BuilderBoard set2048Tiles() {
         tiles = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
                 tiles.add(new Game2048Tile());
@@ -52,7 +47,7 @@ public class BuilderBoard {
         return this;
     }
 
-    public BuilderBoard setMineTiles() {
+    BuilderBoard setMineTiles() {
         for (int i = 0; i < dimension * dimension; i++) {
             MineTile tile = new MineTile();
             tiles.add(tile);
@@ -62,29 +57,14 @@ public class BuilderBoard {
         return this;
     }
 
-    public BuilderBoard setMinePosition(List<MineTile> minePosition) {
-        this.minePosition = minePosition;
-        return this;
-    }
-
-    public BuilderBoard setGame2048Score(int game2048Score) {
-        this.game2048Score = game2048Score;
-        return this;
-    }
-
-    public BuilderBoard setChanged(boolean changed) {
-        isChanged = changed;
-        return this;
-    }
-
-    public SlidingBoard buildSlidingBoard() {
+    SlidingBoard buildSlidingBoard() {
         SlidingBoard slidingBoard = new SlidingBoard();
         slidingBoard.setDimension(dimension);
         slidingBoard.setTiles((List<SlidingTile>) (List<?>) tiles);
         return slidingBoard;
     }
 
-    public Game2048Board build2048Board() {
+    Game2048Board build2048Board() {
         Game2048Board game2048Board = new Game2048Board();
         set2048Tiles();
         game2048Board.setDimension(4);
@@ -92,7 +72,7 @@ public class BuilderBoard {
         return game2048Board;
     }
 
-    public MineBoard buildMineBoard(){
+    MineBoard buildMineBoard(){
         MineBoard mineBoard = new MineBoard();
         mineBoard.setDimension(dimension);
         mineBoard.setMineNum(mine);
