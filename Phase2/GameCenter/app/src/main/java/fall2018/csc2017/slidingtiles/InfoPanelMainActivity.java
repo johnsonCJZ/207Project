@@ -26,22 +26,44 @@ import fall2018.csc2017.slidingtiles.ui.Games.SlideGameFragment;
 
 public class InfoPanelMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MenuItem.OnMenuItemClickListener {
+    /**
+     * database
+     */
     DatabaseHelper myDB;
+
+    /**
+     * toolbar in UI
+     */
     Toolbar toolbar;
+
+    /**
+     * drawerLayout component
+     */
     DrawerLayout drawer;
+
     /**
      * The current user playing the game.
      */
     private UserAccount user;
+
     /**
      * UserAccountManager keep record of all users data.
      */
     private UserAccountManager users;
 
+    /**
+     * fragment to get in
+     */
     private String fragment;
 
+    /**
+     * current user in system
+     */
     private String currentUser;
 
+    /**
+     * UI navigation View component
+     */
     private NavigationView navigationView;
 
     @Override
@@ -53,6 +75,9 @@ public class InfoPanelMainActivity extends AppCompatActivity
 
     }
 
+    /**
+     * get all components from UI
+     */
     private void getAllComponents() {
         setContentView(R.layout.app_bar_main_info_panel);
         setContentView(R.layout.nav_header_main_info_panel);
@@ -71,10 +96,14 @@ public class InfoPanelMainActivity extends AppCompatActivity
         t.setText(currentUser);
     }
 
+    /**
+     * switch fragment to join into
+     * @param fragment fragment id
+     */
     private void gamePanel(String fragment) {
+        passInfo();
         if (fragment == null) {
             ProfileFragment pp = new ProfileFragment();
-            passInfo();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     pp).commit();
             navigationView.setCheckedItem(R.id.profile);
@@ -82,49 +111,42 @@ public class InfoPanelMainActivity extends AppCompatActivity
             switch (fragment) {
                 case "Slide":
                     SlideGameFragment s = new SlideGameFragment();
-                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             s).commit();
                     navigationView.setCheckedItem(R.id.slide);
                     break;
                 case "Mine":
                     MinesweeperFragment m = new MinesweeperFragment();
-                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             m).commit();
                     navigationView.setCheckedItem(R.id.mine_sweeper);
                     break;
                 case "2048":
                     G2048Fragment g = new G2048Fragment();
-                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             g).commit();
                     navigationView.setCheckedItem(R.id.g2048);
                     break;
                 case "profile":
                     ProfileFragment p = new ProfileFragment();
-                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             p).commit();
                     navigationView.setCheckedItem(R.id.profile);
                     break;
                 case "store":
                     GameStoreFragment gs = new GameStoreFragment();
-                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             gs).commit();
                     navigationView.setCheckedItem(R.id.game_store);
                     break;
                 case "tool":
                     ToolFragment t = new ToolFragment();
-                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             t).commit();
                     navigationView.setCheckedItem(R.id.toolbar);
                     break;
                 default:
                     ProfileFragment de = new ProfileFragment();
-                    passInfo();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             de).commit();
                     navigationView.setCheckedItem(R.id.profile);
@@ -132,6 +154,9 @@ public class InfoPanelMainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * get all user information
+     */
     private void getUsers() {
         this.myDB = new DatabaseHelper(this);
         Intent intentExtras = getIntent();
@@ -171,6 +196,11 @@ public class InfoPanelMainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * topBar drop down menu
+     * @param item menu item to select on
+     * @return true
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -199,12 +229,20 @@ public class InfoPanelMainActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * update user information to databse
+     */
     private void passInfo() {
         user = myDB.selectUser(currentUser); //get updated after user bought games in game store
         myDB.updateAccountManager(users);
         myDB.updateUser(currentUser, user);
     }
 
+    /**
+     * navigation items trigger and fire action from activity to fragments
+     * @param item
+     * @return
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

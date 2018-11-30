@@ -125,6 +125,3 @@ public class LoginActivity extends AppCompatActivity {
     }
 }
 
-/**
- * load from pre-saved .ser file.
- */

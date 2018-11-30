@@ -26,6 +26,9 @@ public class MineDifficultyActivity extends AppCompatActivity {
      */
     private ScoreBoard personalScoreBoard;
 
+    /**
+     * scoreboard of game all users
+     */
     private ScoreBoard globalScoreBoard;
 
     @Override
@@ -38,6 +41,9 @@ public class MineDifficultyActivity extends AppCompatActivity {
         addRankButton();
     }
 
+    /**
+     * get all UI components from UI
+     */
     private void getAllComponents() {
         setContentView(R.layout.activity_minesweeper_difficulty);
         start = findViewById(R.id.start);
@@ -45,6 +51,9 @@ public class MineDifficultyActivity extends AppCompatActivity {
         rank = findViewById(R.id.rank);
     }
 
+    /**
+     * set start button
+     */
     private void addStartButton() {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +63,9 @@ public class MineDifficultyActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * set load button
+     */
     private void addLoadButton() {
         load.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +80,9 @@ public class MineDifficultyActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * set scoreBoard button
+     */
     void addRankButton() {
         rank.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +96,9 @@ public class MineDifficultyActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * switch to scoreBoard activity
+     */
     private void switchToScoreBoard() {
         Intent tmp = new Intent(this, ScoreBoardTabLayoutActivity.class);
         Bundle pass = new Bundle();
@@ -93,6 +111,9 @@ public class MineDifficultyActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * select game difficulty and start game activity
+     */
     private void selectDifficulty() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose an difficulty");
@@ -156,6 +177,9 @@ public class MineDifficultyActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * start game activity
+     */
     private void switchToGame() {
         Intent tmp = new Intent(this, MineMainActivity.class);
         Bundle pass = new Bundle();
