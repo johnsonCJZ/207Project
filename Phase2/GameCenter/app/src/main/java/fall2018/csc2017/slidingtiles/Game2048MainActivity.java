@@ -165,10 +165,12 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = new Game2048BoardManager();
-                isPaused = false;
-                createTileButtons(getApplicationContext());
-                setGridView();
+                Game2048MainActivity.this.finish();
+                Intent tmp = new Intent(getApplicationContext(), Game2048MainActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("boardManager", new Game2048BoardManager());
+                tmp.putExtras(bundle);
+                startActivity(tmp);
             }
         });
     }
