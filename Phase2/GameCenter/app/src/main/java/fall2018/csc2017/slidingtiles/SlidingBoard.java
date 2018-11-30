@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * The sliding slidingTiles board.
  */
-public class SlidingBoard extends Board<SlidingTile> implements Serializable, IObservable<SlidingBoard> {
+public class SlidingBoard extends Board<SlidingTile> implements IObservable<SlidingBoard> {
 
     private boolean changed = false;
 

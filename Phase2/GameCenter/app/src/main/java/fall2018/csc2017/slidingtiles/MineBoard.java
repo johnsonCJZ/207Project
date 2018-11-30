@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MineBoard extends Board<MineTile> implements Serializable, IObservable<MineBoard> {
+public class MineBoard extends Board<MineTile> implements IObservable<MineBoard> {
     private int mineNum;
     private int mineLeft;
     private List<MineTile> minePosition = new ArrayList<>();

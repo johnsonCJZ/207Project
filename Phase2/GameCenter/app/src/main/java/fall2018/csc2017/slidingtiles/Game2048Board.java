@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Observable;
 
-public class Game2048Board extends Board<Game2048Tile> implements Serializable, Iterable<Game2048Tile>, IObservable<Game2048Board> {
+public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2048Tile>, IObservable<Game2048Board> {
     private int score = 0;
     private boolean isChanged = false;
     private boolean changed = false;
