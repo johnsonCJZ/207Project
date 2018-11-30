@@ -1,31 +1,35 @@
 package fall2018.csc2017.slidingtiles;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class SlidingMemory extends Memory<SlidingBoardManager> {
+
+    /**
+     * The dimension of the SlidingBoard cloned.
+     */
     private int dimension;
-    private double timeTmp;
+
+    /**
+     * The time of the SlidingBoard cloned.
+     */
+    private double timeSliding;
     private List<Integer> slidingTiles = new ArrayList<>();
 
     @Override
     public void makeCopy(SlidingBoardManager manager) {
         this.dimension = manager.getBoard().getDimension();
-        this.timeTmp = manager.getTime();
+        this.timeSliding = manager.getTime();
         for (SlidingTile tile : manager.getTiles()) {
             this.slidingTiles.add(tile.getId());
         }
-
     }
 
     @Override
     public SlidingBoardManager copy(){
 
         int dimension = this.dimension;
-        double time = this.timeTmp;
+        double time = this.timeSliding;
         List<SlidingTile> tt = new ArrayList<>();
         for (int i : this.slidingTiles){
             tt.add(new SlidingTile(i));
@@ -36,7 +40,7 @@ public class SlidingMemory extends Memory<SlidingBoardManager> {
 
     int getDimension() {return dimension;}
 
-    double getTimeTmp() {return timeTmp;}
+    double getTimeTmp() {return timeSliding;}
 
     List<Integer> getSlidingTiles() {return slidingTiles;}
 

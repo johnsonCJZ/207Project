@@ -33,6 +33,7 @@ public class Game2048Test {
         for (Game2048Tile tile: tiles){
             tile.setValue(2);
         }
+        board.setScore(0);
     }
 
     private int[] tileToInt(Game2048Tile[] line) {
@@ -281,7 +282,6 @@ public class Game2048Test {
     @Test
     public void testMergeWholeBoardUp(){
         setBoardCanMove();
-        board.setScore(0);
         manager.move("UP");
         int[][] expectedRows = {{4, 4, 4, 4}, {4, 4, 4, 4}, {0, 0, 0, 0}, {0, 0, 0, 0}};
         for (int i = 0; i < board.getDimension(); i++){
@@ -308,7 +308,7 @@ public class Game2048Test {
         for (int i = 0; i < board.getDimension(); i++){
             assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
         }
-        assertEquals(64, manager.getScore());
+        assertEquals(32, manager.getScore());
     }
 
     @Test
@@ -324,7 +324,7 @@ public class Game2048Test {
         for (int i = 0; i < board.getDimension(); i++){
             assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
         }
-        assertEquals(96, manager.getScore());
+        assertEquals(32, manager.getScore());
     }
 
     @Test
@@ -339,6 +339,6 @@ public class Game2048Test {
         for (int i = 0; i < board.getDimension(); i++){
             assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
         }
-        assertEquals(128, manager.getScore());
+        assertEquals(32, manager.getScore());
     }
 }

@@ -35,7 +35,7 @@ public class Factory {
             m.addTile();
             m.shuffle();
             b.setTiles(m.getTiles());
-            m.getHistory().add(new HistoryNode(m.findBlankIndex()));
+            m.getSlidingHistory().add(new SlidingHistoryNode(m.findBlankIndex()));
             return m;
         }
         return null;
@@ -57,11 +57,12 @@ public class Factory {
         Factory f = new Factory();
         MineBoard b = new BuilderBoard()
                 .setMine(mineNum)
-                .setMineLeft(mineNum)
+                .setMineLeft(mineLeft)
                 .setDimension(d)
                 .setMineTiles(tiles)
                 .buildMineBoard();
         MineBoardManager m = (MineBoardManager) f.createNewManager(b);
+        m.switchIsFirst();
         m.setDimension(d);
         m.setBoard(b);
         m.setTime(time);
@@ -83,8 +84,8 @@ public class Factory {
                 .setDimension(dimension)
                 .buildSlidingBoard());
         m.setTiles(slidingTiles);
-        m.setHistory(new History());
-        m.getHistory().add(new HistoryNode(m.findBlankIndex()));
+        m.setSlidingHistory(new SlidingHistory());
+        m.getSlidingHistory().add(new SlidingHistoryNode(m.findBlankIndex()));
         return m;
     }
 

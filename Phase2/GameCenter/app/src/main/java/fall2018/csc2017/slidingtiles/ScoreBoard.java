@@ -33,7 +33,7 @@ public class ScoreBoard implements Serializable {
      * Set the scoreBoardSize to size.
      * @param size the new size to set
      */
-    private void setScoreBoardSize(int size) {
+    void setScoreBoardSize(int size) {
         scoreBoardSize = size;
     }
 
@@ -80,6 +80,10 @@ public class ScoreBoard implements Serializable {
      */
     List<Object[]> getScoreList() {
         return scoreList;
+    }
+
+    void setScoreList(List<Object[]> nameAndScoreList) {
+        scoreList = nameAndScoreList;
     }
 
 }

@@ -1,7 +1,5 @@
 package fall2018.csc2017.slidingtiles;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,12 +8,12 @@ import java.util.List;
  */
 public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>{
     /**
-     * The linked list of history moves of the slidingBoard.
+     * The linked list of slidingHistory moves of the slidingBoard.
      */
-    private History history = new History();
+    private SlidingHistory slidingHistory = new SlidingHistory();
 
     /**
-     * The index at which the element in history represents the current location of blank tile.
+     * The index at which the element in slidingHistory represents the current location of blank tile.
      */
     private int currIndex = 0;
 
@@ -26,8 +24,8 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
             }
     }
 
-    void setHistory(History history) {
-        this.history = history;
+    void setSlidingHistory(SlidingHistory slidingHistory) {
+        this.slidingHistory = slidingHistory;
     }
 
     @Override
@@ -85,11 +83,11 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
     }
 
     /**
-     * Return the History.
-     * @return the History
+     * Return the SlidingHistory.
+     * @return the SlidingHistory
      */
-    History getHistory() {
-        return history;
+    SlidingHistory getSlidingHistory() {
+        return slidingHistory;
     }
 
     /**
@@ -148,10 +146,11 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
             getBoard().swapTiles(row,col,r_row,r_col);
             result[0] = row;
             result[1] = col;
-            if (currIndex == history.getSize()-1) {history.add(new HistoryNode(result)); currIndex++;}
+            if (currIndex == slidingHistory.getSize()-1) {
+                slidingHistory.add(new SlidingHistoryNode(result)); currIndex++;}
             else {
-                history.remove(currIndex+1);
-                history.add(new HistoryNode((result)));
+                slidingHistory.remove(currIndex+1);
+                slidingHistory.add(new SlidingHistoryNode((result)));
                 currIndex++;
             }
         }
@@ -197,15 +196,15 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
         int[] currPosition = new int[2];
         int[] postPosition = new int[2];
         //redo
-        if (i == 1 && history.get(currIndex).next != null) {
-            currPosition = history.get(currIndex).getData();
-            postPosition = history.get(currIndex+1).getData();
+        if (i == 1 && slidingHistory.get(currIndex).next != null) {
+            currPosition = slidingHistory.get(currIndex).getData();
+            postPosition = slidingHistory.get(currIndex+1).getData();
             currIndex++;
         }
         // undo
-        else if (i == -1 && history.getSize() > 1){
-            currPosition = history.get(currIndex).getData();
-            postPosition = history.get(currIndex-1).getData();
+        else if (i == -1 && slidingHistory.getSize() > 1){
+            currPosition = slidingHistory.get(currIndex).getData();
+            postPosition = slidingHistory.get(currIndex-1).getData();
             currIndex--;
         }
         getBoard().swapTiles(postPosition[0], postPosition[1], currPosition[0], currPosition[1]);

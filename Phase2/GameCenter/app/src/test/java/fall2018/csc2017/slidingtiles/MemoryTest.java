@@ -32,6 +32,7 @@ public class MemoryTest {
         mineMemory = new MineMemory();
         MineBoard board = new BuilderBoard().setMine(10).setMineLeft(10).setDimension(9).setMineTiles().buildMineBoard();
         mineBoardManager = (MineBoardManager) factory.createNewManager(board);
+        mineBoardManager.move(40);
     }
 
     @Test
@@ -87,6 +88,8 @@ public class MemoryTest {
         assertEquals(mineMemory.getDimension(), mineBoardManager.getDimension());
         assertEquals(mineMemory.getMine(), mineBoardManager.getBoard().getMineNum());
         assertEquals(mineMemory.getMineLeft(), mineBoardManager.getBoard().getMineLeft());
+        assertEquals(mineMemory.isFirst(),mineBoardManager.isFirst());
+        assertEquals(mineMemory.getTimeMine(), mineBoardManager.getTime(), 0.0);
         for (int i = 0; i < mineMemory.getIsFlaggedOfTiles().size(); i++) {
             assertEquals(mineMemory.getIsFlaggedOfTiles().get(i), mineBoardManager.getTiles().get(i).isFlagged());
             assertEquals(mineMemory.getIsMineOfTiles().get(i), mineBoardManager.getTiles().get(i).isMine());
@@ -103,6 +106,8 @@ public class MemoryTest {
         assertEquals(mineMemory.getDimension(), managerCopy.getDimension());
         assertEquals(mineMemory.getMine(), managerCopy.getBoard().getMineNum());
         assertEquals(mineMemory.getMineLeft(), managerCopy.getBoard().getMineLeft());
+        assertEquals(mineMemory.isFirst(), managerCopy.isFirst());
+        assertEquals(mineMemory.getTimeMine(), managerCopy.getTime(), 0.0);
         for (int i = 0; i < managerCopy.getTiles().size(); i++) {
             assertEquals(managerCopy.getTiles().get(i).isFlagged(), mineMemory.getIsFlaggedOfTiles().get(i));
             assertEquals(managerCopy.getTiles().get(i).isMine(), mineMemory.getIsMineOfTiles().get(i));
