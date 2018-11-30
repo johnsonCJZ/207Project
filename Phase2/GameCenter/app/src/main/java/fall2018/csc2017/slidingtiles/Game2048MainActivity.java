@@ -36,6 +36,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
     private DatabaseHelper myDB;
     private String username;
     private TextView scorePlace;
+    private Game2048MainController game2048MainController;
 
 
     @Override
@@ -43,7 +44,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         getAllInfo(); // pass in all useful data from last activity, including boardManager
         getAllComponents();
         super.onCreate(savedInstanceState);
-        createTileButtons(this);
+        tileButtons=game2048MainController.createTileButtons(this,boardManager,tileButtons);
         isPaused = false;
         Thread t = time();
         t.start();
@@ -56,6 +57,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         setContentView(R.layout.activity_main2048);
         scorePlace = findViewById(R.id.score);
         gridView = findViewById(R.id.grid2048);
+        game2048MainController = new Game2048MainController();
     }
 
     @NonNull
@@ -174,7 +176,9 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
     }
 
     private void display() {
-        updateTileButtons();
+        tileButtons =game2048MainController.updateTileButtons(boardManager,tileButtons);
+        // add a tile if the board has been modified and it has empty spot
+        scorePlace.setText("Score: "+String.valueOf(personalScoreBoard.calculateScore(boardManager)));
         gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
     }
 
@@ -185,58 +189,27 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
     }
 
 
-    private void updateTileButtons() {
-        Game2048Board board = boardManager.getBoard();
-        if (board.isChanged()) {
-            Game2048Tile newTile = board.addTile();
-            if (newTile != null) {
-                newTile.setAnimation();
-            }
-            int nextPos = 0;
-            for (Button b : tileButtons) {
-                int row = nextPos / boardManager.getBoard().getDimension();
-                int col = nextPos % boardManager.getBoard().getDimension();
-                if (board.getTile(row, col).getFadeIn()) {
-                    addFadeInAnimation(b);
-                    board.getTile(row, col).removeFadeIn();
-                }
-                b.setBackgroundResource(board.getTile(row, col).getBackground());
-                nextPos++;
-            }
-        }
-        // add a tile if the board has been modified and it has empty spot
-        scorePlace.setText("Score: "+String.valueOf(personalScoreBoard.calculateScore(boardManager)));
-
-    }
-
     private void autoSave() {
         user.setGame2048History("resumeHistory2048", boardManager);
         myDB.updateUser(username, user);
     }
 
-    private void addFadeInAnimation(Button b){
-        Animation fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
-        fadeIn.setDuration(1000);
-        AnimationSet animation = new AnimationSet(true); //change to false
-        animation.addAnimation(fadeIn);
-        b.setAnimation(animation);
-
+    private int getScore(Game2048BoardManager boardManager) {
+        int score;
+        score = personalScoreBoard.calculateScore(boardManager);
+        Object[] result = new Object[2];
+        result[0] = username;
+        result[1] = score;
+        personalScoreBoard.addAndSort(result);
+        globalScoreBoard.addAndSort(result);
+        myDB.updateUser(username,user);
+        myDB.updateAccountManager(users);
+        return score;
     }
 
-    private void createTileButtons(Context context) {
-        Game2048Board board = boardManager.getBoard();
-        tileButtons = new ArrayList<>();
-        for (int i = 0; i < board.getDimension() * board.getDimension(); i++) {
-            Button tmp = new Button(context);
-            tmp.setBackgroundResource(board.getTiles().get(i).getBackground());
-            tileButtons.add(tmp);
-        }
-
-    }
 
     private void endAlert() {
-        int score = getScore();
+        int score = getScore(boardManager);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if (isWin) {
             builder.setMessage("You Win!");
@@ -278,21 +251,6 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         intent.putExtras(pass);
         startActivity(intent);
     }
-
-    private int getScore() {
-        int score;
-        score = personalScoreBoard.calculateScore(boardManager);
-        Object[] result = new Object[2];
-        result[0] = user.getName();
-        result[1] = score;
-        personalScoreBoard.addAndSort(result);
-        globalScoreBoard.addAndSort(result);
-        myDB.updateUser(user.getName(), this.user);
-        myDB.updateAccountManager(users);
-        return score;
-
-    }
-
 
     @Override
     public void update(IObservable o) {

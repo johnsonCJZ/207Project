@@ -90,6 +90,8 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
     private UserAccountManager users;
     private String currentUser;
 
+    private MineMainController mineMainController;
+
     /**
      * Initialize all buttons
      * @param savedInstanceState
@@ -109,19 +111,8 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         addStartOver();
     }
 
-    /**
-     * Update the backgrounds on the buttons to match the slidingTiles.
-     */
-    private void updateTileButtons() {
-        MineBoard board = boardManager.getBoard();
-        int nextPos = 0;
-        for (Button b : tileButtons) {
-            b.setBackgroundResource(board.getTile(nextPos).getBackground());
-            nextPos++;
-        }
-    }
-
     private void getAllComponents(){
+        mineMainController = new MineMainController();
         setContentView(R.layout.activity_minesweeper);
         time = findViewById(R.id.time);
         mineLeft = findViewById(R.id.mineLeft);
@@ -138,7 +129,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
      * of positions, and then call the adapter to set the view.
      */
     public void display() {
-        updateTileButtons();
+        tileButtons=mineMainController.updateTileButtons(boardManager,tileButtons);
         updateMineLeft();
         gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
     }
@@ -265,7 +256,7 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
                         .buildMineBoard();
                 boardManager = (MineBoardManager) f.createNewManager(b);
                 boardManager.setTime((double) -1);
-                createTileButtons(getApplicationContext());
+                tileButtons = mineMainController.createTileButtons(getApplicationContext(),boardManager,tileButtons,face);
                 setGridView();
             }
         });
