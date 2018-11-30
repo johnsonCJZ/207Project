@@ -1,7 +1,5 @@
 package fall2018.csc2017.slidingtiles;
-
 import android.support.annotation.NonNull;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,7 +10,6 @@ import java.util.Observable;
 public class Game2048Board extends Board implements Serializable, Iterable<Game2048Tile>, IObservable<Game2048Board> {
     final static int DIMENSION = 4;
     private int score = 0;
-    private List<Game2048Tile> tiles;
     private boolean isChanged = false;
     public boolean changed = false;
     private ArrayList<IObserver> observers = new ArrayList<>();
@@ -49,6 +46,7 @@ public class Game2048Board extends Board implements Serializable, Iterable<Game2
 
     Game2048Tile addTile() {
         ArrayList<Game2048Tile> empty = findEmpty();
+        System.out.println(findEmpty().size());
         //if (!empty.isEmpty()){ // add if not empty
         Game2048Tile randomTile = empty.get((int) (Math.random() * empty.size()));
         randomTile.random();
@@ -60,9 +58,10 @@ public class Game2048Board extends Board implements Serializable, Iterable<Game2
 
     ArrayList<Game2048Tile> findEmpty() {
         ArrayList<Game2048Tile> result = new ArrayList<>();
-        for (Game2048Tile tile : this.tiles) {
-            if (tile.isEmpty()) {
-                result.add(tile);
+        for (Tile tile : this.tiles) {
+            Game2048Tile t = (Game2048Tile) tile;
+            if (t.isEmpty()) {
+                result.add(t);
             }
         }
         return result;
@@ -71,21 +70,18 @@ public class Game2048Board extends Board implements Serializable, Iterable<Game2
     Game2048Tile[] getRow(int row) {
         Game2048Tile[] result = new Game2048Tile[DIMENSION];
         for (int i = 0; i < DIMENSION; i++) {
-            result[i] = tiles.get(row * DIMENSION + i);
+            result[i] = (Game2048Tile) tiles.get(row * DIMENSION + i);
         }
         return result;
     }
 
     private Game2048Tile[] getColumn(int col) {
         Game2048Tile[] result = new Game2048Tile[DIMENSION];
+
         for (int i = 0; i < DIMENSION; i++) {
-            result[i] = tiles.get(i * DIMENSION + col);
+            result[i] = (Game2048Tile) tiles.get(i * DIMENSION + col);
         }
         return result;
-    }
-
-    void setTiles(List<Game2048Tile> tiles){
-        this.tiles = tiles;
     }
 
     void mergeList(Game2048Tile[] tileArray, String direction){
@@ -262,15 +258,11 @@ public class Game2048Board extends Board implements Serializable, Iterable<Game2
 //    }
 
     Game2048Tile getTile(int x, int y) {
-        return tiles.get(x * DIMENSION + y);
+        return (Game2048Tile) tiles.get(x * DIMENSION + y);
     }
 
     int getDimension() {
         return DIMENSION;
-    }
-
-    List<Game2048Tile> getTiles() {
-        return tiles;
     }
 
     void setTile(int x, int y, Game2048Tile tile){
@@ -280,7 +272,7 @@ public class Game2048Board extends Board implements Serializable, Iterable<Game2
     @NonNull
     @Override
     public Iterator<Game2048Tile> iterator() {
-        return new Tile2048Iterator(tiles);
+        return new Tile2048Iterator((List<Game2048Tile>)(List<?>)tiles);
     }
 
 
