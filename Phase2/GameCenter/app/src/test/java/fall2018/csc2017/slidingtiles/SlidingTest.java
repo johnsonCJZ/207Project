@@ -15,11 +15,12 @@ public class SlidingTest {
         SlidingBoardManager manager = new SlidingBoardManager(dimension, time, tiles);
         SlidingBoard board = manager.getSlidingBoard();
         board.setSlidingTiles(tiles);
+        board.setDimension(dimension);
         return manager;
     }
 
     @Test
-    public void testNoInversion() {
+    public void testDimensionThreeNoInversion() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
         Arrays.asList(new SlidingTile(0), new SlidingTile(1),
                 new SlidingTile(2), new SlidingTile(3),
@@ -28,6 +29,7 @@ public class SlidingTest {
         ));
         SlidingBoardManager testCase = setUpBoard(3, 2.0, tilesToTest);
         assertEquals(0, testCase.findInversion());
+        assertEquals(3, testCase.getSlidingBoard().getDimension());
     }
 
     @Test
@@ -92,6 +94,7 @@ public class SlidingTest {
         ));
         SlidingBoardManager testCase = setUpBoard(4, 2.0, tilesToTest);
         assertEquals(0, testCase.findInversion());
+        assertEquals(4, testCase.getSlidingBoard().getDimension());
     }
 
     @Test
@@ -113,6 +116,7 @@ public class SlidingTest {
         ));
         SlidingBoardManager testCase = setUpBoard(5, 2.0, tilesToTest);
         assertEquals(0, testCase.findInversion());
+        assertEquals(5, testCase.getSlidingBoard().getDimension());
     }
 
     @Test
@@ -204,6 +208,7 @@ public class SlidingTest {
             actual[i] = tiles.get(i).getId();
         }
         assertArrayEquals(expected, actual);
+        assertTrue(testCase.getSlidingBoard().hasChanged());
     }
 
     @Test
@@ -223,6 +228,7 @@ public class SlidingTest {
             actual[i] = tiles.get(i).getId();
         }
         assertArrayEquals(expected, actual);
+        assertTrue(testCase.getSlidingBoard().hasChanged());
     }
 
     @Test
@@ -242,5 +248,6 @@ public class SlidingTest {
             actual[i] = tiles.get(i).getId();
         }
         assertArrayEquals(expected, actual);
+        assertTrue(testCase.getSlidingBoard().hasChanged());
     }
 }
