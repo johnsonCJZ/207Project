@@ -77,6 +77,7 @@ public class MineTest {
     @Test
     public void testFlag() {
         setUp();
+        manager.mark(12);
         assertEquals(board.getMineLeft(), board.getMineNum() - 1);
         manager.mark(12);
         assertEquals(board.getMineLeft(), board.getMineNum());
