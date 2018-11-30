@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game2048Memory extends Memory implements Serializable {
+public class Game2048Memory extends Memory<Game2048BoardManager> implements Serializable {
     private double time2048;
     private int score;
     private List<Integer> tileValueList = new ArrayList<>();
@@ -21,6 +21,7 @@ public class Game2048Memory extends Memory implements Serializable {
         return tileValueList;
     }
 
+    @Override
     public void makeCopy(Game2048BoardManager manager) {
         this.time2048 = manager.getTime();
         score = manager.getScore();
@@ -29,6 +30,7 @@ public class Game2048Memory extends Memory implements Serializable {
         }
     }
 
+    @Override
     public Game2048BoardManager copy(){
         Factory f = new Factory();
         return (Game2048BoardManager) f.Load2048Manager(time2048, score, tileValueList);

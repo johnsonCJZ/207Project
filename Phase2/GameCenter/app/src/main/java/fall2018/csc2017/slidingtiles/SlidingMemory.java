@@ -6,11 +6,12 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SlidingMemory extends Memory {
+public class SlidingMemory extends Memory<SlidingBoardManager> {
     private int dimension;
     private double timeTmp;
     private List<Integer> slidingTiles = new ArrayList<>();
 
+    @Override
     public void makeCopy(SlidingBoardManager manager) {
         this.dimension = manager.getBoard().getDimension();
         this.timeTmp = manager.getTime();
@@ -20,6 +21,7 @@ public class SlidingMemory extends Memory {
 
     }
 
+    @Override
     public SlidingBoardManager copy(){
 
         int dimension = this.dimension;

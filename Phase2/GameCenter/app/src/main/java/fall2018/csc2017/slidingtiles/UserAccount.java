@@ -29,52 +29,35 @@ public class UserAccount implements Serializable {
      */
     private String email;
 
+
     /**
      * The sliding slidingTiles game history of the UserAccount.
      */
-    private HashMap<String, SlidingMemory> historySliding = new HashMap<>();
+    private HashMap<String, SlidingMemory> historySliding;
 
-    private HashMap<String, MineMemory> historyMine = new HashMap<>();
+    private HashMap<String, MineMemory> historyMine;
 
-    private HashMap<String, Game2048Memory> history2048 = new HashMap<>();
+    private HashMap<String, Game2048Memory> history2048;
 
     /**
      * The sliding slidingTiles score list of the UserAccount
      */
-    private ArrayList<Integer> userScoreList = new ArrayList<>();
+    private ArrayList<Integer> userScoreList;
 
     /**
      * The archive of the game sliding slidingTiles.
      */
-    private HashMap<String,ScoreBoard> personalScoreBoard = new HashMap<>();
+    private HashMap<String,ScoreBoard> personalScoreBoard;
 
     /**
      * The games the UserAccount has purchased.
      */
-    private ArrayList<String> games = new ArrayList<>();
+    private ArrayList<String> games;
+
     /**
      * The UserAccount class constructor.
-     * @param name the name of the UserAccount
-     * @param password
      */
-
     public UserAccount(){}
-
-    public HashMap<String, SlidingMemory> getHistorySliding() {
-        return historySliding;
-    }
-
-    public HashMap<String, Game2048Memory> getHistory2048() {
-        return history2048;
-    }
-
-    public HashMap<String, MineMemory> getHistoryMine() {
-        return historyMine;
-    }
-
-    public HashMap<String, ScoreBoard> getPersonalScoreBoard() {
-        return personalScoreBoard;
-    }
 
     /**
      * The setter of the field email.
@@ -237,5 +220,29 @@ public class UserAccount implements Serializable {
 
     public void setName(String name){
         this.name = name;
+    }
+
+    public void setHistorySliding(HashMap<String, SlidingMemory> historySliding) {
+        this.historySliding = historySliding;
+    }
+
+    public void setHistoryMine(HashMap<String, MineMemory> historyMine) {
+        this.historyMine = historyMine;
+    }
+
+    public void setHistory2048(HashMap<String, Game2048Memory> history2048) {
+        this.history2048 = history2048;
+    }
+
+    public void setUserScoreList(ArrayList<Integer> userScoreList) {
+        this.userScoreList = userScoreList;
+    }
+
+    public void setPersonalScoreBoard(HashMap<String, ScoreBoard> personalScoreBoard) {
+        this.personalScoreBoard = personalScoreBoard;
+    }
+
+    public void setGames(ArrayList<String> games) {
+        this.games = games;
     }
 }

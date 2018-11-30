@@ -93,22 +93,31 @@ public class Factory {
         u.setName(name);
         u.setPassword(password);
         u.setEmail("");
-        HashMap<String, SlidingMemory> historySliding = u.getHistorySliding();
+        HashMap<String, SlidingMemory> historySliding = new HashMap<>();
         historySliding.put("history3x3", null);
         historySliding.put("history4x4", null);
         historySliding.put("history5x5", null);
         historySliding.put("resumeHistorySlide", null);
-        HashMap<String, MineMemory> historyMine = u.getHistoryMine();
+        HashMap<String, MineMemory> historyMine = new HashMap<>();
         historyMine.put("resumeHistoryMine", null);
         historyMine.put("historyMine",null);
-        HashMap<String, Game2048Memory> history2048 = u.getHistory2048();
+        HashMap<String, Game2048Memory> history2048 = new HashMap<>();
         history2048.put("resumeHistory2048", null);
-        HashMap<String,ScoreBoard> personalScoreBoard = u.getPersonalScoreBoard();
+        HashMap<String,ScoreBoard> personalScoreBoard = new HashMap<>();
         personalScoreBoard.put("history3x3", new ScoreBoard("SlidingTiles"));
         personalScoreBoard.put("history4x4", new ScoreBoard("SlidingTiles"));
         personalScoreBoard.put("history5x5", new ScoreBoard("SlidingTiles"));
         personalScoreBoard.put("2048", new ScoreBoard("2048"));
         personalScoreBoard.put("Mine", new ScoreBoard("MineSweeper"));
+        ArrayList<String> games = new ArrayList<>();
+        ArrayList<Integer> userScoreList = new ArrayList<>();
+        u.setHistorySliding(historySliding);
+        u.setHistory2048(history2048);
+        u.setHistorySliding(historySliding);
+        u.setGames(games);
+        u.setHistoryMine(historyMine);
+        u.setPersonalScoreBoard(personalScoreBoard);
+        u.setUserScoreList(userScoreList);
         return u;
     }
 
