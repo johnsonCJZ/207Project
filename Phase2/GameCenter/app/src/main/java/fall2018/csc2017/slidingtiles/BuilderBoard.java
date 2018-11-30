@@ -137,6 +137,10 @@ public class BuilderBoard {
         return game2048Board;
     }
 
+    /**
+     * Builder a Mine Board.
+     * @return the new Mine Board built.
+     */
     public MineBoard buildMineBoard() {
         MineBoard mineBoard = new MineBoard();
         mineBoard.setDimension(dimension);
