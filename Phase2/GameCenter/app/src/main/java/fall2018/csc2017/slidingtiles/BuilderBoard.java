@@ -27,6 +27,10 @@ public class BuilderBoard {
         return this;
     }
 
+    public BuilderBoard setTiles(List<Tile> tiles) {
+        this.tiles = tiles;
+        return this;
+    }
 
     BuilderBoard setMineTiles(List<MineTile> tiles) {
         for (int i = 0; i < dimension * dimension; i++) {

@@ -10,15 +10,6 @@ public class MineBoardManager extends BoardManager<MineBoard, MineTile>{
 
     MineBoardManager(){}
 
-    MineBoardManager(int d, int mineNum, int mineLeft, double time, List<MineTile> tiles) {
-        super(d);
-        setBoard(new BuilderBoard().setMine(mineNum).setMineLeft(mineLeft).setDimension(getDimension()).setMineTiles(tiles).buildMineBoard());
-        isFirst = false;
-        setDimension(getDimension());
-        setTime(time);
-        minePosition = getBoard().getMinePosition();
-    }
-
     List<MineTile> getMinePosition() {
         return minePosition;
     }

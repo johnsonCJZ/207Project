@@ -9,14 +9,6 @@ public class Game2048BoardManager extends BoardManager<Game2048Board, Game2048Ti
 
     public Game2048BoardManager() {}
 
-    Game2048BoardManager(double time, int score, List<Integer> list){
-        super(4);
-        setTime(time);
-        setBoard(new BuilderBoard().build2048Board());
-        this.getBoard().setScore(score);
-        this.getBoard().setUpTiles(list);
-    }
-
     int getScore() {
         return getBoard().getScore();
     }

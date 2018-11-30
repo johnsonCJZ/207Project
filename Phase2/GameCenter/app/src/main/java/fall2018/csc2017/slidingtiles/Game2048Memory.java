@@ -19,7 +19,8 @@ public class Game2048Memory extends Memory implements Serializable {
     }
 
     public Game2048BoardManager copy(){
-        return new Game2048BoardManager(time2048, score, tileValueList);
+        ManagerFactory f = new ManagerFactory();
+        return (Game2048BoardManager) f.Load2048Manager(time2048, score, tileValueList);
     }
 
 }

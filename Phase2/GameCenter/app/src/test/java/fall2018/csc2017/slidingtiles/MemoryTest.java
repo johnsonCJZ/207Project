@@ -11,17 +11,31 @@ public class MemoryTest {
     private BoardManager manager;
 
     public void setUpSlidingMemory() {
-        manager = new SlidingBoardManager(4);
+        ManagerFactory f = new ManagerFactory();
+        SlidingBoard b =new BuilderBoard()
+                .setDimension(4)
+                .buildSlidingBoard();
+        manager = f.createNewManager(b);
         slidingMemory = new SlidingMemory();
     }
 
     public void setUpGame2048Memory() {
-        manager = new Game2048BoardManager();
+        ManagerFactory f = new ManagerFactory();
+        Game2048Board board = new BuilderBoard().build2048Board();
+        manager = f.createNewManager(board);
         game2048Memory = new Game2048Memory();
     }
 
     public void setUpMineMemory() {
-        manager = new MineBoardManager(9, 10);
+
+        ManagerFactory f = new ManagerFactory();
+        MineBoard b = new BuilderBoard()
+                .setMine(10)
+                .setMineLeft(10)
+                .setDimension(9)
+                .setMineTiles()
+                .buildMineBoard();
+        manager = (MineBoardManager) f.createNewManager(b);
         mineMemory = new MineMemory();
     }
 

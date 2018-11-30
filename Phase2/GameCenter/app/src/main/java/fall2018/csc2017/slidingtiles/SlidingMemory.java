@@ -31,7 +31,8 @@ public class SlidingMemory extends Memory {
         for (int i : this.slidingTiles){
             tt.add(new SlidingTile(i));
         }
-        return new SlidingBoardManager(dimension,time, tt);
+        ManagerFactory f = new ManagerFactory();
+        return (SlidingBoardManager) f.loadSlidingManager(dimension,time, tt);
     }
 
     int getDimension() {return dimension;}

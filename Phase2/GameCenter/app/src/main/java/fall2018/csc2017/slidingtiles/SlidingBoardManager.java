@@ -28,16 +28,8 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
             }
     }
 
-    public SlidingBoardManager(int dimension, double time, List<SlidingTile> slidingTiles){
-        super(dimension);
-        setTime(time);
-        setBoard(new BuilderBoard()
-                .setDimension(dimension)
-                .buildSlidingBoard());
-        setTiles(slidingTiles);
-        getBoard().setTiles(slidingTiles);
-        this.history=new History();
-        this.history.add(new HistoryNode(this.findBlankIndex()));
+    public void setHistory(History history) {
+        this.history = history;
     }
 
     @Override

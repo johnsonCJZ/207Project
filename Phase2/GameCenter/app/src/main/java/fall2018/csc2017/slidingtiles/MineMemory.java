@@ -32,6 +32,7 @@ public class MineMemory extends Memory {
         for (int i = 0; i < dimension * dimension; i++) {
             tiles.add(new MineTile(isObscuredOfTiles.get(i), numberOfTiles.get(i), isMineOfTiles.get(i), isFlaggedOfTiles.get(i)));
         }
-        return new MineBoardManager(dimension, mine, mineLeft, timeMine, tiles);
+        ManagerFactory f = new ManagerFactory();
+        return (MineBoardManager) f.loadMineManager(dimension, mine, mineLeft, timeMine, tiles);
     }
 }
