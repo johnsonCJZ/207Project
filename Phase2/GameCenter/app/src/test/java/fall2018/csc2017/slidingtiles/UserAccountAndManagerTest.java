@@ -3,14 +3,11 @@ package fall2018.csc2017.slidingtiles;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
 
-public class UserAccountTest {
-
-    @Before
-    public void setUp() throws Exception {
-    }
-
+public class UserAccountAndManagerTest {
     @Test
     public void testCreateNewUser() {
         Factory f = new Factory();
@@ -25,5 +22,14 @@ public class UserAccountTest {
         assertEquals("abc@gmail.com",newUser.getEmail());
         newUser.setAge(3);
         assertEquals(3,(int) newUser.getAge());
+    }
+
+    @Test
+    public void testUserAccountManager(){
+        Factory f = new Factory();
+        UserAccountManager m = f.createUserManager();
+        assertEquals(5 ,m.getGlobalScoreBoard().size());
+        m.addUser("aaa");
+        assertEquals(1, m.getUserList().size());
     }
 }
