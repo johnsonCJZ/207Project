@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Board implements Serializable {
-    List<Tile> tiles = new ArrayList<>();
+public abstract class Board<T> implements Serializable {
+    List<T> tiles = new ArrayList<>();
 
-    public void setTiles(List<Tile> tiles) {
+    public void setTiles(List<T> tiles) {
         this.tiles = tiles;
     }
 
-    public List<Tile> getTiles(){
+    public List<T> getTiles(){
         return tiles;
     }
 
