@@ -1,9 +1,7 @@
 package fall2018.csc2017.slidingtiles;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.storage.StorageManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,7 +18,6 @@ import es.dmoral.toasty.Toasty;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 import fall2018.csc2017.slidingtiles.drop_down_menu.ContactsFragment;
 import fall2018.csc2017.slidingtiles.drop_down_menu.HelpsFragment;
-import fall2018.csc2017.slidingtiles.drop_down_menu.SettingsFragment;
 import fall2018.csc2017.slidingtiles.menu_bars.GameStoreFragment;
 import fall2018.csc2017.slidingtiles.menu_bars.ProfileFragment;
 import fall2018.csc2017.slidingtiles.menu_bars.ToolFragment;
@@ -189,12 +186,6 @@ public class InfoPanelMainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         switch (id){
-            case R.id.action_settings:
-                SettingsFragment s = new SettingsFragment();
-                passInfo();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        s).commit();
-                break;
             case R.id.action_helps:
                 HelpsFragment h = new HelpsFragment();
                 passInfo();

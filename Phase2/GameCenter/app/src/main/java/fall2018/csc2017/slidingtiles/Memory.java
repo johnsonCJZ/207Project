@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Memory implements Serializable {
+public abstract class Memory<T> implements Serializable {
     private List<Integer> board;
     private int size;
     private double time;
@@ -14,6 +14,11 @@ public class Memory implements Serializable {
     public Memory(){
         board = new ArrayList<>();
     }
+
+
+    public abstract void makeCopy(T manager);
+
+    public abstract T copy();
 
 //    public Memory makeCopy(BoardManager manager, String boardType){
 //        switch (boardType){

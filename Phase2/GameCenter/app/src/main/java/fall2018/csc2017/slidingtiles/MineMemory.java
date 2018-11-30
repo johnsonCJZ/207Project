@@ -3,7 +3,7 @@ package fall2018.csc2017.slidingtiles;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MineMemory extends Memory {
+public class MineMemory extends Memory<MineBoardManager> {
     private int dimension;
     private int mine;
     private double timeMine;
@@ -46,6 +46,7 @@ public class MineMemory extends Memory {
     private List<Boolean> isMineOfTiles = new ArrayList<>();
     private List<Boolean> isFlaggedOfTiles = new ArrayList<>();
 
+    @Override
     public void makeCopy(MineBoardManager manager) {
         dimension = manager.getBoard().getDimension();
         mine = manager.getBoard().getMineNum();
@@ -60,6 +61,7 @@ public class MineMemory extends Memory {
         }
     }
 
+    @Override
     public MineBoardManager copy() {
         List<MineTile> tiles = new ArrayList<>();
         for (int i = 0; i < dimension * dimension; i++) {
