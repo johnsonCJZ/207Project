@@ -256,7 +256,14 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
             @Override
             public void onClick(View v) {
                 isPaused = false;
-                boardManager = new MineBoardManager(dimension,mine);
+                ManagerFactory f = new ManagerFactory();
+                MineBoard b = new BuilderBoard()
+                        .setMine(mine)
+                        .setMineLeft(mine)
+                        .setDimension(dimension)
+                        .setMineTiles()
+                        .buildMineBoard();
+                boardManager = (MineBoardManager) f.createNewManager(b);
                 boardManager.setTime((double) -1);
                 createTileButtons(getApplicationContext());
                 setGridView();

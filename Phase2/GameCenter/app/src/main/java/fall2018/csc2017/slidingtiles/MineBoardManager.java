@@ -8,6 +8,8 @@ public class MineBoardManager extends BoardManager<MineBoard, MineTile>{
     private boolean lost = false;
     private List<MineTile> minePosition;
 
+    MineBoardManager(){}
+
     MineBoardManager(int dimension, int numOfMine) {
         super(dimension);
         board = new BuilderBoard().setMine(numOfMine).setMineLeft(numOfMine).setDimension(dimension).setMineTiles().buildMineBoard();
@@ -24,6 +26,10 @@ public class MineBoardManager extends BoardManager<MineBoard, MineTile>{
         this.dimension = dimension;
         this.time = time;
         minePosition = board.getMinePosition();
+    }
+
+    public void setBoard(MineBoard board) {
+        this.board = board;
     }
 
     List<MineTile> getMinePosition() {

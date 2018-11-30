@@ -19,6 +19,8 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
      */
     private int currIndex = 0;
 
+    public SlidingBoardManager(){}
+
     /**
      * Create a new SlidingBoardManager to manage a new shuffled n*n slidingBoard.
      * @param n the number of rows and columns

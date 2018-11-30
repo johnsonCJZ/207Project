@@ -14,6 +14,8 @@ public abstract class BoardManager<T, K> implements Serializable {
 
     T board;
 
+    public BoardManager(){}
+
     public BoardManager(int n) {
         this.dimension = n;
     }

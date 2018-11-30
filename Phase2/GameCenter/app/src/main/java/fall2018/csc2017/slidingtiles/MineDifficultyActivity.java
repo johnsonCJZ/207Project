@@ -104,15 +104,36 @@ public class MineDifficultyActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0: // 3x3
-                        boardManager =new MineBoardManager(9, 10);
+                        ManagerFactory f = new ManagerFactory();
+                        MineBoard b = new BuilderBoard()
+                                .setMine(10)
+                                .setMineLeft(10)
+                                .setDimension(9)
+                                .setMineTiles()
+                                .buildMineBoard();
+                        boardManager = (MineBoardManager) f.createNewManager(b);
                         switchToGame();
                         break;
                     case 1: // 4x4
-                        boardManager = new MineBoardManager(16, 40);
+                        ManagerFactory f2 = new ManagerFactory();
+                        MineBoard b2 = new BuilderBoard()
+                                .setMine(40)
+                                .setMineLeft(40)
+                                .setDimension(16)
+                                .setMineTiles()
+                                .buildMineBoard();
+                        boardManager = (MineBoardManager) f2.createNewManager(b2);
                         switchToGame();
                         break;
                     case 2: // 5x5
-                        boardManager = new MineBoardManager(20, 80);
+                        ManagerFactory f3 = new ManagerFactory();
+                        MineBoard b3 = new BuilderBoard()
+                                .setMine(80)
+                                .setMineLeft(80)
+                                .setDimension(20)
+                                .setMineTiles()
+                                .buildMineBoard();
+                        boardManager = (MineBoardManager) f3.createNewManager(b3);
                         switchToGame();
                         break;
                 }

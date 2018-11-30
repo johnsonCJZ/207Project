@@ -11,8 +11,9 @@ public class ManagerFactory {
         if(b instanceof MineBoard){
             MineBoardManager m = new MineBoardManager();
             m.setTiles(b.getTiles());
-            m.setDimension(((MineBoard) b).getDimension());
+            m.setDimension(b.getDimension());
             m.setMinePosition(((MineBoard) b).getMinePosition());
+            m.setBoard((MineBoard) b);
             m.setUpBoard();
             return m;
         }
@@ -26,9 +27,9 @@ public class ManagerFactory {
         }
         if(b instanceof SlidingBoard){
             SlidingBoardManager m = new SlidingBoardManager();
-            int dimension = ((SlidingBoard) b).getDimension();
+            int dimension = (b.getDimension());
             m.setDimension(dimension);
-            m.setSlidingBoard((SlidingBoard) b);
+            m.setBoard((SlidingBoard) b);
             int numTiles = dimension * dimension;
             List<SlidingTile>slidingTiles = b.getTiles();
             for (int tileNum = 0; tileNum != numTiles; tileNum++) {

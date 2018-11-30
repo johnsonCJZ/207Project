@@ -294,9 +294,9 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
 
 
     void setGridView() {
-        gridView.setNumColumns(slidingBoardManager.getSlidingBoard().getDimension());
+        gridView.setNumColumns(slidingBoardManager.getBoard().getDimension());
         gridView.setBoardBoardManager(slidingBoardManager);
-        slidingBoardManager.getSlidingBoard().addObserver(this);
+        slidingBoardManager.getBoard().addObserver(this);
         // Observer sets up desired dimensions as well as calls our display function
         gridView.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -307,8 +307,8 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
                         int displayWidth = gridView.getMeasuredWidth();
                         int displayHeight = gridView.getMeasuredHeight();
 
-                        columnWidth = displayWidth / slidingBoardManager.getSlidingBoard().getDimension();
-                        columnHeight = displayHeight / slidingBoardManager.getSlidingBoard().getDimension();
+                        columnWidth = displayWidth / slidingBoardManager.getBoard().getDimension();
+                        columnHeight = displayHeight / slidingBoardManager.getBoard().getDimension();
 
                         display();
 
@@ -398,7 +398,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         }
         slidingTiles.add(new SlidingTile(0));
         slidingTiles.add(new SlidingTile(numTiles-1));
-        slidingBoardManager.setSlidingTiles(slidingTiles);
+        slidingBoardManager.setTiles(slidingTiles);
     }
 
     /**
@@ -426,8 +426,8 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
 
         this.slidingBoardManager = (SlidingBoardManager) extra.getSerializable("slidingBoardManager");
         this.size = extra.getInt("size");
-        if (slidingBoardManager.getSlidingBoard()!=null){
-            this.size = slidingBoardManager.getSlidingBoard().getDimension();
+        if (slidingBoardManager.getBoard()!=null){
+            this.size = slidingBoardManager.getBoard().getDimension();
         }
         switch (size) {
             case 3:
@@ -456,7 +456,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
      * @param context the context
      */
     private void createTileButtons(Context context) {
-        SlidingBoard slidingBoard = slidingBoardManager.getSlidingBoard();
+        SlidingBoard slidingBoard = slidingBoardManager.getBoard();
         tileButtons = new ArrayList<>();
         for (int row = 0; row != size; row++) {
             for (int col = 0; col != size; col++) {
@@ -471,11 +471,11 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
      * Update the backgrounds on the buttons to match the slidingTiles.
      */
     private void updateTileButtons() {
-        SlidingBoard slidingBoard = slidingBoardManager.getSlidingBoard();
+        SlidingBoard slidingBoard = slidingBoardManager.getBoard();
         int nextPos = 0;
         for (Button b : tileButtons) {
-            int row = nextPos / slidingBoardManager.getSlidingBoard().getDimension();
-            int col = nextPos % slidingBoardManager.getSlidingBoard().getDimension();
+            int row = nextPos / slidingBoardManager.getBoard().getDimension();
+            int col = nextPos % slidingBoardManager.getBoard().getDimension();
             b.setBackgroundResource(slidingBoard.getTile(row, col).getBackground());
             nextPos++;
         }
