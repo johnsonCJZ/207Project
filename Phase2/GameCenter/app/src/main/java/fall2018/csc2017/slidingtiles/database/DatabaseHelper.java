@@ -23,10 +23,10 @@ import fall2018.csc2017.slidingtiles.UserAccount;
 import fall2018.csc2017.slidingtiles.UserAccountManager;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "User.db";
-    public static final String TABLE_NAME = "user_table";
-    public static final String KEY_NAME = "USERNAME";
-    public static final String KEY_USER = "USERACCOUNT";
+    private static final String DATABASE_NAME = "User.db";
+    private static final String TABLE_NAME = "user_table";
+    private static final String KEY_NAME = "USERNAME";
+    private static final String KEY_USER = "USERACCOUNT";
     private final String USER_ACCOUNT_MANAGER = "UserAccountManager";
 
     public DatabaseHelper(@Nullable Context context) {
@@ -69,7 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public String convertToJson(Object o) {
+    private String convertToJson(Object o) {
         Gson gson = new GsonBuilder().registerTypeAdapter(ScoreStrategy.class, new InterfaceAdapter<ScoreStrategy>())
                 .create();
         return gson.toJson(o);

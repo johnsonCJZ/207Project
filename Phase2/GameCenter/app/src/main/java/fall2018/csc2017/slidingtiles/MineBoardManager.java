@@ -17,6 +17,19 @@ public class MineBoardManager extends BoardManager<MineBoard, MineTile>{
         isFirst = true;
     }
 
+    /**
+     * Return if the MineBoard is played.
+     * @return if the MineBoard is played
+     */
+    public boolean isFirst() {
+        return isFirst;
+    }
+
+    public void switchIsFirst() {
+        isFirst = !isFirst;
+    }
+
+
     void mark(int position) {
         getBoard().flag(position);
     }
