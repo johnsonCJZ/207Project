@@ -1,7 +1,8 @@
 package fall2018.csc2017.slidingtiles;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class MemoryTest {
     private Factory factory = new Factory();
@@ -85,7 +86,7 @@ public class MemoryTest {
         assertEquals(mineMemory.getDimension(), mineBoardManager.getDimension());
         assertEquals(mineMemory.getMine(), mineBoardManager.getBoard().getMineNum());
         assertEquals(mineMemory.getMineLeft(), mineBoardManager.getBoard().getMineLeft());
-        assertEquals(mineMemory.isFirst(),mineBoardManager.isFirst());
+        assertEquals(mineMemory.isFirst(), mineBoardManager.isFirst());
         assertEquals(mineMemory.getTimeMine(), mineBoardManager.getTime(), 0.0);
         for (int i = 0; i < mineMemory.getIsFlaggedOfTiles().size(); i++) {
             assertEquals(mineMemory.getIsFlaggedOfTiles().get(i), mineBoardManager.getTiles().get(i).isFlagged());

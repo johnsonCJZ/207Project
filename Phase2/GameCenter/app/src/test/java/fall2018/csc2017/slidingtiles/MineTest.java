@@ -2,9 +2,12 @@ package fall2018.csc2017.slidingtiles;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class MineTest {
 
@@ -23,11 +26,11 @@ public class MineTest {
     @Test
     public void testGetSurround() {
         setUp();
-        assertEquals(3,board.getSurround(0).size());
-        assertEquals(8,board.getSurround(12).size());
-        for (MineTile tile: board.getSurround(12)) {
-            int tileRow = tile.getPosition()/board.getDimension();
-            int tileCol = tile.getPosition()%board.getDimension();
+        assertEquals(3, board.getSurround(0).size());
+        assertEquals(8, board.getSurround(12).size());
+        for (MineTile tile : board.getSurround(12)) {
+            int tileRow = tile.getPosition() / board.getDimension();
+            int tileCol = tile.getPosition() % board.getDimension();
             int row = 12 / board.getDimension();
             int col = 12 % board.getDimension();
             assertTrue(tileRow - row <= 1 && tileRow - row >= -1 && tileCol - col <= 1 && tileCol - col >= -1);
@@ -53,9 +56,9 @@ public class MineTest {
     public void testFlag() {
         setUp();
         manager.mark(12);
-        assertEquals(board.getMineLeft(),board.getMineNum()-1);
+        assertEquals(board.getMineLeft(), board.getMineNum() - 1);
         manager.mark(12);
-        assertEquals(board.getMineLeft(),board.getMineNum());
+        assertEquals(board.getMineLeft(), board.getMineNum());
     }
 
     @Test
@@ -75,13 +78,14 @@ public class MineTest {
         for (MineTile tile : manager.getTiles()) {
             if (tile.isMine()) {
                 assertEquals(tile.getNumber(), -1);
-            }
-            else {
+            } else {
                 int mineNum = 0;
                 for (MineTile surroundTile : board.getSurround(tile.getPosition())) {
-                    if (surroundTile.isMine()) {mineNum++;}
+                    if (surroundTile.isMine()) {
+                        mineNum++;
+                    }
                 }
-                assertEquals(tile.getNumber(),mineNum);
+                assertEquals(tile.getNumber(), mineNum);
             }
         }
     }

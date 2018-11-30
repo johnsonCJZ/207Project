@@ -1,10 +1,16 @@
 package fall2018.csc2017.slidingtiles;
 
 import org.junit.Test;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.*;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class SlidingTest {
 
@@ -14,7 +20,7 @@ public class SlidingTest {
     private SlidingBoardManager setUpBoard(int dimension, List<SlidingTile> tiles) {
         Factory factory = new Factory();
         SlidingBoard board = new BuilderBoard().setDimension(dimension).buildSlidingBoard();
-        SlidingBoardManager manager = (SlidingBoardManager)factory.createNewManager(board);
+        SlidingBoardManager manager = (SlidingBoardManager) factory.createNewManager(board);
         manager.setTiles(tiles);
         board.setDimension(dimension);
         return manager;
@@ -62,11 +68,11 @@ public class SlidingTest {
     @Test
     public void testDimensionThreeNoInversion() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
-        Arrays.asList(new SlidingTile(0), new SlidingTile(1),
-                new SlidingTile(2), new SlidingTile(3),
-                new SlidingTile(4), new SlidingTile(5),
-                new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
-        ));
+                Arrays.asList(new SlidingTile(0), new SlidingTile(1),
+                        new SlidingTile(2), new SlidingTile(3),
+                        new SlidingTile(4), new SlidingTile(5),
+                        new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
+                ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertEquals(0, testCase.findInversion());
         assertEquals(3, testCase.getBoard().getDimension());
@@ -78,11 +84,11 @@ public class SlidingTest {
     @Test
     public void testOneInversion() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
-        Arrays.asList(new SlidingTile(0), new SlidingTile(2),
-                new SlidingTile(1), new SlidingTile(3),
-                new SlidingTile(4), new SlidingTile(5),
-                new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
-        ));
+                Arrays.asList(new SlidingTile(0), new SlidingTile(2),
+                        new SlidingTile(1), new SlidingTile(3),
+                        new SlidingTile(4), new SlidingTile(5),
+                        new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
+                ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertEquals(1, testCase.findInversion());
     }
@@ -94,11 +100,11 @@ public class SlidingTest {
     @Test
     public void testNoInversionEndWithZero() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
-        Arrays.asList(new SlidingTile(1), new SlidingTile(2),
-                new SlidingTile(3), new SlidingTile(4),
-                new SlidingTile(5), new SlidingTile(6),
-                new SlidingTile(7), new SlidingTile(8), new SlidingTile(0)
-        ));
+                Arrays.asList(new SlidingTile(1), new SlidingTile(2),
+                        new SlidingTile(3), new SlidingTile(4),
+                        new SlidingTile(5), new SlidingTile(6),
+                        new SlidingTile(7), new SlidingTile(8), new SlidingTile(0)
+                ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertEquals(0, testCase.findInversion());
     }
@@ -110,11 +116,11 @@ public class SlidingTest {
     @Test
     public void testOneInversionZeroInMiddle() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
-        Arrays.asList(new SlidingTile(1), new SlidingTile(2),
-                new SlidingTile(3), new SlidingTile(4),
-                new SlidingTile(5), new SlidingTile(6),
-                new SlidingTile(0), new SlidingTile(8), new SlidingTile(7)
-        ));
+                Arrays.asList(new SlidingTile(1), new SlidingTile(2),
+                        new SlidingTile(3), new SlidingTile(4),
+                        new SlidingTile(5), new SlidingTile(6),
+                        new SlidingTile(0), new SlidingTile(8), new SlidingTile(7)
+                ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertEquals(1, testCase.findInversion());
     }
@@ -125,11 +131,11 @@ public class SlidingTest {
     @Test
     public void testMultipleInversions() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
-        Arrays.asList(new SlidingTile(8), new SlidingTile(0),
-                new SlidingTile(6), new SlidingTile(7),
-                new SlidingTile(5), new SlidingTile(4),
-                new SlidingTile(2), new SlidingTile(3), new SlidingTile(1)
-        ));
+                Arrays.asList(new SlidingTile(8), new SlidingTile(0),
+                        new SlidingTile(6), new SlidingTile(7),
+                        new SlidingTile(5), new SlidingTile(4),
+                        new SlidingTile(2), new SlidingTile(3), new SlidingTile(1)
+                ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertEquals(26, testCase.findInversion());
     }
@@ -141,15 +147,15 @@ public class SlidingTest {
     @Test
     public void testDimensionFourInversions() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
-        Arrays.asList(new SlidingTile(1), new SlidingTile(2),
-                new SlidingTile(3), new SlidingTile(4),
-                new SlidingTile(5), new SlidingTile(6),
-                new SlidingTile(7), new SlidingTile(8),
-                new SlidingTile(0), new SlidingTile(9),
-                new SlidingTile(10), new SlidingTile(11),
-                new SlidingTile(12), new SlidingTile(13),
-                new SlidingTile(14), new SlidingTile(15)
-        ));
+                Arrays.asList(new SlidingTile(1), new SlidingTile(2),
+                        new SlidingTile(3), new SlidingTile(4),
+                        new SlidingTile(5), new SlidingTile(6),
+                        new SlidingTile(7), new SlidingTile(8),
+                        new SlidingTile(0), new SlidingTile(9),
+                        new SlidingTile(10), new SlidingTile(11),
+                        new SlidingTile(12), new SlidingTile(13),
+                        new SlidingTile(14), new SlidingTile(15)
+                ));
         SlidingBoardManager testCase = setUpBoard(4, tilesToTest);
         assertEquals(0, testCase.findInversion());
         assertEquals(4, testCase.getBoard().getDimension());
@@ -162,20 +168,20 @@ public class SlidingTest {
     @Test
     public void testDimensionFiveInversions() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
-        Arrays.asList(new SlidingTile(1), new SlidingTile(2),
-                new SlidingTile(3), new SlidingTile(4),
-                new SlidingTile(5), new SlidingTile(6),
-                new SlidingTile(7), new SlidingTile(8),
-                new SlidingTile(0), new SlidingTile(9),
-                new SlidingTile(10), new SlidingTile(11),
-                new SlidingTile(12), new SlidingTile(13),
-                new SlidingTile(14), new SlidingTile(15),
-                new SlidingTile(16), new SlidingTile(17),
-                new SlidingTile(18), new SlidingTile(19),
-                new SlidingTile(20), new SlidingTile(21),
-                new SlidingTile(22), new SlidingTile(23),
-                new SlidingTile(24)
-        ));
+                Arrays.asList(new SlidingTile(1), new SlidingTile(2),
+                        new SlidingTile(3), new SlidingTile(4),
+                        new SlidingTile(5), new SlidingTile(6),
+                        new SlidingTile(7), new SlidingTile(8),
+                        new SlidingTile(0), new SlidingTile(9),
+                        new SlidingTile(10), new SlidingTile(11),
+                        new SlidingTile(12), new SlidingTile(13),
+                        new SlidingTile(14), new SlidingTile(15),
+                        new SlidingTile(16), new SlidingTile(17),
+                        new SlidingTile(18), new SlidingTile(19),
+                        new SlidingTile(20), new SlidingTile(21),
+                        new SlidingTile(22), new SlidingTile(23),
+                        new SlidingTile(24)
+                ));
         SlidingBoardManager testCase = setUpBoard(5, tilesToTest);
         assertEquals(0, testCase.findInversion());
         assertEquals(5, testCase.getBoard().getDimension());
@@ -186,13 +192,13 @@ public class SlidingTest {
      * is at the beginning.
      */
     @Test
-    public void testNotWonZeroAtBeginning(){
+    public void testNotWonZeroAtBeginning() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
-        Arrays.asList(new SlidingTile(0), new SlidingTile(1),
-                new SlidingTile(2), new SlidingTile(3),
-                new SlidingTile(4), new SlidingTile(5),
-                new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
-        ));
+                Arrays.asList(new SlidingTile(0), new SlidingTile(1),
+                        new SlidingTile(2), new SlidingTile(3),
+                        new SlidingTile(4), new SlidingTile(5),
+                        new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
+                ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertFalse(testCase.isWon());
     }
@@ -202,13 +208,13 @@ public class SlidingTest {
      * is in the middle.
      */
     @Test
-    public void testNotWonZeroInMiddle(){
+    public void testNotWonZeroInMiddle() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
-        Arrays.asList(new SlidingTile(1), new SlidingTile(0),
-                new SlidingTile(2), new SlidingTile(3),
-                new SlidingTile(4), new SlidingTile(5),
-                new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
-        ));
+                Arrays.asList(new SlidingTile(1), new SlidingTile(0),
+                        new SlidingTile(2), new SlidingTile(3),
+                        new SlidingTile(4), new SlidingTile(5),
+                        new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
+                ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertFalse(testCase.isWon());
     }
@@ -218,13 +224,13 @@ public class SlidingTest {
      * is at the end
      */
     @Test
-    public void testWonZeroAtEnd(){
+    public void testWonZeroAtEnd() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
-        Arrays.asList(new SlidingTile(1), new SlidingTile(2),
-                new SlidingTile(3), new SlidingTile(4),
-                new SlidingTile(5), new SlidingTile(6),
-                new SlidingTile(7), new SlidingTile(8), new SlidingTile(0)
-        ));
+                Arrays.asList(new SlidingTile(1), new SlidingTile(2),
+                        new SlidingTile(3), new SlidingTile(4),
+                        new SlidingTile(5), new SlidingTile(6),
+                        new SlidingTile(7), new SlidingTile(8), new SlidingTile(0)
+                ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertTrue(testCase.isWon());
     }
@@ -233,13 +239,13 @@ public class SlidingTest {
      * Test whether isWon returns false when there is one inversion.
      */
     @Test
-    public void testNotWonOneInversion(){
+    public void testNotWonOneInversion() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
-        Arrays.asList(new SlidingTile(1), new SlidingTile(2),
-                new SlidingTile(3), new SlidingTile(4),
-                new SlidingTile(5), new SlidingTile(6),
-                new SlidingTile(0), new SlidingTile(8), new SlidingTile(7)
-        ));
+                Arrays.asList(new SlidingTile(1), new SlidingTile(2),
+                        new SlidingTile(3), new SlidingTile(4),
+                        new SlidingTile(5), new SlidingTile(6),
+                        new SlidingTile(0), new SlidingTile(8), new SlidingTile(7)
+                ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertFalse(testCase.isWon());
     }
@@ -248,13 +254,13 @@ public class SlidingTest {
      * Test whether isWon returns false when there is more than one inversion.
      */
     @Test
-    public void testNotWonMoreInversions(){
+    public void testNotWonMoreInversions() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
-        Arrays.asList(new SlidingTile(8), new SlidingTile(0),
-                new SlidingTile(6), new SlidingTile(7),
-                new SlidingTile(5), new SlidingTile(4),
-                new SlidingTile(2), new SlidingTile(3), new SlidingTile(1)
-        ));
+                Arrays.asList(new SlidingTile(8), new SlidingTile(0),
+                        new SlidingTile(6), new SlidingTile(7),
+                        new SlidingTile(5), new SlidingTile(4),
+                        new SlidingTile(2), new SlidingTile(3), new SlidingTile(1)
+                ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertFalse(testCase.isWon());
     }
@@ -266,11 +272,11 @@ public class SlidingTest {
     @Test
     public void testMoveCorner() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
-        Arrays.asList(new SlidingTile(0), new SlidingTile(1),
-                new SlidingTile(2), new SlidingTile(3),
-                new SlidingTile(4), new SlidingTile(5),
-                new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
-        ));
+                Arrays.asList(new SlidingTile(0), new SlidingTile(1),
+                        new SlidingTile(2), new SlidingTile(3),
+                        new SlidingTile(4), new SlidingTile(5),
+                        new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
+                ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         testCase.move(1);
         List<SlidingTile> tiles = testCase.getTiles();
@@ -290,11 +296,11 @@ public class SlidingTest {
     @Test
     public void testMoveSide() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
-        Arrays.asList(new SlidingTile(1), new SlidingTile(0),
-                new SlidingTile(2), new SlidingTile(3),
-                new SlidingTile(4), new SlidingTile(5),
-                new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
-        ));
+                Arrays.asList(new SlidingTile(1), new SlidingTile(0),
+                        new SlidingTile(2), new SlidingTile(3),
+                        new SlidingTile(4), new SlidingTile(5),
+                        new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
+                ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         testCase.move(0);
         List<SlidingTile> tiles = testCase.getTiles();
@@ -314,11 +320,11 @@ public class SlidingTest {
     @Test
     public void testMoveMiddle() {
         ArrayList<SlidingTile> tilesToTest = new ArrayList<>(
-        Arrays.asList(new SlidingTile(1), new SlidingTile(2),
-                new SlidingTile(3), new SlidingTile(4),
-                new SlidingTile(0), new SlidingTile(5),
-                new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
-        ));
+                Arrays.asList(new SlidingTile(1), new SlidingTile(2),
+                        new SlidingTile(3), new SlidingTile(4),
+                        new SlidingTile(0), new SlidingTile(5),
+                        new SlidingTile(6), new SlidingTile(7), new SlidingTile(8)
+                ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         testCase.move(1);
         List<SlidingTile> tiles = testCase.getTiles();

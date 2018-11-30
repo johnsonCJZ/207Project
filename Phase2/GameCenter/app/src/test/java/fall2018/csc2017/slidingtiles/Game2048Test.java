@@ -4,7 +4,10 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class Game2048Test {
 
@@ -27,16 +30,15 @@ public class Game2048Test {
      * A helper function that makes the board full and not movable. Each tile has no adjacent tiles
      * with same value.
      */
-    private void setBoardCannotMove(int largestTile){
+    private void setBoardCannotMove(int largestTile) {
         board.setUpTiles();
         int n = 2;
         List<Game2048Tile> tiles = board.getTiles();
-        for (Game2048Tile tile: tiles){
+        for (Game2048Tile tile : tiles) {
             tile.setValue(n);
-            if(n < largestTile){
+            if (n < largestTile) {
                 n = n * 2;
-            }
-            else{
+            } else {
                 n = 2;
             }
         }
@@ -45,10 +47,10 @@ public class Game2048Test {
     /**
      * A helper function that makes the board full and mergeble. All tiles have value of 2.
      */
-    private void setBoardCanMove(){
+    private void setBoardCanMove() {
         board.setUpTiles();
         List<Game2048Tile> tiles = board.getTiles();
-        for (Game2048Tile tile: tiles){
+        for (Game2048Tile tile : tiles) {
             tile.setValue(2);
         }
         board.setScore(0);
@@ -87,7 +89,7 @@ public class Game2048Test {
     /**
      * A helper function to reset game score and call mergeList.
      */
-    private void setUpMergeList(Game2048Tile[] testCase, String direction){
+    private void setUpMergeList(Game2048Tile[] testCase, String direction) {
         board.setScore(0);
         board.mergeList(testCase, direction);
     }
@@ -143,7 +145,7 @@ public class Game2048Test {
      * Test whether isWon returns false when for a new board in the game.
      */
     @Test
-    public void testNotWinNewBoard(){
+    public void testNotWinNewBoard() {
         board.setUpTiles();
         board.addTile();
         assertTrue(manager.canMove());
@@ -156,7 +158,7 @@ public class Game2048Test {
     @Test
     public void testNotWinCanMove() {
         board.setUpTiles();
-        Game2048Tile tile= board.getTile(0, 0);
+        Game2048Tile tile = board.getTile(0, 0);
         tile.setValue(2);
         assertTrue(manager.canMove());
         assertFalse(manager.isWon());
@@ -297,16 +299,16 @@ public class Game2048Test {
      * Test merging the whole board up.
      */
     @Test
-    public void testMergeWholeBoardUp(){
+    public void testMergeWholeBoardUp() {
         setBoardCanMove();
         manager.move("UP");
         int[][] expectedRows = {{4, 4, 4, 4}, {4, 4, 4, 4}, {0, 0, 0, 0}, {0, 0, 0, 0}};
-        for (int i = 0; i < board.getDimension(); i++){
+        for (int i = 0; i < board.getDimension(); i++) {
             assertArrayEquals(expectedRows[i], tileToInt(board.getRow(i)));
         }
         int[][] expectedColumns = {{4, 4, 0, 0}, {4, 4, 0, 0}, {4, 4, 0, 0}, {4, 4, 0, 0}};
         assertTrue(board.isChanged());
-        for (int i = 0; i < board.getDimension(); i++){
+        for (int i = 0; i < board.getDimension(); i++) {
             assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
         }
         assertEquals(32, manager.getScore());
@@ -316,16 +318,16 @@ public class Game2048Test {
      * Test merging the whole board down.
      */
     @Test
-    public void testMergeWholeBoardDown(){
+    public void testMergeWholeBoardDown() {
         setBoardCanMove();
         manager.move("DOWN");
         int[][] expectedRows = {{0, 0, 0, 0}, {0, 0, 0, 0}, {4, 4, 4, 4}, {4, 4, 4, 4}};
-        for (int i = 0; i < board.getDimension(); i++){
+        for (int i = 0; i < board.getDimension(); i++) {
             assertArrayEquals(expectedRows[i], tileToInt(board.getRow(i)));
         }
         int[][] expectedColumns = {{0, 0, 4, 4}, {0, 0, 4, 4}, {0, 0, 4, 4}, {0, 0, 4, 4}};
         assertTrue(board.isChanged());
-        for (int i = 0; i < board.getDimension(); i++){
+        for (int i = 0; i < board.getDimension(); i++) {
             assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
         }
         assertEquals(32, manager.getScore());
@@ -335,16 +337,16 @@ public class Game2048Test {
      * Test merging the whole board left.
      */
     @Test
-    public void testMergeWholeBoardLeft(){
+    public void testMergeWholeBoardLeft() {
         setBoardCanMove();
         manager.move("LEFT");
         int[][] expectedRows = {{4, 4, 0, 0}, {4, 4, 0, 0}, {4, 4, 0, 0}, {4, 4, 0, 0}};
-        for (int i = 0; i < board.getDimension(); i++){
+        for (int i = 0; i < board.getDimension(); i++) {
             assertArrayEquals(expectedRows[i], tileToInt(board.getRow(i)));
         }
         int[][] expectedColumns = {{4, 4, 4, 4}, {4, 4, 4, 4}, {0, 0, 0, 0}, {0, 0, 0, 0}};
         assertTrue(board.isChanged());
-        for (int i = 0; i < board.getDimension(); i++){
+        for (int i = 0; i < board.getDimension(); i++) {
             assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
         }
         assertEquals(32, manager.getScore());
@@ -354,16 +356,16 @@ public class Game2048Test {
      * Test merging the whole board right.
      */
     @Test
-    public void testMergeWholeBoardRight(){
+    public void testMergeWholeBoardRight() {
         setBoardCanMove();
         manager.move("RIGHT");
         int[][] expectedRows = {{0, 0, 4, 4}, {0, 0, 4, 4}, {0, 0, 4, 4}, {0, 0, 4, 4}};
-        for (int i = 0; i < board.getDimension(); i++){
+        for (int i = 0; i < board.getDimension(); i++) {
             assertArrayEquals(expectedRows[i], tileToInt(board.getRow(i)));
         }
         int[][] expectedColumns = {{0, 0, 0, 0}, {0, 0, 0, 0}, {4, 4, 4, 4}, {4, 4, 4, 4}};
         assertTrue(board.isChanged());
-        for (int i = 0; i < board.getDimension(); i++){
+        for (int i = 0; i < board.getDimension(); i++) {
             assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
         }
         assertEquals(32, manager.getScore());
