@@ -7,8 +7,6 @@ public class Game2048BoardManager extends BoardManager<Game2048Board, Game2048Ti
     final private Integer DIMENSION = 4;
 //    private Double time;
 
-    public Game2048BoardManager() {}
-
     int getScore() {
         return getBoard().getScore();
     }

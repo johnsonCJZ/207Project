@@ -1,7 +1,6 @@
 package fall2018.csc2017.slidingtiles;
 
 import java.io.Serializable;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
