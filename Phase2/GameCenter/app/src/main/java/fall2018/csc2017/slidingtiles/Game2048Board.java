@@ -61,6 +61,17 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
         //return null;
     }
 
+    void cheat() {
+        ArrayList<Game2048Tile> empty = findEmpty();
+        for (Game2048Tile tile : empty) {
+            tile.setValue(1024);
+        }
+
+        isChanged = true;
+        setChanged();
+        notifyObservers();
+    }
+
     /**
      * Find all empty tiles.
      * @return Array List of empty tiles.
