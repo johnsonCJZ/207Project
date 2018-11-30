@@ -45,8 +45,6 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        myDB = new DatabaseHelper(this);
-        username = (String) DataHolder.getInstance().retrieve("current user");
         getAllInfo(); // pass in all useful data from last activity, including boardManager
         getAllComponents();
         super.onCreate(savedInstanceState);
@@ -54,9 +52,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         isPaused = false;
         Thread t = time();
         t.start();
-
         setGridView();
-
         addCheatButton();
         addNewGameButton();
     }
@@ -94,6 +90,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         public void run() {
             if ((boardManager.isWon() || boardManager.isLost())
                     && !isPaused) {
+                user.setGame2048History("resumeHistory2048",null);
                 setIsWin();
                 isPaused = true;
                 endAlert();
@@ -136,6 +133,8 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
     }
 
     private void getAllInfo() {
+        myDB = new DatabaseHelper(this);
+        username = (String) DataHolder.getInstance().retrieve("current user");
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
 
@@ -165,10 +164,12 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boardManager = new Game2048BoardManager();
-                isPaused = false;
-                createTileButtons(getApplicationContext());
-                setGridView();
+                Game2048MainActivity.this.finish();
+                Intent tmp = new Intent(getApplicationContext(), Game2048MainActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("boardManager", new Game2048BoardManager());
+                tmp.putExtras(bundle);
+                startActivity(tmp);
             }
         });
     }
