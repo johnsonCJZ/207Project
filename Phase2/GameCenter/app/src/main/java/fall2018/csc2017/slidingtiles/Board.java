@@ -13,19 +13,19 @@ public abstract class Board<T> implements Serializable, IObservable<Game2048Boar
 
     private ArrayList<IObserver> observers = new ArrayList<>();
 
-    public void setTiles(List<T> tiles) {
+    void setTiles(List<T> tiles) {
         this.tiles = tiles;
     }
 
-    public List<T> getTiles(){
+    List<T> getTiles(){
         return tiles;
     }
 
-    public int getDimension() {
+    int getDimension() {
         return dimension;
     }
 
-    public void setDimension(int dimension) {
+    void setDimension(int dimension) {
         this.dimension = dimension;
     }
 
