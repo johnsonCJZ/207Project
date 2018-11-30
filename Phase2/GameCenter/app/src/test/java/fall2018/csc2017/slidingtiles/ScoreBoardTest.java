@@ -7,14 +7,14 @@ import static org.junit.Assert.*;
 public class ScoreBoardTest {
 
     @Test
-    public void calculateScore() {
+    public void testCalculateScore() {
     }
 
     @Test
-    public void addAndSort() {
+    public void testAddAndSort() {
     }
 
     @Test
-    public void getScoreList() {
+    public void testGetScoreList() {
     }
 }

@@ -56,10 +56,6 @@ public class Game2048Test {
         };
     }
 
-    public void setUp(Game2048Tile[] testCase, String direction) {
-        board.mergeList(testCase, direction);
-    }
-
     @Test
     public void testLose() {
         setBoardCannotMove(1024);
@@ -110,7 +106,7 @@ public class Game2048Test {
         int[] expected = {0, 0, 2, 4};
         int[] before = {2, 4, 0, 0};
         Game2048Tile[] actual = intToTile(before);
-        setUp(actual, "RIGHT");
+        board.mergeList(actual, "RIGHT");
         assertArrayEquals(expected, tileToInt(actual));
     }
 
@@ -119,7 +115,7 @@ public class Game2048Test {
         int[] expected = {0, 0, 0, 4};
         int[] before = {0, 0, 2, 2};
         Game2048Tile[] actual = intToTile(before);
-        setUp(actual, "RIGHT");
+        board.mergeList(actual, "RIGHT");
         assertArrayEquals(expected, tileToInt(actual));
     }
 
@@ -128,7 +124,7 @@ public class Game2048Test {
         int[] expected = {0, 0, 0, 8};
         int[] before = {4, 4, 0, 0};
         Game2048Tile[] actual = intToTile(before);
-        setUp(actual, "RIGHT");
+        board.mergeList(actual, "RIGHT");
         assertArrayEquals(expected, tileToInt(actual));
     }
 
@@ -137,7 +133,7 @@ public class Game2048Test {
         int[] expected = {0, 0, 8, 16};
         int[] before = {0, 0, 8, 16};
         Game2048Tile[] actual = intToTile(before);
-        setUp(actual, "RIGHT");
+        board.mergeList(actual, "RIGHT");
         assertArrayEquals(expected, tileToInt(actual));
     }
 
@@ -146,7 +142,7 @@ public class Game2048Test {
         int[] expected = {0, 0, 4, 4};
         int[] before = {2, 0, 2, 4};
         Game2048Tile[] actual = intToTile(before);
-        setUp(actual, "RIGHT");
+        board.mergeList(actual, "RIGHT");
         assertArrayEquals(expected, tileToInt(actual));
     }
 
@@ -155,7 +151,7 @@ public class Game2048Test {
         int[] expected = {0, 0, 2048, 512};
         int[] before = {1024, 0, 1024, 512};
         Game2048Tile[] actual = intToTile(before);
-        setUp(actual, "RIGHT");
+        board.mergeList(actual, "RIGHT");
         for (int i = 0; i < 4; i++) {
             assertEquals(expected[i], tileToInt(actual)[i]);
         }
@@ -166,7 +162,7 @@ public class Game2048Test {
         int[] expected = {0, 512, 2048, 512};
         int[] before = {256, 256, 2048, 512};
         Game2048Tile[] actual = intToTile(before);
-        setUp(actual, "RIGHT");
+        board.mergeList(actual, "RIGHT");
         assertArrayEquals(expected, tileToInt(actual));
     }
 
@@ -175,7 +171,7 @@ public class Game2048Test {
         int[] expected = {0, 0, 128, 256};
         int[] before = {64, 64, 128, 128};
         Game2048Tile[] actual = intToTile(before);
-        setUp(actual, "RIGHT");
+        board.mergeList(actual, "RIGHT");
         assertArrayEquals(expected, tileToInt(actual));
     }
 
@@ -184,7 +180,7 @@ public class Game2048Test {
         int[] expected = {2, 4, 0, 0};
         int[] before = {0, 0, 2, 4};
         Game2048Tile[] actual = intToTile(before);
-        setUp(actual, "LEFT");
+        board.mergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
     }
 
@@ -193,7 +189,7 @@ public class Game2048Test {
         int[] expected = {4, 0, 0, 0};
         int[] before = {2, 2, 0, 0};
         Game2048Tile[] actual = intToTile(before);
-        setUp(actual, "LEFT");
+        board.mergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
     }
 
@@ -202,7 +198,7 @@ public class Game2048Test {
         int[] expected = {8, 0, 0, 0};
         int[] before = {0, 4, 0, 4};
         Game2048Tile[] actual = intToTile(before);
-        setUp(actual, "LEFT");
+        board.mergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
     }
 
@@ -211,7 +207,7 @@ public class Game2048Test {
         int[] expected = {1024, 2, 0, 0};
         int[] before = {1024, 2, 0, 0};
         Game2048Tile[] actual = intToTile(before);
-        setUp(actual, "LEFT");
+        board.mergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
     }
 
@@ -220,7 +216,7 @@ public class Game2048Test {
         int[] expected = {4, 4, 0, 0};
         int[] before = {4, 2, 2, 0};
         Game2048Tile[] actual = intToTile(before);
-        setUp(actual, "LEFT");
+        board.mergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
     }
 
@@ -229,7 +225,7 @@ public class Game2048Test {
         int[] expected = {512, 2048, 0, 0};
         int[] before = {512, 1024, 0, 1024};
         Game2048Tile[] actual = intToTile(before);
-        setUp(actual, "LEFT");
+        board.mergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
     }
 
@@ -238,7 +234,7 @@ public class Game2048Test {
         int[] expected = {512, 2048, 512, 0};
         int[] before = {512, 2048, 256, 256};
         Game2048Tile[] actual = intToTile(before);
-        setUp(actual, "LEFT");
+        board.mergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
     }
 
@@ -247,7 +243,7 @@ public class Game2048Test {
         int[] expected = {16, 32, 0, 0};
         int[] before = {8, 8, 16, 16};
         Game2048Tile[] actual = intToTile(before);
-        setUp(actual, "LEFT");
+        board.mergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
     }
 }
