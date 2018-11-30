@@ -42,7 +42,6 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
 
     Game2048Tile addTile() {
         ArrayList<Game2048Tile> empty = findEmpty();
-        System.out.println(findEmpty().size());
         Game2048Tile randomTile = empty.get((int) (Math.random() * empty.size()));
         randomTile.random();
         isChanged = false;
