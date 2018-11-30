@@ -35,7 +35,7 @@ class Game2048Memory extends Memory<Game2048BoardManager> {
     @Override
     public Game2048BoardManager copy() {
         Factory f = new Factory();
-        return (Game2048BoardManager) f.Load2048Manager(time2048, score, tileValueList);
+        return f.Load2048Manager(time2048, score, tileValueList);
     }
 
     /**
