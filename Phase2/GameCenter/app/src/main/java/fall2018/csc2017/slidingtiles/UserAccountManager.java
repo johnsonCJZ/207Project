@@ -19,7 +19,7 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
     /**
      * global scoreBoard
      */
-    private HashMap<String,ScoreBoard> GlobalScoreBoard;
+    private HashMap<String,ScoreBoard> GlobalScoreBoard = new HashMap<>();
 
     /**
      * The serialized file for the users information.
@@ -42,17 +42,7 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
         userList.add(u);
     }
 
-    /**
-     * create a new UserAccountManager with empty memory
-     */
-    public UserAccountManager() {
-        GlobalScoreBoard = new HashMap<>();
-        GlobalScoreBoard.put("history3x3", new ScoreBoard("SlidingTiles"));
-        GlobalScoreBoard.put("history4x4", new ScoreBoard("SlidingTiles"));
-        GlobalScoreBoard.put("history5x5", new ScoreBoard("SlidingTiles"));
-        GlobalScoreBoard.put("2048", new ScoreBoard("2048"));
-        GlobalScoreBoard.put("Mine", new ScoreBoard("Mine"));
-    }
+
     /**
      * Return a iterator of the UserAccountManager class.
      * @return a UserAccountManager Iterator.
@@ -97,6 +87,10 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
 
     public ScoreBoard getGlobalScoreBoard(String tag) {
         return GlobalScoreBoard.get(tag);
+    }
+
+    public HashMap<String, ScoreBoard> getGlobalScoreBoard() {
+        return GlobalScoreBoard;
     }
 }
 

@@ -110,5 +110,15 @@ public class Factory {
         personalScoreBoard.put("Mine", new ScoreBoard("MineSweeper"));
         return u;
     }
+
+    public UserAccountManager createUserManager() {
+        UserAccountManager m = new UserAccountManager();
+        m.getGlobalScoreBoard().put("history3x3", new ScoreBoard("SlidingTiles"));
+        m.getGlobalScoreBoard().put("history4x4", new ScoreBoard("SlidingTiles"));
+        m.getGlobalScoreBoard().put("history5x5", new ScoreBoard("SlidingTiles"));
+        m.getGlobalScoreBoard().put("2048", new ScoreBoard("2048"));
+        m.getGlobalScoreBoard().put("Mine", new ScoreBoard("Mine"));
+        return m;
+    }
 }
 

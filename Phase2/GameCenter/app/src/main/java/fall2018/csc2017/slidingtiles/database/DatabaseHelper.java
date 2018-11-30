@@ -15,6 +15,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
+import fall2018.csc2017.slidingtiles.Factory;
 import fall2018.csc2017.slidingtiles.InterfaceAdapter;
 import fall2018.csc2017.slidingtiles.LoginActivity;
 import fall2018.csc2017.slidingtiles.ScoreStrategy;
@@ -59,7 +60,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean createUserAccountManager() {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(KEY_USER, convertToJson(new UserAccountManager()));
+        Factory f = new Factory();
+        contentValues.put(KEY_USER, convertToJson(f.createUserManager()));
         contentValues.put(KEY_NAME, USER_ACCOUNT_MANAGER);
         long result = db.insert(TABLE_NAME, null, contentValues);
 
