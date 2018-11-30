@@ -14,7 +14,8 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
     /**
      * A new empty board of 4*4 slidingTiles.
      */
-    Game2048Board() {}
+    Game2048Board() {
+    }
 
     void setUpTiles() {
         for (int row = 0; row != dimension; row++) {

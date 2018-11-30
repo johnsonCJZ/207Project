@@ -87,6 +87,7 @@ public class BuilderBoard {
     public Game2048Board build2048Board() {
         Game2048Board game2048Board = new Game2048Board();
         set2048Tiles();
+        game2048Board.setDimension(4);
         game2048Board.setTiles((List<Game2048Tile>)(List<?>)tiles);
         return game2048Board;
     }

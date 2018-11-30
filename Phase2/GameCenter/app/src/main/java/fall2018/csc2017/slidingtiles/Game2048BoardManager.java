@@ -3,7 +3,7 @@ package fall2018.csc2017.slidingtiles;
 import java.io.Serializable;
 import java.util.List;
 
-public class Game2048BoardManager extends BoardManager{
+public class Game2048BoardManager extends BoardManager implements Serializable{
     private Game2048Board board;
     final private Integer DIMENSION = 4;
 //    private Double time;

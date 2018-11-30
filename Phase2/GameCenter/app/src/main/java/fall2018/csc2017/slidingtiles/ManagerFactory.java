@@ -10,7 +10,7 @@ public class ManagerFactory {
     public BoardManager createNewManager(Board b){
         if(b instanceof MineBoard){
             MineBoardManager m = new MineBoardManager();
-            m.setTiles((List<MineTile>)(List<?>)b.getTiles());
+            m.setTiles(b.getTiles());
             m.setDimension(((MineBoard) b).getDimension());
             m.setMinePosition(((MineBoard) b).getMinePosition());
             m.setUpBoard();
@@ -30,7 +30,7 @@ public class ManagerFactory {
             m.setDimension(dimension);
             m.setSlidingBoard((SlidingBoard) b);
             int numTiles = dimension * dimension;
-            List<SlidingTile>slidingTiles = (List<SlidingTile>)(List<?>)b.getTiles();
+            List<SlidingTile>slidingTiles = b.getTiles();
             for (int tileNum = 0; tileNum != numTiles; tileNum++) {
                 slidingTiles.add(new SlidingTile(tileNum));
             }

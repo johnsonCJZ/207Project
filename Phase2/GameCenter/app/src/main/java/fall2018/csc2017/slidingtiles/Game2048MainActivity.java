@@ -30,16 +30,13 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
     private ArrayList<Button> tileButtons;
     private UserAccount user;
     private UserAccountManager users;
-
     static boolean isPaused;
     private int columnHeight;
     private int columnWidth;
-
     double tempCount;
     private boolean isWin;
     private DatabaseHelper myDB;
     private String username;
-
     private TextView scorePlace;
 
 
@@ -167,7 +164,12 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
                 Game2048MainActivity.this.finish();
                 Intent tmp = new Intent(getApplicationContext(), Game2048MainActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("boardManager", new Game2048BoardManager());
+
+                ManagerFactory f = new ManagerFactory();
+                Game2048Board board = new BuilderBoard().build2048Board();
+
+
+                bundle.putSerializable("boardManager", f.createNewManager(board));
                 tmp.putExtras(bundle);
                 startActivity(tmp);
             }
