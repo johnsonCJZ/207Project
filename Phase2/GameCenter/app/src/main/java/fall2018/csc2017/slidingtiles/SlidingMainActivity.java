@@ -253,6 +253,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         public void run() {
             if (slidingBoardManager.isWon() && !isPaused) {
                 slidingBoardManager.setTime(count);
+                gridView.freeze();
                 isPaused = true;
                 user.setSlideHistory("resumeHistorySlide", null);
                 winAlert();

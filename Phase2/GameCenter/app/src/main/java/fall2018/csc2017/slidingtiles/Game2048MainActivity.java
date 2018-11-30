@@ -85,6 +85,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
         public void run() {
             if ((boardManager.isWon() || boardManager.isLost())
                     && !isPaused) {
+                gridView.freeze();
                 user.setGame2048History("resumeHistory2048",null);
                 setIsWin();
                 isPaused = true;

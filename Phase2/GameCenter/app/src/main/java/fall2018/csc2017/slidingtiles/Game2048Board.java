@@ -132,6 +132,7 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
                         Integer valueJ = tileArray[j].getValue();
                         if (valueI.equals(valueJ)){
                             temp.add(valueI*2);
+                            score = score + valueI * 2;
                             i=j-1;
                         }
                         else{
