@@ -17,45 +17,11 @@ import java.util.List;
 /**
  * The sliding slidingTiles board.
  */
-public class SlidingBoard extends Board implements Serializable, IObservable<SlidingBoard> {
+public class SlidingBoard extends Board<SlidingTile> implements Serializable, IObservable<SlidingBoard> {
 
-    /**
-     * The number of rows and columns.
-     */
-    private int dimension;
-
-    /**
-     * The slidingTiles on the board in row-major order.
-     */
-    private List<SlidingTile> slidingTiles;
-
-    public boolean changed = false;
+    private boolean changed = false;
 
     private ArrayList<IObserver> observers = new ArrayList<>();
-
-    SlidingBoard(){}
-
-    /**
-     * Set the slidingTiles to slidingTiles.
-     * @param slidingTiles the slidingTiles for the board
-     */
-    void setSlidingTiles(List<SlidingTile> slidingTiles) {
-        this.slidingTiles = slidingTiles;
-    }
-
-    /**
-     * Set the number of rows and columns to int d.
-     * @param d the number of rows/columns
-     */
-    void setDimension(int d) { dimension = d;}
-
-    /**
-     * Return the number of rows/columns the board.
-     * @return the number of rows/columns on the board
-     */
-    int getDimension() {
-        return dimension; // no need to check empty tile on board
-    }
 
     /**
      * Return the tile at (row, col)
@@ -65,7 +31,7 @@ public class SlidingBoard extends Board implements Serializable, IObservable<Sli
      * @return the tile at (row, col)
      */
     SlidingTile getTile(int row, int col) {
-        return slidingTiles.get(row * dimension + col);
+        return tiles.get(row * dimension + col);
     }
 
     /**
@@ -79,11 +45,19 @@ public class SlidingBoard extends Board implements Serializable, IObservable<Sli
     void swapTiles(int row1, int col1, int row2, int col2) {
         SlidingTile temp1 = getTile(row1, col1);
         SlidingTile temp2 = getTile(row2, col2);
-        slidingTiles.set(row1 * dimension + col1, temp2);
-        slidingTiles.set(row2 * dimension + col2, temp1);
+        tiles.set(row1 * dimension + col1, temp2);
+        tiles.set(row2 * dimension + col2, temp1);
 
         setChanged();
         notifyObservers();
+    }
+
+    /**
+     * Set the slidingTiles to slidingTiles.
+     * @param slidingTiles the slidingTiles for the board
+     */
+    void setSlidingTiles(List<SlidingTile> slidingTiles) {
+        this.tiles = slidingTiles;
     }
 
     @Override

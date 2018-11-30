@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Board<T> implements Serializable {
+    int dimension;
+
     List<T> tiles = new ArrayList<>();
 
     public void setTiles(List<T> tiles) {
@@ -15,5 +17,12 @@ public abstract class Board<T> implements Serializable {
         return tiles;
     }
 
+    public int getDimension() {
+        return dimension;
+    }
+
+    public void setDimension(int dimension) {
+        this.dimension = dimension;
+    }
 }
 

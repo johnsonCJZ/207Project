@@ -5,17 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MineBoard extends Board implements Serializable, IObservable<MineBoard> {
-    private int dimension;
+public class MineBoard extends Board<MineTile> implements Serializable, IObservable<MineBoard> {
     private int mineNum;
     private int mineLeft;
     private List<MineTile> minePosition = new ArrayList<>();
-    boolean changed = false;
+    private boolean changed = false;
     private ArrayList<IObserver> observers = new ArrayList<>();
 
     MineBoard(){}
-
-    int getDimension() {return dimension;}
 
     int getMineNum() {return mineNum;}
 
@@ -24,11 +21,7 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
     List<MineTile> getMinePosition() {return minePosition;}
 
     MineTile getTile(int position) {
-        return (MineTile)tiles.get(position);
-    }
-
-    public void setDimension(int sideLength){
-        dimension = sideLength;
+        return tiles.get(position);
     }
 
     void setMinePosition(List<MineTile> minePosition) {
@@ -37,7 +30,7 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
 
     void setMines(int position) {
         int mineNum = getMineNum();
-        List<MineTile> startNine = (List<MineTile>)(List<?>)getSurround(position);
+        List<MineTile> startNine = getSurround(position);
         startNine.add(getTile(position));
         Random r = new Random();
         List<Integer> randomNums = new ArrayList<>();
@@ -93,10 +86,10 @@ public class MineBoard extends Board implements Serializable, IObservable<MineBo
         notifyObservers();
     }
 
-    List<Tile> getSurround(int position) {
+    List<MineTile> getSurround(int position) {
         int row = position / dimension ;
         int col = position % dimension ;
-        List<Tile> surround = new ArrayList<>();
+        List<MineTile> surround = new ArrayList<>();
 
         if (row != 0 && col != 0) {
             surround.add(getTiles().get(position-dimension -1));
