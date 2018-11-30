@@ -19,7 +19,7 @@ public class MineBoard extends Board<MineTile> {
     List<MineTile> getMinePosition() {return minePosition;}
 
     MineTile getTile(int position) {
-        return tiles.get(position);
+        return getTiles().get(position);
     }
 
     void setMinePosition(List<MineTile> minePosition) {
@@ -34,7 +34,7 @@ public class MineBoard extends Board<MineTile> {
         List<Integer> randomNums = new ArrayList<>();
         int i = 0;
         while (i < mineNum) {
-            Integer num = r.nextInt(dimension * dimension);
+            Integer num = r.nextInt(getDimension() * getDimension());
 
             if (!randomNums.contains(num) && !startNine.contains(getTile(num))) {
                 randomNums.add(num);
@@ -45,7 +45,7 @@ public class MineBoard extends Board<MineTile> {
         }
     }
 
-    public void setMineNum(int mineNum) {
+    void setMineNum(int mineNum) {
         this.mineNum = mineNum;
     }
 
@@ -85,6 +85,7 @@ public class MineBoard extends Board<MineTile> {
     }
 
     List<MineTile> getSurround(int position) {
+        int dimension = getDimension();
         int row = position / dimension ;
         int col = position % dimension ;
         List<MineTile> surround = new ArrayList<>();

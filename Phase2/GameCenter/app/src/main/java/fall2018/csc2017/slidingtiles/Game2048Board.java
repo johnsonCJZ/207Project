@@ -11,15 +11,10 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
     private int score = 0;
     private boolean isChanged = false;
 
-    /**
-     * A new empty board of 4*4 slidingTiles.
-     */
-    Game2048Board() {
-    }
 
     void setUpTiles() {
-        for (int row = 0; row != dimension; row++) {
-            for (int col = 0; col != dimension; col++) {
+        for (int row = 0; row != getDimension(); row++) {
+            for (int col = 0; col != getDimension(); col++) {
                 this.setTile(row, col, new Game2048Tile());
             }
         }
@@ -51,7 +46,7 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
 
     ArrayList<Game2048Tile> findEmpty() {
         ArrayList<Game2048Tile> result = new ArrayList<>();
-        for (Game2048Tile tile : this.tiles) {
+        for (Game2048Tile tile : getTiles()) {
             if (tile.isEmpty()) {
                 result.add(tile);
             }
@@ -60,23 +55,24 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
     }
 
     Game2048Tile[] getRow(int row) {
-        Game2048Tile[] result = new Game2048Tile[dimension];
-        for (int i = 0; i < dimension; i++) {
-            result[i] = tiles.get(row * dimension + i);
+        Game2048Tile[] result = new Game2048Tile[getDimension()];
+        for (int i = 0; i < getDimension(); i++) {
+            result[i] = getTiles().get(row * getDimension() + i);
         }
         return result;
     }
 
     Game2048Tile[] getColumn(int col) {
-        Game2048Tile[] result = new Game2048Tile[dimension];
+        Game2048Tile[] result = new Game2048Tile[getDimension()];
 
-        for (int i = 0; i < dimension; i++) {
-            result[i] = tiles.get(i * dimension + col);
+        for (int i = 0; i < getDimension(); i++) {
+            result[i] = getTiles().get(i * getDimension() + col);
         }
         return result;
     }
 
     void mergeList(Game2048Tile[] tileArray, String direction){
+        int dimension = getDimension();
         ArrayList<Integer> temp = new ArrayList<>(dimension);
         int i;
         switch (direction) {
@@ -164,6 +160,7 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
     }
 
     void merge(String direction) {
+        int dimension = getDimension();
         switch (direction) {
             case "LEFT":
                 for (int row = 0; row <= dimension - 1; row++) {
@@ -195,17 +192,17 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
     }
 
     Game2048Tile getTile(int x, int y) {
-        return tiles.get(x * dimension + y);
+        return getTiles().get(x * getDimension() + y);
     }
 
-    void setTile(int x, int y, Game2048Tile tile){
-        tiles.set(x * dimension + y, tile);
+    private void setTile(int x, int y, Game2048Tile tile){
+        getTiles().set(x * getDimension() + y, tile);
     }
 
     @NonNull
     @Override
     public Iterator<Game2048Tile> iterator() {
-        return new Tile2048Iterator(tiles);
+        return new Tile2048Iterator(getTiles());
     }
 
 
@@ -237,7 +234,7 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
         @Override
         public boolean hasNext() {
 
-            return currentPosition < dimension * dimension -1;
+            return currentPosition < getDimension() * getDimension() -1;
         }
 
         /**
