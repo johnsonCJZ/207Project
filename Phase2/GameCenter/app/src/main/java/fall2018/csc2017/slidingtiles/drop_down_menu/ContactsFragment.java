@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 
 import fall2018.csc2017.slidingtiles.R;
 
+/**
+ * The Fragment of the Contacts page.
+ */
 public class ContactsFragment extends Fragment {
     private View view;
 
