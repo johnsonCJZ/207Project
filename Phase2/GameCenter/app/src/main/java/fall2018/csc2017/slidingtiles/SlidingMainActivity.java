@@ -86,6 +86,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
     private UserAccountManager users;
     private String username;
     private TextView time;
+    private SlidingMainController slidingMainController;
 
 
     /**
@@ -99,7 +100,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         super.onCreate(savedInstanceState);
         getAllInfo(); // pass in all useful data from last activity, including slidingBoardManager
         getAllComponents();
-        createTileButtons(this);
+        tileButtons = slidingMainController.createTileButtons(getApplicationContext(),slidingBoardManager,tileButtons);
         Thread t = time();
         t.start();
 
@@ -112,7 +113,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
      * of positions, and then call the adapter to set the view.
      */
     public void display() {
-        updateTileButtons();
+        tileButtons=slidingMainController.updateTileButtons(slidingBoardManager,tileButtons);
         gridView.setAdapter(new CustomAdapter(tileButtons, columnWidth, columnHeight));
     }
 
@@ -215,6 +216,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         setContentView(R.layout.activity_main);
         gridView = findViewById(R.id.grid);
         time = findViewById(R.id.textView6);
+        slidingMainController = new SlidingMainController();
     }
 
     @NonNull
@@ -429,35 +431,7 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         }
     }
 
-    /**
-     * Create the buttons for displaying the slidingTiles.
-     * @param context the context
-     */
-    private void createTileButtons(Context context) {
-        SlidingBoard slidingBoard = slidingBoardManager.getBoard();
-        tileButtons = new ArrayList<>();
-        for (int row = 0; row != size; row++) {
-            for (int col = 0; col != size; col++) {
-                Button tmp = new Button(context);
-                tmp.setBackgroundResource(slidingBoard.getTile(row, col).getBackground());
-                this.tileButtons.add(tmp);
-            }
-        }
-    }
 
-    /**
-     * Update the backgrounds on the buttons to match the slidingTiles.
-     */
-    private void updateTileButtons() {
-        SlidingBoard slidingBoard = slidingBoardManager.getBoard();
-        int nextPos = 0;
-        for (Button b : tileButtons) {
-            int row = nextPos / slidingBoardManager.getBoard().getDimension();
-            int col = nextPos % slidingBoardManager.getBoard().getDimension();
-            b.setBackgroundResource(slidingBoard.getTile(row, col).getBackground());
-            nextPos++;
-        }
-    }
 
     /**
      * Dispatch onPause() to fragments.
