@@ -12,10 +12,10 @@ import static org.junit.Assert.*;
 public class SlidingTest {
 
     private SlidingBoardManager setUpBoard(int dimension, List<SlidingTile> tiles) {
-        SlidingBoardManager manager = new SlidingBoardManager(dimension);
+        ManagerFactory factory = new ManagerFactory();
+        SlidingBoard board = new BuilderBoard().setDimension(dimension).buildSlidingBoard();
+        SlidingBoardManager manager = (SlidingBoardManager)factory.createNewManager(board);
         manager.setTiles(tiles);
-        SlidingBoard board = manager.getBoard();
-        board.setTiles(tiles);
         board.setDimension(dimension);
         return manager;
     }
@@ -238,5 +238,10 @@ public class SlidingTest {
         }
         assertArrayEquals(expected, actual);
         assertTrue(testCase.getBoard().hasChanged());
+    }
+
+    @Test
+    public void testCalculateSlidingScore() {
+
     }
 }
