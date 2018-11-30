@@ -76,9 +76,8 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
 
 
     /**
-     * Initialize all buttons
-     *
-     * @param savedInstanceState
+     * Initialize all buttons.
+     * @param savedInstanceState all saved information bundle
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,7 +151,6 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
 
     /**
      * Return the score of the finished game.
-     *
      * @return the score of the finished game.
      */
     private int getScore() {
@@ -171,7 +169,6 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
 
     /**
      * Save the game history.
-     *
      * @param dialog
      */
     private void saveHistory(DialogInterface dialog) {
@@ -233,6 +230,9 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
         };
     }
 
+    /**
+     * Set up the grid view.
+     */
     void setGridView() {
         gridView.setNumColumns(slidingBoardManager.getBoard().getDimension());
         gridView.setBoardBoardManager(slidingBoardManager);

@@ -5,7 +5,7 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
-public class SlidingMainController {
+class SlidingMainController {
     /**
      * Create the buttons for displaying the slidingTiles.
      *
