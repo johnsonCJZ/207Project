@@ -7,6 +7,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class SlidingMemory extends Memory {
     private int dimension;
@@ -32,4 +33,11 @@ public class SlidingMemory extends Memory {
         }
         return new SlidingBoardManager(dimension,time, tt);
     }
+
+    int getDimension() {return dimension;}
+
+    double getTimeTmp() {return timeTmp;}
+
+    List<Integer> getSlidingTiles() {return slidingTiles;}
+
 }
