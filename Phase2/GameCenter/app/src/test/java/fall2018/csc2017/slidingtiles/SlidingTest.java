@@ -13,8 +13,8 @@ public class SlidingTest {
 
     private SlidingBoardManager setUpBoard(int dimension, List<SlidingTile> tiles) {
         SlidingBoardManager manager = new SlidingBoardManager(dimension);
-        manager.setSlidingTiles(tiles);
-        SlidingBoard board = manager.getSlidingBoard();
+        manager.setTiles(tiles);
+        SlidingBoard board = manager.getBoard();
         board.setTiles(tiles);
         board.setDimension(dimension);
         return manager;
@@ -30,7 +30,7 @@ public class SlidingTest {
         ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         assertEquals(0, testCase.findInversion());
-        assertEquals(3, testCase.getSlidingBoard().getDimension());
+        assertEquals(3, testCase.getBoard().getDimension());
     }
 
     @Test
@@ -95,7 +95,7 @@ public class SlidingTest {
         ));
         SlidingBoardManager testCase = setUpBoard(4, tilesToTest);
         assertEquals(0, testCase.findInversion());
-        assertEquals(4, testCase.getSlidingBoard().getDimension());
+        assertEquals(4, testCase.getBoard().getDimension());
     }
 
     @Test
@@ -117,7 +117,7 @@ public class SlidingTest {
         ));
         SlidingBoardManager testCase = setUpBoard(5, tilesToTest);
         assertEquals(0, testCase.findInversion());
-        assertEquals(5, testCase.getSlidingBoard().getDimension());
+        assertEquals(5, testCase.getBoard().getDimension());
     }
 
     @Test
@@ -190,14 +190,14 @@ public class SlidingTest {
         ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         testCase.move(1);
-        List<SlidingTile> tiles = testCase.getSlidingTiles();
+        List<SlidingTile> tiles = testCase.getTiles();
         int[] expected = {1, 0, 2, 3, 4, 5, 6, 7, 8};
         int[] actual = new int[tilesToTest.size()];
         for (int i = 0; i < tilesToTest.size(); i++) {
             actual[i] = tiles.get(i).getId();
         }
         assertArrayEquals(expected, actual);
-        assertTrue(testCase.getSlidingBoard().hasChanged());
+        assertTrue(testCase.getBoard().hasChanged());
     }
 
     @Test
@@ -210,14 +210,14 @@ public class SlidingTest {
         ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         testCase.move(0);
-        List<SlidingTile> tiles = testCase.getSlidingTiles();
+        List<SlidingTile> tiles = testCase.getTiles();
         int[] expected = {0, 1, 2, 3, 4, 5, 6, 7, 8};
         int[] actual = new int[tilesToTest.size()];
         for (int i = 0; i < tilesToTest.size(); i++) {
             actual[i] = tiles.get(i).getId();
         }
         assertArrayEquals(expected, actual);
-        assertTrue(testCase.getSlidingBoard().hasChanged());
+        assertTrue(testCase.getBoard().hasChanged());
     }
 
     @Test
@@ -230,13 +230,13 @@ public class SlidingTest {
         ));
         SlidingBoardManager testCase = setUpBoard(3, tilesToTest);
         testCase.move(1);
-        List<SlidingTile> tiles = testCase.getSlidingTiles();
+        List<SlidingTile> tiles = testCase.getTiles();
         int[] expected = {1, 0, 3, 4, 2, 5, 6, 7, 8};
         int[] actual = new int[tilesToTest.size()];
         for (int i = 0; i < tilesToTest.size(); i++) {
             actual[i] = tiles.get(i).getId();
         }
         assertArrayEquals(expected, actual);
-        assertTrue(testCase.getSlidingBoard().hasChanged());
+        assertTrue(testCase.getBoard().hasChanged());
     }
 }
