@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -378,8 +379,8 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
                 } else {
                     autoSave();
                 }
-                time.setText("Time: " +String.format("%03d", count/10) + " s");
-            }
+                String decimal = new DecimalFormat(".##").format( count/10);
+                time.setText("Time: " +String.valueOf(decimal) + " s");            }
         }
     }
 
