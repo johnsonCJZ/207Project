@@ -15,7 +15,7 @@ public class SlidingScoreStrategy implements ScoreStrategy, Serializable {
      * @return the score related to steps
      */
     private int calStepScore(SlidingBoardManager slidingBoardManager) {
-        int step = slidingBoardManager.getHistory().getSize()-1;
+        int step = slidingBoardManager.getSlidingHistory().getSize()-1;
 
         return Math.round(100 - step/5);
     }

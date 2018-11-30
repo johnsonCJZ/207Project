@@ -183,7 +183,7 @@ public class SlideGameFragment extends Fragment {
                 else {
                     AlertDialog.Builder builder = new AlertDialog.Builder
                             (getActivity());
-                    builder.setMessage("History not found");
+                    builder.setMessage("SlidingHistory not found");
                     AlertDialog d = builder.create();
                     d.show();
                 }
@@ -257,7 +257,7 @@ public class SlideGameFragment extends Fragment {
                     switchToGame();
                 }
                 else{
-                    builder.setMessage("History not found");
+                    builder.setMessage("SlidingHistory not found");
                     AlertDialog d = builder.create();
                     d.show();
                 }

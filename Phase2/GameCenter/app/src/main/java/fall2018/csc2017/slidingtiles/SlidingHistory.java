@@ -3,41 +3,41 @@ package fall2018.csc2017.slidingtiles;
 import java.io.Serializable;
 
 /**
- * The History linked list.
+ * The SlidingHistory linked list.
  */
-public class History implements Serializable {
+public class SlidingHistory implements Serializable {
 
     /**
-     * The front of the History.
+     * The front of the SlidingHistory.
      */
-    private HistoryNode front = null;
+    private SlidingHistoryNode front = null;
 
     /**
-     * The back of the History.
+     * The back of the SlidingHistory.
      */
-    private HistoryNode back = null;
+    private SlidingHistoryNode back = null;
 
     /**
-     * The size of the History.
+     * The size of the SlidingHistory.
      */
     private int size = 0;
 
     /**
-     * Return the size of the History.
-     * @return the size of the History
+     * Return the size of the SlidingHistory.
+     * @return the size of the SlidingHistory
      */
     public int getSize() {
         return size;
     }
 
     /**
-     * Return the HistoryNode at the index of the History.
-     * @param index the index of the HistoryNode returned
-     * @return the HistoryNode at the index
+     * Return the SlidingHistoryNode at the index of the SlidingHistory.
+     * @param index the index of the SlidingHistoryNode returned
+     * @return the SlidingHistoryNode at the index
      */
-    public HistoryNode get(int index) {
+    public SlidingHistoryNode get(int index) {
         int count = 0;
-        HistoryNode curr = this.front;
+        SlidingHistoryNode curr = this.front;
         while (count < index) {
             curr = curr.next;
             count++;
@@ -46,10 +46,10 @@ public class History implements Serializable {
     }
 
     /**
-     * Add a new HistoryNode node to the end of the History.
-     * @param node the new HistoryNode to be added
+     * Add a new SlidingHistoryNode node to the end of the SlidingHistory.
+     * @param node the new SlidingHistoryNode to be added
      */
-    public void add(HistoryNode node) {
+    public void add(SlidingHistoryNode node) {
         if (this.size == 0) {
             this.front = node;
             this.back = node;
@@ -63,7 +63,7 @@ public class History implements Serializable {
     }
 
     /**
-     * Clear the History.
+     * Clear the SlidingHistory.
      */
     private void clear() {
         if (size != 0) {
@@ -74,8 +74,8 @@ public class History implements Serializable {
     }
 
     /**
-     * Remove the HistoryNode at the index of the History.
-     * @param index the index of the History where the HistoryNode to be removed
+     * Remove the SlidingHistoryNode at the index of the SlidingHistory.
+     * @param index the index of the SlidingHistory where the SlidingHistoryNode to be removed
      */
     void remove(int index) {
         if (index == 0) {

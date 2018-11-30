@@ -159,8 +159,8 @@ public class UserAccount implements Serializable {
         }
         else{historyMine.replace(key, null);}}
     /**
-     * The getter for the History of the UserAccount.
-     * @return the History
+     * The getter for the SlidingHistory of the UserAccount.
+     * @return the SlidingHistory
      */
     private HashMap<String, SlidingMemory> getSlideHistory(){
         return historySliding;
