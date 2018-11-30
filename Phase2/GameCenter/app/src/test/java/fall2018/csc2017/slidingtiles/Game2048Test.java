@@ -8,8 +8,9 @@ import static org.junit.Assert.*;
 
 public class Game2048Test {
 
-    private Game2048BoardManager manager = new Game2048BoardManager();
-    private Game2048Board board = manager.getBoard();
+    private ManagerFactory factory = new ManagerFactory();
+    private Game2048Board board = new BuilderBoard.build2048Board();
+    private Game2048BoardManager manager = (Game2048BoardManager) factory.createNewManager(board);
 
     private void setBoardCannotMove(int largestTile){
         board.setUpTiles();
@@ -54,6 +55,11 @@ public class Game2048Test {
         return new Game2048Tile[]{
                 tile1, tile2, tile3, tile4
         };
+    }
+
+    private void setUpMergeList(Game2048Tile[] testCase, String direction){
+        board.setScore(0);
+        board.mergeList(testCase, direction);
     }
 
 
@@ -117,8 +123,9 @@ public class Game2048Test {
         int[] expected = {0, 0, 2, 4};
         int[] before = {2, 4, 0, 0};
         Game2048Tile[] actual = intToTile(before);
-        board.mergeList(actual, "RIGHT");
+        setUpMergeList(actual, "RIGHT");
         assertArrayEquals(expected, tileToInt(actual));
+        assertEquals(0, board.getScore());
     }
 
     @Test
@@ -126,8 +133,9 @@ public class Game2048Test {
         int[] expected = {0, 0, 0, 4};
         int[] before = {0, 0, 2, 2};
         Game2048Tile[] actual = intToTile(before);
-        board.mergeList(actual, "RIGHT");
+        setUpMergeList(actual, "RIGHT");
         assertArrayEquals(expected, tileToInt(actual));
+        assertEquals(4, board.getScore());
     }
 
     @Test
@@ -135,8 +143,9 @@ public class Game2048Test {
         int[] expected = {0, 0, 0, 8};
         int[] before = {4, 4, 0, 0};
         Game2048Tile[] actual = intToTile(before);
-        board.mergeList(actual, "RIGHT");
+        setUpMergeList(actual, "RIGHT");
         assertArrayEquals(expected, tileToInt(actual));
+        assertEquals(8, board.getScore());
     }
 
     @Test
@@ -144,8 +153,9 @@ public class Game2048Test {
         int[] expected = {0, 0, 8, 16};
         int[] before = {0, 0, 8, 16};
         Game2048Tile[] actual = intToTile(before);
-        board.mergeList(actual, "RIGHT");
+        setUpMergeList(actual, "RIGHT");
         assertArrayEquals(expected, tileToInt(actual));
+        assertEquals(0, board.getScore());
     }
 
     @Test
@@ -153,8 +163,9 @@ public class Game2048Test {
         int[] expected = {0, 0, 4, 4};
         int[] before = {2, 0, 2, 4};
         Game2048Tile[] actual = intToTile(before);
-        board.mergeList(actual, "RIGHT");
+        setUpMergeList(actual, "RIGHT");
         assertArrayEquals(expected, tileToInt(actual));
+        assertEquals(4, board.getScore());
     }
 
     @Test
@@ -162,10 +173,9 @@ public class Game2048Test {
         int[] expected = {0, 0, 2048, 512};
         int[] before = {1024, 0, 1024, 512};
         Game2048Tile[] actual = intToTile(before);
-        board.mergeList(actual, "RIGHT");
-        for (int i = 0; i < 4; i++) {
-            assertEquals(expected[i], tileToInt(actual)[i]);
-        }
+        setUpMergeList(actual, "RIGHT");
+        assertArrayEquals(expected, tileToInt(actual));
+        assertEquals(2048, board.getScore());
     }
 
     @Test
@@ -173,8 +183,9 @@ public class Game2048Test {
         int[] expected = {0, 512, 2048, 512};
         int[] before = {256, 256, 2048, 512};
         Game2048Tile[] actual = intToTile(before);
-        board.mergeList(actual, "RIGHT");
+        setUpMergeList(actual, "RIGHT");
         assertArrayEquals(expected, tileToInt(actual));
+        assertEquals(512, board.getScore());
     }
 
     @Test
@@ -182,8 +193,9 @@ public class Game2048Test {
         int[] expected = {0, 0, 128, 256};
         int[] before = {64, 64, 128, 128};
         Game2048Tile[] actual = intToTile(before);
-        board.mergeList(actual, "RIGHT");
+        setUpMergeList(actual, "RIGHT");
         assertArrayEquals(expected, tileToInt(actual));
+        assertEquals(384, board.getScore());
     }
 
     @Test
@@ -191,8 +203,9 @@ public class Game2048Test {
         int[] expected = {2, 4, 0, 0};
         int[] before = {0, 0, 2, 4};
         Game2048Tile[] actual = intToTile(before);
-        board.mergeList(actual, "LEFT");
+        setUpMergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
+        assertEquals(0, board.getScore());
     }
 
     @Test
@@ -200,8 +213,9 @@ public class Game2048Test {
         int[] expected = {4, 0, 0, 0};
         int[] before = {2, 2, 0, 0};
         Game2048Tile[] actual = intToTile(before);
-        board.mergeList(actual, "LEFT");
+        setUpMergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
+        assertEquals(4, board.getScore());
     }
 
     @Test
@@ -209,8 +223,9 @@ public class Game2048Test {
         int[] expected = {8, 0, 0, 0};
         int[] before = {0, 4, 0, 4};
         Game2048Tile[] actual = intToTile(before);
-        board.mergeList(actual, "LEFT");
+        setUpMergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
+        assertEquals(8, board.getScore());
     }
 
     @Test
@@ -218,8 +233,9 @@ public class Game2048Test {
         int[] expected = {1024, 2, 0, 0};
         int[] before = {1024, 2, 0, 0};
         Game2048Tile[] actual = intToTile(before);
-        board.mergeList(actual, "LEFT");
+        setUpMergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
+        assertEquals(0, board.getScore());
     }
 
     @Test
@@ -227,8 +243,9 @@ public class Game2048Test {
         int[] expected = {4, 4, 0, 0};
         int[] before = {4, 2, 2, 0};
         Game2048Tile[] actual = intToTile(before);
-        board.mergeList(actual, "LEFT");
+        setUpMergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
+        assertEquals(4, board.getScore());
     }
 
     @Test
@@ -236,8 +253,9 @@ public class Game2048Test {
         int[] expected = {512, 2048, 0, 0};
         int[] before = {512, 1024, 0, 1024};
         Game2048Tile[] actual = intToTile(before);
-        board.mergeList(actual, "LEFT");
+        setUpMergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
+        assertEquals(2048, board.getScore());
     }
 
     @Test
@@ -245,8 +263,9 @@ public class Game2048Test {
         int[] expected = {512, 2048, 512, 0};
         int[] before = {512, 2048, 256, 256};
         Game2048Tile[] actual = intToTile(before);
-        board.mergeList(actual, "LEFT");
+        setUpMergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
+        assertEquals(512, board.getScore());
     }
 
     @Test
@@ -254,13 +273,15 @@ public class Game2048Test {
         int[] expected = {16, 32, 0, 0};
         int[] before = {8, 8, 16, 16};
         Game2048Tile[] actual = intToTile(before);
-        board.mergeList(actual, "LEFT");
+        setUpMergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
+        assertEquals(48, board.getScore());
     }
 
     @Test
     public void testMergeWholeBoardUp(){
         setBoardCanMove();
+        board.setScore(0);
         manager.move("UP");
         int[][] expectedRows = {{4, 4, 4, 4}, {4, 4, 4, 4}, {0, 0, 0, 0}, {0, 0, 0, 0}};
         for (int i = 0; i < board.getDimension(); i++){
@@ -271,6 +292,7 @@ public class Game2048Test {
         for (int i = 0; i < board.getDimension(); i++){
             assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
         }
+        assertEquals(32, manager.getScore());
     }
 
     @Test
@@ -286,6 +308,7 @@ public class Game2048Test {
         for (int i = 0; i < board.getDimension(); i++){
             assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
         }
+        assertEquals(64, manager.getScore());
     }
 
     @Test
@@ -301,6 +324,7 @@ public class Game2048Test {
         for (int i = 0; i < board.getDimension(); i++){
             assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
         }
+        assertEquals(96, manager.getScore());
     }
 
     @Test
@@ -316,5 +340,11 @@ public class Game2048Test {
         for (int i = 0; i < board.getDimension(); i++){
             assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
         }
+        assertEquals(128, manager.getScore());
+    }
+
+    @Test
+    public void testCalculateScore() {
+
     }
 }
