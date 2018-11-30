@@ -8,9 +8,7 @@ import java.util.List;
 /**
  * Manage a slidingBoard, including swapping slidingTiles, checking for a win, and managing taps.
  */
-public class SlidingBoardManager extends BoardManager<SlidingBoard>{
-    private List<SlidingTile> slidingTiles = new ArrayList<>();
-
+public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>{
     /**
      * The linked list of history moves of the slidingBoard.
      */
@@ -32,14 +30,14 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard>{
                 .buildSlidingBoard();
         addTile();
         shuffle();
-        board.setTiles(slidingTiles);
+        board.setTiles(tiles);
         this.history.add(new HistoryNode(this.findBlankIndex()));
     }
 
     private void addTile() {
             int numTiles = dimension * dimension;
             for (int tileNum = 0; tileNum != numTiles; tileNum++) {
-                slidingTiles.add(new SlidingTile(tileNum));
+                tiles.add(new SlidingTile(tileNum));
             }
     }
 
@@ -49,30 +47,16 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard>{
         this.board = new BuilderBoard()
                 .setDimension(dimension)
                 .buildSlidingBoard();
-        this.slidingTiles = slidingTiles;
+        this.tiles = slidingTiles;
         board.setTiles(slidingTiles);
         this.history=new History();
         this.history.add(new HistoryNode(this.findBlankIndex()));
     }
 
-    void setSlidingBoard(SlidingBoard slidingBoard) {
-        this.board = slidingBoard;
-    }
-
-    /**
-     * Return the current slidingBoard.
-     */
-    SlidingBoard getSlidingBoard() {
-        return board;
-    }
-
-    List<SlidingTile> getSlidingTiles() {
-        return slidingTiles;
-    }
-
-    void setSlidingTiles(List<SlidingTile> slidingTiles) {
+    @Override
+    public void setTiles(List<SlidingTile> slidingTiles) {
         board.setTiles(slidingTiles);
-        this.slidingTiles = slidingTiles;
+        super.tiles = slidingTiles;
     }
 
     /**
@@ -83,9 +67,9 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard>{
     int findInversion() {
         int count = 0;
         for (int i = 0; i < dimension * dimension -1; i++) {
-            if (slidingTiles.get(i).getId() != 0){
+            if (tiles.get(i).getId() != 0){
                 for (int j = i+1; j < dimension * dimension; j++){
-                    if (slidingTiles.get(j).getId() < slidingTiles.get(i).getId() && slidingTiles.get(j).getId() != 0){
+                    if (tiles.get(j).getId() < tiles.get(i).getId() && tiles.get(j).getId() != 0){
                         count++;
                     }
                 }
@@ -98,9 +82,9 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard>{
      * Shuffle the list of slidingTiles until the state is solvable.
      */
     void shuffle() {
-        Collections.shuffle(slidingTiles);
+        Collections.shuffle(tiles);
         while (!isSolvable()) {
-            Collections.shuffle(slidingTiles);
+            Collections.shuffle(tiles);
         }
     }
 
@@ -115,7 +99,7 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard>{
         }
         else {
             int i = 0;
-            while(slidingTiles.get(i).getId() != 0){
+            while(tiles.get(i).getId() != 0){
                 i++;
             }
             int blankAtRowFromBottom = dimension- (i/dimension);
@@ -139,11 +123,11 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard>{
     @Override
     boolean isWon() {
         for (int i = 0; i < dimension * dimension - 3; i++) {
-            if (slidingTiles.get(i).getId() > slidingTiles.get(i+1).getId()) {
+            if (tiles.get(i).getId() > tiles.get(i+1).getId()) {
                 return false;
             }
         }
-        return slidingTiles.get(dimension * dimension -1).getId() == 0;
+        return tiles.get(dimension * dimension -1).getId() == 0;
     }
 
     /**
@@ -207,7 +191,7 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard>{
     int[] findBlankIndex(){
         int[] result = new int[2];
         int position = 0;
-        for (SlidingTile t : slidingTiles){
+        for (SlidingTile t : tiles){
             if (t.getId()== 0){
                 result[0] = position / dimension;
                 result[1] = position % dimension;

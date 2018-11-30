@@ -3,13 +3,10 @@ package fall2018.csc2017.slidingtiles;
 import java.io.Serializable;
 import java.util.List;
 
-public class MineBoardManager extends BoardManager<MineBoard>{
-    private List<MineTile> tiles;
+public class MineBoardManager extends BoardManager<MineBoard, MineTile>{
     private boolean isFirst = true;
     private boolean lost = false;
     private List<MineTile> minePosition;
-
-    MineBoardManager(){}
 
     MineBoardManager(int dimension, int numOfMine) {
         super(dimension);
@@ -40,14 +37,6 @@ public class MineBoardManager extends BoardManager<MineBoard>{
 
     void mark(int position) {
         board.flag(position);
-    }
-
-    public void setTiles(List<MineTile> tiles) {
-        this.tiles = tiles;
-    }
-
-    public void setDimension(int n){
-        dimension = n;
     }
 
     void setMinePosition(List<MineTile> minePosition) {

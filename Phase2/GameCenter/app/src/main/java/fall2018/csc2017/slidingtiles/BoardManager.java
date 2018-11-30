@@ -1,18 +1,29 @@
 package fall2018.csc2017.slidingtiles;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class BoardManager<T> implements Serializable {
+public abstract class BoardManager<T, K> implements Serializable {
     Double time = (double) 0;
+
+    List<K> tiles = new ArrayList<>();
 
     int dimension;
 
     T board;
 
-    BoardManager(){}
-
     public BoardManager(int n) {
         this.dimension = n;
+    }
+
+    public List<K> getTiles() {
+        return tiles;
+    }
+
+    public void setTiles(List<K> tiles) {
+        this.tiles = tiles;
     }
 
     /**

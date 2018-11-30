@@ -3,12 +3,9 @@ package fall2018.csc2017.slidingtiles;
 import java.io.Serializable;
 import java.util.List;
 
-public class Game2048BoardManager extends BoardManager implements Serializable{
-    private Game2048Board board;
+public class Game2048BoardManager extends BoardManager<Game2048Board, Game2048Tile> implements Serializable{
     final private Integer DIMENSION = 4;
 //    private Double time;
-
-    public Game2048Board getBoard() {return board;}
 
     public Game2048BoardManager() {
         super(4);
