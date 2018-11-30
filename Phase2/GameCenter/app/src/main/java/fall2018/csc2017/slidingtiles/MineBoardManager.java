@@ -8,8 +8,6 @@ public class MineBoardManager extends BoardManager<MineBoard, MineTile>{
     private boolean lost = false;
     private List<MineTile> minePosition;
 
-    MineBoardManager(){}
-
     List<MineTile> getMinePosition() {
         return minePosition;
     }
