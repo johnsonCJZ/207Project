@@ -85,11 +85,6 @@ public abstract class Board<T> implements Serializable, IObservable<Game2048Boar
     }
 
     @Override
-    public void deleteObserver(IObserver o) {
-        observers.remove(o);
-    }
-
-    @Override
     public void notifyObservers() {
         if (changed) {
             int i = observers.size();
@@ -98,11 +93,6 @@ public abstract class Board<T> implements Serializable, IObservable<Game2048Boar
             }
 
         }
-    }
-
-    @Override
-    public void clearChanged() {
-        changed = false;
     }
 
     @Override
