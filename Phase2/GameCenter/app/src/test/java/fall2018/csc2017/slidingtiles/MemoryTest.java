@@ -2,8 +2,6 @@ package fall2018.csc2017.slidingtiles;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 public class MemoryTest {
@@ -15,20 +13,20 @@ public class MemoryTest {
     private Game2048BoardManager game2048BoardManager;
     private MineBoardManager mineBoardManager;
 
-    public void setUpSlidingManager() {
+    private void setUpSlidingManager() {
         slidingMemory = new SlidingMemory();
         SlidingBoard board = new BuilderBoard().setDimension(4).buildSlidingBoard();
         slidingBoardManager = (SlidingBoardManager) factory.createNewManager(board);
     }
 
-    public void setUpGame2048Manager() {
+    private void setUpGame2048Manager() {
         game2048Memory = new Game2048Memory();
         Game2048Board board = new BuilderBoard().build2048Board();
         game2048BoardManager = (Game2048BoardManager) factory.createNewManager(board);
         game2048BoardManager.setTime(6.6);
     }
 
-    public void setUpMineManager() {
+    private void setUpMineManager() {
         mineMemory = new MineMemory();
         MineBoard board = new BuilderBoard().setMine(10).setMineLeft(10).setDimension(9).setMineTiles().buildMineBoard();
         mineBoardManager = (MineBoardManager) factory.createNewManager(board);
@@ -40,7 +38,7 @@ public class MemoryTest {
         setUpSlidingManager();
         slidingMemory.makeCopy(slidingBoardManager);
         assertEquals(slidingMemory.getDimension(), slidingBoardManager.getDimension());
-        assertEquals(slidingMemory.getTimeTmp(), slidingBoardManager.getTime(), 0.0);
+        assertEquals(slidingMemory.getTimeSliding(), slidingBoardManager.getTime(), 0.0);
         for (int i = 0; i < slidingBoardManager.getTiles().size(); i++) {
             assertEquals((int) slidingMemory.getSlidingTiles().get(i), slidingBoardManager.getTiles().get(i).getId());
         }
@@ -52,7 +50,7 @@ public class MemoryTest {
         slidingMemory.makeCopy(slidingBoardManager);
         SlidingBoardManager managerCopy = slidingMemory.copy();
         assertEquals(managerCopy.getDimension(), slidingMemory.getDimension());
-        assertEquals(managerCopy.getTime(), slidingMemory.getTimeTmp(), 0.0);
+        assertEquals(managerCopy.getTime(), slidingMemory.getTimeSliding(), 0.0);
         for (int i = 0; i < managerCopy.getTiles().size(); i++) {
             assertEquals((int) slidingMemory.getSlidingTiles().get(i), managerCopy.getTiles().get(i).getId());
         }
