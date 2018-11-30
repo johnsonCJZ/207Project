@@ -38,14 +38,10 @@ public class MinesweeperFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        myDB = new DatabaseHelper(this.getContext());
-        username = (String) DataHolder.getInstance().retrieve("current user");
         view = inflater.inflate(R.layout.minesweeper_fragment, container, false);
         getUser();
         addImageAnim();
         addStartButton();
-        // set current game
-        DataHolder.getInstance().save("current game", "Mine");
         return view;
     }
 
@@ -62,8 +58,12 @@ public class MinesweeperFragment extends Fragment {
     }
 
     private void getUser(){
+        myDB = new DatabaseHelper(this.getContext());
+        username = (String) DataHolder.getInstance().retrieve("current user");
         user= myDB.selectUser(username);
         users= myDB.selectAccountManager();
+        // set current game
+        DataHolder.getInstance().save("current game", "Mine");
     }
 
     private void addImageAnim(){

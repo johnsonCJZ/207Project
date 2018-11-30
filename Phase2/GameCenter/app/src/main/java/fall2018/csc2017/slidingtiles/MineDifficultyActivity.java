@@ -17,6 +17,9 @@ public class MineDifficultyActivity extends AppCompatActivity {
     DatabaseHelper myDB;
     String username;
     private UserAccountManager users;
+    private Button start;
+    private Button load;
+    private Button rank;
 
     /**
      * scoreboard of user
@@ -28,15 +31,21 @@ public class MineDifficultyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_minesweeper_difficulty);
         getUser();
+        getAllComponents();
         addStartButton();
         addLoadButton();
         addRankButton();
     }
 
+    private void getAllComponents(){
+        setContentView(R.layout.activity_minesweeper_difficulty);
+        start = findViewById(R.id.start);
+        load = findViewById(R.id.load);
+        rank = findViewById(R.id.rank);
+    }
+
     private void addStartButton(){
-        Button start = findViewById(R.id.start);
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,7 +55,6 @@ public class MineDifficultyActivity extends AppCompatActivity {
     }
 
     private void addLoadButton(){
-        Button load = findViewById(R.id.load);
         load.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -61,7 +69,6 @@ public class MineDifficultyActivity extends AppCompatActivity {
     }
 
     void addRankButton() {
-        Button rank = findViewById(R.id.rank);
         rank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -90,6 +90,24 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
     private UserAccountManager users;
     private String currentUser;
 
+    /**
+     * Initialize all buttons
+     * @param savedInstanceState
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getAllInfo(); // pass in all useful data from last activity, including boardManager
+        getAllComponents();
+        face.setImageResource(R.drawable.normal);
+        createTileButtons(this);
+        t = time();
+        t.start();
+
+        // Add View to activity
+        setGridView();
+        addStartOver();
+    }
 
     /**
      * Update the backgrounds on the buttons to match the slidingTiles.
@@ -205,25 +223,6 @@ public class MineMainActivity extends AppCompatActivity implements IObserver {
         myDB.updateUser(currentUser,user);
     }
 
-
-    /**
-     * Initialize all buttons
-     * @param savedInstanceState
-     */
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getAllInfo(); // pass in all useful data from last activity, including boardManager
-        getAllComponents();
-        face.setImageResource(R.drawable.normal);
-        createTileButtons(this);
-        t = time();
-        t.start();
-
-        // Add View to activity
-        setGridView();
-        addStartOver();
-    }
 
     private void setGridView(){
         if (gridView.isFrozen()){

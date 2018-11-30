@@ -1,6 +1,7 @@
 package fall2018.csc2017.slidingtiles;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 import fall2018.csc2017.slidingtiles.menu_bars.ProfileFragment;
 
 public class ChangePasswordActivity extends AppCompatActivity {
@@ -18,85 +20,61 @@ public class ChangePasswordActivity extends AppCompatActivity {
     TextView confirmPw;
     Button update;
     TextView message;
-    UserAccount userAccount;
-    UserAccountManager userAccountManager;
+    UserAccount user;
+    UserAccountManager users;
+    private DatabaseHelper myDB;
+    private String usernameS;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_password);
+        getAllComponents();
+        getAllUser();
+        addUpdateButton();
+    }
 
-        username = findViewById(R.id.username);
-        passwordOrEmail = findViewById(R.id.psOrEmail);
-        newPw = findViewById(R.id.password);
-        confirmPw = findViewById(R.id.confirmpw);
-        update = findViewById(R.id.update);
-        message = findViewById(R.id.message);
-
+    private void addUpdateButton(){
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateButtonPushed();
             }
         });
-//        openFragment();
+    }
 
+    private void getAllComponents(){
+        setContentView(R.layout.activity_change_password);
+        username = findViewById(R.id.username);
+        passwordOrEmail = findViewById(R.id.psOrEmail);
+        newPw = findViewById(R.id.password);
+        confirmPw = findViewById(R.id.confirmpw);
+        update = findViewById(R.id.update);
+        message = findViewById(R.id.message);
+    }
+
+    private void getAllUser(){
+        myDB = new DatabaseHelper(this);
+        usernameS=(String) DataHolder.getInstance().retrieve("current user");
+        this.user=myDB.selectUser(usernameS);
+        this.users= myDB.selectAccountManager();
     }
 
     boolean updateButtonPushed() {
-        String usernameS= this.username.getText().toString();
         String passwordOrEmailS = this.passwordOrEmail.getText().toString();
         String newPwS = this.newPw.getText().toString();
         String confirmS = confirmPw.getText().toString();
-//        ArrayList<UserAccount> userList = userAccountManager.getUserList();
-        UserAccount user = userAccount;
-//        if (!userList.isEmpty()) {
-//            for (UserAccount account : userList) {
-//                if ((account.getName().equals(usernameS))) {
-//                    user = account;
-//                }else{
-//                    message.setText("The user with the username doesn't exist");
-//                    return false;
-//                }
-//            }
-//        }
         if (!(user.getEmail() == passwordOrEmailS || user.getPassword() == passwordOrEmailS)) {
             message.setText("The current password or email is not correct.");
             return false;
         }
-        if(!(newPwS == confirmS)){
+        if(!(newPwS.equals(confirmS))){
             message.setText("The new password are not the same with the confirmed password.");
             return false;
         }
-        userAccount.changePassword(newPwS);
+        user.changePassword(newPwS);
         message.setText("Your password is successfully updated.");
         return true;
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        final String sender=this.getIntent().getExtras().getString("SENDER_KEY");
-//        if(sender != null)
-//        {
-//            this.receiveData();
-//
-//        }
-//    }
-//
-//    private void openFragment()
-//    {
-//        ProfileFragment pFragment = new ProfileFragment();
-//        getSupportFragmentManager().beginTransaction().replace(R.id.container,pFragment).commit();
-//    }
-//
-//    private void receiveData()
-//    {
-//        Intent i = getIntent();
-//        userAccount = (UserAccount)i.getSerializableExtra("user");
-//        userAccountManager = (UserAccountManager) i.getSerializableExtra("users");
-//    }
-
 
 }
