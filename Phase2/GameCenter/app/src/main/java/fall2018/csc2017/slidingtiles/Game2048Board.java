@@ -67,7 +67,7 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
         return result;
     }
 
-    private Game2048Tile[] getColumn(int col) {
+    Game2048Tile[] getColumn(int col) {
         Game2048Tile[] result = new Game2048Tile[dimension];
 
         for (int i = 0; i < dimension; i++) {

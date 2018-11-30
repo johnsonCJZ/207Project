@@ -257,4 +257,60 @@ public class Game2048Test {
         board.mergeList(actual, "LEFT");
         assertArrayEquals(expected, tileToInt(actual));
     }
+
+    @Test
+    public void testMergeWholeBoardUp(){
+        setBoardCanMove();
+        manager.move("UP");
+        int[][] expectedRows = {{4, 4, 4, 4}, {4, 4, 4, 4}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+        for (int i = 0; i < board.getDimension(); i++){
+            assertArrayEquals(expectedRows[i], tileToInt(board.getRow(i)));
+        }
+        int[][] expectedColumns = {{4, 4, 0, 0}, {4, 4, 0, 0}, {4, 4, 0, 0}, {4, 4, 0, 0}};
+        for (int i = 0; i < board.getDimension(); i++){
+            assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
+        }
+    }
+
+    @Test
+    public void testMergeWholeBoardDown(){
+        setBoardCanMove();
+        manager.move("DOWN");
+        int[][] expectedRows = {{0, 0, 0, 0}, {0, 0, 0, 0}, {4, 4, 4, 4}, {4, 4, 4, 4}};
+        for (int i = 0; i < board.getDimension(); i++){
+            assertArrayEquals(expectedRows[i], tileToInt(board.getRow(i)));
+        }
+        int[][] expectedColumns = {{0, 0, 4, 4}, {0, 0, 4, 4}, {0, 0, 4, 4}, {0, 0, 4, 4}};
+        for (int i = 0; i < board.getDimension(); i++){
+            assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
+        }
+    }
+
+    @Test
+    public void testMergeWholeBoardLeft(){
+        setBoardCanMove();
+        manager.move("LEFT");
+        int[][] expectedRows = {{4, 4, 0, 0}, {4, 4, 0, 0}, {4, 4, 0, 0}, {4, 4, 0, 0}};
+        for (int i = 0; i < board.getDimension(); i++){
+            assertArrayEquals(expectedRows[i], tileToInt(board.getRow(i)));
+        }
+        int[][] expectedColumns = {{4, 4, 4, 4}, {4, 4, 4, 4}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+        for (int i = 0; i < board.getDimension(); i++){
+            assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
+        }
+    }
+
+    @Test
+    public void testMergeWholeBoardRight(){
+        setBoardCanMove();
+        manager.move("RIGHT");
+        int[][] expectedRows = {{0, 0, 4, 4}, {0, 0, 4, 4}, {0, 0, 4, 4}, {0, 0, 4, 4}};
+        for (int i = 0; i < board.getDimension(); i++){
+            assertArrayEquals(expectedRows[i], tileToInt(board.getRow(i)));
+        }
+        int[][] expectedColumns = {{0, 0, 0, 0}, {0, 0, 0, 0}, {4, 4, 4, 4}, {4, 4, 4, 4}};
+        for (int i = 0; i < board.getDimension(); i++){
+            assertArrayEquals(expectedColumns[i], tileToInt(board.getColumn(i)));
+        }
+    }
 }
