@@ -61,26 +61,29 @@ public class SlideGameFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        myDB = new DatabaseHelper(this.getContext());
-        username = (String) DataHolder.getInstance().retrieve("current user");
         getUser();
         View rootView = inflater.inflate(R.layout.slide_game_fragment, container, false);
-        Rank=rootView.findViewById(R.id.Rank);
-        startButton=rootView.findViewById(R.id.NewGameButton1);
-        resumeButton=rootView.findViewById(R.id.ResumeButton1);
-        loadButton=rootView.findViewById(R.id.LoadButton1);
+        getAllComponents(rootView);
         addStartButtonListener();
         addLoadButtonListener();
         addResumeButtonListener();
         addScoreBoardListener();
         // set current game
-        DataHolder.getInstance().save("current game", "Slide");
         return rootView;
+    }
+    private void getAllComponents(View rootView){
+        Rank=rootView.findViewById(R.id.Rank);
+        startButton=rootView.findViewById(R.id.NewGameButton1);
+        resumeButton=rootView.findViewById(R.id.ResumeButton1);
+        loadButton=rootView.findViewById(R.id.LoadButton1);
     }
 
     private void getUser(){
+        myDB = new DatabaseHelper(this.getContext());
+        username = (String) DataHolder.getInstance().retrieve("current user");
         user= myDB.selectUser(username);
         users= myDB.selectAccountManager();
+        DataHolder.getInstance().save("current game", "Slide");
     }
 
     /**

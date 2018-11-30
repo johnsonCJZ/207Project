@@ -87,6 +87,26 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
     private String username;
     private TextView time;
 
+
+    /**
+     * Initialize all buttons
+     * @param savedInstanceState
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        myDB = new DatabaseHelper(this);
+        username = (String) DataHolder.getInstance().retrieve("current user");
+        super.onCreate(savedInstanceState);
+        getAllInfo(); // pass in all useful data from last activity, including slidingBoardManager
+        getAllComponents();
+        createTileButtons(this);
+        Thread t = time();
+        t.start();
+
+        // Add View to activity
+        setGridView();
+    }
+
     /**
      * Set up the background image for each button based on the master list
      * of positions, and then call the adapter to set the view.
@@ -186,25 +206,6 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
     }
 
 
-    /**
-     * Initialize all buttons
-     * @param savedInstanceState
-     */
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        myDB = new DatabaseHelper(this);
-        username = (String) DataHolder.getInstance().retrieve("current user");
-        super.onCreate(savedInstanceState);
-        getAllInfo(); // pass in all useful data from last activity, including slidingBoardManager
-        getAllComponents();
-        createTileButtons(this);
-        Thread t = time();
-        t.start();
-
-        // Add View to activity
-        setGridView();
-    }
-
     private void getAllComponents(){
         setContentView(R.layout.activity_main);
         gridView = findViewById(R.id.grid);
@@ -232,8 +233,39 @@ public class SlidingMainActivity extends AppCompatActivity implements IObserver 
                     }
                 }
             }
+
+
         };
     }
+
+    private class GameThread extends Thread{
+        private boolean isPaused;
+        @Override
+        public void run(){
+            while(!isInterrupted()) {
+                if (!isPaused) {
+                    try {
+                        Thread.sleep(10);
+                        if (slidingBoardManager.isWon()) {
+                            this.interrupt();
+                        }
+                        runOnUiThread(new InGame(time));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        public void pause(){
+            isPaused = true;
+        }
+
+        public void unPause(){
+            isPaused = false;
+        }
+    }
+
 
     private class InGame implements Runnable {
         TextView time;

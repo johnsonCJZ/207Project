@@ -46,29 +46,36 @@ public class InfoPanelMainActivity extends AppCompatActivity
 
     private String currentUser;
 
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        this.myDB = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
+        getUsers();
+        getAllComponents();
+        gamePanel(fragment);
+
+    }
+
+    private void getAllComponents(){
         setContentView(R.layout.app_bar_main_info_panel);
         setContentView(R.layout.nav_header_main_info_panel);
         setContentView(R.layout.activity_main_info_panel);
-
-        getUsers();
-
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView t = headerView.findViewById(R.id.primary_username);
+        t.setText(currentUser);
+    }
 
+    private void gamePanel(String fragment){
         if (fragment==null){
             ProfileFragment pp = new ProfileFragment();
             passInfo();
@@ -128,13 +135,10 @@ public class InfoPanelMainActivity extends AppCompatActivity
                     navigationView.setCheckedItem(R.id.profile);
             }
         }
-
-        View headerView = navigationView.getHeaderView(0);
-        TextView t = headerView.findViewById(R.id.primary_username);
-        t.setText(currentUser);
     }
 
     private void getUsers(){
+        this.myDB = new DatabaseHelper(this);
         Intent intentExtras = getIntent();
         Bundle extra = intentExtras.getExtras();
         currentUser = (String)DataHolder.getInstance().retrieve("current user");

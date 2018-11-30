@@ -26,9 +26,10 @@ public class SlidingDifficultyActivity extends AppCompatActivity {
 
     String username;
 
+    private Button startButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        myDB = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slide_difficulty);
         getUser();
@@ -48,6 +49,7 @@ public class SlidingDifficultyActivity extends AppCompatActivity {
      * Receive UserAccount and UserAccountManager from the previous activity/view.
      */
     private void getUser(){
+        myDB = new DatabaseHelper(this);
         username = (String)DataHolder.getInstance().retrieve("current user");
         this.user=myDB.selectUser(username);
     }
@@ -56,7 +58,7 @@ public class SlidingDifficultyActivity extends AppCompatActivity {
      * Add the 4x4 button for initializing a 4x4 game.
      */
     private void addStart4x4Button() {
-        Button startButton = findViewById(R.id.button3);
+        startButton = findViewById(R.id.button3);
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -71,7 +73,7 @@ public class SlidingDifficultyActivity extends AppCompatActivity {
      * Add the 3x3 button for initializing a 4x4 game.
      */
     private void addStart3x3Button() {
-        Button startButton = findViewById(R.id.button);
+        startButton = findViewById(R.id.button);
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -86,7 +88,7 @@ public class SlidingDifficultyActivity extends AppCompatActivity {
      * Add the 5x5 button for initializing a 4x4 game.
      */
     private void addStart5x5Button() {
-        Button startButton = findViewById(R.id.button4);
+        startButton = findViewById(R.id.button4);
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
