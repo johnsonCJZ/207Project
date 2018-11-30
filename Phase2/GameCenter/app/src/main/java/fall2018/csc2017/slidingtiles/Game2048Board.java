@@ -104,7 +104,6 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
                             temp.add(valueI);
                             i = j;
                         }
-
                     }
                 }
 
@@ -112,14 +111,11 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
                     temp.add(0);
                 }
 
-                for (int m = 0; m < dimension; m++){
-                    if (tileArray[m].getValue() != temp.get(m)){
+                for (i = 0; i < dimension; i++){
+                    if (tileArray[i].getValue() != temp.get(i)){
                         isChanged = true;
+                        tileArray[i].setValue(temp.get(i));
                     }
-                }
-
-                for (int k = 0; k < dimension; k++) {
-                    tileArray[k].setValue(temp.get(k));
                 }
                 break;
 
@@ -146,7 +142,6 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
                             temp.add(valueI);
                             i = j;
                         }
-
                     }
                 }
 
@@ -154,14 +149,11 @@ public class Game2048Board extends Board<Game2048Tile> implements Iterable<Game2
                     temp.add(0);
                 }
 
-                for (int m = 0; m < dimension; m++) {
-                    if (tileArray[m].getValue() != temp.get(temp.size() - 1 - m)) {
-                        isChanged = true;
-                    }
-                }
-
                 for (i = dimension - 1; i >= 0; i--) {
-                    tileArray[i].setValue(temp.get(temp.size()-1-i));
+                    if (tileArray[i].getValue() != temp.get(temp.size() - 1 - i)) {
+                        isChanged = true;
+                        tileArray[i].setValue(temp.get(temp.size() - 1 - i));
+                    }
                 }
                 break;
 
