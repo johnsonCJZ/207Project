@@ -19,9 +19,7 @@ import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
  */
 public class ChangePasswordActivity extends AppCompatActivity {
 
-    /**
-     *
-     */
+
     TextView username;
     TextView passwordOrEmail;
     TextView newPw;
@@ -54,6 +52,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Link all the fields with the corresponding element in the view.
+     */
     private void getAllComponents() {
         setContentView(R.layout.activity_change_password);
         username = findViewById(R.id.username);
@@ -64,11 +65,18 @@ public class ChangePasswordActivity extends AppCompatActivity {
         message = findViewById(R.id.message);
     }
 
+    /**
+     * Get the user list and the current user information from the database.
+     */
     private void getAllUser() {
         myDB = new DatabaseHelper(this);
         this.users = myDB.selectAccountManager();
     }
 
+    /**
+     * Update information of UserAccount.
+     * @return if information is updated
+     */
     boolean updateButtonPushed() {
         String usernameS = username.getText().toString();
         if (!users.getUserList().contains(usernameS)) {
@@ -97,7 +105,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
         return true;
 
     }
-
+    /**
+     * Check if the String argument fulfills the regex argument
+     *
+     * @param info  the information to be checked
+     * @param regex the regex to be fulfilled.
+     * @return whether the regex is fulfilled by the info.
+     */
     private boolean validateInfo(String info, String regex) {
         String infoRegex = regex;
         Pattern regexP = Pattern.compile(infoRegex);
