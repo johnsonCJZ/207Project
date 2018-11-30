@@ -14,10 +14,13 @@ import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 public class Game2048MainController {
     public ArrayList<Button> updateTileButtons(Game2048BoardManager boardManager,ArrayList<Button> tileButtons) {
         Game2048Board board = boardManager.getBoard();
+        //If the board has been changed.
         if (board.isChanged()) {
-            Game2048Tile newTile = board.addTile();
-            if (newTile != null) {
-                newTile.setAnimation();
+            if (board.findEmpty().size() != 0) { //If no empty slot left, meaning cheated. Otherwise generate a new random tile.
+                Game2048Tile newTile = board.addTile();
+                if (newTile != null) {
+                    newTile.setAnimation();
+                }
             }
             int nextPos = 0;
             for (Button b : tileButtons) {

@@ -26,18 +26,19 @@ public abstract class Board<T> implements Serializable, IObservable<Game2048Boar
     private ArrayList<IObserver> observers = new ArrayList<>();
 
     /**
+     * @return tiles in the board.
+     */
+    List<T> getTiles() {
+        return tiles;
+    }
+
+    /**
      * Set tiles in the board.
+     *
      * @param tiles tiles in the board
      */
     void setTiles(List<T> tiles) {
         this.tiles = tiles;
-    }
-
-    /**
-     * @return tiles in the board.
-     */
-    List<T> getTiles(){
-        return tiles;
     }
 
     /**
@@ -49,6 +50,7 @@ public abstract class Board<T> implements Serializable, IObservable<Game2048Boar
 
     /**
      * Set dimension of the board.
+     *
      * @param dimension new dimension of the board.
      */
     void setDimension(int dimension) {
@@ -62,7 +64,7 @@ public abstract class Board<T> implements Serializable, IObservable<Game2048Boar
      * @param col the tile column
      * @return the tile at (row, col)
      */
-    T getTile(int row, int col){
+    T getTile(int row, int col) {
         return tiles.get(row * dimension + col);
     }
 
@@ -71,9 +73,8 @@ public abstract class Board<T> implements Serializable, IObservable<Game2048Boar
      *
      * @param row the tile row
      * @param col the tile column
-     *
      */
-    void setTile(int row, int col, T tile){
+    void setTile(int row, int col, T tile) {
         tiles.set(row * getDimension() + col, tile);
     }
 
@@ -90,9 +91,9 @@ public abstract class Board<T> implements Serializable, IObservable<Game2048Boar
 
     @Override
     public void notifyObservers() {
-        if(changed){
+        if (changed) {
             int i = observers.size();
-            while(--i >= 0){
+            while (--i >= 0) {
                 observers.get(i).update(this);
             }
 

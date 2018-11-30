@@ -14,10 +14,6 @@ public class Game2048BoardManager extends BoardManager<Game2048Board, Game2048Ti
         return getBoard().getScore();
     }
 
-    void cheat() {
-        getBoard().getTile(0,0).setValue(2048);
-    }
-
     /**
      * @return whether the board is full.
      */

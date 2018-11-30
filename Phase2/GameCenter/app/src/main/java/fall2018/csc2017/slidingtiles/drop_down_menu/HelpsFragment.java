@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import fall2018.csc2017.slidingtiles.R;
 
+/**
+ * The Fragment of the Helps page.
+ */
 public class HelpsFragment extends Fragment {
     private View view;
     private TextView instM;
@@ -27,7 +29,10 @@ public class HelpsFragment extends Fragment {
         return view;
     }
 
-    public void setInstructions(){
+    /**
+     * Set the Game Instructions TextField.
+     */
+    public void setInstructions() {
         instM.setText("Mine Sweeper: click to reveal tiles, long press to flag and unflag. " +
                 "\n For more instructions, please see http://www.freeminesweeper.org/help/minehelpinstructions.html");
         instS.setText("Swipe a tile to the empty tile to move it. Make the numbers in order to win. " +

@@ -127,7 +127,7 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
     }
 
     private void cheat() {
-        boardManager.cheat();
+        boardManager.getBoard().cheat();
     }
 
     private void getAllInfo() {
