@@ -22,10 +22,6 @@ public class ScoreBoardTabLayoutActivity extends AppCompatActivity {
 
     private ScoreBoard globalScoreBoard;
 
-    /**
-     * User playing game
-     */
-    private UserAccount user;
 
     /**
      * Initialize activity with corresponding user and data
@@ -37,6 +33,8 @@ public class ScoreBoardTabLayoutActivity extends AppCompatActivity {
     private String username;
 
     private String fragment;
+
+    private UserAccount user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,27 +87,6 @@ public class ScoreBoardTabLayoutActivity extends AppCompatActivity {
         globalScoreBoard =  (ScoreBoard) extra.getSerializable("globalScoreBoard");
     }
 
-    private void setBoard(ArrayList<Object[]> scoreList) {
-
-        for (int i = 0; i < 11; i++) {
-            String name = "Name" + i;
-            String score = "Score" + i;
-            TextView t1 = findViewById
-                    (getResources().getIdentifier(name, "id", getPackageName()));
-            TextView t2 = findViewById
-                    (getResources().getIdentifier(score, "id", getPackageName()));
-
-            if (i < scoreList.size()) {
-                t1.setText((String) scoreList.get(i)[0]);
-                t2.setText(String.valueOf(scoreList.get(i)[1]));
-            }
-
-            else {
-                t1.setText("");
-                t2.setText("");
-            }
-        }
-    }
 
     @Override
     public void onBackPressed(){

@@ -26,23 +26,54 @@ import fall2018.csc2017.slidingtiles.UserAccount;
 import fall2018.csc2017.slidingtiles.UserAccountManager;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
+/**
+ * Fragment for game 2048
+ */
+
 public class G2048Fragment extends Fragment {
+    /**
+     * Button get in game center
+     */
     private ImageButton Image2048;
 
+    /**
+     * database
+     */
     DatabaseHelper myDB;
 
+    /**
+     * boardManager for 2048
+     */
     private Game2048BoardManager boardManager;
 
+    /**
+     * current user
+     */
     private UserAccount user;
 
+    /**
+     * userManager
+     */
     private UserAccountManager users;
 
+    /**
+     * Button enter scoreBoard
+     */
     private Button scoreBoard;
 
+    /**
+     * Personal scoreBoard
+     */
     private ScoreBoard personalScoreBoard;
 
+    /**
+     * Overall scoreBoard for game
+     */
     private ScoreBoard globalScoreBoard;
 
+    /**
+     * username for user
+     */
     private String username;
 
     @Nullable
@@ -50,6 +81,7 @@ public class G2048Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         this.myDB = new DatabaseHelper(getContext());
+        getUser();
         View view = inflater.inflate(R.layout.g2048_fragment, container, false);
         Image2048 = view.findViewById(R.id.g_2048);
         scoreBoard = view.findViewById(R.id.score_board);
@@ -57,10 +89,12 @@ public class G2048Fragment extends Fragment {
         addStartButton();
         addScoreBoardButton();
         DataHolder.getInstance().save("current game", "2048");
-        getUser();
         return view;
     }
 
+    /**
+     * set start game button
+     */
     private void addStartButton() {
         Image2048.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +126,9 @@ public class G2048Fragment extends Fragment {
         startActivity(tmp);
     }
 
+    /**
+     * set scoreBoard button
+     */
     public void addScoreBoardButton(){
         scoreBoard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +137,9 @@ public class G2048Fragment extends Fragment {
             }
     });}
 
-
+    /**
+     * start game activity
+     */
     private void switchToGame() {
         Intent tmp = new Intent(getContext(), Game2048MainActivity.class);
         Bundle pass = new Bundle();
@@ -109,13 +148,16 @@ public class G2048Fragment extends Fragment {
         startActivity(tmp);
     }
 
+    /**
+     * get all user information and variables passed between activities
+     */
     private void getUser() {
-        String currentUser = (String)DataHolder.getInstance().retrieve("current user");
-        this.user = myDB.selectUser(currentUser);
+        username = (String) DataHolder.getInstance().retrieve("current user");
+        this.user = myDB.selectUser(username);
         this.users = myDB.selectAccountManager();
         personalScoreBoard = user.getScoreBoard("2048");
         globalScoreBoard = users.getGlobalScoreBoard("2048");
-        username = (String) DataHolder.getInstance().retrieve("current user");
+
     }
 
 }

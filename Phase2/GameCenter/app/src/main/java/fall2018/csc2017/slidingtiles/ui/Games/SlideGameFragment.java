@@ -16,10 +16,20 @@ import fall2018.csc2017.slidingtiles.R;
 import fall2018.csc2017.slidingtiles.*;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
-
+/**
+ * Fragment for Slide Game
+ */
 public class SlideGameFragment extends Fragment {
+    /**
+     * database
+     */
     DatabaseHelper myDB;
+
+    /**
+     * username for user
+     */
     String username;
+
     /**
      * user that is operating system
      */
@@ -35,6 +45,9 @@ public class SlideGameFragment extends Fragment {
      */
     private ScoreBoard personalScoreBoard;
 
+    /**
+     * overall scoreboard of game
+     */
     private ScoreBoard globalScoreBoard;
 
     /**
@@ -43,18 +56,28 @@ public class SlideGameFragment extends Fragment {
     private SlidingBoardManager slidingBoardManager;
 
     /**
-     * board type judgement
+     * scoreboard button
      */
-
-
     private Button Rank;
 
+    /**
+     * button starts game
+     */
     private Button startButton;
 
+    /**
+     * button resumes game
+     */
     private Button resumeButton;
 
+    /**
+     * button loads game
+     */
     private Button loadButton;
 
+    /**
+     * size of board
+     */
     private int boardSize;
 
     @Nullable
@@ -71,6 +94,11 @@ public class SlideGameFragment extends Fragment {
         // set current game
         return rootView;
     }
+
+    /**
+     * get all components from view
+     * @param rootView current view
+     */
     private void getAllComponents(View rootView){
         Rank=rootView.findViewById(R.id.Rank);
         startButton=rootView.findViewById(R.id.NewGameButton1);
@@ -78,6 +106,9 @@ public class SlideGameFragment extends Fragment {
         loadButton=rootView.findViewById(R.id.LoadButton1);
     }
 
+    /**
+     * get all user information and variables passed between activities
+     */
     private void getUser(){
         myDB = new DatabaseHelper(this.getContext());
         username = (String) DataHolder.getInstance().retrieve("current user");
@@ -224,7 +255,6 @@ public class SlideGameFragment extends Fragment {
         tmp.putExtras(pass);
         startActivity(tmp);
     }
-
 
     /**
      * load game

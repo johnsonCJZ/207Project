@@ -22,6 +22,9 @@ import fall2018.csc2017.slidingtiles.UserAccount;
 import fall2018.csc2017.slidingtiles.UserAccountManager;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
+/**
+ * Fragment for Minesweeper game
+ */
 public class MinesweeperFragment extends Fragment {
     private UserAccount user;
     private View view;
@@ -45,6 +48,9 @@ public class MinesweeperFragment extends Fragment {
         return view;
     }
 
+    /**
+     * set start button
+     */
     private void addStartButton(){
         thomas.setOnClickListener(new View.OnClickListener() {
 
@@ -57,6 +63,9 @@ public class MinesweeperFragment extends Fragment {
         });
     }
 
+    /**
+     * get all user information and variables passed between activities
+     */
     private void getUser(){
         myDB = new DatabaseHelper(this.getContext());
         username = (String) DataHolder.getInstance().retrieve("current user");
@@ -66,6 +75,9 @@ public class MinesweeperFragment extends Fragment {
         DataHolder.getInstance().save("current game", "Mine");
     }
 
+    /**
+     * set animation to ImageView
+     */
     private void addImageAnim(){
         thomas = (ImageView) view.findViewById(R.id.Thomas);
         Animation rotate = AnimationUtils.loadAnimation(getContext(),R.anim.anims);
