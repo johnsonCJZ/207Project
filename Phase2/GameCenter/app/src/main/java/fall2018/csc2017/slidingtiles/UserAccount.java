@@ -40,11 +40,6 @@ public class UserAccount implements Serializable {
     private HashMap<String, Game2048Memory> history2048;
 
     /**
-     * The sliding slidingTiles score list of the UserAccount
-     */
-    private ArrayList<Integer> userScoreList;
-
-    /**
      * The archive of the game sliding slidingTiles.
      */
     private HashMap<String, ScoreBoard> personalScoreBoard;
@@ -121,19 +116,6 @@ public class UserAccount implements Serializable {
      */
     void setPassword(String ps) {
         this.password = ps;
-    }
-
-    /**
-     * The getter for the UserScoreList of the UserAccount.
-     *
-     * @return the UserScoreList.
-     */
-    public ArrayList<Integer> getUserScoreList() {
-        return this.userScoreList;
-    }
-
-    public void setUserScoreList(ArrayList<Integer> userScoreList) {
-        this.userScoreList = userScoreList;
     }
 
     public void setSlideHistory(String key, SlidingBoardManager item) {
@@ -246,15 +228,15 @@ public class UserAccount implements Serializable {
         this.games = games;
     }
 
-    public void setHistorySliding(HashMap<String, SlidingMemory> historySliding) {
+    void setHistorySliding(HashMap<String, SlidingMemory> historySliding) {
         this.historySliding = historySliding;
     }
 
-    public void setHistoryMine(HashMap<String, MineMemory> historyMine) {
+    void setHistoryMine(HashMap<String, MineMemory> historyMine) {
         this.historyMine = historyMine;
     }
 
-    public void setHistory2048(HashMap<String, Game2048Memory> history2048) {
+    void setHistory2048(HashMap<String, Game2048Memory> history2048) {
         this.history2048 = history2048;
     }
 

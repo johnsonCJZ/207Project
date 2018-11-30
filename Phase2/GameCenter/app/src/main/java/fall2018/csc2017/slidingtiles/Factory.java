@@ -153,7 +153,6 @@ public class Factory {
         u.setGames(games);
         u.setHistoryMine(historyMine);
         u.setPersonalScoreBoard(personalScoreBoard);
-        u.setUserScoreList(userScoreList);
         return u;
     }
 

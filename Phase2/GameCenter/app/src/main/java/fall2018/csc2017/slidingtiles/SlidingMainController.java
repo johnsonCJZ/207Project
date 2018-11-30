@@ -11,7 +11,7 @@ public class SlidingMainController {
      *
      * @param context the context
      */
-    public ArrayList<Button> createTileButtons(Context context, SlidingBoardManager slidingBoardManager, ArrayList<Button> tileButtons) {
+    ArrayList<Button> createTileButtons(Context context, SlidingBoardManager slidingBoardManager, ArrayList<Button> tileButtons) {
         SlidingBoard slidingBoard = slidingBoardManager.getBoard();
         tileButtons = new ArrayList<>();
         for (int row = 0; row != slidingBoard.getDimension(); row++) {
@@ -27,7 +27,7 @@ public class SlidingMainController {
     /**
      * Update the backgrounds on the buttons to match the slidingTiles.
      */
-    public ArrayList<Button> updateTileButtons(SlidingBoardManager slidingBoardManager, ArrayList<Button> tileButtons) {
+    ArrayList<Button> updateTileButtons(SlidingBoardManager slidingBoardManager, ArrayList<Button> tileButtons) {
         SlidingBoard slidingBoard = slidingBoardManager.getBoard();
         int nextPos = 0;
         for (Button b : tileButtons) {

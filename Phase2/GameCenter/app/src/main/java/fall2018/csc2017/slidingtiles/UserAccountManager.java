@@ -58,7 +58,7 @@ public class UserAccountManager implements Iterable<UserAccount>, Serializable {
         return GlobalScoreBoard.get(tag);
     }
 
-    public HashMap<String, ScoreBoard> getGlobalScoreBoard() {
+    HashMap<String, ScoreBoard> getGlobalScoreBoard() {
         return GlobalScoreBoard;
     }
 
