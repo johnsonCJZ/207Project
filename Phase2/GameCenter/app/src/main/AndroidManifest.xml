@@ -27,6 +27,7 @@
         <activity android:name=".ScoreBoardTabLayoutActivity" />
         <activity android:name=".MineMainActivity" />
         <activity android:name=".MineDifficultyActivity" />
+        <activity android:name=".ChangePasswordActivity" />
     </application>
 
 </manifest>

@@ -5,7 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import es.dmoral.toasty.Toasty;
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
 
 public class ChangePasswordActivity extends AppCompatActivity {
@@ -55,20 +60,36 @@ public class ChangePasswordActivity extends AppCompatActivity {
         this.users= myDB.selectAccountManager();
     }
 
-    void updateButtonPushed() {
+    boolean updateButtonPushed() {
         String passwordOrEmailS = this.passwordOrEmail.getText().toString();
         String newPwS = this.newPw.getText().toString();
         String confirmS = confirmPw.getText().toString();
-        if (!(user.getEmail() == passwordOrEmailS || user.getPassword() == passwordOrEmailS)) {
+        String email = user.getEmail();
+        String ps = user.getPassword();
+        if (!(email.equals(passwordOrEmailS) || ps.equals(passwordOrEmailS))) {
             message.setText("The current password or email is not correct.");
-            return;
+            return false;
         }
-        if(!(newPwS.equals(confirmS))){
+        if (!(newPwS.equals(confirmS))) {
             message.setText("The new password are not the same with the confirmed password.");
-            return;
+            return false;
         }
-        user.setPassword(newPwS);
-        message.setText("Your password is successfully updated.");
+        if (!(validateInfo(newPw.getText().toString(), "^[a-z0-9]{1,9}$"))) {
+            message.setText("The format of new password is not correct.");
+            return false;
+        }
+            user.setPassword(newPwS);
+            myDB.updateUser(username.getText().toString(), user);
+            message.setText("Your password is successfully updated.");
+            return true;
+
+    }
+
+    private boolean validateInfo(String info, String regex){
+        String infoRegex = regex;
+        Pattern regexP = Pattern.compile(infoRegex);
+        Matcher matcher = regexP.matcher(info);
+        return matcher.matches();
     }
 
 }
