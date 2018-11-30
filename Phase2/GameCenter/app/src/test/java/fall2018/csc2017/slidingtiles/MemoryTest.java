@@ -8,6 +8,22 @@ public class MemoryTest {
     private SlidingMemory slidingMemory;
     private Game2048Memory game2048Memory;
     private MineMemory mineMemory;
+    private BoardManager manager;
+
+    public void setUpSlidingMemory() {
+        manager = new SlidingBoardManager(4);
+        slidingMemory = new SlidingMemory();
+    }
+
+    public void setUpGame2048Memory() {
+        manager = new Game2048BoardManager();
+        game2048Memory = new Game2048Memory();
+    }
+
+    public void setUpMineMemory() {
+        manager = new MineBoardManager(9, 10);
+        mineMemory = new MineMemory();
+    }
 
     @Test
     public void testSlidingMemoryMakeCopy() {
