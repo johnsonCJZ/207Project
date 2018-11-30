@@ -13,6 +13,9 @@ import java.util.regex.Pattern;
 
 import es.dmoral.toasty.Toasty;
 
+/**
+ * The activity class for the register page.
+ */
 public class RegisterActivity extends AppCompatActivity {
     EditText username;
     EditText password;
@@ -52,6 +55,9 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Assign value of the corresponding fields to the element in the view
+     */
     private void updateInfo() {
         username = findViewById(R.id.username);
         usernameS = this.username.getText().toString();
@@ -115,6 +121,12 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Check whether the info argument fulfills the regex
+     * @param info the information to be checked
+     * @param regex the regex to check the information
+     * @return whether the regex is fulfilled by info.
+     */
     private boolean validateInfo(String info, String regex) {
         String infoRegex = regex;
         Pattern regexP = Pattern.compile(infoRegex);
