@@ -246,4 +246,8 @@ public class UserAccount implements Serializable {
     public ArrayList<String> getGames() {
         return games;
     }
+
+    public void setName(String name){
+        this.name = name;
+    }
 }

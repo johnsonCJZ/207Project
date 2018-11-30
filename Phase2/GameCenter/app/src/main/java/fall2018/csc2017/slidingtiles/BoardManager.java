@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BoardManager<T, K> implements Serializable {
-    Double time = (double) 0;
+    private Double time = (double) 0;
 
-    List<K> tiles = new ArrayList<>();
+    private List<K> tiles = new ArrayList<>();
 
-    int dimension;
+    private int dimension;
 
-    T board;
+    private T board;
 
     public BoardManager(){}
 

@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Board<T> implements Serializable, IObservable<Game2048Board> {
-    int dimension;
+    private int dimension;
 
-    List<T> tiles = new ArrayList<>();
+    private List<T> tiles = new ArrayList<>();
 
     private boolean changed = false;
 

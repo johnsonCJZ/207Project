@@ -9,33 +9,29 @@ public class Game2048BoardManager extends BoardManager<Game2048Board, Game2048Ti
 
     public Game2048BoardManager() {
         super(4);
-        this.board = new BuilderBoard().build2048Board();
-        board.addTile();
-        board.addTile();
+        setBoard(new BuilderBoard().build2048Board());
+        getBoard().addTile();
+        getBoard().addTile();
     }
 
     Game2048BoardManager(double time, int score, List<Integer> list){
         super(4);
-        this.time = time;
-        this.board = new BuilderBoard().build2048Board();
-        this.board.setScore(score);
-        this.board.setUpTiles(list);
+        setTime(time);
+        setBoard(new BuilderBoard().build2048Board());
+        this.getBoard().setScore(score);
+        this.getBoard().setUpTiles(list);
     }
 
     int getScore() {
-        return board.getScore();
+        return getBoard().getScore();
     }
 
     void cheat() {
-        board.getTile(0,0).setValue(2048);
+        getBoard().getTile(0,0).setValue(2048);
     }
 
     private boolean isFull() {
-        return board.findEmpty().size() == 0;
-    }
-
-    public void setBoard(Game2048Board board) {
-        this.board = board;
+        return getBoard().findEmpty().size() == 0;
     }
 
     @Override
@@ -45,7 +41,7 @@ public class Game2048BoardManager extends BoardManager<Game2048Board, Game2048Ti
 
     @Override
     boolean isWon(){
-        for (Game2048Tile tile : board) {
+        for (Game2048Tile tile : getBoard()) {
             if (tile.getValue() == 2048) {
                 return true;
             }
@@ -55,7 +51,7 @@ public class Game2048BoardManager extends BoardManager<Game2048Board, Game2048Ti
 
     @Override
     void move(Object direction) {
-        board.merge((String) direction);
+        getBoard().merge((String) direction);
     }
 
     boolean canMove() {
@@ -64,9 +60,9 @@ public class Game2048BoardManager extends BoardManager<Game2048Board, Game2048Ti
         } else {
             for (int i = 0; i < DIMENSION; i++) {
                 for (int j = 0; j < DIMENSION; j++) {
-                    Game2048Tile tile = board.getTile(i, j);
-                    if ((i < DIMENSION - 1 && tile.equals(board.getTile(i + 1, j)))
-                            || (j < DIMENSION - 1 && tile.equals(board.getTile(i, j+1)))) {
+                    Game2048Tile tile = getBoard().getTile(i, j);
+                    if ((i < DIMENSION - 1 && tile.equals(getBoard().getTile(i + 1, j)))
+                            || (j < DIMENSION - 1 && tile.equals(getBoard().getTile(i, j+1)))) {
                         return true;
                     }
                 }

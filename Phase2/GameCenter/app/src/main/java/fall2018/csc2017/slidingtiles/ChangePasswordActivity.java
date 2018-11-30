@@ -1,17 +1,12 @@
 package fall2018.csc2017.slidingtiles;
 
-import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import fall2018.csc2017.slidingtiles.database.DatabaseHelper;
-import fall2018.csc2017.slidingtiles.menu_bars.ProfileFragment;
 
 public class ChangePasswordActivity extends AppCompatActivity {
     TextView username;
@@ -60,21 +55,20 @@ public class ChangePasswordActivity extends AppCompatActivity {
         this.users= myDB.selectAccountManager();
     }
 
-    boolean updateButtonPushed() {
+    void updateButtonPushed() {
         String passwordOrEmailS = this.passwordOrEmail.getText().toString();
         String newPwS = this.newPw.getText().toString();
         String confirmS = confirmPw.getText().toString();
         if (!(user.getEmail() == passwordOrEmailS || user.getPassword() == passwordOrEmailS)) {
             message.setText("The current password or email is not correct.");
-            return false;
+            return;
         }
         if(!(newPwS.equals(confirmS))){
             message.setText("The new password are not the same with the confirmed password.");
-            return false;
+            return;
         }
         user.changePassword(newPwS);
         message.setText("Your password is successfully updated.");
-        return true;
     }
 
 }

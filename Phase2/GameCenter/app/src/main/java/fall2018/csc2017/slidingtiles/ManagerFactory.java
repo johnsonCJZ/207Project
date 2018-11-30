@@ -30,13 +30,9 @@ public class ManagerFactory {
             int dimension = (b.getDimension());
             m.setDimension(dimension);
             m.setBoard((SlidingBoard) b);
-            int numTiles = dimension * dimension;
-            List<SlidingTile>slidingTiles = b.getTiles();
-            for (int tileNum = 0; tileNum != numTiles; tileNum++) {
-                slidingTiles.add(new SlidingTile(tileNum));
-            }
+            m.addTile();
             m.shuffle();
-            b.setTiles(slidingTiles);
+            b.setTiles(m.getTiles());
             m.getHistory().add(new HistoryNode(m.findBlankIndex()));
             return m;
         }
