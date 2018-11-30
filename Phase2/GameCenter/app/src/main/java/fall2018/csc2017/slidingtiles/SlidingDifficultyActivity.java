@@ -62,7 +62,13 @@ public class SlidingDifficultyActivity extends AppCompatActivity {
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    slidingBoardManager = new SlidingBoardManager(4);
+
+
+                    ManagerFactory f = new ManagerFactory();
+                    SlidingBoard b =new BuilderBoard()
+                            .setDimension(4)
+                            .buildSlidingBoard();
+                    slidingBoardManager = (SlidingBoardManager) f.createNewManager(b);
                     clearResumeHistory();
                     switchToGame();
                 }
@@ -77,7 +83,12 @@ public class SlidingDifficultyActivity extends AppCompatActivity {
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    slidingBoardManager = new SlidingBoardManager(3);
+
+                    ManagerFactory f = new ManagerFactory();
+                    SlidingBoard b =new BuilderBoard()
+                            .setDimension(3)
+                            .buildSlidingBoard();
+                    slidingBoardManager = (SlidingBoardManager) f.createNewManager(b);
                     clearResumeHistory();
                     switchToGame();
                 }
@@ -92,7 +103,12 @@ public class SlidingDifficultyActivity extends AppCompatActivity {
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    slidingBoardManager = new SlidingBoardManager(5);
+
+                    ManagerFactory f = new ManagerFactory();
+                    SlidingBoard b =new BuilderBoard()
+                            .setDimension(5)
+                            .buildSlidingBoard();
+                    slidingBoardManager = (SlidingBoardManager) f.createNewManager(b);
                     clearResumeHistory();
                     switchToGame();
                 }

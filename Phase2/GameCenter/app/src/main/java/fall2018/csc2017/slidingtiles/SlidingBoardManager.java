@@ -21,21 +21,6 @@ public class SlidingBoardManager extends BoardManager<SlidingBoard, SlidingTile>
 
     public SlidingBoardManager(){}
 
-    /**
-     * Create a new SlidingBoardManager to manage a new shuffled n*n slidingBoard.
-     * @param n the number of rows and columns
-     */
-    public SlidingBoardManager(int n) {
-        super(n);
-        setBoard(new BuilderBoard()
-                .setDimension(n)
-                .buildSlidingBoard());
-        addTile();
-        shuffle();
-        getBoard().setTiles(getTiles());
-        this.history.add(new HistoryNode(this.findBlankIndex()));
-    }
-
     void addTile() {
             int numTiles = getDimension() * getDimension();
             for (int tileNum = 0; tileNum != numTiles; tileNum++) {

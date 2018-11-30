@@ -57,14 +57,14 @@ public class BuilderBoard {
         return this;
     }
 
-    SlidingBoard buildSlidingBoard() {
+    public SlidingBoard buildSlidingBoard() {
         SlidingBoard slidingBoard = new SlidingBoard();
         slidingBoard.setDimension(dimension);
         slidingBoard.setTiles((List<SlidingTile>) (List<?>) tiles);
         return slidingBoard;
     }
 
-    Game2048Board build2048Board() {
+    public Game2048Board build2048Board() {
         Game2048Board game2048Board = new Game2048Board();
         set2048Tiles();
         game2048Board.setDimension(4);
@@ -72,7 +72,7 @@ public class BuilderBoard {
         return game2048Board;
     }
 
-    MineBoard buildMineBoard(){
+    public MineBoard buildMineBoard(){
         MineBoard mineBoard = new MineBoard();
         mineBoard.setDimension(dimension);
         mineBoard.setMineNum(mine);

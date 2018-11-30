@@ -7,12 +7,7 @@ public class Game2048BoardManager extends BoardManager<Game2048Board, Game2048Ti
     final private Integer DIMENSION = 4;
 //    private Double time;
 
-    public Game2048BoardManager() {
-        super(4);
-        setBoard(new BuilderBoard().build2048Board());
-        getBoard().addTile();
-        getBoard().addTile();
-    }
+    public Game2048BoardManager() {}
 
     Game2048BoardManager(double time, int score, List<Integer> list){
         super(4);

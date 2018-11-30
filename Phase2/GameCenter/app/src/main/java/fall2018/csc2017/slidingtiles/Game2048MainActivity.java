@@ -167,8 +167,6 @@ public class Game2048MainActivity extends AppCompatActivity implements IObserver
 
                 ManagerFactory f = new ManagerFactory();
                 Game2048Board board = new BuilderBoard().build2048Board();
-
-
                 bundle.putSerializable("boardManager", f.createNewManager(board));
                 tmp.putExtras(bundle);
                 startActivity(tmp);
