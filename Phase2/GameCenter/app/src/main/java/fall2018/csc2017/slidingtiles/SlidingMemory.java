@@ -42,7 +42,7 @@ class SlidingMemory extends Memory<SlidingBoardManager> {
             tt.add(new SlidingTile(i));
         }
         Factory f = new Factory();
-        return (SlidingBoardManager) f.loadSlidingManager(dimension, time, tt);
+        return f.loadSlidingManager(dimension, time, tt);
     }
 
     /**

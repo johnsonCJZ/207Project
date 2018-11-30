@@ -9,6 +9,11 @@ public class Factory {
     public Factory() {
     }
 
+    /**
+     * Create a new BoardManager corresponding to the type of Board b.
+     * @param b the Board which a new BoardManager is built
+     * @return the new-built BoardManager
+     */
     public BoardManager createNewManager(Board b) {
         if (b instanceof MineBoard) {
             MineBoardManager m = new MineBoardManager();
@@ -42,7 +47,14 @@ public class Factory {
         return null;
     }
 
-    public BoardManager Load2048Manager(double time, int score, List<Integer> list) {
+    /**
+     * Rebuild a Game2048BoardManager.
+     * @param time time of playing of the Game2048BoardManager
+     * @param score score of the Game2048BoardManager
+     * @param list list of Integer representing number of tiles in the Game2048BoardManager
+     * @return new-built Game2048BoardManager.
+     */
+    Game2048BoardManager Load2048Manager(double time, int score, List<Integer> list) {
         Factory f = new Factory();
         Game2048Board board = new BuilderBoard().build2048Board();
         Game2048BoardManager manager = (Game2048BoardManager) f.createNewManager(board);
@@ -54,24 +66,40 @@ public class Factory {
         return manager;
     }
 
-    public BoardManager loadMineManager(int d, int mineNum, int mineLeft, double time, List<MineTile> tiles) {
+    /**
+     * Rebuild a MineBoardManager.
+     * @param dimension dimension of the MineBoardManager
+     * @param mineNum number of mines of the MineBoardManager
+     * @param mineLeft number of mine left of the MineBoardManager
+     * @param time time of playing of the MineBoardManager
+     * @param tiles list of tiles in the MineBoardManager
+     * @return new-built MineBoardManager
+     */
+    MineBoardManager loadMineManager(int dimension, int mineNum, int mineLeft, double time, List<MineTile> tiles) {
         Factory f = new Factory();
         MineBoard b = new BuilderBoard()
                 .setMine(mineNum)
                 .setMineLeft(mineLeft)
-                .setDimension(d)
+                .setDimension(dimension)
                 .setMineTiles(tiles)
                 .buildMineBoard();
         MineBoardManager m = (MineBoardManager) f.createNewManager(b);
         m.switchIsFirst();
-        m.setDimension(d);
+        m.setDimension(dimension);
         m.setBoard(b);
         m.setTime(time);
         m.setMinePosition(b.getMinePosition());
         return m;
     }
 
-    public BoardManager loadSlidingManager(int dimension, double time, List<SlidingTile> slidingTiles) {
+    /**
+     * Rebuild a SlidingBoardManager.
+     * @param dimension dimension of the SlidingBoardManager
+     * @param time time of playing of the SlidingBoardManager
+     * @param slidingTiles list of tiles in the SlidingBoardManager
+     * @return new-built SlidingBoardManager
+     */
+    SlidingBoardManager loadSlidingManager(int dimension, double time, List<SlidingTile> slidingTiles) {
         Factory f = new Factory();
         SlidingBoard b = new BuilderBoard()
                 .setDimension(dimension)
@@ -90,7 +118,13 @@ public class Factory {
         return m;
     }
 
-    public UserAccount createUserAccount(String name, String password) {
+    /**
+     * Create a new UserAccount with name and password and return it.
+     * @param name name of the user
+     * @param password password of the user
+     * @return a new UserAccount
+     */
+    UserAccount createUserAccount(String name, String password) {
         UserAccount u = new UserAccount();
         u.setName(name);
         u.setPassword(password);
@@ -123,7 +157,11 @@ public class Factory {
         return u;
     }
 
-    public UserAccountManager createUserManager() {
+    /**
+     * Create a new UserAccountManager with a hash map containing five global ScoreBoards.
+     * @return a new UserAccountManager
+     */
+    UserAccountManager createUserManager() {
         UserAccountManager m = new UserAccountManager();
         m.getGlobalScoreBoard().put("history3x3", new ScoreBoard("SlidingTiles"));
         m.getGlobalScoreBoard().put("history4x4", new ScoreBoard("SlidingTiles"));
