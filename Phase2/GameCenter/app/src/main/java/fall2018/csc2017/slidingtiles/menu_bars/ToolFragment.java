@@ -13,6 +13,9 @@ import android.widget.Button;
 import fall2018.csc2017.slidingtiles.LoginActivity;
 import fall2018.csc2017.slidingtiles.R;
 
+/**
+ * The Fragment of the Tool page.
+ */
 public class ToolFragment extends Fragment {
     Button logOut;
     @Nullable
@@ -24,17 +27,16 @@ public class ToolFragment extends Fragment {
         addLogOut();
         return rootView; }
 
+    /**
+     * Sign the current user out and turn to the login page.
+     */
     private void addLogOut(){
         logOut.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View v) {
-                                          openLogin();
+                                          Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                          startActivity(intent);
                                       }
                                   }
         );}
-
-    private void openLogin(){
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        startActivity(intent);
-    }
 }
