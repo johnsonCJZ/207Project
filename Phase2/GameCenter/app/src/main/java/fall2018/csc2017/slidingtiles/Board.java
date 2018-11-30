@@ -29,6 +29,29 @@ public abstract class Board<T> implements Serializable, IObservable<Game2048Boar
         this.dimension = dimension;
     }
 
+    /**
+     * Return the tile at (row, col)
+     *
+     * @param row the tile row
+     * @param col the tile column
+     * @return the tile at (row, col)
+     */
+    T getTile(int row, int col){
+        return tiles.get(row * dimension + col);
+    }
+
+    /**
+     * Set the tile at (row, col)
+     *
+     * @param row the tile row
+     * @param col the tile column
+     *
+     */
+    void setTile(int row, int col, T tile){
+        tiles.set(row * getDimension() + col, tile);
+    }
+
+
     @Override
     public void addObserver(IObserver o) {
         observers.add(o);
